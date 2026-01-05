@@ -152,9 +152,9 @@ export default function StudentPortal() {
         {/* Early Access Section */}
         <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
           <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg p-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-100 mb-4">Early Access Registration for Observerships and Electives</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-100 mb-4">Early Access Registration</h2>
             <p className="text-lg text-slate-300 mb-6 leading-relaxed">
-              MedGate is preparing pilot program listings for formal observership and elective opportunities in collaboration with healthcare institutions. By creating an account, students can register for early access, receive program updates, and be notified when applications become available.
+              MedGate is conducting a pilot rollout of formal observership and elective program listings in collaboration with healthcare institutions. By creating an account, students may register for early access, receive program updates, and be notified when applications open.
             </p>
             
             {/* No Live Programs Notice */}

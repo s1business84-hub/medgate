@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { ArrowLeft, Users, Award, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
@@ -7,12 +10,26 @@ import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
 export default function AboutPage() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        animate={{ opacity: [0.9, 1, 0.9] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <div className="absolute top-10 left-10 w-56 h-56 rounded-full bg-linear-to-br from-cyan-400/20 via-blue-500/15 to-indigo-500/15 blur-3xl" />
+        <div className="absolute bottom-10 right-8 w-64 h-64 rounded-full bg-linear-to-tr from-fuchsia-400/18 via-purple-500/15 to-blue-500/12 blur-3xl" />
+      </motion.div>
       <LiquidParallax />
       <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
       
       <div className="relative max-w-4xl mx-auto px-6 py-16">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-12 gap-4">
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          viewport={{ once: true }}
+          className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-12 gap-4"
+        >
           <Link href="/" className="flex items-center text-indigo-300 hover:text-indigo-200 transition-colors group">
             <ArrowLeft className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" />
             Back to Home
@@ -22,24 +39,36 @@ export default function AboutPage() {
               Login / Sign Up
             </Button>
           </Link>
-        </div>
+        </motion.div>
 
         {/* Hero Section */}
-        <div className="text-center mb-16 animate-fade-in">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
           <h1 className="text-4xl md:text-5xl font-bold text-slate-100 mb-6">
             <AnimatedGradientText>About MedGate</AnimatedGradientText>
           </h1>
           <p className="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
             MedGate is being developed to connect medical students with structured clinical observership and elective opportunities across the UAE. The platform focuses on improving transparency, standardization, and communication between students and healthcare institutions.
           </p>
-        </div>
+        </motion.div>
 
         {/* Our Story */}
-        <section className="mb-16 animate-fade-in" style={{ animationDelay: '0.1s' }}>
+        <motion.section
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          viewport={{ once: true }}
+          className="mb-16"
+        >
           <h2 className="text-3xl font-bold text-slate-100 mb-8 text-center">
             <AnimatedGradientText>Our Story</AnimatedGradientText>
           </h2>
-          <div className="rounded-2xl shadow-lg overflow-hidden group backdrop-blur-xl bg-white/5 border border-white/10 hover:shadow-2xl transition-all duration-300 p-8 md:p-12">
+          <div className="relative rounded-2xl shadow-lg overflow-hidden group backdrop-blur-xl bg-white/5 border border-white/10 hover:shadow-2xl transition-all duration-300 p-8 md:p-12">
             {/* Animated gradient overlay */}
             <div className="absolute inset-0 bg-linear-to-r from-cyan-400/10 via-transparent to-indigo-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             
@@ -48,7 +77,7 @@ export default function AboutPage() {
               <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-linear-to-br from-white to-transparent rounded-full blur-xl" />
             </div>
             
-            <div className="relative z-10">
+            <div className="relative z-10 space-y-6">
               <p className="text-lg text-slate-300 leading-relaxed mb-6">
                 MedGate is an early-stage platform being developed to address long-standing challenges in accessing and managing medical observership and elective programs.
               </p>
@@ -60,10 +89,16 @@ export default function AboutPage() {
               </p>
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* What We Do */}
-        <section className="mb-16 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+        <motion.section
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.85, ease: "easeOut", delay: 0.05 }}
+          viewport={{ once: true }}
+          className="mb-16"
+        >
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold text-slate-100 mb-4">
               <AnimatedGradientText>What We Do</AnimatedGradientText>
@@ -86,7 +121,7 @@ export default function AboutPage() {
               {
                 icon: Target,
                 title: 'Reduce Administrative Friction',
-                description: 'MedGate is designed to reduce repetitive back-and-forth by centralizing program information and application workflows.',
+                description: 'MedGate is designed to reduce repetitive back and forth by centralizing program information and application workflows.',
                 gradient: 'from-purple-500 to-pink-500',
                 bgGradient: 'from-fuchsia-400/20 to-pink-400/10',
                 number: '02'
@@ -100,10 +135,14 @@ export default function AboutPage() {
                 number: '03'
               }
             ].map((item, index) => (
-              <div 
+              <motion.div 
                 key={item.title} 
                 className="group relative rounded-2xl overflow-hidden backdrop-blur-xl bg-white/5 border border-white/10 hover:border-white/20 shadow-lg hover:shadow-2xl transition-all duration-300 animate-fade-in p-8"
                 style={{ animationDelay: `${0.3 + index * 0.1}s` }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.05 * index }}
+                viewport={{ once: true }}
               >
                 {/* Animated gradient overlay */}
                 <div className={`absolute inset-0 bg-linear-to-br ${item.bgGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
@@ -144,41 +183,51 @@ export default function AboutPage() {
                 {/* Floating elements for visual interest */}
                 <div className="absolute top-4 right-4 w-2 h-2 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse" />
                 <div className="absolute bottom-4 left-4 w-1.5 h-1.5 bg-indigo-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ animationDelay: '0.5s' }} />
-              </div>
+              </motion.div>
             ))}
           </div>
-
-
-        </section>
+        </motion.section>
 
         {/* Call to Action */}
-        <section className="text-center animate-fade-in mb-16" style={{ animationDelay: '0.35s' }}>
+        <motion.section
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.08 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
           <h2 className="text-3xl font-bold text-slate-100 mb-12">
             <AnimatedGradientText>Our Founders</AnimatedGradientText>
           </h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
-            <div className="rounded-2xl bg-white/5 border border-white/10 p-8 hover:bg-white/10 transition-all duration-300">
+            <motion.div className="rounded-2xl bg-white/5 border border-white/10 p-8 hover:bg-white/10 transition-all duration-300" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} viewport={{ once: true }}>
               <div className="w-12 h-12 rounded-full bg-linear-to-r from-cyan-500 to-indigo-600 mx-auto mb-4 flex items-center justify-center">
                 <span className="text-white font-bold text-lg">KD</span>
               </div>
               <h3 className="text-xl font-semibold text-slate-100 mb-2">Kashish Devnani</h3>
               <p className="text-slate-300">Founder & Program Director</p>
               <p className="text-sm text-slate-400 mt-3">Leads MedGate&apos;s platform direction and institutional collaboration strategy, working closely with healthcare institutions to translate program requirements into structured, transparent workflows within the platform.</p>
-            </div>
+            </motion.div>
             
-            <div className="rounded-2xl bg-white/5 border border-white/10 p-8 hover:bg-white/10 transition-all duration-300">
+            <motion.div className="rounded-2xl bg-white/5 border border-white/10 p-8 hover:bg-white/10 transition-all duration-300" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.18 }} viewport={{ once: true }}>
               <div className="w-12 h-12 rounded-full bg-linear-to-r from-indigo-600 to-purple-600 mx-auto mb-4 flex items-center justify-center">
                 <span className="text-white font-bold text-lg">SN</span>
               </div>
               <h3 className="text-xl font-semibold text-slate-100 mb-2">Sanskaar Nair</h3>
               <p className="text-slate-300">Co-Founder & Lead Engineer</p>
               <p className="text-sm text-slate-400 mt-3">Architects and engineers the MedGate platform, overseeing system design, backend infrastructure, and application workflows that support institutional onboarding and secure applicant management.</p>
-            </div>
+            </motion.div>
           </div>
-        </section>
+        </motion.section>
 
         {/* Call to Action */}
-        <section className="text-center animate-fade-in" style={{ animationDelay: '0.4s' }}>
+        <motion.section
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.85, ease: "easeOut", delay: 0.1 }}
+          viewport={{ once: true }}
+          className="text-center"
+        >
           <h2 className="text-3xl font-bold text-slate-100 mb-4">
             <AnimatedGradientText>Ready to Start Your Journey?</AnimatedGradientText>
           </h2>
@@ -187,17 +236,17 @@ export default function AboutPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/programs">
-              <Button size="lg" className="bg-linear-to-r from-cyan-600 to-indigo-600 hover:from-cyan-700 hover:to-indigo-700">
+              <Button size="lg" className="bg-linear-to-r from-cyan-600 to-indigo-600 hover:from-cyan-700 hover:to-indigo-700 shadow-lg hover:shadow-xl transition-transform duration-300 hover:-translate-y-0.5">
                 Browse Programs
               </Button>
             </Link>
             <Link href="/login">
-              <Button variant="outline" size="lg" className="border-white/15 text-slate-100 hover:bg-white/10">
+              <Button variant="outline" size="lg" className="border-white/15 text-slate-100 hover:bg-white/10 hover:-translate-y-0.5 transition-transform duration-300">
                 Create Account
               </Button>
             </Link>
           </div>
-        </section>
+        </motion.section>
       </div>
     </div>
   );

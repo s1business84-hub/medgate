@@ -16,8 +16,12 @@ async function sendOnboardingEmail(email: string) {
   });
 
   if (!res.ok) {
-    throw new Error("Failed to send onboarding email");
+    const errorData = await res.json().catch(() => ({ error: "Unknown error" }));
+    console.error("Email API error:", errorData);
+    throw new Error(errorData.error || "Failed to send onboarding email");
   }
+  
+  return res.json();
 }
 
 export default function ForHospitalsPage() {
@@ -26,19 +30,23 @@ export default function ForHospitalsPage() {
   const [onboardingError, setOnboardingError] = useState("");
   const [showFounderContact, setShowFounderContact] = useState(false);
 
-  const handleSendOnboarding = (e: React.FormEvent) => {
+  const handleSendOnboarding = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!onboardingEmail.trim()) {
       setOnboardingError("Please enter your email");
       return;
     }
     setOnboardingError("");
-    sendOnboardingEmail(onboardingEmail.trim())
-      .then(() => setOnboardingStatus("sent"))
-      .catch(() => {
-        setOnboardingStatus("error");
-        setOnboardingError("Unable to send onboarding steps. Please try again.");
-      });
+    setOnboardingStatus("idle");
+    
+    try {
+      await sendOnboardingEmail(onboardingEmail.trim());
+      setOnboardingStatus("sent");
+    } catch (error) {
+      console.error("Onboarding email error:", error);
+      setOnboardingStatus("error");
+      setOnboardingError("Unable to send onboarding steps. Please try again.");
+    }
   };
 
   return (

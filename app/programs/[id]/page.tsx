@@ -78,7 +78,7 @@ function ProgramContent({ id }: { id: string }) {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <h2 className="text-xl font-semibold text-slate-100 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]">Program Requirements</h2>
+            <h2 className="text-xl font-semibold text-slate-100 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]">Baseline Eligibility Requirements (Institution-Defined)</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {program.requirements.map((req, index) => (
@@ -117,18 +117,19 @@ function ProgramContent({ id }: { id: string }) {
                 <svg className="w-4 h-4 mr-2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span className="font-medium">Accreditation:</span> <span className="ml-1">{hospital?.accreditation}</span>
+                <span className="font-medium">Regulatory Authority:</span> <span className="ml-1">As per institutional declaration</span>
               </div>
               <div className="flex items-center text-slate-300">
                 <svg className="w-4 h-4 mr-2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
-                <span className="font-medium">Max Students:</span> <span className="ml-1">{hospital?.maxStudentsPerPeriod}</span>
+                <span className="font-medium">Capacity:</span> <span className="ml-1">As defined by institution</span>
               </div>
             </div>
             <div className="space-y-3">
               <div className="text-slate-300">
                 <span className="font-medium">Participating Departments:</span>
+                <div className="text-xs text-slate-400 mt-1">Departments listed are illustrative and subject to institutional scheduling.</div>
                 <div className="mt-2 flex flex-wrap gap-2">
                   {hospital?.departments.map((dept, index) => (
                     <span key={index} className="px-2 py-1 bg-purple-400/15 text-purple-100 text-xs rounded-full border border-purple-300/30">
@@ -171,7 +172,7 @@ function ProgramContent({ id }: { id: string }) {
                 <svg className="w-4 h-4 mr-2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
-                <span className="font-medium">Minimum Academic Year:</span> <span className="ml-1">{program.eligibility.yearOfStudyMin}</span>
+                <span className="font-medium">Minimum Academic Year:</span> <span className="ml-1">As defined by institution (example: {program.eligibility.yearOfStudyMin})</span>
               </div>
               <div className="flex items-center text-slate-300">
                 <svg className="w-4 h-4 mr-2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -208,12 +209,8 @@ function ProgramContent({ id }: { id: string }) {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                   <div>
-                    <span className="font-medium">Available Start Dates:</span>
-                    <ul className="mt-1 ml-0 space-y-1">
-                      {program.startDates.map((date, idx) => (
-                        <li key={idx} className="text-slate-300">• {date}</li>
-                      ))}
-                    </ul>
+                    <span className="font-medium">Start Dates:</span>
+                    <p className="mt-1 text-slate-400">Determined by institution during onboarding</p>
                   </div>
                 </div>
               </div>
@@ -221,13 +218,16 @@ function ProgramContent({ id }: { id: string }) {
                 <svg className="w-4 h-4 mr-2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
-                <span className="font-medium">{program.seatsAvailable} seats available</span>
+                <span className="font-medium">Capacity:</span> <span className="ml-1">Defined by institution</span>
               </div>
-              <div className="flex items-center text-slate-300">
-                <svg className="w-4 h-4 mr-2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="flex items-start text-slate-300">
+                <svg className="w-4 h-4 mr-2 mt-0.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
-                <span className="font-medium">Clinical Access Level:</span> <span className="ml-1">Observational only</span>
+                <div>
+                  <span className="font-medium">Clinical Access Level:</span> <span className="ml-1">Observational only</span>
+                  <div className="text-sm text-slate-400">(Defined by hosting institution)</div>
+                </div>
               </div>
               <div className="flex items-center text-slate-300">
                 <svg className="w-4 h-4 mr-2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -235,11 +235,11 @@ function ProgramContent({ id }: { id: string }) {
                 </svg>
                 <span className="font-medium">Certificate:</span> <span className="ml-1">Provided upon successful completion</span>
               </div>
-              <div className="flex items-center font-medium text-emerald-200">
-                <svg className="w-4 h-4 mr-2 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="flex items-center text-slate-300">
+                <svg className="w-4 h-4 mr-2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                 </svg>
-                <span>{program.feeAed ? `${program.feeAed} AED` : "Free"}</span>
+                <span className="font-medium">Fee:</span> <span className="ml-1">Determined by institution</span>
               </div>
             </div>
           </div>

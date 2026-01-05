@@ -48,7 +48,7 @@ export default function ProgramsPage() {
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         {/* Header */}
         <div className="text-center mb-8 sm:mb-12 animate-fade-in">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-clip-text bg-linear-to-r from-cyan-300 via-sky-200 to-indigo-200 text-transparent mb-3 sm:mb-4">Example Programs</h1>
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-clip-text bg-linear-to-r from-cyan-300 via-sky-200 to-indigo-200 text-transparent mb-3 sm:mb-4">Prototype Program Listings</h1>
           <p className="text-base sm:text-lg lg:text-xl text-slate-300 max-w-2xl mx-auto px-4">
             Prototype listings for demonstration only
           </p>
@@ -79,7 +79,7 @@ export default function ProgramsPage() {
         <div className="mb-12 animate-fade-in" style={{ animationDelay: '0.2s' }}>
           <div className="mb-4">
             <h2 className="text-2xl font-bold text-slate-100">Hospital Locations</h2>
-            <p className="text-slate-300 mt-2">View all observership opportunities across UAE hospitals on the map below</p>
+            <p className="text-slate-300 mt-2">Map locations are illustrative and do not represent confirmed participating institutions.</p>
           </div>
           <HospitalsMap />
         </div>
@@ -115,12 +115,8 @@ export default function ProgramsPage() {
                   </div>
                   
                   <div className="flex items-center gap-2 sm:gap-3">
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap border ${
-                      p.seatsAvailable > 2 ? 'border-emerald-400/40 text-emerald-200 bg-emerald-400/10' :
-                      p.seatsAvailable > 0 ? 'border-amber-300/40 text-amber-100 bg-amber-400/10' :
-                      'border-rose-400/40 text-rose-100 bg-rose-400/10'
-                    }`}>
-                      {p.seatsAvailable} seats
+                    <span className="px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap border border-slate-400/40 text-slate-200 bg-slate-400/10">
+                      Capacity: Institution-defined
                     </span>
                     
                     {/* Reminder Button */}
@@ -205,11 +201,11 @@ export default function ProgramsPage() {
                     {p.handsOnLevel}
                   </div>
                   
-                  <div className="flex items-center text-sm font-medium text-emerald-200">
-                    <svg className="w-4 h-4 mr-2 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="flex items-center text-sm text-slate-300">
+                    <svg className="w-4 h-4 mr-2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                     </svg>
-                    <span>{p.feeAed ? `${p.feeAed} AED` : "To be Discussed"}</span>
+                    <span>Fee: Set by institution</span>
                   </div>
                 </div>
 
@@ -248,7 +244,7 @@ export default function ProgramsPage() {
                             <svg className="w-4 h-4 mr-2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            <span className="font-medium">Accreditation:</span> <span className="ml-1">{h?.accreditation}</span>
+                            <span className="font-medium">Regulatory Authority:</span> <span className="ml-1">As per institutional declaration</span>
                           </div>
                           
                           <div className="text-sm text-slate-300">

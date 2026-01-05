@@ -19,7 +19,7 @@ const features = [
   },
   {
     name: "Eligibility & Requirement Transparency",
-    description: "Built to reduce back-and-forth communication by allowing hospitals to publish clear eligibility standards and students to understand requirements upfront.",
+    description: "Built to reduce back and forth communication by allowing hospitals to publish clear eligibility standards and students to understand requirements upfront.",
     icon: FileCheck,
     gradient: "from-green-500 to-emerald-500",
   },

@@ -1,7 +1,7 @@
 "use client"
 
 import { motion, AnimatePresence } from "framer-motion"
-import { ChevronDown, MessageCircle, HelpCircle } from "lucide-react"
+import { ChevronDown, MessageCircle, HelpCircle, Sparkles } from "lucide-react"
 import * as React from "react"
 
 const faqs = [
@@ -50,14 +50,35 @@ export function FAQ() {
     },
   }
 
+  const accentGradients = [
+    "from-cyan-400/40 via-blue-500/30 to-indigo-500/30",
+    "from-purple-400/40 via-pink-500/30 to-orange-400/30",
+    "from-emerald-400/40 via-teal-400/30 to-cyan-400/30",
+    "from-amber-400/40 via-orange-500/30 to-rose-400/30",
+    "from-sky-400/40 via-indigo-400/30 to-fuchsia-400/30",
+  ] as const
+
   return (
     <section
       id="faq"
       className="py-24 sm:py-32 relative overflow-hidden text-slate-50"
     >
       {/* Decorative Elements */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-blue-400/25 rounded-full mix-blend-screen filter blur-3xl opacity-60 -z-10" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-400/25 rounded-full mix-blend-screen filter blur-3xl opacity-60 -z-10" />
+      <motion.div
+        animate={{ y: [0, -10, 0], rotate: [0, 4, -2, 0] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-0 right-10 w-80 h-80 bg-linear-to-br from-cyan-400/25 via-indigo-400/25 to-purple-500/20 rounded-full mix-blend-screen blur-3xl opacity-70 -z-10"
+      />
+      <motion.div
+        animate={{ y: [0, 12, 0], rotate: [0, -3, 2, 0] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-0 left-6 w-96 h-96 bg-linear-to-tr from-fuchsia-400/20 via-purple-400/25 to-blue-400/20 rounded-full mix-blend-screen blur-3xl opacity-70 -z-10"
+      />
+      <motion.div
+        animate={{ scale: [1, 1.05, 1] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.08),transparent_30%),radial-gradient(circle_at_70%_40%,rgba(236,72,153,0.08),transparent_26%),radial-gradient(circle_at_40%_80%,rgba(16,185,129,0.08),transparent_24%)] -z-10"
+      />
 
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
@@ -77,7 +98,7 @@ export function FAQ() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
             viewport={{ once: true }}
-            className="text-4xl sm:text-5xl font-bold tracking-tight text-white bg-clip-text bg-linear-to-r from-white via-blue-200 to-purple-200"
+            className="text-4xl sm:text-5xl font-bold tracking-tight bg-linear-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent drop-shadow-[0_10px_35px_rgba(56,189,248,0.25)]"
           >
             Frequently asked questions
           </motion.h2>
@@ -100,17 +121,17 @@ export function FAQ() {
           variants={containerVariants}
           className="mx-auto mt-16 max-w-3xl"
         >
-          <div className="space-y-4">
+          <div className="space-y-5">
             <AnimatePresence mode="wait">
               {faqs.map((faq, index) => (
                 <motion.div key={index} variants={itemVariants} className="group">
                   {/** Card with dynamic liquid color change when expanded **/}
                   <motion.div
-                    className={`relative rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 overflow-hidden backdrop-blur-xl ${openIndex === index ? "bg-white/10 border border-blue-300/30" : "bg-white/5 border border-white/10"}`}
-                    whileHover={{ y: -4 }}
+                    className={`relative rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-400 overflow-hidden backdrop-blur-xl ${openIndex === index ? "bg-white/12 border border-white/20" : "bg-white/6 border border-white/10"}`}
+                    whileHover={{ y: -6, scale: 1.01 }}
                   >
                     {/* Animated gradient background on hover */}
-                    <div className="absolute inset-0 bg-linear-to-r from-blue-400/15 via-transparent to-purple-400/15 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className={`absolute inset-0 bg-linear-to-r ${accentGradients[index % accentGradients.length]} opacity-0 group-hover:opacity-90 transition-opacity duration-400 blur-[1px]`} />
 
                     {/* Liquid glass shine effect */}
                     <div className={`absolute inset-0 transition-opacity duration-300 ${openIndex === index ? "opacity-25" : "opacity-0 group-hover:opacity-20"}`}>
@@ -124,9 +145,15 @@ export function FAQ() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="absolute inset-0 bg-linear-to-br from-cyan-400/20 via-indigo-400/10 to-purple-400/20"
+                        className="absolute inset-0 bg-linear-to-br from-white/8 via-white/6 to-white/4"
                       />
                     )}
+
+                    {/* Glow ring */}
+                    <motion.div
+                      animate={{ opacity: openIndex === index ? 0.6 : 0 }}
+                      className="absolute -inset-px rounded-2xl bg-[conic-gradient(from_90deg_at_50%_50%,rgba(59,130,246,0.35),rgba(236,72,153,0.3),rgba(16,185,129,0.3),rgba(59,130,246,0.35))] blur-[14px]"
+                    />
 
                     <button
                       onClick={() => setOpenIndex(openIndex === index ? null : index)}
@@ -134,11 +161,11 @@ export function FAQ() {
                     >
                       <div className="flex items-center gap-4 flex-1">
                         <motion.div
-                          animate={{ rotate: openIndex === index ? 360 : 0 }}
-                          transition={{ duration: 0.1 }}
+                          animate={{ rotate: openIndex === index ? 360 : 0, scale: openIndex === index ? 1.1 : 1 }}
+                          transition={{ duration: 0.2 }}
                           className="shrink-0"
                         >
-                            <MessageCircle className="h-5 w-5 text-blue-200" />
+                            <MessageCircle className="h-5 w-5 text-blue-50 drop-shadow-[0_0_12px_rgba(125,211,252,0.5)]" />
                         </motion.div>
                           <h3 className="text-lg font-semibold text-white group-hover:text-blue-200 transition-colors">
                           {faq.question}
@@ -146,10 +173,10 @@ export function FAQ() {
                       </div>
                       <motion.div
                         animate={{ rotate: openIndex === index ? 180 : 0 }}
-                        transition={{ duration: 0.1 }}
+                        transition={{ duration: 0.2 }}
                         className="shrink-0"
                       >
-                          <ChevronDown className="h-5 w-5 text-slate-200" />
+                          <ChevronDown className="h-5 w-5 text-slate-100" />
                       </motion.div>
                     </button>
 
@@ -159,7 +186,7 @@ export function FAQ() {
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.1, ease: "easeInOut" }}
+                          transition={{ duration: 0.16, ease: "easeInOut" }}
                           className="relative border-t border-white/10 px-6 py-4 z-10"
                         >
                           <motion.p
@@ -170,6 +197,10 @@ export function FAQ() {
                           >
                             {faq.answer}
                           </motion.p>
+                          <div className="mt-3 flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-blue-100/80">
+                            <Sparkles className="h-3.5 w-3.5" />
+                            <span>In Development</span>
+                          </div>
                         </motion.div>
                       )}
                     </AnimatePresence>

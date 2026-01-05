@@ -256,9 +256,14 @@ export default function AdminPage() {
                     </span>
                   </div>
                   {selectedApp.notes && (
-                    <div>
-                      <p className="text-sm text-slate-400 mb-1">Notes</p>
-                      <p className="text-slate-200 text-sm">{selectedApp.notes}</p>
+                    <div className="rounded-lg border border-yellow-500/30 bg-yellow-500/10 p-3">
+                      <p className="text-sm text-yellow-300 font-semibold mb-2 flex items-center">
+                        <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                        </svg>
+                        Notes
+                      </p>
+                      <p className="text-yellow-100 text-sm leading-relaxed">{selectedApp.notes}</p>
                     </div>
                   )}
                   {selectedApp.status === "Submitted" && (

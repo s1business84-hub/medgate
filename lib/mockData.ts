@@ -48,7 +48,7 @@ export const mockHospitals: Hospital[] = [
     type: "Hospital",
     accreditation: "DHA",
     departments: ["Emergency Medicine", "Radiology", "ICU"],
-    programTypes: ["Observership"],
+    programTypes: ["Observership", "Elective"],
     maxStudentsPerPeriod: 12,
     approvalSlaDays: 8,
     status: "Active",
@@ -115,10 +115,13 @@ export const mockPrograms: Program[] = [
     description: "Observe surgical procedures, outpatient clinics, ward rounds, and day-to-day clinical workflows within a General Surgery department under an observership framework.",
     requirements: [
       "Must be currently enrolled in a recognized medical school.",
-      "Valid government-issued identification and appropriate residency or visit visa, as required by hospital policy.",
+      "Valid government issued identification and appropriate residency or visit visa, as required by hospital policy.",
       "Ability to understand and communicate in English within a clinical environment.",
-      "Medical fitness or health clearance may be required by the hosting institution prior to confirmation.",
-      "Academic transcripts or proof of enrollment may be requested for verification purposes."
+      "Passport copy",
+      "Emirates ID copy (if applicable)",
+      "Latest educational transcript",
+      "Document from your base university requesting the elective (if applicable)",
+      "Fitness to work certificate from a GP physician based on blood test (less than six months old) and vaccination reports"
     ],
     isActive: true,
   },
@@ -127,23 +130,23 @@ export const mockPrograms: Program[] = [
     hospitalId: "h2",
     name: "Internal Medicine Observership (Example Listing - Demo Data)",
     description: "Clinical observation in internal medicine department focusing on patient care and diagnostics",
-    requirements: ["Medical Student Status", "Government ID and residency/visa status (as applicable)", "English Proficiency", "Medical Fitness Certificate", "Academic Transcripts"],
+    requirements: ["Medical Student Status", "Government ID and residency/visa status (as applicable)", "English Proficiency", "Passport copy", "Emirates ID copy (if applicable)", "Latest educational transcript", "Document from your base university requesting the elective (if applicable)", "Fitness to work certificate from a GP physician based on blood test (less than six months old) and vaccination reports"],
     isActive: true,
   },
   {
     id: "prog_3",
     hospitalId: "h3",
     name: "Cardiology Observership (Example Listing - Demo Data)",
-    description: "Advanced cardiology observation program focusing on cardiac diagnostics and interventions",
-    requirements: ["Medical Student Status", "Government ID and residency/visa status (as applicable)", "English Proficiency", "Medical Fitness Certificate", "Academic Transcripts", "ECG Knowledge Preferred"],
+    description: "Advanced cardiology observation program focusing on cardiac diagnostics and interventional workflows",
+    requirements: ["Medical Student Status", "Government ID and residency/visa status (as applicable)", "English Proficiency", "Passport copy", "Emirates ID copy (if applicable)", "Latest educational transcript", "Document from your base university requesting the elective (if applicable)", "Fitness to work certificate from a GP physician based on blood test (less than six months old) and vaccination reports"],
     isActive: true,
   },
   {
     id: "prog_4",
     hospitalId: "h3",
     name: "Orthopedic Surgery Elective (Example Listing - Demo Data)",
-    description: "Elective rotation in orthopedic surgery with hands-on learning opportunities",
-    requirements: ["Medical Student Status", "Government ID and residency/visa status (as applicable)", "English Proficiency", "Medical Fitness Certificate", "Academic Transcripts", "Surgery Interest"],
+    description: "Elective rotation in orthopedic surgery focused on structured clinical observation and institution-defined supervised learning exposure.",
+    requirements: ["Medical Student Status", "Government ID and residency/visa status (as applicable)", "English Proficiency", "Passport copy", "Emirates ID copy (if applicable)", "Latest educational transcript", "Document from your base university requesting the elective (if applicable)", "Fitness to work certificate from a GP physician based on blood test (less than six months old) and vaccination reports"],
     isActive: true,
   },
   {
@@ -151,31 +154,31 @@ export const mockPrograms: Program[] = [
     hospitalId: "h4",
     name: "Emergency Medicine Observership (Example Listing - Demo Data)",
     description: "Observe emergency medicine procedures and acute care management",
-    requirements: ["Medical Student Status", "Government ID and residency/visa status (as applicable)", "English Proficiency", "Medical Fitness Certificate", "Academic Transcripts"],
+    requirements: ["Medical Student Status", "Government ID and residency/visa status (as applicable)", "English Proficiency", "Passport copy", "Emirates ID copy (if applicable)", "Latest educational transcript", "Document from your base university requesting the elective (if applicable)", "Fitness to work certificate from a GP physician based on blood test (less than six months old) and vaccination reports"],
     isActive: true,
   },
   {
     id: "prog_6",
     hospitalId: "h4",
     name: "Radiology Elective (Example Listing - Demo Data)",
-    description: "Diagnostic imaging and radiology training elective",
-    requirements: ["Medical Student Status", "Government ID and residency/visa status (as applicable)", "English Proficiency", "Medical Fitness Certificate", "Academic Transcripts"],
+    description: "Observe diagnostic imaging workflows and radiology reporting processes within a hospital radiology department.",
+    requirements: ["Medical Student Status", "Government ID and residency/visa status (as applicable)", "English Proficiency", "Passport copy", "Emirates ID copy (if applicable)", "Latest educational transcript", "Document from your base university requesting the elective (if applicable)", "Fitness to work certificate from a GP physician based on blood test (less than six months old) and vaccination reports", "Radiation safety compliance may be required as per hospital policy"],
     isActive: true,
   },
   {
     id: "prog_7",
     hospitalId: "h5",
     name: "Neurology Observership (Example Listing - Demo Data)",
-    description: "Clinical neurology observation focusing on neurological diagnostics",
-    requirements: ["Medical Student Status", "Government ID and residency/visa status (as applicable)", "English Proficiency", "Medical Fitness Certificate", "Academic Transcripts"],
+    description: "Observe clinical neurology workflows with a focus on neurological assessment and diagnostic processes.",
+    requirements: ["Medical Student Status", "Government ID and residency/visa status (as applicable)", "English Proficiency", "Passport copy", "Emirates ID copy (if applicable)", "Latest educational transcript", "Document from your base university requesting the elective (if applicable)", "Fitness to work certificate from a GP physician based on blood test (less than six months old) and vaccination reports"],
     isActive: true,
   },
   {
     id: "prog_8",
     hospitalId: "h5",
     name: "Dermatology Elective (Example Listing - Demo Data)",
-    description: "Dermatological disorders and treatments elective rotation",
-    requirements: ["Medical Student Status", "Government ID and residency/visa status (as applicable)", "English Proficiency", "Medical Fitness Certificate", "Academic Transcripts"],
+    description: "Observe dermatology outpatient clinics and dermatologic case management workflows within a hospital setting.",
+    requirements: ["Medical Student Status", "Government ID and residency/visa status (as applicable)", "English Proficiency", "Passport copy", "Emirates ID copy (if applicable)", "Latest educational transcript", "Document from your base university requesting the elective (if applicable)", "Fitness to work certificate from a GP physician based on blood test (less than six months old) and vaccination reports"],
     isActive: true,
   },
 ];
@@ -284,15 +287,15 @@ export const mockAuditLogs: AuditLog[] = [
 export const hospitals = mockHospitals;
 export const programs = mockPrograms.map(p => {
   // Determine program type based on name/content
-  let programType: "Observership" | "Hands-on" | "Internship" | "Residency" | "Elective" = "Observership";
+  let programType: "Observership" | "Hands on" | "Internship" | "Residency" | "Elective" = "Observership";
   if (p.name.toLowerCase().includes('elective')) {
     programType = "Elective";
   }
 
-  // Determine hands-on level
-  let handsOnLevel: "observe" | "assist" | "supervised" | "independent" = "observe";
+  // Determine hands on level
+  let handsOnLevel: "observe" | "Limited supervised exposure" | "supervised" | "independent" = "observe";
   if (p.name.toLowerCase().includes('elective')) {
-    handsOnLevel = "assist";
+    handsOnLevel = "Limited supervised exposure";
   }
 
   // Demo data - fees removed, replaced with TBD

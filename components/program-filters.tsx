@@ -60,19 +60,18 @@ const filterConfig = {
   eligibleLevel: {
     label: "Eligible Applicant Level",
     options: [
-      "Pre-clinical medical student",
-      "Clinical-year medical student",
-      "Final-year medical student",
-      "Medical graduate (IMG)",
+      "Preclinical medical student",
+      "Clinical year medical student",
+      "Final year medical student",
       "Varies by institution"
     ]
   },
   duration: {
     label: "Program Duration",
     options: [
-      "1–2 weeks",
-      "3–4 weeks",
-      "6–8 weeks",
+      "1 to 2 weeks",
+      "3 to 4 weeks",
+      "6 to 8 weeks",
       "Custom / Varies by institution"
     ]
   },

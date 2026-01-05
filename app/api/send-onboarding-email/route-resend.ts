@@ -1,25 +1,8 @@
 import { NextResponse } from "next/server"
-import nodemailer from "nodemailer"
+import { Resend } from "resend"
 
 const FROM_EMAIL = "hellomedgate@gmail.com"
-
-function getTransporter() {
-  const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_SECURE } = process.env
-
-  if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS) {
-    throw new Error("SMTP configuration is missing. Please set SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS.")
-  }
-
-  return nodemailer.createTransport({
-    host: SMTP_HOST,
-    port: Number(SMTP_PORT),
-    secure: SMTP_SECURE === "true" || Number(SMTP_PORT) === 465,
-    auth: {
-      user: SMTP_USER,
-      pass: SMTP_PASS,
-    },
-  })
-}
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 type EmailVariant = "welcome-student" | "welcome-hospital" | "onboarding-pack"
 
@@ -187,31 +170,83 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Email is required" }, { status: 400 })
     }
 
-    console.log("Attempting to send email to:", email, "Type:", type)
+    // Check if we should use Resend or fallback to nodemailer
+    if (process.env.RESEND_API_KEY) {
+      console.log("Using Resend to send email to:", email, "Type:", type)
+      
+      const mail = buildEmailContent(type as EmailVariant, email, name)
 
-    const mail = buildEmailContent(type as EmailVariant, email, name)
+      try {
+        const { data, error } = await resend.emails.send({
+          from: "MedGate <onboarding@resend.dev>", // Resend requires verified domain, using their test domain
+          to: [email],
+          subject: mail.subject,
+          html: mail.html,
+        })
 
-    try {
-      const transporter = getTransporter()
-      console.log("Transporter created successfully")
+        if (error) {
+          console.error("Resend error:", error)
+          return NextResponse.json({ 
+            error: "Failed to send email", 
+            details: error.message 
+          }, { status: 500 })
+        }
 
-      const info = await transporter.sendMail({
-        from: FROM_EMAIL,
-        to: email,
-        subject: mail.subject,
-        text: mail.text,
-        html: mail.html,
-      })
+        console.log("Email sent successfully via Resend:", data?.id)
+        return NextResponse.json({ ok: true, messageId: data?.id })
+      } catch (error) {
+        console.error("Resend send failed:", error)
+        const errorMessage = error instanceof Error ? error.message : "Unknown error"
+        return NextResponse.json({ 
+          error: "Failed to send email", 
+          details: errorMessage 
+        }, { status: 500 })
+      }
+    } else {
+      // Fallback to nodemailer if RESEND_API_KEY is not set
+      const nodemailer = require("nodemailer")
+      
+      console.log("Using nodemailer to send email to:", email, "Type:", type)
 
-      console.log("Email sent successfully:", info.messageId)
-      return NextResponse.json({ ok: true, messageId: info.messageId })
-    } catch (error) {
-      console.error("Email send failed:", error)
-      const errorMessage = error instanceof Error ? error.message : "Unknown error"
-      return NextResponse.json({ 
-        error: "Failed to send email", 
-        details: errorMessage 
-      }, { status: 500 })
+      const mail = buildEmailContent(type as EmailVariant, email, name)
+
+      const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_SECURE } = process.env
+
+      if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS) {
+        return NextResponse.json({ 
+          error: "Email service not configured. Please set RESEND_API_KEY or SMTP configuration." 
+        }, { status: 500 })
+      }
+
+      try {
+        const transporter = nodemailer.createTransport({
+          host: SMTP_HOST,
+          port: Number(SMTP_PORT),
+          secure: SMTP_SECURE === "true" || Number(SMTP_PORT) === 465,
+          auth: {
+            user: SMTP_USER,
+            pass: SMTP_PASS,
+          },
+        })
+
+        const info = await transporter.sendMail({
+          from: FROM_EMAIL,
+          to: email,
+          subject: mail.subject,
+          text: mail.text,
+          html: mail.html,
+        })
+
+        console.log("Email sent successfully via nodemailer:", info.messageId)
+        return NextResponse.json({ ok: true, messageId: info.messageId })
+      } catch (error) {
+        console.error("Nodemailer send failed:", error)
+        const errorMessage = error instanceof Error ? error.message : "Unknown error"
+        return NextResponse.json({ 
+          error: "Failed to send email", 
+          details: errorMessage 
+        }, { status: 500 })
+      }
     }
   } catch (error) {
     console.error("Request processing failed:", error)

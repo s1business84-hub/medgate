@@ -74,11 +74,12 @@ export type Hospital = {
   type: "Hospital" | "Clinic";
   accreditation: "DHA" | "DOH" | "MOH";
   departments: string[];
-  programTypes: Array<"Observership" | "Hands-on" | "Internship" | "Residency" | "Elective">;
+  programTypes: Array<"Observership" | "Hands on" | "Internship" | "Residency" | "Elective">;
   maxStudentsPerPeriod: number;
   approvalSlaDays: number;
   status: "Active" | "Paused";
 };
+
 
 export interface Notification {
   id: string;
@@ -90,6 +91,7 @@ export interface Notification {
   createdAt: string;
   relatedApplicationId?: string;
 }
+
 
 export interface ProgramReminder {
   id: string;

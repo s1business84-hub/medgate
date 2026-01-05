@@ -35,7 +35,7 @@ export const mockHospitals: Hospital[] = [
     type: "Hospital",
     accreditation: "DOH",
     departments: ["Cardiology", "Orthopedics", "Oncology"],
-    programTypes: ["Observership", "Hands-on", "Residency"],
+    programTypes: ["Observership", "Hands on", "Residency"],
     maxStudentsPerPeriod: 15,
     approvalSlaDays: 5,
     status: "Active",
@@ -136,7 +136,7 @@ export const mockPrograms: Program[] = [
     id: "prog_4",
     hospitalId: "h3",
     name: "Orthopedic Surgery Fellowship - DHA Accredited",
-    description: "Hands-on orthopedic surgery training program accredited by Dubai Health Authority",
+    description: "Hands on orthopedic surgery training program accredited by Dubai Health Authority",
     requirements: ["Medical Degree", "Surgery Experience", "Valid DHA License", "Emirates ID", "Medical Fitness Certificate", "Specialty Certification"],
     isActive: true,
   },
@@ -184,7 +184,7 @@ export const mockPrograms: Program[] = [
     id: "prog_10",
     hospitalId: "h7",
     name: "General Surgery Internship - MOH Accredited",
-    description: "Hands-on surgical training and experience accredited by Ministry of Health UAE",
+    description: "Hands on surgical training and experience accredited by Ministry of Health UAE",
     requirements: ["Medical Degree", "Surgery Interest", "Valid MOH License", "Emirates ID", "Medical Fitness Certificate", "Academic Transcripts"],
     isActive: true,
   },
@@ -318,20 +318,20 @@ export const mockAuditLogs: AuditLog[] = [
 export const hospitals = mockHospitals;
 export const programs = mockPrograms.map(p => {
   // Determine program type based on name/content
-  let programType: "Observership" | "Hands-on" | "Internship" | "Residency" | "Elective" = "Observership";
+  let programType: "Observership" | "Hands on" | "Internship" | "Residency" | "Elective" = "Observership";
   if (p.name.toLowerCase().includes('fellowship') || p.name.toLowerCase().includes('residency')) {
     programType = "Residency";
   } else if (p.name.toLowerCase().includes('internship') || p.name.toLowerCase().includes('training')) {
     programType = "Internship";
-  } else if (p.name.toLowerCase().includes('hands-on') || p.name.toLowerCase().includes('elective')) {
+  } else if (p.name.toLowerCase().includes('hands on') || p.name.toLowerCase().includes('elective')) {
     programType = "Elective";
   }
 
-  // Determine hands-on level
+  // Determine hands on level
   let handsOnLevel: "observe" | "assist" | "supervised" | "independent" = "observe";
   if (p.name.toLowerCase().includes('fellowship') || p.name.toLowerCase().includes('residency') || p.name.toLowerCase().includes('internship')) {
     handsOnLevel = "supervised";
-  } else if (p.name.toLowerCase().includes('hands-on')) {
+  } else if (p.name.toLowerCase().includes('hands on')) {
     handsOnLevel = "assist";
   }
 

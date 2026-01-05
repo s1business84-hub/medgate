@@ -178,7 +178,7 @@ export default function PurposePage() {
             <div className="bg-white/5 border border-white/10 rounded-2xl backdrop-blur-xl p-8 hover:bg-white/10 transition-all duration-300">
               <h3 className="text-2xl font-bold text-indigo-300 mb-3">2. Administrative Efficiency</h3>
               <p className="text-lg text-slate-300 leading-relaxed">
-                By centralizing program information and application workflows, MedGate reduces repetitive back-and-forth communication and improves visibility for students and administrators alike.
+                By centralizing program information and application workflows, MedGate reduces repetitive back and forth communication and improves visibility for students and administrators alike.
               </p>
             </div>
 

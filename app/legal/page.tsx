@@ -80,7 +80,7 @@ export default function LegalPage() {
               <p className="text-slate-700 leading-relaxed">Applicants acknowledge that:</p>
               <ul className="list-disc pl-6 text-slate-700 space-y-1">
                 <li>Observerships are observational only</li>
-                <li>No hands-on patient care, procedures, or clinical decision-making is permitted unless explicitly authorized by the host institution</li>
+                <li>No hands on patient care, procedures, or clinical decision making is permitted unless explicitly authorized by the host institution</li>
                 <li>The platform does not authorize clinical activity</li>
               </ul>
               <p className="text-slate-700 leading-relaxed">Any clinical permissions granted are solely at the discretion of the hosting institution and may be revoked at any time.</p>
