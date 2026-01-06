@@ -4,12 +4,17 @@ import { hospitals, programs } from "@/lib/mockData";
 import Link from "next/link";
 import { useState } from "react";
 import { ApplicationModal } from "@/components/application-modal";
+import ExposureAcknowledgementLog from "@/app/audit/exposure-log";
+import { useAuth } from "@/lib/auth-context";
 import { use } from "react";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
+
 
 function ProgramContent({ id }: { id: string }) {
   const program = programs.find((p) => p.id === id);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [acknowledged, setAcknowledged] = useState(false);
+  const { user } = useAuth();
 
   if (!program) return (
     <main className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100 flex items-center justify-center">
@@ -279,13 +284,27 @@ function ProgramContent({ id }: { id: string }) {
           </div>
         </div>
 
-        {/* Apply Button */}
+
+        {/* Exposure Acknowledgement Log (must be completed before applying) */}
+        <div className="mb-8">
+          {!acknowledged && user && (
+            <ExposureAcknowledgementLog
+              studentId={user.id}
+              programId={program.id}
+              // @ts-ignore
+              onAcknowledged={() => setAcknowledged(true)}
+            />
+          )}
+        </div>
+
+        {/* Apply Button (only enabled after acknowledgement) */}
         <div className="text-center animate-fade-in" style={{ animationDelay: '0.7s' }}>
           <button
             onClick={() => setIsModalOpen(true)}
             className="text-lg px-8 py-4 hover-scale rounded-xl bg-linear-to-r from-cyan-500 to-indigo-600 text-white font-semibold shadow-lg hover:from-cyan-400 hover:to-indigo-500 transition-all duration-300"
+            disabled={!acknowledged}
           >
-            Apply for this Program →
+            {acknowledged ? "Apply for this Program →" : "Acknowledge Exposure to Apply"}
           </button>
           <p className="text-xs text-slate-400 mt-4 max-w-2xl mx-auto">
             Submission of an application does not guarantee placement. Final confirmation is subject to hospital approval and slot availability.
@@ -298,6 +317,8 @@ function ProgramContent({ id }: { id: string }) {
           onClose={() => setIsModalOpen(false)}
           programName={program.departmentName}
           hospitalName={hospital?.name || ''}
+          programId={program.id}
+          hospitalId={hospital?.id}
         />
       </div>
     </main>

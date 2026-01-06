@@ -10,9 +10,11 @@ interface ApplicationModalProps {
   onClose: () => void
   programName: string
   hospitalName: string
+  programId?: string
+  hospitalId?: string
 }
 
-export function ApplicationModal({ isOpen, onClose, programName, hospitalName }: ApplicationModalProps) {
+export function ApplicationModal({ isOpen, onClose, programName, hospitalName, programId, hospitalId }: ApplicationModalProps) {
   const [step, setStep] = useState(1)
   const [formData, setFormData] = useState({
     firstName: '',
@@ -50,11 +52,29 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName }:
     e.preventDefault()
     setIsSubmitting(true)
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000))
+    try {
+      // Find or create student
+      const existingStudentsRaw = window.localStorage.getItem('medgate_students')
+      const existingStudents = existingStudentsRaw ? JSON.parse(existingStudentsRaw) : []
+      let student = existingStudents.find((s: any) => s.email === formData.email)
+      if (!student) {
+        // create student
+        const newId = `stu_${Date.now()}_${Math.random().toString(16).slice(2)}`
+        student = { id: newId, name: `${formData.firstName} ${formData.lastName}`, email: formData.email, phone: formData.phone, nationality: '', complianceStatus: 'Incomplete', createdAt: new Date().toISOString() }
+        existingStudents.push(student)
+        window.localStorage.setItem('medgate_students', JSON.stringify(existingStudents))
+      }
 
-    setIsSubmitting(false)
-    setIsSubmitted(true)
+      // Create application via storage
+      const { createApplication } = await import('@/lib/storage')
+      createApplication({ studentId: student.id, programId: programId || '', hospitalId: hospitalId || '' })
+
+      setIsSubmitted(true)
+    } catch (err: any) {
+      alert(err?.message || 'Failed to submit application')
+    } finally {
+      setIsSubmitting(false)
+    }
 
     // Auto close after success
     setTimeout(() => {
@@ -176,9 +196,9 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName }:
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">
                     Application Submitted!
                   </h3>
-                  <p className="text-gray-600">
-                    We&apos;ll review your application and get back to you within 3-5 business days.
-                  </p>
+                      <p className="text-gray-600">
+                        We&apos;ll review your application and get back to you within 3-5 business days.
+                      </p>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit}>

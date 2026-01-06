@@ -1,4 +1,5 @@
 import type { Student, Application, Document, Payment, AuditLog, User, Notification, ProgramReminder } from "./types";
+import { programs, hospitals } from "./mockData";
 
 const KEYS = {
   students: "medgate_students",
@@ -52,7 +53,24 @@ export function getStudents(): Student[] {
 
 /* APPLICATIONS */
 export function createApplication(input: Omit<Application, "id" | "status" | "submissionDate">): Application {
+  // Capacity guard: block if hospital department exceeds declared maxStudentsPerPeriod
   const applications = readJSON<Application[]>(KEYS.applications, []);
+
+  const program = programs.find(p => p.id === input.programId);
+  const hospitalId = program?.hospitalId || input.hospitalId;
+  const hospital = hospitals.find(h => h.id === hospitalId);
+  const maxAllowed = hospital?.maxStudentsPerPeriod ?? 5;
+
+  const activeCount = applications.filter(a => {
+    // count all applications for same hospital that are not Rejected
+    const p = programs.find(pp => pp.id === a.programId);
+    return p?.hospitalId === hospitalId && a.status !== 'Rejected';
+  }).length;
+
+  if (activeCount >= maxAllowed) {
+    throw new Error('Department capacity reached');
+  }
+
   const app: Application = {
     id: newId("app"),
     status: "Submitted",
