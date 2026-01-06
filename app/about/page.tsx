@@ -121,7 +121,7 @@ export default function AboutPage() {
               {
                 icon: Target,
                 title: 'Reduce Administrative Friction',
-                description: 'MedGate is designed to reduce repetitive back and forth by centralizing program information and application workflows.',
+                description: 'MedGate is designed to reduce repetitive back-and-forth by centralizing program information and application workflows.',
                 gradient: 'from-purple-500 to-pink-500',
                 bgGradient: 'from-fuchsia-400/20 to-pink-400/10',
                 number: '02'
