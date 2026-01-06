@@ -24,9 +24,17 @@ export interface Application {
   studentId: string;
   programId: string;
   hospitalId?: string;
-  status: "Draft" | "Submitted" | "Under Review" | "Approved" | "Rejected" | "Waitlisted";
+  status: "Draft" | "Submitted" | "Under Review" | "Approved" | "Rejected" | "Waitlisted" | "Accepted" | "Deferred" | "Declined" | "In Training";
   submissionDate: string;
   notes?: string;
+  regulatory?: {
+    type: "None" | "EHS" | "DHA" | "DoH";
+    reference?: string;
+    status?: "Pending" | "Verified";
+  };
+  // Optional fields populated by admin/hospital after review
+  supervisor?: string; // supervisor name or identifier
+  department?: string;
 }
 
 export interface Document {

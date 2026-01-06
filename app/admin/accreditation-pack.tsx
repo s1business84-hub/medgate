@@ -6,7 +6,10 @@ export default function AccreditationPack() {
 
   const fetchPack = async () => {
     const res = await fetch('/api/admin/accreditation-export');
-    if (!res.ok) return alert('Failed to fetch pack');
+    if (!res.ok) {
+      (await import('@/lib/toast')).showToast('Failed to fetch pack');
+      return;
+    }
     const text = await res.text();
     setCsv(text);
   };

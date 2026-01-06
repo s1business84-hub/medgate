@@ -6,7 +6,10 @@ export default function IncidentFlagAdmin() {
   const [severity, setSeverity] = useState("low");
 
   const handleFlag = async () => {
-    if (!note) return alert('Please add a note');
+    if (!note) {
+      (await import('@/lib/toast')).showToast('Please add a note');
+      return;
+    }
     try {
       const res = await fetch('/api/admin/incident-flag', {
         method: 'POST',
@@ -14,10 +17,10 @@ export default function IncidentFlagAdmin() {
         body: JSON.stringify({ adminId: 'admin_1', programId: 'program_1', note, severity })
       });
       if (!res.ok) throw new Error('Failed to flag incident');
-      alert('Flag recorded');
+      (await import('@/lib/toast')).showToast('Flag recorded');
       setNote('');
     } catch (e: any) {
-      alert(e.message);
+      (await import('@/lib/toast')).showToast(e.message || 'Error');
     }
   };
 

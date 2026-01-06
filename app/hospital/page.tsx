@@ -8,8 +8,10 @@ import { Button } from "@/components/ui/button";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
 import { getApplicationsByHospital, getStudents, updateApplicationStatus, createNotification } from "@/lib/storage";
+import { getSupervisorConfirmations } from "@/lib/auditStore";
 import { Application } from "@/lib/types";
 import { CheckCircle, XCircle, FileText, Users, Clock } from "lucide-react";
+import { showToast } from "@/lib/toast";
 
 export default function HospitalPortal() {
   const { user, logout } = useAuth();
@@ -60,8 +62,26 @@ export default function HospitalPortal() {
 
   const handleApproval = (appId: string) => {
     setActionInProgress(true);
+    const app = applications.find(a => a.id === appId);
+    // Enforcement: require supervisor confirmation and regulatory verification for DHA/DoH
+    const supConfirmed = app ? getSupervisorConfirmations().some(s => s.programId === app.programId && (s.studentId === app.studentId || !s.studentId)) : false;
+    const regulatoryType = app?.regulatory?.type || "None";
+    const regulatoryVerified = regulatoryType === "None" || app?.regulatory?.status === "Verified";
+
+    if (!supConfirmed) {
+      showToast("Cannot approve application: no supervisor confirmation found for this application.");
+      setActionInProgress(false);
+      return;
+    }
+
+    if (!regulatoryVerified && (regulatoryType === "DHA" || regulatoryType === "DoH")) {
+      showToast("Cannot approve application: regulatory requirement not verified for this application.");
+      setActionInProgress(false);
+      return;
+    }
+
     const updated = updateApplicationStatus(appId, "Approved", "Application approved by hospital");
-    
+
     if (updated) {
       // Create notification for student
       createNotification({
@@ -234,9 +254,19 @@ export default function HospitalPortal() {
                         <div className="flex-1">
                           <p className="font-semibold text-slate-100">{getStudentName(app.studentId)}</p>
                           <p className="text-sm text-slate-300">{getStudentEmail(app.studentId)}</p>
-                          <p className="text-xs text-slate-400 mt-1">
-                            {new Date(app.submissionDate).toLocaleDateString()}
-                          </p>
+                                <p className="text-xs text-slate-400 mt-1">
+                                  {new Date(app.submissionDate).toLocaleDateString()}
+                                </p>
+                                <div className="flex gap-2 mt-2">
+                                  {!app.regulatory || app.regulatory.type === 'None' ? (
+                                    <span className="text-amber-300 text-xs">No regulatory</span>
+                                  ) : app.regulatory.status !== 'Verified' ? (
+                                    <span className="text-yellow-300 text-xs">Regulatory: {app.regulatory.status || 'Pending'}</span>
+                                  ) : null}
+                                  {(!getSupervisorConfirmations().some(s => s.programId === app.programId && (s.studentId === app.studentId || !s.studentId))) && (
+                                    <span className="text-rose-300 text-xs">No supervisor confirmation</span>
+                                  )}
+                                </div>
                         </div>
                         <div className="text-right">
                           <span

@@ -2,8 +2,12 @@
 
 import { hospitals, programs } from "@/lib/mockData";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ApplicationModal } from "@/components/application-modal";
+import { getApplications, updateApplicationStatus, createNotification, logAudit, getUsers } from "@/lib/storage";
+import { getSupervisorConfirmations, getExposureLogs } from "@/lib/auditStore";
+import { showToast } from "@/lib/toast";
+import UI_COPY from '@/lib/uiCopy';
 import ExposureAcknowledgementLog from "@/app/audit/exposure-log";
 import { useAuth } from "@/lib/auth-context";
 import { use } from "react";
@@ -15,6 +19,55 @@ function ProgramContent({ id }: { id: string }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [acknowledged, setAcknowledged] = useState(false);
   const { user } = useAuth();
+  const [startLoading, setStartLoading] = useState(false);
+  const [canStart, setCanStart] = useState<boolean | null>(null);
+  const [startMessage, setStartMessage] = useState<string | null>(null);
+
+  const evaluateCanStart = () => {
+    if (!program) {
+      setStartMessage('Program not found');
+      return setCanStart(false);
+    }
+    if (!user || user.role !== 'student') return setCanStart(false);
+    const apps = getApplications();
+    const app = apps.find(a => a.programId === program.id && a.studentId === user.id);
+    if (!app) return setCanStart(false);
+    // status must be Approved or Accepted
+    if (!(app.status === 'Approved' || app.status === 'Accepted')) {
+      setStartMessage('Application not approved yet');
+      return setCanStart(false);
+    }
+
+    // exposure acknowledged
+    const exposureOk = getExposureLogs().some(e => e.programId === program.id && e.studentId === user.id);
+    if (!exposureOk) {
+      setStartMessage('Exposure acknowledgement missing');
+      return setCanStart(false);
+    }
+
+    // regulatory check
+    const regType = app.regulatory?.type || 'None';
+    if ((regType === 'DHA' || regType === 'DoH') && app.regulatory?.status !== 'Verified') {
+      setStartMessage('Regulatory clearance required and not verified');
+      return setCanStart(false);
+    }
+
+    // supervisor confirmation present (student-level or program-level)
+    const supConfirmed = getSupervisorConfirmations().some(s => s.programId === app.programId && (s.studentId === app.studentId || !s.studentId));
+    if (!supConfirmed) {
+      setStartMessage('Supervisor confirmation missing');
+      return setCanStart(false);
+    }
+
+    setStartMessage(null);
+    return setCanStart(true);
+  };
+
+  // Evaluate when component mounts and when user or program changes
+  useEffect(() => {
+    evaluateCanStart();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id, program?.id]);
 
   if (!program) return (
     <main className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100 flex items-center justify-center">
@@ -64,6 +117,18 @@ function ProgramContent({ id }: { id: string }) {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
             {hospital?.name} • {hospital?.emirate}, {hospital?.city}
+            {/** Program-level supervisor confirmation badge */}
+            {getSupervisorConfirmations().some(s => s.programId === program.id && !s.studentId) && (() => {
+              const conf = getSupervisorConfirmations().find(s => s.programId === program.id && !s.studentId);
+              const sup = getUsers().find(u => u.id === conf?.supervisorId);
+              return (
+                <span className="ml-4 inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs bg-cyan-500/10 text-cyan-100 border border-cyan-400/20">
+                  <strong>Program Confirmed</strong>
+                  <span className="text-slate-300">by {sup ? sup.name : conf?.supervisorId}</span>
+                  <span className="text-slate-400">{conf ? new Date(conf.confirmedAt).toLocaleDateString() : ''}</span>
+                </span>
+              );
+            })()}
           </div>
 
           {/* Program Description */}
@@ -310,6 +375,61 @@ function ProgramContent({ id }: { id: string }) {
             Submission of an application does not guarantee placement. Final confirmation is subject to hospital approval and slot availability.
           </p>
         </div>
+
+        {/* Start Training Button (student) */}
+        {user && user.role === 'student' && (
+          <div className="text-center mt-6">
+            <button
+              onClick={async () => {
+                setStartLoading(true);
+                try {
+                  evaluateCanStart();
+                  if (!canStart) {
+                    showToast(startMessage || 'Cannot start training');
+                    setStartLoading(false);
+                    return;
+                  }
+                  const apps = getApplications();
+                  const app = apps.find(a => a.programId === program.id && a.studentId === user.id);
+                  if (!app) {
+                    showToast('No application found for this program');
+                    setStartLoading(false);
+                    return;
+                  }
+                  const updated = updateApplicationStatus(app.id, 'In Training', 'Student started training');
+                  if (updated) {
+                    showToast(UI_COPY.student.startTrainingSuccess);
+                    setStartLoading(false);
+                    setCanStart(false);
+                    // Add an audit log entry
+                    try {
+                      logAudit({ userId: user.id, action: 'Training Started', details: `Student ${user.name} started training for program ${program.id}` });
+                    } catch (err) {
+                      // ignore logging errors in demo
+                    }
+
+                    // Notify hospital users (admins) about training start
+                    try {
+                      const hospitalUsers = getUsers().filter(u => u.role === 'hospital' && u.hospitalId === program.hospitalId);
+                      hospitalUsers.forEach(hu => {
+                        createNotification({ userId: hu.id, type: 'update', title: 'Trainee Started', message: `${user.name} has started training for ${program.departmentName}`, relatedApplicationId: updated.id });
+                      });
+                    } catch (err) {
+                      // ignore notification errors in demo
+                    }
+                  }
+                } catch (err: any) {
+                  showToast(err?.message || 'Error starting training');
+                  setStartLoading(false);
+                }
+              }}
+              className="mt-4 text-lg px-8 py-4 hover-scale rounded-xl bg-linear-to-r from-emerald-500 to-emerald-700 text-white font-semibold shadow-lg hover:from-emerald-400 hover:to-emerald-600 transition-all duration-300"
+              disabled={startLoading || canStart === false}
+            >
+              {startLoading ? 'Starting...' : (canStart ? 'Start Training' : (startMessage || 'Start Training'))}
+            </button>
+          </div>
+        )}
 
         {/* Application Modal */}
         <ApplicationModal

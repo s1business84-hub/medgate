@@ -27,6 +27,8 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
     experience: '',
     motivation: '',
     documents: [] as File[]
+    , regulatoryType: 'None',
+    regulatoryReference: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -52,7 +54,7 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
     e.preventDefault()
     setIsSubmitting(true)
 
-    try {
+      try {
       // Find or create student
       const existingStudentsRaw = window.localStorage.getItem('medgate_students')
       const existingStudents = existingStudentsRaw ? JSON.parse(existingStudentsRaw) : []
@@ -65,13 +67,30 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
         window.localStorage.setItem('medgate_students', JSON.stringify(existingStudents))
       }
 
+      // Prepare regulatory payload (cast to expected literal types)
+      const regulatoryTypeVal = (formData as any).regulatoryType as 'None' | 'EHS' | 'DHA' | 'DoH';
+      const regulatoryStatusVal = regulatoryTypeVal && regulatoryTypeVal !== 'None' ? ('Pending' as const) : undefined;
+      const regulatory = {
+        type: regulatoryTypeVal || 'None',
+        reference: (formData as any).regulatoryReference || undefined,
+        status: regulatoryStatusVal,
+      };
+
+      // If regulatory requires upstream verification (DHA/DoH) and no reference provided, block
+      if (regulatory.type === 'DHA' || regulatory.type === 'DoH') {
+        if (!regulatory.reference) {
+          (await import('@/lib/toast')).showToast('Regulatory reference required for selected regulator before submission.')
+          setIsSubmitting(false)
+          return
+        }
+      }
+
       // Create application via storage
       const { createApplication } = await import('@/lib/storage')
-      createApplication({ studentId: student.id, programId: programId || '', hospitalId: hospitalId || '' })
-
+      createApplication({ studentId: student.id, programId: programId || '', hospitalId: hospitalId || '', regulatory })
       setIsSubmitted(true)
     } catch (err: any) {
-      alert(err?.message || 'Failed to submit application')
+      (await import('@/lib/toast')).showToast(err?.message || 'Failed to submit application')
     } finally {
       setIsSubmitting(false)
     }
@@ -91,7 +110,9 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
         gpa: '',
         experience: '',
         motivation: '',
-        documents: []
+        documents: [],
+        regulatoryType: 'None',
+        regulatoryReference: ''
       })
     }, 3000)
   }
@@ -393,6 +414,20 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
                           <p className="text-xs text-gray-500 mt-1">
                             Minimum 50 characters. {formData.motivation.length}/50
                           </p>
+                        </div>
+
+                        <div className="mt-4">
+                          <label className="block text-sm font-medium text-gray-700 mb-2">Regulatory (if applicable)</label>
+                          <div className="flex gap-2">
+                            <select name="regulatoryType" value={(formData as any).regulatoryType} onChange={(e) => setFormData(prev => ({ ...prev, regulatoryType: (e.target as HTMLSelectElement).value }))} className="form-select w-48">
+                              <option value="None">None</option>
+                              <option value="EHS">EHS</option>
+                              <option value="DHA">DHA</option>
+                              <option value="DoH">DoH</option>
+                            </select>
+                            <input name="regulatoryReference" value={(formData as any).regulatoryReference} onChange={(e) => setFormData(prev => ({ ...prev, regulatoryReference: e.target.value }))} placeholder="Reference (if any)" className="form-input" />
+                          </div>
+                          <p className="text-xs text-gray-500 mt-1">If DHA/DoH selected, a reference is required and hospital must verify.</p>
                         </div>
 
                         <div>

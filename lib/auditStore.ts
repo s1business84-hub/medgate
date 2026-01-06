@@ -1,5 +1,5 @@
-type ExposureLog = { studentId: string; programId: string; acknowledgedAt: string; type: string };
-type SupervisorConfirmation = { supervisorId: string; programId: string; dates: string; exposureBoundaries: string; confirmedAt: string; type: string };
+type ExposureLog = { studentId: string; programId: string; exposureType?: string; acknowledgedAt: string; type: string };
+type SupervisorConfirmation = { supervisorId: string; studentId?: string; programId: string; dates: string; exposureBoundaries: string; confirmedAt: string; type: string };
 type CompletionAttestation = { supervisorId: string; studentId: string; programId: string; dates: string; exposureType: string; notes?: string; attestedAt: string; type: string };
 type IncidentFlag = { adminId: string; programId: string; note: string; flaggedAt: string; severity?: string; type: string };
 
@@ -41,22 +41,51 @@ export function addIncidentFlag(entry: Omit<IncidentFlag, 'flaggedAt' | 'type'>)
 export function getIncidentFlags() { return incidentFlags; }
 
 export function exportAccreditationCSV() {
-  // Simple CSV combining trainees, supervisors, and exposure logs
+  // Simple CSV combining trainees, supervisors, exposure logs and application status
   const rows: string[] = [];
-  rows.push('studentId,programId,acknowledgedAt,supervisorId,supervisorConfirmedAt,completionAttestedAt,exposureType');
+  rows.push('studentId,studentName,programId,applicationStatus,acknowledgedAt,supervisorId,supervisorConfirmedAt,completionAttestedAt,exposureType');
 
-  // Build map of supervisor confirmations and completion attestations by program+student
-  const supMap = new Map<string, any>();
-  getSupervisorConfirmations().forEach(s => { supMap.set(`${s.programId}::${s.supervisorId}`, s); });
+  // Build maps
+  const supList = getSupervisorConfirmations();
+  const compList = getCompletionAttestations();
+  const apps = (() => {
+    try {
+      // lazy import to avoid cycles
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const storage = require('./storage');
+      return storage.getApplications();
+    } catch {
+      return [] as any[];
+    }
+  })();
 
-  const compMap = new Map<string, any>();
-  getCompletionAttestations().forEach(c => { compMap.set(`${c.programId}::${c.studentId}`, c); });
+  const students = (() => {
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const storage = require('./storage');
+      return storage.getStudents();
+    } catch {
+      return [] as any[];
+    }
+  })();
 
   getExposureLogs().forEach(e => {
-    const comp = compMap.get(`${e.programId}::${e.studentId}`);
-    // Find a supervisor confirmation for same program (best-effort)
-    const sup = getSupervisorConfirmations().find(s => s.programId === e.programId);
-    rows.push([e.studentId, e.programId, e.acknowledgedAt, sup?.supervisorId || '', sup?.confirmedAt || '', comp?.attestedAt || '', comp?.exposureType || ''].join(','));
+    const comp = compList.find(c => c.programId === e.programId && c.studentId === e.studentId);
+    // Prefer student-scoped supervisor confirmation, fall back to program-level
+    const sup = supList.find(s => s.programId === e.programId && (s.studentId === e.studentId || !s.studentId));
+    const app = apps.find((a: any) => a.programId === e.programId && a.studentId === e.studentId);
+    const student = students.find((s: any) => s.id === e.studentId);
+    rows.push([
+      e.studentId,
+      (student?.name || '').replace(/\"/g, '""'),
+      e.programId,
+      app?.status || '',
+      e.acknowledgedAt,
+      sup?.supervisorId || '',
+      sup?.confirmedAt || '',
+      comp?.attestedAt || '',
+      comp?.exposureType || ''
+    ].join(','));
   });
 
   return rows.join('\n');

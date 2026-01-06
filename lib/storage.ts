@@ -1,5 +1,4 @@
 import type { Student, Application, Document, Payment, AuditLog, User, Notification, ProgramReminder } from "./types";
-import { programs, hospitals } from "./mockData";
 
 const KEYS = {
   students: "medgate_students",
@@ -53,23 +52,7 @@ export function getStudents(): Student[] {
 
 /* APPLICATIONS */
 export function createApplication(input: Omit<Application, "id" | "status" | "submissionDate">): Application {
-  // Capacity guard: block if hospital department exceeds declared maxStudentsPerPeriod
   const applications = readJSON<Application[]>(KEYS.applications, []);
-
-  const program = programs.find(p => p.id === input.programId);
-  const hospitalId = program?.hospitalId || input.hospitalId;
-  const hospital = hospitals.find(h => h.id === hospitalId);
-  const maxAllowed = hospital?.maxStudentsPerPeriod ?? 5;
-
-  const activeCount = applications.filter(a => {
-    // count all applications for same hospital that are not Rejected
-    const p = programs.find(pp => pp.id === a.programId);
-    return p?.hospitalId === hospitalId && a.status !== 'Rejected';
-  }).length;
-
-  if (activeCount >= maxAllowed) {
-    throw new Error('Department capacity reached');
-  }
 
   const app: Application = {
     id: newId("app"),
@@ -101,6 +84,33 @@ export function updateApplicationStatus(applicationId: string, status: Applicati
   applications[appIndex] = updated;
   writeJSON(KEYS.applications, applications);
   
+  return updated;
+}
+
+export function setApplicationRegulatory(applicationId: string, regulatory: Application["regulatory"]): Application | null {
+  const applications = readJSON<Application[]>(KEYS.applications, []);
+  const appIndex = applications.findIndex(a => a.id === applicationId);
+  if (appIndex === -1) return null;
+  const updated: Application = {
+    ...applications[appIndex],
+    regulatory,
+  };
+  applications[appIndex] = updated;
+  writeJSON(KEYS.applications, applications);
+  return updated;
+}
+
+export function setApplicationAssignment(applicationId: string, assignment: { supervisor?: string; department?: string }): Application | null {
+  const applications = readJSON<Application[]>(KEYS.applications, []);
+  const appIndex = applications.findIndex(a => a.id === applicationId);
+  if (appIndex === -1) return null;
+  const updated: Application = {
+    ...applications[appIndex],
+    supervisor: assignment.supervisor ?? applications[appIndex].supervisor,
+    department: assignment.department ?? applications[appIndex].department,
+  };
+  applications[appIndex] = updated;
+  writeJSON(KEYS.applications, applications);
   return updated;
 }
 

@@ -3,8 +3,11 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { getApplications, updateApplicationStatus, getStudents, createNotification, deleteApplication, addDocument } from "@/lib/storage";
-import { mockPrograms } from "@/lib/mockData";
+import { getApplications, updateApplicationStatus, getStudents, createNotification, deleteApplication, addDocument, setApplicationAssignment, getUsers } from "@/lib/storage";
+import { getSupervisorConfirmations, addSupervisorConfirmation } from "@/lib/auditStore";
+import { showToast } from "@/lib/toast";
+import UI_COPY from '@/lib/uiCopy';
+import { mockPrograms, mockHospitals } from "@/lib/mockData";
 import { useAuth } from "@/lib/auth-context";
 import type { Application } from "@/lib/types";
 import { CheckCircle, XCircle, Clock } from "lucide-react";
@@ -28,6 +31,12 @@ export default function AdminPage() {
   const [docName, setDocName] = useState("");
   const [docType, setDocType] = useState<"Passport" | "Medical Certificate" | "Emirates ID" | "Medical Fitness Certificate" | "Police Clearance Certificate" | "Immunization Records" | "Nursing License" | "Specialty Certification" | "Other">("Other");
   const [showObsForm, setShowObsForm] = useState(false);
+  const [showEHSForm, setShowEHSForm] = useState(false);
+  const [ehsStudentId, setEhsStudentId] = useState("");
+  const [ehsProgramId, setEhsProgramId] = useState("");
+  const [ehsReference, setEhsReference] = useState("");
+  const [selectedSupervisorId, setSelectedSupervisorId] = useState("");
+  const [selectedDepartment, setSelectedDepartment] = useState("");
   const [obsForm, setObsForm] = useState({
     name: "",
     description: "",
@@ -45,6 +54,13 @@ export default function AdminPage() {
     return student?.name || "Unknown Student";
   };
 
+  const getSupervisorName = (supervisorId?: string) => {
+    if (!supervisorId) return '—';
+    const users = getUsers();
+    const u = users.find(x => x.id === supervisorId);
+    return u ? `${u.name} (${u.email})` : supervisorId;
+  };
+
   const getStudentEmail = (studentId: string): string => {
     const students = getStudents();
     const student = students.find(s => s.id === studentId);
@@ -53,8 +69,26 @@ export default function AdminPage() {
 
   const handleIncludeInObservership = (appId: string) => {
     setActionInProgress(true);
+    const app = applications.find(a => a.id === appId);
+    // Enforcement: require supervisor confirmation for the program and regulatory Verified when applicable (DHA/DoH)
+    const supConfirmed = app ? getSupervisorConfirmations().some(s => s.programId === app.programId && (s.studentId === app.studentId || !s.studentId)) : false;
+    const regulatoryType = app?.regulatory?.type || "None";
+    const regulatoryVerified = regulatoryType === "None" || app?.regulatory?.status === "Verified";
+
+    if (!supConfirmed) {
+      showToast("Cannot include in observership: no supervisor confirmation found for this application.");
+      setActionInProgress(false);
+      return;
+    }
+
+    if (!regulatoryVerified && (regulatoryType === "DHA" || regulatoryType === "DoH")) {
+      showToast("Cannot include in observership: regulatory requirement not verified for this application.");
+      setActionInProgress(false);
+      return;
+    }
+
     const updated = updateApplicationStatus(appId, "Approved", "Included in observership program");
-    
+
     if (updated) {
       createNotification({
         userId: updated.studentId,
@@ -64,6 +98,57 @@ export default function AdminPage() {
         relatedApplicationId: appId,
       });
 
+      setApplications(applications.map(app => app.id === appId ? updated : app));
+      setSelectedApp(updated);
+    }
+    setActionInProgress(false);
+  };
+
+  const handleAccept = (appId: string) => {
+    setActionInProgress(true);
+    const updated = updateApplicationStatus(appId, "Accepted", "Accepted by admin");
+    if (updated) {
+      createNotification({
+        userId: updated.studentId,
+        type: "approval",
+        title: "Application Accepted",
+        message: `Your application has been accepted. The hospital will follow up with next steps.`,
+        relatedApplicationId: appId,
+      });
+      setApplications(applications.map(app => app.id === appId ? updated : app));
+      setSelectedApp(updated);
+    }
+    setActionInProgress(false);
+  };
+
+  const handleDefer = (appId: string) => {
+    setActionInProgress(true);
+    const updated = updateApplicationStatus(appId, "Deferred", "Deferred for later review");
+    if (updated) {
+      createNotification({
+        userId: updated.studentId,
+        type: "update",
+        title: "Application Deferred",
+        message: `Your application has been deferred for further review. We will contact you with updates.`,
+        relatedApplicationId: appId,
+      });
+      setApplications(applications.map(app => app.id === appId ? updated : app));
+      setSelectedApp(updated);
+    }
+    setActionInProgress(false);
+  };
+
+  const handleDecline = (appId: string) => {
+    setActionInProgress(true);
+    const updated = updateApplicationStatus(appId, "Declined", "Declined by admin");
+    if (updated) {
+      createNotification({
+        userId: updated.studentId,
+        type: "rejection",
+        title: "Application Declined",
+        message: `We appreciate your interest. Unfortunately, your application was declined.`,
+        relatedApplicationId: appId,
+      });
       setApplications(applications.map(app => app.id === appId ? updated : app));
       setSelectedApp(updated);
     }
@@ -158,7 +243,13 @@ export default function AdminPage() {
         ? "bg-rose-500/15 text-rose-100 border-rose-400/30"
         : state === "Waitlisted"
           ? "bg-amber-500/15 text-amber-100 border-amber-400/30"
-          : "bg-cyan-500/15 text-cyan-100 border-cyan-400/30";
+          : state === "Accepted"
+            ? "bg-emerald-500/10 text-emerald-100 border-emerald-400/20"
+            : state === "Deferred"
+              ? "bg-yellow-500/10 text-amber-100 border-amber-400/20"
+              : state === "Declined"
+                ? "bg-rose-600/10 text-rose-100 border-rose-400/20"
+                : "bg-cyan-500/15 text-cyan-100 border-cyan-400/30";
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
@@ -216,6 +307,25 @@ export default function AdminPage() {
                           <p className="font-semibold text-slate-100">{getStudentName(app.studentId)}</p>
                           <p className="text-sm text-slate-300">{getStudentEmail(app.studentId)}</p>
                           <p className="text-xs text-slate-400 mt-1">{new Date(app.submissionDate).toLocaleDateString()}</p>
+                          <div className="flex gap-2 mt-2">
+                            {!app.regulatory || app.regulatory.type === 'None' ? (
+                              <span className="text-amber-300 text-xs">No regulatory</span>
+                            ) : app.regulatory.status !== 'Verified' ? (
+                              <span className="text-yellow-300 text-xs">Regulatory: {app.regulatory.status || 'Pending'}</span>
+                            ) : null}
+                            {(!getSupervisorConfirmations().some(s => s.programId === app.programId && (s.studentId === app.studentId || !s.studentId))) && (
+                              <span className="text-rose-300 text-xs">No supervisor confirmation</span>
+                            )}
+                            {getSupervisorConfirmations().some(s => s.programId === app.programId && !s.studentId) && (() => {
+                              const prog = getSupervisorConfirmations().find(s => s.programId === app.programId && !s.studentId);
+                              return (
+                                <span className="text-cyan-300 text-xs">Program confirmed by {getSupervisorName(prog?.supervisorId)} on {prog ? new Date(prog.confirmedAt).toLocaleDateString() : ''}</span>
+                              );
+                            })()}
+                            {app.supervisor && (
+                              <span className="text-slate-300 text-xs">Supervisor: {getSupervisorName(app.supervisor)}</span>
+                            )}
+                          </div>
                         </div>
                         <div className="text-right">
                           <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium border ${badge(app.status)}`}>
@@ -240,6 +350,93 @@ export default function AdminPage() {
                   <div>
                     <p className="text-sm text-slate-400 mb-1">Student Name</p>
                     <p className="font-semibold text-slate-100">{getStudentName(selectedApp.studentId)}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-slate-400 mb-1">Supervisor</p>
+                    <p className="font-semibold text-slate-100">{getSupervisorName(selectedApp.supervisor)}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-slate-400 mb-1">Department</p>
+                    <p className="font-semibold text-slate-100">{selectedApp.department || '-'}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-slate-100">Assign Supervisor & Department</p>
+                    <div className="mt-2 grid grid-cols-1 gap-2">
+                      <div>
+                        <label className="text-xs text-slate-300">Supervisor</label>
+                        <select value={selectedSupervisorId} onChange={(e) => setSelectedSupervisorId(e.target.value)} className="w-full px-3 py-2 mt-1 border border-white/15 rounded-lg bg-white/5 text-slate-100">
+                          <option value="">-- Select supervisor --</option>
+                          {getUsers().filter(u => u.role === 'hospital' && u.hospitalId === selectedApp?.hospitalId).map(u => (
+                            <option key={u.id} value={u.id}>{u.name} ({u.email})</option>
+                          ))}
+                        </select>
+                      </div>
+                      <div>
+                        <label className="text-xs text-slate-300">Department</label>
+                        <select value={selectedDepartment} onChange={(e) => setSelectedDepartment(e.target.value)} className="w-full px-3 py-2 mt-1 border border-white/15 rounded-lg bg-white/5 text-slate-100">
+                          <option value="">-- Select department --</option>
+                          {(mockHospitals.find(h => h.id === selectedApp?.hospitalId)?.departments || []).map(d => (
+                            <option key={d} value={d}>{d}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="flex gap-2">
+                        <button onClick={() => {
+                          if (!selectedApp) return;
+                          if (!selectedSupervisorId && !selectedDepartment) {
+                            showToast("Please select a supervisor or department before saving.");
+                            return;
+                          }
+                          const supervisorValue = selectedSupervisorId || undefined;
+                          const departmentValue = selectedDepartment || undefined;
+                          const updated = setApplicationAssignment(selectedApp.id, { supervisor: supervisorValue, department: departmentValue });
+                          if (updated) {
+                            setApplications(applications.map(a => a.id === updated.id ? updated : a));
+                            setSelectedApp(updated);
+                            setSelectedSupervisorId("");
+                            setSelectedDepartment("");
+                            showToast(UI_COPY.admin.assignmentSaved);
+                            try {
+                              // Log audit and notify student
+                              const { logAudit, createNotification, getStudents } = require('@/lib/storage');
+                              const student = getStudents().find((s: any) => s.id === updated.studentId);
+                              logAudit({ userId: updated.studentId, action: 'Assignment Updated', details: `Assigned supervisor ${supervisorValue || '-'} and department ${departmentValue || '-'} by admin` });
+                              if (student) {
+                                createNotification({ userId: student.id, type: 'update', title: 'Assignment Updated', message: `Your application for ${updated.programId} was assigned to ${supervisorValue || 'TBD'} in ${departmentValue || 'TBD'}`, relatedApplicationId: updated.id });
+                              }
+                            } catch (err) {
+                              // ignore in demo
+                            }
+                          }
+                        }} className="px-4 py-2 bg-indigo-600 text-white rounded-lg">Save</button>
+
+                        <button onClick={() => {
+                          if (!selectedApp) return;
+                          if (!selectedSupervisorId) {
+                            showToast('Select a supervisor before confirming program-level supervision');
+                            return;
+                          }
+                          try {
+                            addSupervisorConfirmation({ supervisorId: selectedSupervisorId, programId: selectedApp.programId, dates: selectedApp.submissionDate || new Date().toISOString(), exposureBoundaries: selectedApp.notes || 'standard' });
+                            showToast(UI_COPY.admin.programConfirmed);
+                            try {
+                              const { logAudit, createNotification, getUsers } = require('@/lib/storage');
+                              logAudit({ userId: selectedApp.studentId, action: 'Program-level Confirmation', details: `Supervisor ${selectedSupervisorId} confirmed program ${selectedApp.programId}` });
+                              const hospUsers = getUsers().filter((u: any) => u.role === 'hospital' && u.hospitalId === selectedApp.hospitalId);
+                              hospUsers.forEach((hu: any) => createNotification({ userId: hu.id, type: 'update', title: 'Program Confirmed', message: `Program ${selectedApp.programId} has a supervisor confirmation`, relatedApplicationId: selectedApp.id }));
+                            } catch (err) {
+                              // ignore
+                            }
+                            setApplications(getApplications());
+                          } catch (err) {
+                            showToast('Error recording confirmation');
+                          }
+                        }} className="px-4 py-2 bg-emerald-600 text-white rounded-lg">Confirm Program</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-4">
+                    <button onClick={() => setShowEHSForm(true)} className="px-3 py-2 bg-indigo-600 text-white rounded">{UI_COPY.admin.ehsAllocationButton}</button>
                   </div>
                   <div>
                     <p className="text-sm text-slate-400 mb-1">Email</p>
@@ -268,17 +465,21 @@ export default function AdminPage() {
                   )}
                   {selectedApp.status === "Submitted" && (
                     <div className="pt-4 border-t border-white/10 space-y-2">
-                      <button onClick={() => handleIncludeInObservership(selectedApp.id)} disabled={actionInProgress} className="w-full bg-linear-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-semibold py-2 rounded-lg transition-colors disabled:opacity-50 flex items-center justify-center shadow-lg">
+                      <button onClick={() => handleAccept(selectedApp.id)} disabled={actionInProgress} className="w-full bg-linear-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-semibold py-2 rounded-lg transition-colors disabled:opacity-50 flex items-center justify-center shadow-lg">
+                        <CheckCircle className="w-4 h-4 mr-2" />
+                        Accept Application
+                      </button>
+                      <button onClick={() => handleIncludeInObservership(selectedApp.id)} disabled={actionInProgress} className="w-full bg-linear-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white font-semibold py-2 rounded-lg transition-colors disabled:opacity-50 flex items-center justify-center shadow-lg">
                         <CheckCircle className="w-4 h-4 mr-2" />
                         Include in Observership
                       </button>
-                      <button onClick={() => handleWaitlist(selectedApp.id)} disabled={actionInProgress} className="w-full bg-linear-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-white font-semibold py-2 rounded-lg transition-colors disabled:opacity-50 flex items-center justify-center shadow-lg">
+                      <button onClick={() => handleDefer(selectedApp.id)} disabled={actionInProgress} className="w-full bg-linear-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-white font-semibold py-2 rounded-lg transition-colors disabled:opacity-50 flex items-center justify-center shadow-lg">
                         <Clock className="w-4 h-4 mr-2" />
-                        Add to Waitlist
+                        Defer Application
                       </button>
-                      <button onClick={() => setShowRejectModal(true)} disabled={actionInProgress} className="w-full bg-linear-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white font-semibold py-2 rounded-lg transition-colors disabled:opacity-50 flex items-center justify-center shadow-lg">
+                      <button onClick={() => handleDecline(selectedApp.id)} disabled={actionInProgress} className="w-full bg-linear-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white font-semibold py-2 rounded-lg transition-colors disabled:opacity-50 flex items-center justify-center shadow-lg">
                         <XCircle className="w-4 h-4 mr-2" />
-                        Reject Application
+                        Decline Application
                       </button>
                       <button onClick={() => handleRemoveApplication(selectedApp.id)} className="w-full border border-white/15 bg-white/5 hover:bg-white/10 text-slate-100 font-semibold py-2 rounded-lg transition-colors flex items-center justify-center">
                         Remove Application
@@ -418,6 +619,57 @@ export default function AdminPage() {
               >
                 Create Observership
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showEHSForm && (
+        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50">
+          <div className="bg-slate-900/95 border border-white/10 rounded-2xl shadow max-w-md w-full p-6 text-slate-100">
+            <h3 className="text-2xl font-bold mb-4">Create EHS Allocation</h3>
+            <div className="space-y-3">
+              <div>
+                <label className="block text-sm text-slate-300 mb-1">Student</label>
+                <select value={ehsStudentId} onChange={(e) => setEhsStudentId(e.target.value)} className="w-full p-2 rounded bg-white/5 border border-white/10">
+                  <option value="">-- Select student --</option>
+                  {getStudents().map(s => <option key={s.id} value={s.id}>{s.name} ({s.email})</option>)}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm text-slate-300 mb-1">Program</label>
+                <select value={ehsProgramId} onChange={(e) => setEhsProgramId(e.target.value)} className="w-full p-2 rounded bg-white/5 border border-white/10">
+                  <option value="">-- Select program --</option>
+                  {mockPrograms.map(p => <option key={p.id} value={p.id}>{p.name} — {p.hospitalId}</option>)}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm text-slate-300 mb-1">EHS Reference (optional)</label>
+                <input value={ehsReference} onChange={(e) => setEhsReference(e.target.value)} className="w-full p-2 rounded bg-white/5 border border-white/10" />
+              </div>
+            </div>
+            <div className="flex gap-3 mt-4">
+              <button onClick={() => setShowEHSForm(false)} className="px-4 py-2 border border-white/15 rounded">Cancel</button>
+              <button onClick={() => {
+                if (!ehsStudentId || !ehsProgramId) {
+                  showToast('Select student and program');
+                  return;
+                }
+                // create application with regulatory EHS and mark Verified as per scenario record
+                const { createApplication } = require('@/lib/storage');
+                const programAny = mockPrograms.find(p => p.id === ehsProgramId);
+                const hospitalId = programAny?.hospitalId || '';
+                const app = createApplication({ studentId: ehsStudentId, programId: ehsProgramId, hospitalId, regulatory: { type: 'EHS', reference: ehsReference || undefined, status: 'Verified' } });
+                try {
+                  const { createNotification, logAudit } = require('@/lib/storage');
+                  createNotification({ userId: ehsStudentId, type: 'update', title: 'EHS Allocation Recorded', message: `Your allocation via EHS has been recorded for ${programAny?.name || ehsProgramId}`, relatedApplicationId: app.id });
+                  logAudit({ userId: ehsStudentId, action: 'EHS Allocation', details: `Admin created EHS allocation for program ${ehsProgramId}` });
+                } catch (err) {}
+                setShowEHSForm(false);
+                setEhsStudentId(''); setEhsProgramId(''); setEhsReference('');
+                setApplications(getApplications());
+                showToast('EHS allocation created');
+              }} className="px-4 py-2 bg-green-600 text-white rounded">Create Allocation</button>
             </div>
           </div>
         </div>
