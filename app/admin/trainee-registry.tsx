@@ -1,9 +1,7 @@
 "use client";
 import { useState } from "react";
 import { getStudents, getApplications, getUsers } from "@/lib/storage";
-
-// Feature flag: hide exports for locked pilot. Set to true only when exports are allowed.
-const ALLOW_EXPORT = false;
+import { ALLOW_EXPORT } from "@/lib/featureFlags";
 
 export default function TraineeRegistry() {
   const [query, setQuery] = useState("");

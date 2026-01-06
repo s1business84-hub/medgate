@@ -1,7 +1,17 @@
 "use client";
 import { useState } from "react";
+import { ALLOW_EXPORT } from "@/lib/featureFlags";
 
 export default function AccreditationPack() {
+  if (!ALLOW_EXPORT) {
+    return (
+      <div className="p-6 max-w-4xl mx-auto">
+        <h2 className="text-2xl font-bold mb-4">Accreditation Evidence Pack</h2>
+        <p className="text-sm text-slate-500 mb-4">This export feature is disabled in the pilot build.</p>
+      </div>
+    );
+  }
+
   const [csv, setCsv] = useState("");
 
   const fetchPack = async () => {

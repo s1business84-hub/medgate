@@ -363,13 +363,14 @@ function ProgramContent({ id }: { id: string }) {
         </div>
 
         {/* Apply Button (only enabled after acknowledgement) */}
-        <div className="text-center animate-fade-in" style={{ animationDelay: '0.7s' }}>
+          <div className="text-center animate-fade-in" style={{ animationDelay: '0.7s' }}>
           <button
             onClick={() => setIsModalOpen(true)}
             className="text-lg px-8 py-4 hover-scale rounded-xl bg-linear-to-r from-cyan-500 to-indigo-600 text-white font-semibold shadow-lg hover:from-cyan-400 hover:to-indigo-500 transition-all duration-300"
             disabled={!acknowledged}
+            title={!acknowledged ? UI_COPY.student.acknowledgeToApply : undefined}
           >
-            {acknowledged ? "Apply for this Program →" : "Acknowledge Exposure to Apply"}
+            {acknowledged ? UI_COPY.student.applyButton : UI_COPY.student.acknowledgeToApply}
           </button>
           <p className="text-xs text-slate-400 mt-4 max-w-2xl mx-auto">
             Submission of an application does not guarantee placement. Final confirmation is subject to hospital approval and slot availability.
@@ -385,7 +386,7 @@ function ProgramContent({ id }: { id: string }) {
                 try {
                   evaluateCanStart();
                   if (!canStart) {
-                    showToast(startMessage || 'Cannot start training');
+                    showToast(startMessage || UI_COPY.student.startTrainingBlockedSupervisor);
                     setStartLoading(false);
                     return;
                   }
@@ -425,6 +426,8 @@ function ProgramContent({ id }: { id: string }) {
               }}
               className="mt-4 text-lg px-8 py-4 hover-scale rounded-xl bg-linear-to-r from-emerald-500 to-emerald-700 text-white font-semibold shadow-lg hover:from-emerald-400 hover:to-emerald-600 transition-all duration-300"
               disabled={startLoading || canStart === false}
+              aria-disabled={startLoading || canStart === false}
+              title={startLoading || canStart === false ? (startMessage || UI_COPY.student.startTrainingButtonTooltip) : undefined}
             >
               {startLoading ? 'Starting...' : (canStart ? 'Start Training' : (startMessage || 'Start Training'))}
             </button>

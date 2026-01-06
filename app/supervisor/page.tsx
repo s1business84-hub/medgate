@@ -1,18 +1,27 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getApplications, getStudents, getUsers } from "@/lib/storage";
-import UI_COPY from '@/lib/uiCopy';
+import { getApplications, getStudents, getUsers, getCurrentUser } from "@/lib/storage";
 
 export default function SupervisorDashboard() {
   const [apps, setApps] = useState([] as any[]);
   const [students, setStudents] = useState([] as any[]);
-
   useEffect(() => {
     setApps(getApplications());
     setStudents(getStudents());
-    setUsers(getUsers());
+    const allUsers = getUsers();
+    setUsers(allUsers);
+    // If a supervisor is logged-in, prefer them as the default selected supervisor
+    try {
+      const current = getCurrentUser();
+      // Treat admin/hospital roles as supervisor-capable in the demo environment
+      if (current && (current.role === 'admin' || current.role === 'hospital')) {
+        setConfirmSupervisorId(current.id);
+        setAttestSupervisorId(current.id);
+      }
+    } catch (err) {
+      // ignore
+    }
   }, []);
-
   const [users, setUsers] = useState([] as any[]);
   const [confirmingAppId, setConfirmingAppId] = useState<string | null>(null);
   const [confirmSupervisorId, setConfirmSupervisorId] = useState<string | null>(null);
@@ -33,7 +42,7 @@ export default function SupervisorDashboard() {
 
   async function submitConfirmSupervision(appId: string) {
     if (!confirmSupervisorId) {
-        (await import("@/lib/toast")).showToast(UI_COPY.supervisor.selectSupervisorBeforeConfirm);
+      (await import("@/lib/toast")).showToast('Select a supervisor before confirming');
       return;
     }
     const application = apps.find(a => a.id === appId);
@@ -50,7 +59,7 @@ export default function SupervisorDashboard() {
       const res = await fetch('/api/audit/supervisor-confirmation', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       const body = await res.json();
       if (res.ok) {
-          (await import("@/lib/toast")).showToast(UI_COPY.supervisor.confirmationSuccessToast);
+        (await import("@/lib/toast")).showToast('Supervisor confirmation recorded');
         setConfirmingAppId(null);
         setApps(getApplications());
       } else {
@@ -68,7 +77,7 @@ export default function SupervisorDashboard() {
 
   async function submitAttestCompletion(appId: string) {
     if (!attestSupervisorId) {
-        (await import("@/lib/toast")).showToast(UI_COPY.supervisor.selectSupervisorBeforeAttest);
+      (await import("@/lib/toast")).showToast('Select a supervisor before attesting');
       return;
     }
     const application = apps.find(a => a.id === appId);
@@ -86,7 +95,7 @@ export default function SupervisorDashboard() {
       const res = await fetch('/api/audit/completion-attestation', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       const body = await res.json();
       if (res.ok) {
-          (await import("@/lib/toast")).showToast(UI_COPY.supervisor.attestSuccessToast);
+        (await import("@/lib/toast")).showToast('Completion attestation recorded');
         setAttestingAppId(null);
         setApps(getApplications());
       } else {

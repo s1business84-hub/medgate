@@ -408,7 +408,7 @@ export default function AdminPage() {
                               // ignore in demo
                             }
                           }
-                        }} className="px-4 py-2 bg-indigo-600 text-white rounded-lg">Save</button>
+                        }} className="px-4 py-2 bg-indigo-600 text-white rounded-lg" aria-label="Save assignment" title="Save selected supervisor and department">Save</button>
 
                         <button onClick={() => {
                           if (!selectedApp) return;
@@ -431,12 +431,12 @@ export default function AdminPage() {
                           } catch (err) {
                             showToast('Error recording confirmation');
                           }
-                        }} className="px-4 py-2 bg-emerald-600 text-white rounded-lg">Confirm Program</button>
+                        }} className="px-4 py-2 bg-emerald-600 text-white rounded-lg" aria-label="Confirm program-level supervision" title="Record program-level supervisor confirmation">Confirm Program</button>
                       </div>
                     </div>
                   </div>
                   <div className="mt-4">
-                    <button onClick={() => setShowEHSForm(true)} className="px-3 py-2 bg-indigo-600 text-white rounded">{UI_COPY.admin.ehsAllocationButton}</button>
+                    <button onClick={() => setShowEHSForm(true)} className="px-3 py-2 bg-indigo-600 text-white rounded" aria-label="Create EHS allocation" title="Create an EHS allocation for a student">{UI_COPY.admin.ehsAllocationButton}</button>
                   </div>
                   <div>
                     <p className="text-sm text-slate-400 mb-1">Email</p>

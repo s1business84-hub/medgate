@@ -4,6 +4,7 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { X, CheckCircle, Upload, FileText, User, Mail, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import UI_COPY from '@/lib/uiCopy'
 
 interface ApplicationModalProps {
   isOpen: boolean
@@ -215,7 +216,7 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
                     <CheckCircle className="w-8 h-8 text-green-600" />
                   </motion.div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                    Application Submitted!
+                    { UI_COPY.student.applicationSubmittedTitle }
                   </h3>
                       <p className="text-gray-600">
                         We&apos;ll review your application and get back to you within 3-5 business days.
@@ -521,7 +522,7 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
                           Submitting...
                         </div>
                       ) : (
-                        'Submit Application'
+                        UI_COPY.student.submitApplicationButton
                       )}
                     </Button>
                   )}

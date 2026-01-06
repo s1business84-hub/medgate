@@ -9,6 +9,10 @@ export const UI_COPY = {
     startTrainingBlockedExposure: 'Action blocked: exposure acknowledgement required before starting training.',
     startTrainingSuccess: 'Training started — your status is now In Training.',
     startTrainingButtonTooltip: 'Start Training — requires supervisor confirmation and regulatory verification',
+    applyButton: 'Apply for this Program →',
+    acknowledgeToApply: 'Acknowledge Exposure to Apply',
+    applicationSubmittedTitle: 'Application Submitted!',
+    submitApplicationButton: 'Submit Application',
   },
   supervisor: {
     confirmationTitle: 'Supervisor Confirmation',
