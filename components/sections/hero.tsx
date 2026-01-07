@@ -55,20 +55,7 @@ export function Hero() {
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 py-16 sm:py-24 lg:px-8">
         <div className="mx-auto max-w-4xl text-center">
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            viewport={{ once: true }}
-            className="mb-6 sm:mb-8"
-          >
-            <span className="inline-flex items-center rounded-full bg-white/10 px-3 py-1 sm:px-4 sm:py-2 text-sm font-medium text-blue-300 ring-1 ring-inset ring-white/20 backdrop-blur-sm">
-              <CheckCircle className="mr-2 h-4 w-4" />
-              <span className="hidden sm:inline">Built for UAE hospitals and medical institutions</span>
-              <span className="sm:hidden">Built for UAE</span>
-            </span>
-          </motion.div>
+          {/* Badge removed as per pilot copy guidance */}
 
           {/* Headline */}
           <motion.h1
