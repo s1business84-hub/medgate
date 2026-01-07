@@ -17,6 +17,11 @@ export interface Program {
   description: string;
   requirements: string[];
   isActive: boolean;
+  // Optional pilot-friendly fields
+  bestFor?: string;
+  notRecommendedFor?: string;
+  exposureLevel?: "Observation" | "Limited participation" | string;
+  limitations?: string;
 }
 
 export interface Application {

@@ -124,6 +124,11 @@ export const mockPrograms: Program[] = [
       "Fitness to work certificate from a GP physician based on blood test (less than six months old) and vaccination reports"
     ],
     isActive: true,
+    // Pilot-friendly metadata for Scenario 1 (no regulator)
+    bestFor: "Senior medical students (Year 3+), observers interested in surgical workflows",
+    notRecommendedFor: "Students seeking hands-on procedural experience or requiring independent operating privileges",
+    exposureLevel: "Observation",
+    limitations: "No hands-on procedures; access to operating theatre limited by hospital policy and supervisor discretion.",
   },
   {
     id: "prog_2",
@@ -148,6 +153,11 @@ export const mockPrograms: Program[] = [
     description: "Elective rotation in orthopedic surgery focused on structured clinical observation and institution-defined supervised learning exposure.",
     requirements: ["Medical Student Status", "Government ID and residency/visa status (as applicable)", "English Proficiency", "Passport copy", "Emirates ID copy (if applicable)", "Latest educational transcript", "Document from your base university requesting the elective (if applicable)", "Fitness to work certificate from a GP physician based on blood test (less than six months old) and vaccination reports"],
     isActive: true,
+    // Pilot-friendly elective metadata
+    bestFor: "Students with prior clinical rotations interested in orthopedics",
+    notRecommendedFor: "First-year students or those without prior clinical experience",
+    exposureLevel: "Limited participation",
+    limitations: "May include limited supervised hands-on exposure depending on hospital risk assessments; additional PPE/training may be required.",
   },
   {
     id: "prog_5",

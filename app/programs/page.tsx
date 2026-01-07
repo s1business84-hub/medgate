@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { hospitals, programs } from "@/lib/mockData";
 import { EligibilityChecker } from "@/components/eligibility-checker";
+import { getProgramMetadata } from '@/lib/storage';
 import { ProgramFilters } from "@/components/program-filters";
 import { ReminderModal } from "@/components/reminder-modal";
 import { HospitalsMap, hospitalCoords } from "@/components/hospitals-map";
@@ -115,6 +116,29 @@ export default function ProgramsPage() {
                   </div>
                   
                   <div className="flex items-center gap-2 sm:gap-3">
+                    {/* Scenario 1 badge when program metadata present */}
+                    {(() => {
+                      try {
+                        const meta = getProgramMetadata(p.id);
+                        if (meta && (meta.bestFor || meta.exposureLevel || meta.limitations || meta.notRecommendedFor)) {
+                          return (
+                            <span className="px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap border border-emerald-400/20 text-emerald-200 bg-emerald-700/10">
+                              Program Notes
+                            </span>
+                          );
+                        }
+                      } catch (err) {
+                        // ignore server/non-browser
+                      }
+                      if (p.bestFor || p.exposureLevel || p.limitations || p.notRecommendedFor) {
+                        return (
+                          <span className="px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap border border-emerald-400/20 text-emerald-200 bg-emerald-700/10">
+                            Program Notes
+                          </span>
+                        );
+                      }
+                      return null;
+                    })()}
                     <span className="px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap border border-slate-400/40 text-slate-200 bg-slate-400/10">
                       Capacity: Institution-defined
                     </span>

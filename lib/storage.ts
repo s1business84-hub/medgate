@@ -11,6 +11,7 @@ const KEYS = {
   notifications: "medgate_notifications",
   reminders: "medgate_reminders",
   programCriteria: "medgate_program_criteria",
+  programMetadata: "medgate_program_metadata",
 };
 
 function readJSON<T>(key: string, fallback: T): T {
@@ -321,4 +322,25 @@ export function setProgramCriteria(programId: string, criteria: string[]): void 
   const map = readJSON<ProgramCriteriaMap>(KEYS.programCriteria, {});
   map[programId] = criteria;
   writeJSON(KEYS.programCriteria, map);
+}
+
+/* PROGRAM METADATA (pilot-friendly fields) */
+type ProgramMetadata = {
+  bestFor?: string;
+  notRecommendedFor?: string;
+  exposureLevel?: string;
+  limitations?: string;
+};
+
+type ProgramMetadataMap = Record<string, ProgramMetadata>;
+
+export function getProgramMetadata(programId: string): ProgramMetadata | null {
+  const map = readJSON<ProgramMetadataMap>(KEYS.programMetadata, {});
+  return map[programId] || null;
+}
+
+export function setProgramMetadata(programId: string, metadata: ProgramMetadata): void {
+  const map = readJSON<ProgramMetadataMap>(KEYS.programMetadata, {});
+  map[programId] = metadata;
+  writeJSON(KEYS.programMetadata, map);
 }

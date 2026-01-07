@@ -16,6 +16,7 @@ import { LiquidParallax } from "@/components/ui/liquid-parallax";
 
 function ProgramContent({ id }: { id: string }) {
   const program = programs.find((p) => p.id === id);
+  const [metadata, setMetadata] = useState<{ bestFor?: string; notRecommendedFor?: string; exposureLevel?: string; limitations?: string } | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [acknowledged, setAcknowledged] = useState(false);
   const { user } = useAuth();
@@ -66,6 +67,15 @@ function ProgramContent({ id }: { id: string }) {
   // Evaluate when component mounts and when user or program changes
   useEffect(() => {
     evaluateCanStart();
+    // load stored metadata (admin-edits) to augment demo program fields
+    try {
+      // import dynamically to avoid SSR issues
+      const { getProgramMetadata } = require('@/lib/storage');
+      const meta = getProgramMetadata(program?.id || '');
+      setMetadata(meta);
+    } catch (err) {
+      // ignore in non-browser contexts
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id, program?.id]);
 
@@ -135,6 +145,54 @@ function ProgramContent({ id }: { id: string }) {
           <div className="max-w-3xl mx-auto">
             <p className="text-lg text-slate-300 leading-relaxed">{program.description}</p>
           </div>
+          {/* Scenario 1 / Pilot metadata (bestFor, notRecommendedFor, exposureLevel, limitations) */}
+          {((metadata && (metadata.bestFor || metadata.notRecommendedFor || metadata.exposureLevel || metadata.limitations)) || (program.bestFor || program.notRecommendedFor || program.exposureLevel || program.limitations)) && (
+            <div className="mt-6 max-w-3xl mx-auto text-left space-y-4">
+              {(metadata?.bestFor || program.bestFor) && (
+                <div className="p-4 bg-white/5 rounded-lg border border-white/10">
+                  <h3 className="text-sm text-emerald-200 font-semibold">Best For</h3>
+                  <p className="text-slate-300 text-base mt-1">{metadata?.bestFor || program.bestFor}</p>
+                </div>
+              )}
+              {(metadata?.notRecommendedFor || program.notRecommendedFor) && (
+                <div className="p-4 bg-white/5 rounded-lg border border-white/10">
+                  <h3 className="text-sm text-amber-200 font-semibold">Not Recommended For</h3>
+                  <p className="text-slate-300 text-base mt-1">{metadata?.notRecommendedFor || program.notRecommendedFor}</p>
+                </div>
+              )}
+              {((metadata?.exposureLevel || program.exposureLevel) || (metadata?.limitations || program.limitations)) && (
+                <div className="p-4 bg-white/5 rounded-lg border border-white/10">
+                  <h3 className="text-sm text-sky-200 font-semibold">Exposure & Limitations</h3>
+                  {(metadata?.exposureLevel || program.exposureLevel) && <p className="text-slate-300 text-base mt-1"><strong>Exposure level:</strong> {metadata?.exposureLevel || program.exposureLevel}</p>}
+                  {(metadata?.limitations || program.limitations) && <p className="text-slate-300 text-base mt-1"><strong>Limitations:</strong> {metadata?.limitations || program.limitations}</p>}
+                </div>
+              )}
+            </div>
+          )}
+          {/* Scenario 1 / Pilot metadata (bestFor, notRecommendedFor, exposureLevel, limitations) */}
+          {(program.bestFor || program.notRecommendedFor || program.exposureLevel || program.limitations) && (
+            <div className="mt-6 max-w-3xl mx-auto text-left space-y-4">
+              {program.bestFor && (
+                <div className="p-4 bg-white/5 rounded-lg border border-white/10">
+                  <h3 className="text-sm text-emerald-200 font-semibold">Best For</h3>
+                  <p className="text-slate-300 text-base mt-1">{program.bestFor}</p>
+                </div>
+              )}
+              {program.notRecommendedFor && (
+                <div className="p-4 bg-white/5 rounded-lg border border-white/10">
+                  <h3 className="text-sm text-amber-200 font-semibold">Not Recommended For</h3>
+                  <p className="text-slate-300 text-base mt-1">{program.notRecommendedFor}</p>
+                </div>
+              )}
+              {(program.exposureLevel || program.limitations) && (
+                <div className="p-4 bg-white/5 rounded-lg border border-white/10">
+                  <h3 className="text-sm text-sky-200 font-semibold">Exposure & Limitations</h3>
+                  {program.exposureLevel && <p className="text-slate-300 text-base mt-1"><strong>Exposure level:</strong> {program.exposureLevel}</p>}
+                  {program.limitations && <p className="text-slate-300 text-base mt-1"><strong>Limitations:</strong> {program.limitations}</p>}
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Requirements Section */}
