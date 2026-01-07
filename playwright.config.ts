@@ -8,7 +8,8 @@ export default defineConfig({
   fullyParallel: true,
   retries: 0,
   use: {
-    baseURL: 'http://localhost:3000',
+    // Point tests at deployed URL by default; override with PLAYWRIGHT_BASE_URL env var
+    baseURL: process.env.PLAYWRIGHT_BASE_URL || 'https://medgate.vercel.app',
     headless: true,
     viewport: { width: 1280, height: 800 },
   },
