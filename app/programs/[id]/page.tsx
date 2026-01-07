@@ -428,8 +428,11 @@ function ProgramContent({ id }: { id: string }) {
             disabled={!acknowledged}
             title={!acknowledged ? UI_COPY.student.acknowledgeToApply : undefined}
           >
-            {acknowledged ? UI_COPY.student.applyButton : UI_COPY.student.acknowledgeToApply}
+            {UI_COPY.student.applyButton}
           </button>
+          {!acknowledged && (
+            <p className="text-sm text-amber-300 mt-3">{UI_COPY.student.acknowledgeToApply}</p>
+          )}
           <p className="text-xs text-slate-400 mt-4 max-w-2xl mx-auto">
             Submission of an application does not guarantee placement. Final confirmation is subject to hospital approval and slot availability.
           </p>
