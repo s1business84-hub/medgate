@@ -213,9 +213,9 @@ export default function LoginForm() {
             <p className="text-sm text-slate-200">
               Student: <span className="font-mono">student@example.com</span> / <span className="font-mono">password</span><br />
               Hospital: <span className="font-mono">hospital1@medgate.com</span> / <span className="font-mono">password</span><br />
-              Admin: <span className="font-mono">admin@medgate.com</span> / <span className="font-mono">password</span>
+              Admin: <span className="font-mono">admin@example.com</span> / <span className="font-mono">password</span>
             </p>
-            <p className="text-xs text-slate-400">Demo credentials are provided for preview purposes only.</p>
+            <p className="text-xs text-slate-400">Admin is a platform-wide role; hospital users only see their hospital workspace. Demo credentials are provided for preview purposes only.</p>
           </div>
         </div>
       </div>
