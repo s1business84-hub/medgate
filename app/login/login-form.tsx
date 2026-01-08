@@ -104,9 +104,9 @@ export default function LoginForm() {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-7">
             {!isLogin && (
-              <>
+              <div className="space-y-5">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-2">
                     Full Name
@@ -135,7 +135,7 @@ export default function LoginForm() {
                     <option value="hospital">Hospital</option>
                   </select>
                 </div>
-              </>
+              </div>
             )}
 
             <div>

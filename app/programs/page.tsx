@@ -15,7 +15,7 @@ import { LiquidParallax } from "@/components/ui/liquid-parallax";
 export default function ProgramsPage() {
   const [expandedProgram, setExpandedProgram] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedProgram, setSelectedProgram] = useState<{ name: string; hospital: string } | null>(null);
+  const [selectedProgram, setSelectedProgram] = useState<{ name: string; hospital: string; programId?: string; hospitalId?: string } | null>(null);
   const [reminderModal, setReminderModal] = useState<{ open: boolean; programId: string; programName: string }>({
     open: false,
     programId: "",
@@ -29,7 +29,9 @@ export default function ProgramsPage() {
   const handleApplyClick = (program: typeof programs[0], hospital: typeof hospitals[0]) => {
     setSelectedProgram({
       name: program.departmentName,
-      hospital: hospital?.name || ''
+      hospital: hospital?.name || '',
+      programId: program.id,
+      hospitalId: hospital?.id,
     });
     setIsModalOpen(true);
   };
@@ -46,9 +48,9 @@ export default function ProgramsPage() {
       <LiquidParallax />
       <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
 
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
         {/* Header */}
-        <div className="text-center mb-8 sm:mb-12 animate-fade-in">
+        <div className="text-center mb-8 sm:mb-12 animate-fade-in space-y-3">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-clip-text bg-linear-to-r from-cyan-300 via-sky-200 to-indigo-200 text-transparent mb-3 sm:mb-4">Prototype Program Listings</h1>
           <p className="text-base sm:text-lg lg:text-xl text-slate-300 max-w-2xl mx-auto px-4">
             Prototype listings for demonstration only
@@ -93,7 +95,7 @@ export default function ProgramsPage() {
             return (
               <div
                 key={p.id}
-                className="group relative rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.5)] transition-all duration-500 overflow-hidden animate-slide-in p-6 sm:p-8 hover:-translate-y-1 hover:shadow-[0_25px_110px_rgba(0,0,0,0.55)]"
+                className="group relative rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.5)] transition-all duration-500 overflow-hidden animate-slide-in p-5 sm:p-7 lg:p-8 hover:-translate-y-1 hover:shadow-[0_25px_110px_rgba(0,0,0,0.55)] break-words"
                 style={{ animationDelay: `${0.3 + index * 0.1}s` }}
               >
                 <div className="absolute inset-0 bg-linear-to-r from-cyan-400/10 via-transparent to-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -103,7 +105,7 @@ export default function ProgramsPage() {
 
                 {/* Program Header */}
                 <div className="relative flex flex-col lg:flex-row lg:items-center justify-between gap-4 z-10">
-                  <div className="flex items-center space-x-3 flex-1">
+                  <div className="flex items-center space-x-3 flex-1 min-w-0">
                     <div className="w-10 h-10 sm:w-12 sm:h-12 bg-linear-to-br from-cyan-500 to-indigo-600 rounded-xl flex items-center justify-center shrink-0 shadow-lg group-hover:shadow-xl group-hover:scale-110 transition-all duration-300">
                       <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
@@ -115,7 +117,7 @@ export default function ProgramsPage() {
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-2 sm:gap-3">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 w-full lg:w-auto justify-start lg:justify-end">
                     {/* Scenario 1 badge when program metadata present */}
                     {(() => {
                       try {
@@ -184,7 +186,7 @@ export default function ProgramsPage() {
                     
                     <button
                       onClick={() => toggleProgramExpansion(p.id)}
-                      className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-linear-to-r from-cyan-500 to-indigo-600 text-white rounded-lg hover:from-cyan-400 hover:to-indigo-500 transition-colors text-sm shadow-lg"
+                      className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-linear-to-r from-cyan-500 to-indigo-600 text-white rounded-lg hover:from-cyan-400 hover:to-indigo-500 transition-colors text-sm shadow-lg w-full sm:w-auto"
                     >
                       {isExpanded ? (
                         <>
@@ -202,7 +204,7 @@ export default function ProgramsPage() {
                 </div>
 
                 {/* Quick Info Row */}
-                <div className="flex flex-wrap items-center gap-4 mt-4 pt-4 border-t border-white/10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 pt-4 border-t border-white/10">
                   <div className="flex items-center text-sm text-slate-300">
                     <svg className="w-4 h-4 mr-2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -325,6 +327,8 @@ export default function ProgramsPage() {
           }}
           programName={selectedProgram.name}
           hospitalName={selectedProgram.hospital}
+          programId={selectedProgram.programId}
+          hospitalId={selectedProgram.hospitalId}
         />
       )}
 

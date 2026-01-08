@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UI_COPY from '@/lib/uiCopy';
 
 export default function ExposureAcknowledgementLog({ studentId, programId, onAcknowledged }: { studentId: string, programId: string, onAcknowledged?: () => void }) {
@@ -9,7 +9,30 @@ export default function ExposureAcknowledgementLog({ studentId, programId, onAck
   const [exposureType, setExposureType] = useState<string>("Observation");
   const [confirmed, setConfirmed] = useState(false);
 
+  // On mount, check if an acknowledgement already exists
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch("/api/audit/exposure-log");
+        if (!res.ok) return;
+        const data = await res.json();
+        const match = (data.entries || []).find((e: any) => e.studentId === studentId && e.programId === programId);
+        if (match && !cancelled) {
+          setAcknowledged(true);
+        }
+      } catch {
+        // non-fatal
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [studentId, programId]);
+
   const handleAcknowledge = async () => {
+    if (!confirmed) {
+      setError("Please confirm you understand the exposure limits.");
+      return;
+    }
     setLoading(true);
     setError("");
     try {
@@ -18,7 +41,10 @@ export default function ExposureAcknowledgementLog({ studentId, programId, onAck
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ studentId, programId, exposureType, confirmed })
       });
-      if (!res.ok) throw new Error("Failed to record acknowledgement");
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.error || "Failed to record acknowledgement");
+      }
       setAcknowledged(true);
       if (onAcknowledged) onAcknowledged();
     } catch (e: any) {

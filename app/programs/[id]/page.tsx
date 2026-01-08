@@ -72,6 +72,26 @@ function ProgramContent({ id }: { id: string }) {
 
   // Evaluate when component mounts and when user or program changes
   useEffect(() => {
+    const ackKey = user && program ? `medgate_ack_${user.id}_${program.id}` : null;
+    if (ackKey && typeof window !== 'undefined') {
+      const stored = window.localStorage.getItem(ackKey);
+      if (stored === 'true') setAcknowledged(true);
+    }
+
+    // Also check audit log API to honor recorded acknowledgements
+    (async () => {
+      if (!user || !program) return;
+      try {
+        const res = await fetch('/api/audit/exposure-log');
+        if (!res.ok) return;
+        const data = await res.json();
+        const match = (data.entries || []).find((e: any) => e.studentId === user.id && e.programId === program.id);
+        if (match) setAcknowledged(true);
+      } catch {
+        // non-fatal
+      }
+    })();
+
     evaluateCanStart();
     // load stored metadata (admin-edits) to augment demo program fields
     try {
@@ -102,7 +122,7 @@ function ProgramContent({ id }: { id: string }) {
     <main className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
       <LiquidParallax />
       <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
-      <div className="relative max-w-4xl mx-auto px-6 py-12">
+      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 py-12 space-y-12">
         {/* Back Button */}
         <div className="mb-8 animate-fade-in">
           <Link
@@ -115,15 +135,15 @@ function ProgramContent({ id }: { id: string }) {
 
         {/* Header */}
         <div className="text-center mb-12 animate-fade-in" style={{ animationDelay: '0.1s' }}>
-          <div className="flex items-center justify-center mb-4">
-            <div className="w-16 h-16 bg-cyan-500/20 rounded-2xl flex items-center justify-center mr-4 border border-cyan-300/30">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4 text-center sm:text-left">
+            <div className="w-16 h-16 bg-cyan-500/20 rounded-2xl flex items-center justify-center sm:mr-4 border border-cyan-300/30">
               <svg className="w-8 h-8 text-cyan-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
               </svg>
             </div>
             <div>
-              <h1 className="text-4xl font-bold text-slate-100">{program.departmentName}</h1>
-              <p className="text-xl text-slate-300">{program.programType}</p>
+              <h1 className="text-3xl sm:text-4xl font-bold text-slate-100 leading-tight">{program.departmentName}</h1>
+              <p className="text-lg sm:text-xl text-slate-300">{program.programType}</p>
             </div>
           </div>
 
@@ -203,7 +223,7 @@ function ProgramContent({ id }: { id: string }) {
 
         {/* Requirements Section */}
         <div
-          className="mb-12 animate-fade-in rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg drop-shadow-[0_0_10px_rgba(34,211,238,0.4)] p-8"
+          className="animate-fade-in rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg drop-shadow-[0_0_10px_rgba(34,211,238,0.4)] p-6 md:p-8"
           style={{ animationDelay: '0.2s' }}
         >
           <div className="flex items-center mb-6">
@@ -228,7 +248,7 @@ function ProgramContent({ id }: { id: string }) {
 
         {/* Hospital Information */}
         <div
-          className="mb-12 animate-fade-in rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.45)] p-8"
+          className="animate-fade-in rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.45)] p-6 md:p-8"
           style={{ animationDelay: '0.25s' }}
         >
           <div className="flex items-center mb-6">
@@ -287,10 +307,10 @@ function ProgramContent({ id }: { id: string }) {
         </div>
 
         {/* Program Details */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Eligibility */}
           <div
-            className="animate-fade-in rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.45)] p-8"
+            className="animate-fade-in rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.45)] p-6 md:p-8"
             style={{ animationDelay: '0.3s' }}
           >
             <div className="flex items-center mb-4">
@@ -319,7 +339,7 @@ function ProgramContent({ id }: { id: string }) {
 
           {/* Logistics */}
           <div
-            className="animate-fade-in rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.45)] p-8"
+            className="animate-fade-in rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.45)] p-6 md:p-8"
             style={{ animationDelay: '0.4s' }}
           >
             <div className="flex items-center mb-4">
@@ -381,7 +401,7 @@ function ProgramContent({ id }: { id: string }) {
 
         {/* Documents Required */}
         <div
-          className="mb-12 animate-fade-in rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.45)] p-8"
+          className="animate-fade-in rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.45)] p-6 md:p-8"
           style={{ animationDelay: '0.5s' }}
         >
           <div className="flex items-center mb-6">
@@ -428,6 +448,42 @@ function ProgramContent({ id }: { id: string }) {
 
         {/* Apply Button (only enabled after acknowledgement) */}
           <div className="text-center animate-fade-in" style={{ animationDelay: '0.7s' }}>
+          <div className="max-w-2xl mx-auto mb-4">
+            <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-left flex items-start gap-3">
+              <input
+                id="program-ack-checkbox"
+                type="checkbox"
+                className="mt-1 h-5 w-5 accent-amber-500"
+                checked={acknowledged}
+                disabled={acknowledged}
+                onChange={async (e) => {
+                  if (!e.target.checked || acknowledged || !user || !program) return;
+                  setAcknowledged(true);
+                  const ackKey = `medgate_ack_${user.id}_${program.id}`;
+                  try {
+                    const res = await fetch('/api/audit/exposure-log', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ studentId: user.id, programId: program.id, exposureType: 'Observation', confirmed: true })
+                    });
+                    if (!res.ok) {
+                      const body = await res.json().catch(() => ({}));
+                      throw new Error(body.error || 'Failed to record acknowledgement');
+                    }
+                    if (typeof window !== 'undefined') {
+                      window.localStorage.setItem(ackKey, 'true');
+                    }
+                  } catch (err: any) {
+                    setAcknowledged(false);
+                    showToast(err?.message || 'Failed to record acknowledgement');
+                  }
+                }}
+              />
+              <label htmlFor="program-ack-checkbox" className="text-sm text-amber-200 leading-relaxed">
+                I acknowledge the prototype notice and agree to proceed with this application. Exposure confirmation may also be required.
+              </label>
+            </div>
+          </div>
           <button
             data-testid="apply-button"
             onClick={() => setIsModalOpen(true)}

@@ -1,10 +1,28 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function SupervisorConfirmation({ supervisorId, programId, dates, exposureBoundaries, onConfirmed }: { supervisorId: string, programId: string, dates: string, exposureBoundaries: string, onConfirmed?: () => void }) {
+export default function SupervisorConfirmation({ supervisorId, programId, dates, exposureBoundaries, studentId, onConfirmed }: { supervisorId: string, programId: string, dates: string, exposureBoundaries: string, studentId?: string, onConfirmed?: () => void }) {
   const [confirmed, setConfirmed] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch("/api/audit/supervisor-confirmation");
+        if (!res.ok) return;
+        const data = await res.json();
+        const match = (data.entries || []).find((e: any) => e.programId === programId && (e.studentId ? e.studentId === studentId : !studentId));
+        if (match && !cancelled) {
+          setConfirmed(true);
+        }
+      } catch {
+        // non-fatal
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [programId, studentId]);
 
   const handleConfirm = async () => {
     setLoading(true);
@@ -13,9 +31,12 @@ export default function SupervisorConfirmation({ supervisorId, programId, dates,
       const res = await fetch("/api/audit/supervisor-confirmation", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ supervisorId, programId, dates, exposureBoundaries })
+        body: JSON.stringify({ supervisorId, programId, dates, exposureBoundaries, studentId })
       });
-      if (!res.ok) throw new Error("Failed to record confirmation");
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.error || "Failed to record confirmation");
+      }
       setConfirmed(true);
       if (onConfirmed) onConfirmed();
     } catch (e: any) {

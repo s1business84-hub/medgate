@@ -15,21 +15,24 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           cache: 'npm'
+          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+      - name: Install Playwright browsers (Chromium only)
+        run: npx playwright install chromium --with-deps
 
       - name: Run dev + tests
         run: |
           set -euo pipefail
           # limit runtime in CI to avoid stuck jobs
           export PORT=${PORT:-3001}
-          bash ./scripts/dev-test.sh --reporter=list
+          bash ./scripts/dev-test.sh --fast --reporter=list
         env:
           PORT: 3001
+          NEXT_TELEMETRY_DISABLED: 1
+          CI: true
         timeout-minutes: 20

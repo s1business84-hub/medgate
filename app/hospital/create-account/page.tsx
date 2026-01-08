@@ -105,7 +105,7 @@ export default function HospitalCreateAccount() {
           </div>
 
           {/* Content */}
-          <form onSubmit={handleSubmit} className="p-8 space-y-6">
+          <form onSubmit={handleSubmit} className="p-10 space-y-8">
             {error && (
               <div className="p-4 bg-red-900/30 border border-red-700/40 rounded-lg">
                 <p className="text-red-200 font-medium">{error}</p>
@@ -177,7 +177,7 @@ export default function HospitalCreateAccount() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
                 <label className="block text-slate-200 font-semibold mb-2">Password</label>
                 <div className="relative">

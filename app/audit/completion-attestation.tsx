@@ -1,11 +1,29 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function CompletionAttestation({ supervisorId, studentId, programId, dates, exposureType, onAttested }: { supervisorId: string, studentId: string, programId: string, dates: string, exposureType: string, onAttested?: () => void }) {
   const [attested, setAttested] = useState(false);
   const [loading, setLoading] = useState(false);
   const [notes, setNotes] = useState("");
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch("/api/audit/completion-attestation");
+        if (!res.ok) return;
+        const data = await res.json();
+        const match = (data.entries || []).find((e: any) => e.studentId === studentId && e.programId === programId);
+        if (match && !cancelled) {
+          setAttested(true);
+        }
+      } catch {
+        // non-fatal
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [studentId, programId]);
 
   const handleAttest = async () => {
     setLoading(true);
