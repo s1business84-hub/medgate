@@ -100,8 +100,30 @@ export default function LoginForm() {
               {isLogin ? "Welcome Back" : "Create Account"}
             </h1>
             <p className="text-slate-300">
-              {isLogin ? `Sign in as ${role === "hospital" ? "Hospital" : "Student"}` : "Join MedGate platform"}
+              {isLogin ? `Sign in as a ${role === "hospital" ? "Hospital" : "Student"}` : `Create a ${role === "hospital" ? "Hospital" : "Student"} account`}
             </p>
+          </div>
+
+          <div className="mb-6">
+            <div className="flex items-center bg-white/5 border border-white/10 rounded-full p-1 text-sm font-semibold">
+              <button
+                type="button"
+                onClick={() => setRole("student")}
+                className={`flex-1 px-4 py-2 rounded-full transition-colors ${role === "student" ? "bg-white text-slate-900 shadow" : "text-slate-200 hover:text-white"}`}
+                aria-pressed={role === "student"}
+              >
+                Student
+              </button>
+              <button
+                type="button"
+                onClick={() => setRole("hospital")}
+                className={`flex-1 px-4 py-2 rounded-full transition-colors ${role === "hospital" ? "bg-white text-slate-900 shadow" : "text-slate-200 hover:text-white"}`}
+                aria-pressed={role === "hospital"}
+              >
+                Hospital
+              </button>
+            </div>
+            <p className="text-xs text-slate-400 mt-2">Toggle to choose whether you&apos;re signing in as a student or hospital admin.</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-7">
@@ -119,21 +141,6 @@ export default function LoginForm() {
                     className="w-full px-4 py-3 border border-white/15 bg-white/5 text-slate-100 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
                     placeholder="Enter your full name"
                   />
-                </div>
-
-                <div>
-                  <label htmlFor="role" className="block text-sm font-medium text-slate-300 mb-2">
-                    Account Type
-                  </label>
-                  <select
-                    id="role"
-                    value={role}
-                    onChange={(e) => setRole(e.target.value as "student" | "hospital")}
-                    className="w-full px-4 py-3 border border-white/15 bg-white/5 text-slate-100 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
-                  >
-                    <option value="student">Student</option>
-                    <option value="hospital">Hospital</option>
-                  </select>
                 </div>
               </div>
             )}
