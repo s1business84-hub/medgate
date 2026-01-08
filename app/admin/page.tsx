@@ -257,6 +257,72 @@ export default function AdminPage() {
       <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
 
       <div className="relative max-w-7xl mx-auto px-6 py-8">
+        {/* EHS Allocations quick links */}
+        <div className="mb-6 flex gap-3">
+          <Link href="/admin/hospital-confirmations" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-700 hover:bg-cyan-800 text-white font-semibold shadow transition-all">
+            <span>🔗</span> EHS Hospital Confirmations
+          </Link>
+          <Link href="/admin/ehs-audit" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-sky-700 hover:bg-sky-800 text-white font-semibold shadow transition-all">
+            <span>📜</span> EHS Audit
+          </Link>
+          {process.env.NODE_ENV !== 'production' && (
+            <button
+              data-testid="run-scenario2-button"
+              onClick={async () => {
+                try {
+                  showToast('Seeding demo data for Scenario 2...');
+                  const base = window.location.origin;
+                  const resp = await fetch(`${base}/api/test/seed`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ programId: mockPrograms?.[0]?.id || 'demo', hospitalId: mockHospitals?.[0]?.id || 'h1', seedExposure: true, seedSupervisor: true }),
+                  });
+                  const payload = await resp.json();
+                  // Persist to localStorage to mimic test setup
+                  if (payload.users) localStorage.setItem('medgate_users', JSON.stringify(payload.users));
+                  if (payload.students) localStorage.setItem('medgate_students', JSON.stringify(payload.students));
+                  if (payload.applications) localStorage.setItem('medgate_applications', JSON.stringify(payload.applications));
+                  // set current user to student
+                  const stu = payload.users?.find((u: any) => u.role === 'student') || payload.users?.[0];
+                  if (stu) localStorage.setItem('medgate_current_user', JSON.stringify(stu));
+                  showToast('Scenario 2 seeded — opening program page');
+                  const programId = payload.programs?.[0]?.id || mockPrograms?.[0]?.id || 'demo';
+                  router.push(`/programs/${programId}`);
+                } catch (err) {
+                  console.error('Scenario 2 seed failed', err);
+                  showToast('Failed to seed Scenario 2 — check console');
+                }
+              }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-violet-600 hover:bg-violet-700 text-white font-semibold shadow transition-all"
+            >
+              🚀 Run Scenario 2
+            </button>
+          )}
+          <button
+            onClick={async () => {
+              try {
+                const { exportAccreditationCSV } = await import('@/lib/auditStore');
+                const csv = exportAccreditationCSV();
+                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `medgate_accreditation_${new Date().toISOString().slice(0,10)}.csv`;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                URL.revokeObjectURL(url);
+                try { (await import('@/lib/toast')).showToast('Export ready — download should begin shortly'); } catch {}
+              } catch (err) {
+                console.error('Export failed', err);
+                try { (await import('@/lib/toast')).showToast('Export failed'); } catch {}
+              }
+            }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-semibold shadow transition-all"
+          >
+            <span>⬇️</span> Export Accreditation CSV
+          </button>
+        </div>
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-slate-100 mb-2">Admin Dashboard</h1>
@@ -381,7 +447,7 @@ export default function AdminPage() {
                         </select>
                       </div>
                       <div className="flex gap-2">
-                        <button onClick={() => {
+                        <button data-testid="confirm-program-button" onClick={() => {
                           if (!selectedApp) return;
                           if (!selectedSupervisorId && !selectedDepartment) {
                             showToast("Please select a supervisor or department before saving.");
@@ -465,7 +531,7 @@ export default function AdminPage() {
                   )}
                   {selectedApp.status === "Submitted" && (
                     <div className="pt-4 border-t border-white/10 space-y-2">
-                      <button onClick={() => handleAccept(selectedApp.id)} disabled={actionInProgress} className="w-full bg-linear-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-semibold py-2 rounded-lg transition-colors disabled:opacity-50 flex items-center justify-center shadow-lg">
+                      <button data-testid="accept-application-button" onClick={() => handleAccept(selectedApp.id)} disabled={actionInProgress} className="w-full bg-linear-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-semibold py-2 rounded-lg transition-colors disabled:opacity-50 flex items-center justify-center shadow-lg">
                         <CheckCircle className="w-4 h-4 mr-2" />
                         Accept Application
                       </button>
@@ -650,7 +716,7 @@ export default function AdminPage() {
             </div>
             <div className="flex gap-3 mt-4">
               <button onClick={() => setShowEHSForm(false)} className="px-4 py-2 border border-white/15 rounded">Cancel</button>
-              <button onClick={() => {
+              <button data-testid="create-ehs-allocation-button" onClick={() => {
                 if (!ehsStudentId || !ehsProgramId) {
                   showToast('Select student and program');
                   return;
