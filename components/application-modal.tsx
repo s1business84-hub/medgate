@@ -170,7 +170,7 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="relative w-full max-w-lg sm:max-w-2xl max-h-[88vh] sm:max-h-[90vh] overflow-hidden bg-white rounded-xl sm:rounded-2xl shadow-2xl"
+            className="relative w-full max-w-lg sm:max-w-2xl max-h-[88vh] sm:max-h-[90vh] overflow-hidden bg-white text-gray-900 rounded-xl sm:rounded-2xl shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200">
