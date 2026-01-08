@@ -1,4 +1,4 @@
-type ExposureLog = { studentId: string; programId: string; exposureType?: string; acknowledgedAt: string; type: string };
+type ExposureLog = { studentId: string; programId: string; exposureType?: string; confirmed?: boolean; acknowledgedAt: string; type: string };
 type SupervisorConfirmation = { supervisorId: string; studentId?: string; programId: string; dates: string; exposureBoundaries: string; confirmedAt: string; type: string };
 type CompletionAttestation = { supervisorId: string; studentId: string; programId: string; dates: string; exposureType: string; notes?: string; attestedAt: string; type: string };
 type IncidentFlag = { adminId: string; programId: string; note: string; flaggedAt: string; severity?: string; type: string };
