@@ -208,13 +208,14 @@ export default function LoginForm() {
             </Link>
           </div>
 
-          <div className="mt-6 p-4 bg-white/5 border border-white/10 rounded-lg">
+          <div className="mt-6 p-4 bg-white/5 border border-white/10 rounded-lg space-y-2">
+            <p className="text-sm text-slate-200 font-semibold">Demo Credentials</p>
             <p className="text-sm text-slate-200">
-              <strong>Demo Credentials:</strong><br />
-              Student: student@example.com / password<br />
-              Hospital: hospital1@medgate.com / password
+              Student: <span className="font-mono">student@example.com</span> / <span className="font-mono">password</span><br />
+              Hospital: <span className="font-mono">hospital1@medgate.com</span> / <span className="font-mono">password</span><br />
+              Admin: <span className="font-mono">admin@medgate.com</span> / <span className="font-mono">password</span>
             </p>
-            <p className="text-xs text-slate-400 mt-3">Demo credentials are provided for preview purposes only.</p>
+            <p className="text-xs text-slate-400">Demo credentials are provided for preview purposes only.</p>
           </div>
         </div>
       </div>
