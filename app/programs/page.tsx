@@ -21,6 +21,7 @@ export default function ProgramsPage() {
     programId: "",
     programName: "",
   });
+  const [openMapProgram, setOpenMapProgram] = useState<string | null>(null);
 
   const toggleProgramExpansion = (programId: string) => {
     setExpandedProgram(expandedProgram === programId ? null : programId);
@@ -155,14 +156,21 @@ export default function ProgramsPage() {
                     </button>
 
                     {/* Map/Directions Dropdown */}
-                    <div className="relative group">
+                    <div className="relative">
                       <button
-                        className="p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-cyan-400/15 hover:border-cyan-300/40 transition-all group"
+                        onClick={() => setOpenMapProgram(openMapProgram === p.id ? null : p.id)}
+                        className="p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-cyan-400/15 hover:border-cyan-300/40 transition-all"
                         title="View on map and get directions"
+                        aria-expanded={openMapProgram === p.id}
+                        aria-haspopup="true"
                       >
-                        <MapPin className="w-4 h-4 text-cyan-200 group-hover:text-cyan-100" />
+                        <MapPin className="w-4 h-4 text-cyan-200" />
                       </button>
-                      <div className="absolute right-0 top-full mt-2 w-48 rounded-lg bg-slate-900 border border-white/10 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-20">
+                      <div
+                        className={`absolute right-0 top-full mt-2 w-48 rounded-lg bg-slate-900 border border-white/10 shadow-xl transition-all duration-200 z-20 ${openMapProgram === p.id ? "opacity-100 visible" : "opacity-0 invisible"}`}
+                        role="menu"
+                        aria-label="Map actions"
+                      >
                         <a
                           href={`https://www.google.com/maps/search/${h?.name}+${h?.city}+${h?.emirate}+UAE`}
                           target="_blank"
