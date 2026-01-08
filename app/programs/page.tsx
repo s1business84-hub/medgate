@@ -167,7 +167,7 @@ export default function ProgramsPage() {
                         <MapPin className="w-4 h-4 text-cyan-200" />
                       </button>
                       <div
-                        className={`absolute right-0 top-full mt-2 w-48 rounded-lg bg-slate-900 border border-white/10 shadow-xl transition-all duration-200 z-20 ${openMapProgram === p.id ? "opacity-100 visible" : "opacity-0 invisible"}`}
+                        className={`absolute right-0 top-full mt-2 w-48 rounded-lg bg-slate-900 border border-white/10 shadow-xl transition-all duration-200 z-20 ${openMapProgram === p.id ? "opacity-100 visible pointer-events-auto" : "opacity-0 invisible pointer-events-none"}`}
                         role="menu"
                         aria-label="Map actions"
                       >
