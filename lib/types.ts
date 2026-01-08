@@ -37,6 +37,13 @@ export interface Application {
     reference?: string;
     status?: "Pending" | "Verified";
   };
+  // Allocation metadata records how this applicant was allocated to a hospital/program
+  allocation?: {
+    source: "Student" | "Hospital" | "EHS"; // who initiated/assigned the allocation
+    assignedHospitalId?: string; // hospital id provided by the allocator (EHS/hospital)
+    ehsReference?: string; // optional EHS allocation reference/code
+    allocatedAt?: string; // ISO timestamp when allocation was recorded
+  };
   // Optional fields populated by admin/hospital after review
   supervisor?: string; // supervisor name or identifier
   department?: string;

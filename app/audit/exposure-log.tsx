@@ -44,11 +44,12 @@ export default function ExposureAcknowledgementLog({ studentId, programId, onAck
         </select>
       </div>
       <div className="mb-3 flex items-start gap-2">
-        <input id="confirm" type="checkbox" checked={confirmed} onChange={(e) => setConfirmed(e.target.checked)} />
+        <input id="confirm" data-testid="exposure-confirm-checkbox" type="checkbox" checked={confirmed} onChange={(e) => setConfirmed(e.target.checked)} />
         <label htmlFor="confirm" className="text-sm text-gray-700">{UI_COPY.student.exposureCheckbox}</label>
       </div>
       {error && <div className="text-red-600 mb-2">{error}</div>}
       <button
+        data-testid="exposure-acknowledge-button"
         className="bg-blue-600 text-white px-4 py-2 rounded disabled:opacity-50"
         onClick={handleAcknowledge}
         disabled={loading}

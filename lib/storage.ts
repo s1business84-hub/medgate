@@ -115,6 +115,32 @@ export function setApplicationAssignment(applicationId: string, assignment: { su
   return updated;
 }
 
+export function setApplicationAllocation(applicationId: string, allocation: { source: "Student" | "Hospital" | "EHS"; assignedHospitalId?: string; ehsReference?: string }): Application | null {
+  const applications = readJSON<Application[]>(KEYS.applications, []);
+  const appIndex = applications.findIndex(a => a.id === applicationId);
+  if (appIndex === -1) return null;
+  const now = new Date().toISOString();
+  const updated: Application = {
+    ...applications[appIndex],
+    allocation: {
+      source: allocation.source,
+      assignedHospitalId: allocation.assignedHospitalId ?? applications[appIndex].allocation?.assignedHospitalId,
+      ehsReference: allocation.ehsReference ?? applications[appIndex].allocation?.ehsReference,
+      allocatedAt: now,
+    },
+    // If an assigned hospital id is provided, also set hospitalId on the application
+    hospitalId: allocation.assignedHospitalId ?? applications[appIndex].hospitalId,
+  };
+  applications[appIndex] = updated;
+  writeJSON(KEYS.applications, applications);
+  return updated;
+}
+
+export function getApplicationsByEHSReference(ehsReference: string): Application[] {
+  const applications = readJSON<Application[]>(KEYS.applications, []);
+  return applications.filter(app => app.allocation?.ehsReference === ehsReference);
+}
+
 export function deleteApplication(applicationId: string): boolean {
   const applications = readJSON<Application[]>(KEYS.applications, []);
   const next = applications.filter(a => a.id !== applicationId);

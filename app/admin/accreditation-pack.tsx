@@ -3,6 +3,8 @@ import { useState } from "react";
 import { ALLOW_EXPORT } from "@/lib/featureFlags";
 
 export default function AccreditationPack() {
+  const [csv, setCsv] = useState("");
+
   if (!ALLOW_EXPORT) {
     return (
       <div className="p-6 max-w-4xl mx-auto">
@@ -11,8 +13,6 @@ export default function AccreditationPack() {
       </div>
     );
   }
-
-  const [csv, setCsv] = useState("");
 
   const fetchPack = async () => {
     const res = await fetch('/api/admin/accreditation-export');

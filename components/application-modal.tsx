@@ -29,7 +29,11 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
     motivation: '',
     documents: [] as File[]
     , regulatoryType: 'None',
-    regulatoryReference: ''
+    regulatoryReference: '',
+    // Allocation / EHS fields
+    allocationSource: 'Student', // 'Student' | 'EHS' | 'Hospital'
+    allocatedHospitalInput: '',
+    allocationEhsReference: '',
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -87,8 +91,19 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
       }
 
       // Create application via storage
-      const { createApplication } = await import('@/lib/storage')
-      createApplication({ studentId: student.id, programId: programId || '', hospitalId: hospitalId || '', regulatory })
+      const { createApplication, setApplicationAllocation } = await import('@/lib/storage')
+      const allocationPayload = (formData as any).allocationSource && (formData as any).allocationSource !== 'Student' ? {
+        source: (formData as any).allocationSource as 'EHS' | 'Hospital' | 'Student',
+        assignedHospitalId: (formData as any).allocatedHospitalInput || hospitalId || undefined,
+        ehsReference: (formData as any).allocationEhsReference || undefined,
+      } : undefined
+
+      const created = createApplication({ studentId: student.id, programId: programId || '', hospitalId: hospitalId || '', regulatory, ...(allocationPayload ? { allocation: allocationPayload } : {}) })
+
+      // Ensure allocation metadata is set (also updates hospitalId on application if provided)
+      if (allocationPayload && created) {
+        setApplicationAllocation(created.id, allocationPayload as any)
+      }
       setIsSubmitted(true)
     } catch (err: any) {
       (await import('@/lib/toast')).showToast(err?.message || 'Failed to submit application')
@@ -113,7 +128,10 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
         motivation: '',
         documents: [],
         regulatoryType: 'None',
-        regulatoryReference: ''
+        regulatoryReference: '',
+        allocationSource: 'Student',
+        allocatedHospitalInput: '',
+        allocationEhsReference: ''
       })
     }, 3000)
   }
@@ -221,6 +239,15 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
                       <p className="text-gray-600">
                         We&apos;ll review your application and get back to you within 3-5 business days.
                       </p>
+                      {/* Show allocation summary if provided */}
+                      {(formData as any).allocationSource && (formData as any).allocationSource !== 'Student' && (
+                        <div className="mt-4 text-sm text-gray-700">
+                          <div><strong>Allocation:</strong> {(formData as any).allocationSource}</div>
+                          {(formData as any).allocatedHospitalInput ? <div>Assigned hospital: {(formData as any).allocatedHospitalInput}</div> : null}
+                          {(formData as any).allocationEhsReference ? <div>EHS reference: {(formData as any).allocationEhsReference}</div> : null}
+                          {(formData as any).allocationSource === 'EHS' && <div className="text-amber-600">Hospital confirmation may be required before starting training.</div>}
+                        </div>
+                      )}
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit}>
@@ -418,17 +445,44 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
                         </div>
 
                         <div className="mt-4">
-                          <label className="block text-sm font-medium text-gray-700 mb-2">Regulatory (if applicable)</label>
-                          <div className="flex gap-2">
-                            <select name="regulatoryType" value={(formData as any).regulatoryType} onChange={(e) => setFormData(prev => ({ ...prev, regulatoryType: (e.target as HTMLSelectElement).value }))} className="form-select w-48">
-                              <option value="None">None</option>
-                              <option value="EHS">EHS</option>
-                              <option value="DHA">DHA</option>
-                              <option value="DoH">DoH</option>
-                            </select>
-                            <input name="regulatoryReference" value={(formData as any).regulatoryReference} onChange={(e) => setFormData(prev => ({ ...prev, regulatoryReference: e.target.value }))} placeholder="Reference (if any)" className="form-input" />
+                          <label className="block text-sm font-medium text-gray-700 mb-2">Allocation</label>
+                          <div className="flex items-center gap-3">
+                            <label className="flex items-center gap-2">
+                              <input type="radio" name="allocationSource" value="Student" checked={(formData as any).allocationSource === 'Student'} onChange={(e) => setFormData(prev => ({ ...prev, allocationSource: (e.target as HTMLInputElement).value }))} />
+                              <span className="text-sm">I'm applying myself</span>
+                            </label>
+                            <label className="flex items-center gap-2">
+                              <input data-testid="app-modal-allocation-ehs" type="radio" name="allocationSource" value="EHS" checked={(formData as any).allocationSource === 'EHS'} onChange={(e) => setFormData(prev => ({ ...prev, allocationSource: (e.target as HTMLInputElement).value }))} />
+                              <span className="text-sm">Allocated via EHS</span>
+                            </label>
+                            <label className="flex items-center gap-2">
+                              <input type="radio" name="allocationSource" value="Hospital" checked={(formData as any).allocationSource === 'Hospital'} onChange={(e) => setFormData(prev => ({ ...prev, allocationSource: (e.target as HTMLInputElement).value }))} />
+                              <span className="text-sm">Nominated by hospital</span>
+                            </label>
                           </div>
-                          <p className="text-xs text-gray-500 mt-1">If DHA/DoH selected, a reference is required and hospital must verify.</p>
+
+                          {(formData as any).allocationSource !== 'Student' && (
+                            <div className="mt-3 space-y-2">
+                              <input data-testid="app-modal-allocated-hospital" name="allocatedHospitalInput" value={(formData as any).allocatedHospitalInput} onChange={(e) => setFormData(prev => ({ ...prev, allocatedHospitalInput: e.target.value }))} placeholder="Assigned hospital (name or id)" className="form-input" />
+                              {(formData as any).allocationSource === 'EHS' && (
+                                <input data-testid="app-modal-ehs-reference" name="allocationEhsReference" value={(formData as any).allocationEhsReference} onChange={(e) => setFormData(prev => ({ ...prev, allocationEhsReference: e.target.value }))} placeholder="EHS reference (if provided)" className="form-input" />
+                              )}
+                            </div>
+                          )}
+
+                          <div className="mt-3">
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Regulatory (if applicable)</label>
+                            <div className="flex gap-2">
+                              <select name="regulatoryType" value={(formData as any).regulatoryType} onChange={(e) => setFormData(prev => ({ ...prev, regulatoryType: (e.target as HTMLSelectElement).value }))} className="form-select w-48">
+                                <option value="None">None</option>
+                                <option value="EHS">EHS</option>
+                                <option value="DHA">DHA</option>
+                                <option value="DoH">DoH</option>
+                              </select>
+                              <input name="regulatoryReference" value={(formData as any).regulatoryReference} onChange={(e) => setFormData(prev => ({ ...prev, regulatoryReference: e.target.value }))} placeholder="Reference (if any)" className="form-input" />
+                            </div>
+                            <p className="text-xs text-gray-500 mt-1">If DHA/DoH selected, a reference is required and hospital must verify.</p>
+                          </div>
                         </div>
 
                         <div>
@@ -489,6 +543,7 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
             {!isSubmitted && (
               <div className="flex items-center justify-between p-6 border-t border-gray-200 bg-gray-50">
                 <Button
+                  data-testid="app-modal-cancel"
                   type="button"
                   variant="outline"
                   onClick={step === 1 ? onClose : prevStep}
@@ -503,6 +558,7 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
                   </span>
                   {step < 3 ? (
                     <Button
+                      data-testid="app-modal-next"
                       type="button"
                       onClick={nextStep}
                       disabled={!isStepValid() || isSubmitting}
@@ -512,6 +568,7 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
                     </Button>
                   ) : (
                     <Button
+                      data-testid="app-modal-submit"
                       onClick={handleSubmit}
                       disabled={!isStepValid() || isSubmitting}
                       className="bg-green-600 hover:bg-green-700 min-w-30"

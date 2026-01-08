@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { programs, hospitals } from "@/lib/mockData";
 import { getProgramMetadata, setProgramMetadata } from "@/lib/storage";
 import Link from "next/link";
@@ -9,16 +9,17 @@ export default function AdminProgramsPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState({ bestFor: "", notRecommendedFor: "", exposureLevel: "", limitations: "" });
 
-  useEffect(() => {
-    if (!editingId) return;
-    const meta = getProgramMetadata(editingId);
+  // when opening the editor, preload metadata synchronously from local storage
+  const openEditor = (programId: string) => {
+    const meta = getProgramMetadata(programId);
     setForm({
       bestFor: meta?.bestFor || "",
       notRecommendedFor: meta?.notRecommendedFor || "",
       exposureLevel: meta?.exposureLevel || "",
       limitations: meta?.limitations || "",
     });
-  }, [editingId]);
+    setEditingId(programId);
+  };
 
   return (
     <main className="min-h-screen bg-slate-950 text-slate-100 p-8">
@@ -38,7 +39,7 @@ export default function AdminProgramsPage() {
               <div className="flex items-center gap-2">
                 <button
                   className="px-3 py-2 rounded-lg bg-cyan-600 text-white text-sm"
-                  onClick={() => setEditingId(p.id)}
+                  onClick={() => openEditor(p.id)}
                 >
                   Edit Metadata
                 </button>

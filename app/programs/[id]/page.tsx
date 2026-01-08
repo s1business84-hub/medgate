@@ -53,6 +53,12 @@ function ProgramContent({ id }: { id: string }) {
       return setCanStart(false);
     }
 
+    // EHS-specific check: if allocation came from EHS, hospital must verify
+    if (app.allocation?.source === 'EHS' && app.regulatory?.status !== 'Verified') {
+      setStartMessage('Hospital confirmation required for EHS allocations');
+      return setCanStart(false);
+    }
+
     // supervisor confirmation present (student-level or program-level)
     const supConfirmed = getSupervisorConfirmations().some(s => s.programId === app.programId && (s.studentId === app.studentId || !s.studentId));
     if (!supConfirmed) {
@@ -423,6 +429,7 @@ function ProgramContent({ id }: { id: string }) {
         {/* Apply Button (only enabled after acknowledgement) */}
           <div className="text-center animate-fade-in" style={{ animationDelay: '0.7s' }}>
           <button
+            data-testid="apply-button"
             onClick={() => setIsModalOpen(true)}
             className="text-lg px-8 py-4 hover-scale rounded-xl bg-linear-to-r from-cyan-500 to-indigo-600 text-white font-semibold shadow-lg hover:from-cyan-400 hover:to-indigo-500 transition-all duration-300"
             disabled={!acknowledged}
@@ -430,6 +437,28 @@ function ProgramContent({ id }: { id: string }) {
           >
             {UI_COPY.student.applyButton}
           </button>
+          {/* If the current user has an application, show allocation / verification status */}
+          {user && user.role === 'student' && (() => {
+            try {
+              const apps = getApplications();
+              const myApp = apps.find(a => a.programId === program.id && a.studentId === user.id);
+              if (myApp && myApp.allocation) {
+                return (
+                  <div className="mt-3 text-sm">
+                    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs bg-white/5 text-slate-200 border border-white/10">
+                      <strong>Allocation:</strong> {myApp.allocation.source}
+                      {myApp.allocation.ehsReference ? (<span className="ml-2">Ref: {myApp.allocation.ehsReference}</span>) : null}
+                      {myApp.allocation.assignedHospitalId ? (<span className="ml-2">Hospital: {myApp.allocation.assignedHospitalId}</span>) : null}
+                      {myApp.regulatory?.status === 'Verified' ? (<span className="ml-2 text-emerald-300">Verified</span>) : myApp.allocation.source === 'EHS' ? (<span className="ml-2 text-amber-300">Pending hospital confirmation</span>) : null}
+                    </span>
+                  </div>
+                )
+              }
+            } catch (err) {
+              // ignore
+            }
+            return null
+          })()}
           {!acknowledged && (
             <p className="text-sm text-amber-300 mt-3">{UI_COPY.student.acknowledgeToApply}</p>
           )}
@@ -442,6 +471,7 @@ function ProgramContent({ id }: { id: string }) {
         {user && user.role === 'student' && (
           <div className="text-center mt-6">
             <button
+              data-testid="start-training-button"
               onClick={async () => {
                 setStartLoading(true);
                 try {

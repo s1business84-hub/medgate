@@ -38,3 +38,55 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 ## Pilot Brief
 
 See the pilot brief and checklist for the current pilot scope: `PILOT_BRIEF_FINAL.md` and `PILOT_CHECKLIST.md`.
+
+## Running tests (dev)
+
+For local deterministic E2E runs the repo provides a helper that:
+
+- starts the Next dev server on `PORT` (default `3001`),
+- waits for the app to be ready,
+- hits the dev-only seed endpoint `/api/test/seed` to populate demo users and students,
+- runs Playwright against the running app, and
+- tears down the dev server.
+
+Usage:
+
+```bash
+# make the script executable once
+chmod +x ./scripts/dev-test.sh
+
+# run tests (passes extra args to Playwright)
+./scripts/dev-test.sh --reporter=list tests/ehs-flow.spec.ts
+
+# or via npm
+npm run dev:test -- --reporter=list tests/ehs-flow.spec.ts
+```
+
+## Testing (E2E)
+
+The repository includes a helper that starts the Next.js dev server, waits for it to be responsive, seeds demo data (dev-only), runs Playwright E2E tests, and then shuts down the server.
+
+Run the full E2E flow locally with:
+
+```bash
+# ensure Playwright browsers are installed first
+npx playwright install
+
+# runs the helper which starts dev server, seeds, runs tests, then tears down
+npm run dev:test -- --reporter=list tests/ehs-flow.spec.ts
+```
+
+You can set `PORT` env var to change the dev port (default `3001`):
+
+```bash
+PORT=3002 npm run dev:test -- --reporter=list tests/ehs-flow.spec.ts
+```
+
+Note: The seeding endpoint `/api/test/seed` is only enabled in non-production environments.
+
+Notes:
+
+- The script is a best-effort helper for local/CI runs and will attempt to clean up the dev server using multiple fallbacks. If ports remain in use, `npx kill-port 3001` is a useful manual fallback.
+- CI is wired to run `npm run dev:test` in `.github/workflows/ci.yml`.
+
+If you'd like me to add a GitHub Actions badge or adjust the CI job to run only specific suites, tell me which branch or suite to target.

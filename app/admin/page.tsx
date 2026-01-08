@@ -502,7 +502,42 @@ export default function AdminPage() {
                     </div>
                   </div>
                   <div className="mt-4">
-                    <button onClick={() => setShowEHSForm(true)} className="px-3 py-2 bg-indigo-600 text-white rounded" aria-label="Create EHS allocation" title="Create an EHS allocation for a student">{UI_COPY.admin.ehsAllocationButton}</button>
+                    <div className="flex gap-2 items-center">
+                      <button onClick={() => setShowEHSForm(true)} className="px-3 py-2 bg-indigo-600 text-white rounded" aria-label="Create EHS allocation" title="Create an EHS allocation for a student">{UI_COPY.admin.ehsAllocationButton}</button>
+                      <div className="ml-2">
+                        <label className="text-xs text-slate-300">Regulatory requirement</label>
+                        <div className="flex gap-2 mt-1">
+                          <select id="admin-regulatory-type" defaultValue={selectedApp?.regulatory?.type || 'None'} className="px-2 py-1 rounded bg-white/5 text-slate-100" onChange={(e) => {
+                            const val = e.target.value as any;
+                            try { (document.getElementById('admin-regulatory-type') as HTMLSelectElement).dataset.selected = val; } catch {}
+                          }}>
+                            <option value="None">None</option>
+                            <option value="DHA">DHA</option>
+                            <option value="DoH">DoH</option>
+                          </select>
+                          <button data-testid="require-regulatory-button" onClick={() => {
+                            if (!selectedApp) return;
+                            const sel = (document.getElementById('admin-regulatory-type') as HTMLSelectElement)?.value || 'None';
+                            if (sel === 'None') {
+                              showToast('Select a regulator to require');
+                              return;
+                            }
+                            try {
+                              const { setApplicationRegulatory, getApplications } = require('@/lib/storage');
+                              const updated = setApplicationRegulatory(selectedApp.id, { type: sel, reference: undefined, status: 'Pending' });
+                              if (updated) {
+                                setApplications(getApplications());
+                                setSelectedApp(updated);
+                                showToast(`Marked ${sel} required — student will be prompted to provide reference`);
+                              }
+                            } catch (err) {
+                              console.error(err);
+                              showToast('Failed to mark regulatory requirement');
+                            }
+                          }} className="px-3 py-2 bg-amber-600 text-white rounded">Require Clearance</button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div>
                     <p className="text-sm text-slate-400 mb-1">Email</p>
