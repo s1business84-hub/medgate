@@ -203,11 +203,11 @@ body {
 
 .form-input,
 .form-select {
-  @apply w-full px-4 py-3 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300;
+  @apply w-full px-4 py-3 border border-gray-300 rounded-xl bg-white text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300;
 }
 
 .form-select {
-  @apply appearance-none;
+  @apply appearance-none text-gray-900;
 }
 
 .status-badge {
