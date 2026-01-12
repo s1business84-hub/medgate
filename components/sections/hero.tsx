@@ -10,7 +10,7 @@ import { AnimatedGradientText } from "@/components/ui/animated-gradient-text"
 const stats = [
   {
     label: "Infrastructure",
-    value: "Hospital‑Ready Infrastructure",
+    value: "Hospital Ready",
     icon: Users,
   },
   {
