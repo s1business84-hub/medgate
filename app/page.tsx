@@ -2,6 +2,7 @@ import { Hero } from "@/components/sections/hero"
 import { Features } from "@/components/sections/features"
 import { FAQ } from "@/components/sections/faq"
 
+// Force Vercel rebuild
 export default function Home() {
   return (
     <main className="relative min-h-screen overflow-hidden text-slate-50">
