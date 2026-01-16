@@ -113,6 +113,11 @@ export function Hero() {
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
+            <Link href="/login">
+              <Button size="lg" className="w-full sm:w-auto bg-linear-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 shadow-lg hover:shadow-xl transition-all duration-300 text-base px-6 py-3">
+                For Trainees
+              </Button>
+            </Link>
             <Link href="/for-hospitals">
               <Button size="lg" className="w-full sm:w-auto bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all duration-300 text-base px-6 py-3">
                 For Hospitals
