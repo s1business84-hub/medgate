@@ -170,7 +170,7 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="relative w-full max-w-lg sm:max-w-2xl max-h-[88vh] sm:max-h-[90vh] overflow-hidden bg-white text-gray-900 rounded-xl sm:rounded-2xl shadow-2xl"
+            className="relative w-full max-w-lg sm:max-w-2xl max-h-[95vh] overflow-hidden bg-white text-gray-900 rounded-xl sm:rounded-2xl shadow-2xl flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200">
@@ -183,7 +183,7 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
               </button>
             </div>
 
-            <div className="px-4 sm:px-6 py-4 bg-gray-50 border-b border-gray-200">
+            <div className="px-4 sm:px-6 py-3 bg-gray-50 border-b border-gray-200 flex-shrink-0">
               <div className="flex flex-wrap items-center gap-2">
                 {[1, 2, 3].map(stepNumber => (
                   <div key={stepNumber} className="flex items-center">
@@ -207,7 +207,7 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
               </div>
             </div>
 
-            <div className="p-4 sm:p-6 max-h-[70vh] sm:max-h-[60vh] overflow-y-auto space-y-6">
+            <div className="flex-1 px-4 sm:px-6 py-4 overflow-y-auto space-y-6">
               {isSubmitted ? (
                 <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-12">
                   <motion.div
@@ -537,7 +537,7 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
             </div>
 
             {!isSubmitted && (
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-4 sm:p-6 border-t border-gray-200 bg-gray-50">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-4 sm:p-6 border-t border-gray-200 bg-gray-50 flex-shrink-0">
                 <Button
                   data-testid="app-modal-cancel"
                   type="button"
