@@ -117,7 +117,7 @@ export default function PurposePage() {
                   viewport={{ once: true }}
                   className="text-lg md:text-xl text-slate-200 leading-relaxed font-medium"
                 >
-                  MedGate exists to <span className="text-cyan-300 font-semibold">simplify and standardize</span> access to medical observerships and elective programs across the UAE.
+                  Electivio exists to <span className="text-cyan-300 font-semibold">simplify and standardize</span> access to medical observerships and elective programs across the UAE.
                 </motion.p>
                 
                 <motion.div
@@ -140,7 +140,7 @@ export default function PurposePage() {
                   className="pl-4 border-l-2 border-indigo-400/50"
                 >
                   <p className="text-lg text-slate-300 leading-relaxed">
-                    MedGate bridges this gap by providing a <span className="text-slate-200 font-medium">centralized platform</span> where institutions define requirements clearly and students understand opportunities upfront—reducing administrative friction for both sides.
+                    Electivio bridges this gap by providing a <span className="text-slate-200 font-medium">centralized platform</span> where institutions define requirements clearly and students understand opportunities upfront—reducing administrative friction for both sides.
                   </p>
                 </motion.div>
                 
@@ -164,7 +164,7 @@ export default function PurposePage() {
         <section className="mb-24 animate-fade-in" style={{ animationDelay: '0.3s' }}>
           <h2 className="text-3xl font-bold text-slate-100 mb-4">What We Are Building</h2>
           <p className="text-lg text-slate-300 leading-relaxed mb-12">
-            MedGate is being developed as a program management and discovery platform designed around real institutional workflows and student needs. We focus on three core areas:
+            Electivio is being developed as a program management and discovery platform designed around real institutional workflows and student needs. We focus on three core areas:
           </p>
           
           <div className="space-y-6">
@@ -178,14 +178,14 @@ export default function PurposePage() {
             <div className="bg-white/5 border border-white/10 rounded-2xl backdrop-blur-xl p-8 hover:bg-white/10 transition-all duration-300">
               <h3 className="text-2xl font-bold text-indigo-300 mb-3">2. Administrative Efficiency</h3>
               <p className="text-lg text-slate-300 leading-relaxed">
-                By centralizing program information and application workflows, MedGate reduces repetitive back and forth communication and improves visibility for students and administrators alike.
+                By centralizing program information and application workflows, Electivio reduces repetitive back and forth communication and improves visibility for students and administrators alike.
               </p>
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-2xl backdrop-blur-xl p-8 hover:bg-white/10 transition-all duration-300">
               <h3 className="text-2xl font-bold text-emerald-300 mb-3">3. Institutional Control & Governance</h3>
               <p className="text-lg text-slate-300 leading-relaxed">
-                MedGate is built institution-first. Hospitals retain full control over program approvals, intake capacity, and internal policies while benefiting from a structured digital interface.
+                Electivio is built institution-first. Hospitals retain full control over program approvals, intake capacity, and internal policies while benefiting from a structured digital interface.
               </p>
             </div>
           </div>
@@ -195,7 +195,7 @@ export default function PurposePage() {
           <div className="bg-linear-to-br from-cyan-600/20 to-indigo-600/20 border border-cyan-500/30 rounded-3xl backdrop-blur-xl p-8 md:p-12">
             <h2 className="text-3xl font-bold text-slate-100 mb-6">Our Focus Today</h2>
             <p className="text-lg text-slate-300 leading-relaxed mb-8">
-              MedGate is currently in early development and preparing for pilot collaborations with healthcare institutions across the UAE.
+              Electivio is currently in early development and preparing for pilot collaborations with healthcare institutions across the UAE.
             </p>
             <p className="text-lg text-slate-300 leading-relaxed mb-6">Our immediate focus is to:</p>
             <ul className="space-y-3 mb-8">
@@ -229,7 +229,7 @@ export default function PurposePage() {
           <div className="bg-white/5 border border-white/10 rounded-3xl backdrop-blur-xl p-8 md:p-12">
             <h2 className="text-3xl font-bold text-slate-100 mb-6">Looking Ahead</h2>
             <p className="text-lg text-slate-300 leading-relaxed">
-              As the platform evolves, MedGate aims to expand coverage across all UAE emirates and continue improving how clinical training opportunities are accessed and managed—without compromising institutional autonomy or academic standards.
+              As the platform evolves, Electivio aims to expand coverage across all UAE emirates and continue improving how clinical training opportunities are accessed and managed—without compromising institutional autonomy or academic standards.
             </p>
           </div>
         </section>
@@ -238,10 +238,10 @@ export default function PurposePage() {
         <section className="mb-24 animate-fade-in" style={{ animationDelay: '0.6s' }}>
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-slate-100 mb-6">
-              Join <AnimatedGradientText>MedGate</AnimatedGradientText>
+              Join <AnimatedGradientText>Electivio</AnimatedGradientText>
             </h2>
             <p className="text-lg text-slate-300 mb-8">
-              Whether you are a medical student seeking structured clinical exposure or a healthcare institution looking to streamline program management, MedGate is being built with you in mind.
+              Whether you are a medical student seeking structured clinical exposure or a healthcare institution looking to streamline program management, Electivio is being built with you in mind.
             </p>
 
             {/* Toggle Buttons */}

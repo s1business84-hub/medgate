@@ -37,6 +37,6 @@ See `QA_CHECKLIST.md` for step-by-step manual verification and localStorage seed
 ---
 
 Please open the PR on GitHub (branch: `pilot/lockdown`). The remote push was completed; you can open a PR at:
-https://github.com/s1business84-hub/medgatefinal/pull/new/pilot/lockdown
+https://github.com/s1business84-hub/electiviofinal/pull/new/pilot/lockdown
 
 If you want, I can also prepare the PR body text ready for pasting into GitHub or attempt to open the PR using `gh` if the CLI is available in your environment.

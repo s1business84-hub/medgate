@@ -1,4 +1,4 @@
-# Email Sending Fix - MedGate
+# Email Sending Fix - Electivio
 
 ## Problem Identified
 The "Request Onboarding Pack" button fails to send emails due to **network connectivity issues** with Gmail's SMTP servers. The connection times out when trying to reach `smtp.gmail.com` on ports 465 and 587.
@@ -50,7 +50,7 @@ Created a new implementation using Resend API which:
 
 4. **Replace the Route File**
    ```bash
-   cd /Users/sanskaarnair/Desktop/medgate
+   cd /Users/sanskaarnair/Desktop/electivio
    mv app/api/send-onboarding-email/route.ts app/api/send-onboarding-email/route-nodemailer-backup.ts
    mv app/api/send-onboarding-email/route-resend.ts app/api/send-onboarding-email/route.ts
    ```

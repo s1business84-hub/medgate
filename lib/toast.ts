@@ -1,6 +1,6 @@
 export function showToast(message: string, timeout = 3500) {
   if (typeof window === 'undefined') return;
-  const id = `medgate_toast_${Date.now()}`;
+  const id = `electivio_toast_${Date.now()}`;
   const el = document.createElement('div');
   el.id = id;
   el.textContent = message;

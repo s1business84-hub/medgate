@@ -34,7 +34,7 @@ export function Header() {
               </defs>
             </svg>
             <div>
-              <span className="text-lg sm:text-xl font-bold bg-linear-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">MedGate</span>
+              <span className="text-lg sm:text-xl font-bold bg-linear-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">Electivio</span>
               <p className="text-xs text-slate-400 font-medium hidden sm:block">Your Gateway</p>
             </div>
           </Link>

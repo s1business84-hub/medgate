@@ -121,9 +121,9 @@ Pause. Let them agree. They usually will.
 
 ⸻
 
-What MedGate is (Reframed correctly)
+What Electivio is (Reframed correctly)
 
-“MedGate is not about efficiency or replacing any regulator.
+“Electivio is not about efficiency or replacing any regulator.
 It’s a small coordination layer that records three things clearly:
 
 	1. what exposure was agreed
@@ -172,14 +172,14 @@ Student Pitch (Pilot Phase)
 
 Opening
 
-“MedGate doesn’t promise hands-on training or placements.
+“Electivio doesn’t promise hands-on training or placements.
 It helps make sure expectations are clear before you start — so you’re not surprised later.”
 
 ⸻
 
-What MedGate does for them
+What Electivio does for them
 
-“Before training begins, MedGate shows you:
+“Before training begins, Electivio shows you:
 
 	• what you’re actually allowed to do
 	• who your supervising consultant is
@@ -191,7 +191,7 @@ You acknowledge this upfront, so there are no misunderstandings.”
 
 What it does NOT do (important)
 
-“MedGate does not rank hospitals, advise you on what’s best for your career, or guarantee outcomes — especially during the pilot.”
+“Electivio does not rank hospitals, advise you on what’s best for your career, or guarantee outcomes — especially during the pilot.”
 
 This protects you.
 

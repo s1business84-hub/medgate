@@ -33,4 +33,4 @@ Labels: pilot, chore, no-prod-integration
 ---
 
 PR Link (create on GitHub):
-https://github.com/s1business84-hub/medgatefinal/pull/new/pilot/lockdown
+https://github.com/s1business84-hub/electiviofinal/pull/new/pilot/lockdown

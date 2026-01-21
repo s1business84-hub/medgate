@@ -15,7 +15,7 @@ test.describe('Role-based gating', () => {
     // Admin user
     const admin = payload.users.find((u: any) => u.role === 'admin');
     expect(admin).toBeTruthy();
-    await page.evaluate((u) => localStorage.setItem('medgate_current_user', JSON.stringify(u)), admin);
+    await page.evaluate((u) => localStorage.setItem('electivio_current_user', JSON.stringify(u)), admin);
     await page.goto(`${base}/admin`);
     // Admin dashboard heading should be visible
     await expect(page.locator('text=Admin Dashboard')).toBeVisible();
@@ -23,7 +23,7 @@ test.describe('Role-based gating', () => {
     // Student user should NOT see admin dashboard
     const student = payload.users.find((u: any) => u.role === 'student');
     expect(student).toBeTruthy();
-    await page.evaluate((u) => localStorage.setItem('medgate_current_user', JSON.stringify(u)), student);
+    await page.evaluate((u) => localStorage.setItem('electivio_current_user', JSON.stringify(u)), student);
     await page.goto(`${base}/admin`);
     // The admin page should redirect or not show the Admin Dashboard heading
     await expect(page.locator('text=Admin Dashboard')).not.toBeVisible();

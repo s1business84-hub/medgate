@@ -7,11 +7,11 @@ test.describe('Pilot smoke flows', () => {
     await page.goto('/');
     await page.evaluate(() => {
       // Minimal demo seed matching runtime storage keys
-      window.localStorage.setItem('medgate_users', JSON.stringify([
+      window.localStorage.setItem('electivio_users', JSON.stringify([
         { id: 'sup_demo', name: 'Demo Supervisor', email: 'sup@demo', role: 'hospital' },
         { id: 'stu_demo', name: 'Demo Student', email: 'stu@demo', role: 'student' }
       ]));
-      window.localStorage.setItem('medgate_students', JSON.stringify([
+      window.localStorage.setItem('electivio_students', JSON.stringify([
         { id: 'stu_demo', name: 'Demo Student', email: 'stu@demo', phone: '', nationality: '', complianceStatus: 'Incomplete', createdAt: new Date().toISOString() }
       ]));
     });

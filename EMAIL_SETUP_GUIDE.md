@@ -1,4 +1,4 @@
-# Email Setup Guide for MedGate
+# Email Setup Guide for Electivio
 
 ## Issue Identified
 The SMTP connection to Gmail is timing out due to network restrictions. This is common when:

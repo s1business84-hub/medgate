@@ -56,7 +56,7 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
     setIsSubmitting(true)
 
     try {
-      const existingStudentsRaw = window.localStorage.getItem("medgate_students")
+      const existingStudentsRaw = window.localStorage.getItem("electivio_students")
       const existingStudents = existingStudentsRaw ? JSON.parse(existingStudentsRaw) : []
       let student = existingStudents.find((s: any) => s.email === formData.email)
       if (!student) {
@@ -71,7 +71,7 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
           createdAt: new Date().toISOString(),
         }
         existingStudents.push(student)
-        window.localStorage.setItem("medgate_students", JSON.stringify(existingStudents))
+        window.localStorage.setItem("electivio_students", JSON.stringify(existingStudents))
       }
 
       const regulatoryTypeVal = formData.regulatoryType as "None" | "EHS" | "DHA" | "DoH"

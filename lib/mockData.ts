@@ -367,7 +367,7 @@ export const mockUsers = [
   },
   {
     id: "h1_admin",
-    email: "hospital1@medgate.com",
+    email: "hospital1@electivio.com",
     role: "hospital" as const,
     name: "Hospital Administrator",
     hospitalId: "h1",
@@ -375,7 +375,7 @@ export const mockUsers = [
   },
   {
     id: "h2_admin",
-    email: "hospital2@medgate.com",
+    email: "hospital2@electivio.com",
     role: "hospital" as const,
     name: "Clinic Manager",
     hospitalId: "h2",
@@ -383,7 +383,7 @@ export const mockUsers = [
   },
   {
     id: "h3_admin",
-    email: "hospital3@medgate.com",
+    email: "hospital3@electivio.com",
     role: "hospital" as const,
     name: "Medical Director",
     hospitalId: "h3",

@@ -63,7 +63,7 @@ export default function ProgramsPage() {
                 <strong>Prototype Listings:</strong> The programs shown below are example listings for demonstration purposes only. Final observership and elective programs will be published by participating institutions during pilot onboarding.
               </p>
               <p className="text-sm text-amber-200">
-                <strong>Program Scope:</strong> MedGate supports formal, institution-approved observership and elective programs only. Internships, residency, and fellowship placements are not offered or facilitated through the platform.
+                <strong>Program Scope:</strong> Electivio supports formal, institution-approved observership and elective programs only. Internships, residency, and fellowship placements are not offered or facilitated through the platform.
               </p>
             </div>
           </div>

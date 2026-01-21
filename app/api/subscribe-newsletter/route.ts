@@ -30,7 +30,7 @@ export async function POST(request: Request) {
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Welcome to MedGate</title>
+        <title>Welcome to Electivio</title>
       </head>
       <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #0f172a;">
         <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #0f172a; padding: 40px 20px;">
@@ -60,7 +60,7 @@ export async function POST(request: Request) {
                 <tr>
                   <td style="padding: 40px; color: #e2e8f0;">
                     <h2 style="margin: 0 0 20px; color: #38bdf8; font-size: 24px; font-weight: 600;">
-                      Thank You for Joining MedGate!
+                      Thank You for Joining Electivio!
                     </h2>
                     
                     <p style="margin: 0 0 20px; font-size: 16px; line-height: 1.6; color: #cbd5e1;">
@@ -99,7 +99,7 @@ export async function POST(request: Request) {
                         📬 Check Your Inbox
                       </p>
                       <p style="margin: 0; color: #cbd5e1; font-size: 15px; line-height: 1.6;">
-                        Keep an eye on your email for updates from <strong style="color: #e2e8f0;">hellomedgate@gmail.com</strong>. We promise to only send you valuable content — no spam!
+                        Keep an eye on your email for updates from <strong style="color: #e2e8f0;">helloelectivio@gmail.com</strong>. We promise to only send you valuable content — no spam!
                       </p>
                     </div>
 
@@ -115,7 +115,7 @@ export async function POST(request: Request) {
                     <table cellpadding="0" cellspacing="0">
                       <tr>
                         <td style="background: linear-gradient(135deg, #06b6d4 0%, #6366f1 100%); border-radius: 12px; padding: 16px 40px;">
-                          <a href="https://medgate-tau.vercel.app/programs" style="color: white; text-decoration: none; font-weight: 600; font-size: 16px; display: block;">
+                          <a href="https://electivio-tau.vercel.app/programs" style="color: white; text-decoration: none; font-weight: 600; font-size: 16px; display: block;">
                             Explore Programs
                           </a>
                         </td>
@@ -128,13 +128,13 @@ export async function POST(request: Request) {
                 <tr>
                   <td style="padding: 30px 40px; background: rgba(15, 23, 42, 0.8); border-top: 1px solid rgba(56, 189, 248, 0.1); text-align: center;">
                     <p style="margin: 0 0 10px; color: #64748b; font-size: 14px;">
-                      <strong style="color: #94a3b8;">MedGate</strong> — Your Gateway to Medical Training Opportunities
+                      <strong style="color: #94a3b8;">Electivio</strong> — Your Gateway to Medical Training Opportunities
                     </p>
                     <p style="margin: 0; color: #475569; font-size: 12px;">
-                      Dubai, UAE | hellomedgate@gmail.com
+                      Dubai, UAE | helloelectivio@gmail.com
                     </p>
                     <p style="margin: 15px 0 0; color: #475569; font-size: 11px;">
-                      You're receiving this because you subscribed to MedGate updates.
+                      You're receiving this because you subscribed to Electivio updates.
                     </p>
                   </td>
                 </tr>
@@ -148,9 +148,9 @@ export async function POST(request: Request) {
 
     // Send email
     await transporter.sendMail({
-      from: `"MedGate" <${process.env.SMTP_USER}>`,
+      from: `"Electivio" <${process.env.SMTP_USER}>`,
       to: email,
-      subject: '🎉 Welcome to MedGate — You\'re All Set!',
+      subject: '🎉 Welcome to Electivio — You\'re All Set!',
       html: htmlContent,
     });
 

@@ -6,23 +6,23 @@ import * as React from "react"
 
 const faqs = [
   {
-    question: "Is MedGate a placement or recruitment service?",
-    answer: "No. MedGate does not place students or guarantee acceptance. The platform supports observership and elective program discovery and application workflows as defined by participating institutions.",
+    question: "Is Electivio a placement or recruitment service?",
+    answer: "No. Electivio does not place students or guarantee acceptance. The platform supports observership and elective program discovery and application workflows as defined by participating institutions.",
   },
   {
-    question: "What programs does MedGate support?",
-    answer: "MedGate focuses on formal, institution-approved observership and elective programs.",
+    question: "What programs does Electivio support?",
+    answer: "Electivio focuses on formal, institution-approved observership and elective programs.",
   },
   {
-    question: "Does MedGate offer internships or residency placements?",
-    answer: "No. MedGate does not provide internships, residency, or fellowship placements.",
+    question: "Does Electivio offer internships or residency placements?",
+    answer: "No. Electivio does not provide internships, residency, or fellowship placements.",
   },
   {
-    question: "Is MedGate live yet?",
-    answer: "MedGate is currently in early development and preparing for pilot collaborations with healthcare institutions.",
+    question: "Is Electivio live yet?",
+    answer: "Electivio is currently in early development and preparing for pilot collaborations with healthcare institutions.",
   },
   {
-    question: "Who can use MedGate?",
+    question: "Who can use Electivio?",
     answer: "Medical students and institutions participating in approved pilot programs.",
   },
 ]
@@ -109,7 +109,7 @@ export function FAQ() {
             viewport={{ once: true }}
             className="mt-6 text-lg leading-8 text-slate-200"
           >
-            Everything you need to know about getting started with MedGate.
+            Everything you need to know about getting started with Electivio.
             Can&apos;t find the answer you&apos;re looking for? Reach out to our support team.
           </motion.p>
         </div>

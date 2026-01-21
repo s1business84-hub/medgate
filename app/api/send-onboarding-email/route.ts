@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import nodemailer from "nodemailer"
 
-const FROM_EMAIL = "hellomedgate@gmail.com"
+const FROM_EMAIL = "helloelectivio@gmail.com"
 
 function getTransporter() {
   const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_SECURE } = process.env
@@ -31,7 +31,7 @@ function buildHtmlTemplate({
   calloutTitle,
   calloutBody,
   ctaLabel = "Explore Programs",
-  ctaHref = "https://medgate-tau.vercel.app/programs",
+  ctaHref = "https://electivio-tau.vercel.app/programs",
 }: {
   title: string
   headline: string
@@ -105,9 +105,9 @@ function buildHtmlTemplate({
 
               <tr>
                 <td style="padding: 26px 40px; background: rgba(15, 23, 42, 0.82); border-top: 1px solid rgba(56, 189, 248, 0.12); text-align: center;">
-                  <p style="margin: 0 0 8px; color: #94a3b8; font-size: 14px; font-weight: 600;">MedGate — Gateway to Medical Training Opportunities</p>
+                  <p style="margin: 0 0 8px; color: #94a3b8; font-size: 14px; font-weight: 600;">Electivio — Gateway to Medical Training Opportunities</p>
                   <p style="margin: 0; color: #64748b; font-size: 12px;">Dubai, UAE | ${FROM_EMAIL}</p>
-                  <p style="margin: 12px 0 0; color: #475569; font-size: 11px;">You are receiving this email because you requested onboarding or created an account on MedGate.</p>
+                  <p style="margin: 12px 0 0; color: #475569; font-size: 11px;">You are receiving this email because you requested onboarding or created an account on Electivio.</p>
                 </td>
               </tr>
             </table>
@@ -121,7 +121,7 @@ function buildHtmlTemplate({
 
 function buildEmailContent(type: EmailVariant, email: string, name?: string) {
   if (type === "welcome-student") {
-    const subject = "Welcome to MedGate — Early Access Confirmed"
+    const subject = "Welcome to Electivio — Early Access Confirmed"
     const html = buildHtmlTemplate({
       title: subject,
       headline: "Welcome Onboard! 🎉",
@@ -134,14 +134,14 @@ function buildEmailContent(type: EmailVariant, email: string, name?: string) {
       calloutTitle: "📬 Check Your Inbox",
       calloutBody: `We will notify you from <strong style="color:#e2e8f0;">${FROM_EMAIL}</strong> as soon as programs go live.`,
       ctaLabel: "Browse Programs",
-      ctaHref: "https://medgate-tau.vercel.app/programs",
+      ctaHref: "https://electivio-tau.vercel.app/programs",
     })
-    const text = `Welcome to MedGate! You'll receive early access updates from ${FROM_EMAIL}.`
+    const text = `Welcome to Electivio! You'll receive early access updates from ${FROM_EMAIL}.`
     return { subject, html, text }
   }
 
   if (type === "welcome-hospital") {
-    const subject = "MedGate Hospital Portal — Account Ready"
+    const subject = "Electivio Hospital Portal — Account Ready"
     const html = buildHtmlTemplate({
       title: subject,
       headline: "Welcome Onboard! 🎉",
@@ -154,13 +154,13 @@ function buildEmailContent(type: EmailVariant, email: string, name?: string) {
       calloutTitle: "Next Steps",
       calloutBody: "Share your program details and intake preferences. We'll activate your workspace and listing templates.",
       ctaLabel: "Open Hospital Portal",
-      ctaHref: "https://medgate-tau.vercel.app/hospital",
+      ctaHref: "https://electivio-tau.vercel.app/hospital",
     })
-    const text = `Your MedGate hospital account is ready. Configure eligibility, contacts, and intake to go live.`
+    const text = `Your Electivio hospital account is ready. Configure eligibility, contacts, and intake to go live.`
     return { subject, html, text }
   }
 
-  const subject = "MedGate Hospital Onboarding Pack"
+  const subject = "Electivio Hospital Onboarding Pack"
   const html = buildHtmlTemplate({
     title: subject,
     headline: "Welcome Onboard! 🎉",
@@ -173,9 +173,9 @@ function buildEmailContent(type: EmailVariant, email: string, name?: string) {
     calloutTitle: "Share Details",
     calloutBody: `Reply to this email or contact <strong style="color:#e2e8f0;">${FROM_EMAIL}</strong> with your program specs and we\'ll provision your workspace.`,
     ctaLabel: "View Hospital Info",
-    ctaHref: "https://medgate-tau.vercel.app/for-hospitals",
+    ctaHref: "https://electivio-tau.vercel.app/for-hospitals",
   })
-  const text = "Thanks for requesting the MedGate onboarding pack. Reply with your contacts, eligibility, and intake details."
+  const text = "Thanks for requesting the Electivio onboarding pack. Reply with your contacts, eligibility, and intake details."
   return { subject, html, text }
 }
 

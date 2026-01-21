@@ -74,7 +74,7 @@ export default function ForHospitalsPage() {
             Built to Support Hospital-Managed <span className="block"><AnimatedGradientText>Observership and Elective Programs</AnimatedGradientText></span>
           </h1>
           <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed mb-8">
-            MedGate is being developed to support healthcare institutions in managing formal observership and elective programs through structured intake, clear eligibility standards, and transparent application workflows.
+            Electivio is being developed to support healthcare institutions in managing formal observership and elective programs through structured intake, clear eligibility standards, and transparent application workflows.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/hospital/create-account">
@@ -123,7 +123,7 @@ export default function ForHospitalsPage() {
                     </div>
                   </div>
                   <p className="text-slate-300 text-sm">
-                    Ready to bring MedGate to your institution? Get in touch to discuss pilot collaboration opportunities.
+                    Ready to bring Electivio to your institution? Get in touch to discuss pilot collaboration opportunities.
                   </p>
                 </div>
               </motion.div>
@@ -135,7 +135,7 @@ export default function ForHospitalsPage() {
         <section className="mb-20 animate-fade-in" style={{ animationDelay: '0.2s' }}>
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold text-slate-100 mb-4">
-              <AnimatedGradientText>Why Choose MedGate?</AnimatedGradientText>
+              <AnimatedGradientText>Why Choose Electivio?</AnimatedGradientText>
             </h2>
             <p className="text-lg text-slate-300 max-w-2xl mx-auto">
               Designed to support observership and elective program management for healthcare institutions
@@ -147,7 +147,7 @@ export default function ForHospitalsPage() {
               {
                 icon: Shield,
                 title: 'Designed for Institutional Control',
-                description: 'Hospitals define eligibility criteria, documentation requirements, intake capacity, and review workflows. MedGate supports, not overrides, institutional processes.',
+                description: 'Hospitals define eligibility criteria, documentation requirements, intake capacity, and review workflows. Electivio supports, not overrides, institutional processes.',
                 gradient: 'from-blue-600 to-cyan-600',
                 bgGradient: 'from-blue-50 to-cyan-50',
                 index: 0
@@ -249,7 +249,7 @@ export default function ForHospitalsPage() {
         {/* How It Works */}
         <section className="mb-20 animate-fade-in" style={{ animationDelay: '0.6s' }}>
           <h2 className="text-4xl font-bold text-slate-100 mb-12 text-center">
-            <AnimatedGradientText>How MedGate Is Designed to Support Hospitals</AnimatedGradientText>
+            <AnimatedGradientText>How Electivio Is Designed to Support Hospitals</AnimatedGradientText>
           </h2>
           
           <div className="space-y-6">
@@ -342,7 +342,7 @@ export default function ForHospitalsPage() {
               )}
               {onboardingStatus === "sent" && (
                 <p className="text-sm text-cyan-200 mt-3">
-                  Onboarding steps sent from hellomedgate@gmail.com. Please check your inbox.
+                  Onboarding steps sent from helloelectivio@gmail.com. Please check your inbox.
                 </p>
               )}
               {onboardingStatus === "error" && (
@@ -351,7 +351,7 @@ export default function ForHospitalsPage() {
                 </p>
               )}
               <div className="mt-6 text-sm text-slate-300">
-                We send onboarding steps from <span className="text-cyan-200">hellomedgate@gmail.com</span>.
+                We send onboarding steps from <span className="text-cyan-200">helloelectivio@gmail.com</span>.
               </div>
             </div>
           </div>

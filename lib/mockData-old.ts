@@ -3,7 +3,7 @@ import type { Student, Program, Application, Document, Payment, AuditLog, Hospit
 export const mockHospitals: Hospital[] = [
   {
     id: "h1",
-    name: "MedGate Partner Hospital",
+    name: "Electivio Partner Hospital",
     emirate: "Dubai",
     city: "Al Barsha",
     type: "Hospital",
@@ -393,21 +393,21 @@ export const mockUsers = [
   },
   {
     id: "h1_admin",
-    email: "hospital1@medgate.com",
+    email: "hospital1@electivio.com",
     role: "hospital" as const,
     name: "Hospital Administrator",
     hospitalId: "h1",
   },
   {
     id: "h2_admin",
-    email: "hospital2@medgate.com",
+    email: "hospital2@electivio.com",
     role: "hospital" as const,
     name: "Clinic Manager",
     hospitalId: "h2",
   },
   {
     id: "h3_admin",
-    email: "hospital3@medgate.com",
+    email: "hospital3@electivio.com",
     role: "hospital" as const,
     name: "Medical Director",
     hospitalId: "h3",

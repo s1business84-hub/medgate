@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🔧 MedGate Email Fix - Switch to Resend"
+echo "🔧 Electivio Email Fix - Switch to Resend"
 echo "======================================"
 echo ""
 

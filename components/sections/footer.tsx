@@ -86,7 +86,7 @@ export function Footer() {
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-r from-cyan-500 to-indigo-500">
                 <Stethoscope className="h-5 w-5 text-white" />
               </div>
-              <span className="text-xl font-bold bg-linear-to-r from-cyan-300 to-indigo-300 bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(34,211,238,0.4)]">MedGate</span>
+              <span className="text-xl font-bold bg-linear-to-r from-cyan-300 to-indigo-300 bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(34,211,238,0.4)]">Electivio</span>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed mb-6">
               Connecting medical students with clinical training opportunities
@@ -95,7 +95,7 @@ export function Footer() {
             <div className="space-y-2 text-sm text-slate-400">
               <div className="flex items-center">
                 <Mail className="h-4 w-4 mr-2 text-cyan-300 drop-shadow-[0_0_5px_rgba(34,211,238,0.3)]" />
-                hellomedgate@gmail.com
+                helloelectivio@gmail.com
               </div>
               <div className="flex items-center">
                 <Phone className="h-4 w-4 mr-2 text-cyan-300 drop-shadow-[0_0_5px_rgba(34,211,238,0.3)]" />
@@ -227,7 +227,7 @@ export function Footer() {
         >
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-sm text-slate-400 drop-shadow-[0_0_6px_rgba(148,163,184,0.2)]">
-              © 2025 MedGate. All rights reserved.
+              © 2025 Electivio. All rights reserved.
             </p>
             <p className="text-sm text-slate-400 mt-2 md:mt-0 flex items-center drop-shadow-[0_0_6px_rgba(239,68,68,0.3)]">
               Made with <Heart className="h-4 w-4 mx-1 text-red-500 drop-shadow-[0_0_8px_rgba(239,68,68,0.6)]" /> in Dubai

@@ -72,7 +72,7 @@ function ProgramContent({ id }: { id: string }) {
 
   // Evaluate when component mounts and when user or program changes
   useEffect(() => {
-    const ackKey = user && program ? `medgate_ack_${user.id}_${program.id}` : null;
+    const ackKey = user && program ? `electivio_ack_${user.id}_${program.id}` : null;
     if (ackKey && typeof window !== 'undefined') {
       const stored = window.localStorage.getItem(ackKey);
       if (stored === 'true') setAcknowledged(true);
@@ -459,7 +459,7 @@ function ProgramContent({ id }: { id: string }) {
                 onChange={async (e) => {
                   if (!e.target.checked || acknowledged || !user || !program) return;
                   setAcknowledged(true);
-                  const ackKey = `medgate_ack_${user.id}_${program.id}`;
+                  const ackKey = `electivio_ack_${user.id}_${program.id}`;
                   try {
                     const res = await fetch('/api/audit/exposure-log', {
                       method: 'POST',

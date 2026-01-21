@@ -32,11 +32,11 @@ async function testEmail() {
     
     console.log('\nSending test email...');
     const info = await transporter.sendMail({
-      from: 'hellomedgate@gmail.com',
+      from: 'helloelectivio@gmail.com',
       to: process.env.SMTP_USER, // Send to self for testing
-      subject: 'MedGate Test Email',
-      text: 'This is a test email from MedGate.',
-      html: '<p>This is a test email from <strong>MedGate</strong>.</p>',
+      subject: 'Electivio Test Email',
+      text: 'This is a test email from Electivio.',
+      html: '<p>This is a test email from <strong>Electivio</strong>.</p>',
     });
     
     console.log('✓ Email sent successfully!');

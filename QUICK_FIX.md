@@ -24,7 +24,7 @@ RESEND_API_KEY=re_your_key_here
 
 ### Step 3: Run Setup Script
 ```bash
-cd /Users/sanskaarnair/Desktop/medgate
+cd /Users/sanskaarnair/Desktop/electivio
 ./switch-to-resend.sh
 ```
 

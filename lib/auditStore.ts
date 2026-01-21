@@ -28,47 +28,47 @@ const readList = <T,>(key: string, fallback: T[]) => {
 export function addExposureLog(entry: Omit<ExposureLog, 'acknowledgedAt' | 'type'>) {
   const item: ExposureLog = { ...entry, acknowledgedAt: new Date().toISOString(), type: 'exposure_acknowledgement' };
   exposureLogs.push(item);
-  persist('medgate_exposureLogs', [...readList('medgate_exposureLogs', exposureLogs), item]);
+  persist('electivio_exposureLogs', [...readList('electivio_exposureLogs', exposureLogs), item]);
   return item;
 }
 
-export function getExposureLogs() { return readList('medgate_exposureLogs', exposureLogs); }
+export function getExposureLogs() { return readList('electivio_exposureLogs', exposureLogs); }
 
 export function addSupervisorConfirmation(entry: Omit<SupervisorConfirmation, 'confirmedAt' | 'type'>) {
   const item: SupervisorConfirmation = { ...entry, confirmedAt: new Date().toISOString(), type: 'supervisor_confirmation' };
   supervisorConfirmations.push(item);
-  persist('medgate_supervisorConfirmations', [...readList('medgate_supervisorConfirmations', supervisorConfirmations), item]);
+  persist('electivio_supervisorConfirmations', [...readList('electivio_supervisorConfirmations', supervisorConfirmations), item]);
   return item;
 }
 
-export function getSupervisorConfirmations() { return readList('medgate_supervisorConfirmations', supervisorConfirmations); }
+export function getSupervisorConfirmations() { return readList('electivio_supervisorConfirmations', supervisorConfirmations); }
 
 export function addCompletionAttestation(entry: Omit<CompletionAttestation, 'attestedAt' | 'type'>) {
   const item: CompletionAttestation = { ...entry, attestedAt: new Date().toISOString(), type: 'completion_attestation' };
   completionAttestations.push(item);
-  persist('medgate_completionAttestations', [...readList('medgate_completionAttestations', completionAttestations), item]);
+  persist('electivio_completionAttestations', [...readList('electivio_completionAttestations', completionAttestations), item]);
   return item;
 }
 
-export function getCompletionAttestations() { return readList('medgate_completionAttestations', completionAttestations); }
+export function getCompletionAttestations() { return readList('electivio_completionAttestations', completionAttestations); }
 
 export function addIncidentFlag(entry: Omit<IncidentFlag, 'flaggedAt' | 'type'>) {
   const item: IncidentFlag = { ...entry, flaggedAt: new Date().toISOString(), type: 'incident_flag' };
   incidentFlags.push(item);
-  persist('medgate_incidentFlags', [...readList('medgate_incidentFlags', incidentFlags), item]);
+  persist('electivio_incidentFlags', [...readList('electivio_incidentFlags', incidentFlags), item]);
   return item;
 }
 
-export function getIncidentFlags() { return readList('medgate_incidentFlags', incidentFlags); }
+export function getIncidentFlags() { return readList('electivio_incidentFlags', incidentFlags); }
 
 export function addEhsConfirmation(entry: Omit<EhsConfirmation, 'verifiedAt' | 'type'>) {
   const item: EhsConfirmation = { ...entry, verifiedAt: new Date().toISOString(), type: 'ehs_confirmation' };
   ehsConfirmations.push(item);
-  persist('medgate_ehsConfirmations', [...readList('medgate_ehsConfirmations', ehsConfirmations), item]);
+  persist('electivio_ehsConfirmations', [...readList('electivio_ehsConfirmations', ehsConfirmations), item]);
   return item;
 }
 
-export function getEhsConfirmations() { return readList('medgate_ehsConfirmations', ehsConfirmations); }
+export function getEhsConfirmations() { return readList('electivio_ehsConfirmations', ehsConfirmations); }
 
 export function exportAccreditationCSV() {
   // Simple CSV combining trainees, supervisors, exposure logs and application status

@@ -75,7 +75,7 @@ export function AppShell({ children }: AppShellProps) {
               </div>
               <div>
                 <h1 className="text-xl font-bold bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                  MedGate
+                  Electivio
                 </h1>
               </div>
             </motion.div>
@@ -140,7 +140,7 @@ export function AppShell({ children }: AppShellProps) {
                 </div>
                 <div>
                   <h1 className="text-lg sm:text-xl font-bold bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                    MedGate
+                    Electivio
                   </h1>
                 </div>
               </div>
@@ -215,7 +215,7 @@ export function AppShell({ children }: AppShellProps) {
                   <Stethoscope className="h-4 w-4 text-white" />
                 </div>
                 <span className="text-sm sm:text-base font-semibold bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                  MedGate
+                  Electivio
                 </span>
               </div>
             </div>

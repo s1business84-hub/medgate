@@ -5,10 +5,10 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/sections/footer";
 
 export const metadata: Metadata = {
-  title: "MedGate - Medical Training Platform",
+  title: "Electivio - Medical Training Platform",
   description: "Find clinical observerships and electives in the UAE — requirements, availability, and applications in one place.",
   keywords: ["medical", "training", "observership", "electives", "UAE", "healthcare"],
-  authors: [{ name: "MedGate Team" }],
+  authors: [{ name: "Electivio Team" }],
 };
 
 export const viewport: Viewport = {

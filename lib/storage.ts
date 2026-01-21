@@ -1,17 +1,17 @@
 import type { Student, Application, Document, Payment, AuditLog, User, Notification, ProgramReminder } from "./types";
 
 const KEYS = {
-  students: "medgate_students",
-  applications: "medgate_applications",
-  documents: "medgate_documents",
-  payments: "medgate_payments",
-  audit: "medgate_audit",
-  users: "medgate_users",
-  currentUser: "medgate_current_user",
-  notifications: "medgate_notifications",
-  reminders: "medgate_reminders",
-  programCriteria: "medgate_program_criteria",
-  programMetadata: "medgate_program_metadata",
+  students: "electivio_students",
+  applications: "electivio_applications",
+  documents: "electivio_documents",
+  payments: "electivio_payments",
+  audit: "electivio_audit",
+  users: "electivio_users",
+  currentUser: "electivio_current_user",
+  notifications: "electivio_notifications",
+  reminders: "electivio_reminders",
+  programCriteria: "electivio_program_criteria",
+  programMetadata: "electivio_program_metadata",
 };
 
 function readJSON<T>(key: string, fallback: T): T {

@@ -83,7 +83,7 @@ export function Hero() {
             viewport={{ once: true }}
             className="mt-4 sm:mt-6 text-base sm:text-lg lg:text-xl leading-7 sm:leading-8 text-blue-100 max-w-2xl mx-auto px-4"
           >
-            MedGate is being developed to help hospitals and medical students manage formal observership and elective programs through structured eligibility criteria, transparent requirements, and standardized workflows.
+            Electivio is being developed to help hospitals and medical students manage formal observership and elective programs through structured eligibility criteria, transparent requirements, and standardized workflows.
           </motion.p>
 
           {/* Pilot Phase Disclaimer */}

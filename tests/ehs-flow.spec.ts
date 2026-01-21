@@ -24,20 +24,20 @@ test.describe('EHS allocation happy path', () => {
     const seedJson = await seedResp.json();
     // Write returned payload into localStorage for the browser context
     await page.evaluate((payload) => {
-      if (payload.users) localStorage.setItem('medgate_users', JSON.stringify(payload.users));
-      if (payload.students) localStorage.setItem('medgate_students', JSON.stringify(payload.students));
+      if (payload.users) localStorage.setItem('electivio_users', JSON.stringify(payload.users));
+      if (payload.students) localStorage.setItem('electivio_students', JSON.stringify(payload.students));
       // set current user to admin by default for admin flows
       if (payload.users && payload.users.length) {
         const admin = payload.users.find((u: any) => u.role === 'admin');
-        if (admin) localStorage.setItem('medgate_current_user', JSON.stringify(admin));
+        if (admin) localStorage.setItem('electivio_current_user', JSON.stringify(admin));
       }
     }, seedJson);
 
     // 2) Student: act as student, acknowledge exposure and apply with allocation=EHS via the Application modal
     await page.evaluate(() => {
-      const users = JSON.parse(localStorage.getItem('medgate_users') || '[]');
+      const users = JSON.parse(localStorage.getItem('electivio_users') || '[]');
       const stu = users.find((u: any) => u.id === 'stu_demo');
-      if (stu) localStorage.setItem('medgate_current_user', JSON.stringify(stu));
+      if (stu) localStorage.setItem('electivio_current_user', JSON.stringify(stu));
     });
 
     await page.goto(`${base}/programs/${programId}`);
@@ -74,19 +74,19 @@ test.describe('EHS allocation happy path', () => {
     } else {
       // Fallback: create application directly in localStorage if Apply is disabled
       await page.evaluate((pId) => {
-        const apps = JSON.parse(localStorage.getItem('medgate_applications') || '[]');
+        const apps = JSON.parse(localStorage.getItem('electivio_applications') || '[]');
         const newApp = { id: `app_${Date.now()}`, studentId: 'stu_demo', programId: pId, hospitalId: '', status: 'Submitted', submissionDate: new Date().toISOString(), regulatory: { type: 'EHS', reference: 'EHS-REF-UI-1', status: 'Pending' }, allocation: { source: 'EHS', assignedHospitalId: '', ehsReference: 'EHS-REF-UI-1', allocatedAt: new Date().toISOString() } };
         apps.push(newApp);
-        localStorage.setItem('medgate_applications', JSON.stringify(apps));
+        localStorage.setItem('electivio_applications', JSON.stringify(apps));
       }, programId);
       await page.waitForTimeout(300);
     }
 
     // 3) Admin: switch to admin user and accept + confirm program (supervisor) via Admin UI
     await page.evaluate(() => {
-      const users = JSON.parse(localStorage.getItem('medgate_users') || '[]');
+      const users = JSON.parse(localStorage.getItem('electivio_users') || '[]');
       const admin = users.find((u: any) => u.role === 'admin');
-      if (admin) localStorage.setItem('medgate_current_user', JSON.stringify(admin));
+      if (admin) localStorage.setItem('electivio_current_user', JSON.stringify(admin));
     });
     await page.goto(`${base}/admin`);
     await page.waitForLoadState('networkidle');
@@ -120,9 +120,9 @@ test.describe('EHS allocation happy path', () => {
 
     // 4) Student: switch back to student and start training via UI
     await page.evaluate(() => {
-      const users = JSON.parse(localStorage.getItem('medgate_users') || '[]');
+      const users = JSON.parse(localStorage.getItem('electivio_users') || '[]');
       const stu = users.find((u: any) => u.id === 'stu_demo');
-      if (stu) localStorage.setItem('medgate_current_user', JSON.stringify(stu));
+      if (stu) localStorage.setItem('electivio_current_user', JSON.stringify(stu));
     });
     await page.goto(`${base}/programs/${programId}`);
     await page.waitForLoadState('networkidle');
@@ -131,7 +131,7 @@ test.describe('EHS allocation happy path', () => {
     try {
       await page.waitForFunction((pId) => {
         try {
-          const apps = JSON.parse(localStorage.getItem('medgate_applications') || '[]');
+          const apps = JSON.parse(localStorage.getItem('electivio_applications') || '[]');
           const app = apps.find((a: any) => a.programId === pId && a.studentId === 'stu_demo');
           return !!app && (app.status === 'Accepted' || app.status === 'Approved');
         } catch (e) { return false; }
@@ -139,11 +139,11 @@ test.describe('EHS allocation happy path', () => {
     } catch (err) {
       // Fallback: ensure application status is Accepted so Start Training can proceed
       await page.evaluate((pId) => {
-        const apps = JSON.parse(localStorage.getItem('medgate_applications') || '[]');
+        const apps = JSON.parse(localStorage.getItem('electivio_applications') || '[]');
         const idx = apps.findIndex((a: any) => a.programId === pId && a.studentId === 'stu_demo');
         if (idx !== -1) {
           apps[idx].status = 'Accepted';
-          localStorage.setItem('medgate_applications', JSON.stringify(apps));
+          localStorage.setItem('electivio_applications', JSON.stringify(apps));
         }
       }, programId);
     }
@@ -170,14 +170,14 @@ test.describe('EHS allocation happy path', () => {
     } catch (err) {
       // Fallback: directly set the application status to 'In Training'
       await page.evaluate((pId) => {
-        const apps = JSON.parse(localStorage.getItem('medgate_applications') || '[]');
+        const apps = JSON.parse(localStorage.getItem('electivio_applications') || '[]');
         const idx = apps.findIndex((a: any) => a.programId === pId && a.studentId === 'stu_demo');
-        if (idx !== -1) { apps[idx].status = 'In Training'; localStorage.setItem('medgate_applications', JSON.stringify(apps)); }
+        if (idx !== -1) { apps[idx].status = 'In Training'; localStorage.setItem('electivio_applications', JSON.stringify(apps)); }
       }, programId);
     }
 
     // Assert application status in storage is now 'In Training'
-    const apps = await page.evaluate(() => JSON.parse(localStorage.getItem('medgate_applications') || '[]'));
+    const apps = await page.evaluate(() => JSON.parse(localStorage.getItem('electivio_applications') || '[]'));
     const myApp = apps.find((a: any) => a.programId === programId && a.studentId === 'stu_demo');
     expect(myApp).toBeTruthy();
     expect(myApp.status).toBe('In Training');

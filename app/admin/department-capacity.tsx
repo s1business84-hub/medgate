@@ -57,7 +57,7 @@ export default function DepartmentCapacity() {
           ))}
         </tbody>
       </table>
-      <div className="text-xs text-slate-500">MedGate will block new trainees if department is at or above declared capacity.</div>
+      <div className="text-xs text-slate-500">Electivio will block new trainees if department is at or above declared capacity.</div>
     </div>
   );
 }

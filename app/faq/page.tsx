@@ -7,8 +7,8 @@ import Link from "next/link"
 
 const faqs = [
   {
-    question: "What is Medgate?",
-    answer: "Medgate is a comprehensive platform connecting medical students with hospital residency programs and specialized training opportunities. We bridge the gap between educational aspirations and clinical excellence.",
+    question: "What is Electivio?",
+    answer: "Electivio is a comprehensive platform connecting medical students with hospital residency programs and specialized training opportunities. We bridge the gap between educational aspirations and clinical excellence.",
     category: "General",
     color: "from-blue-500/40 to-cyan-500/40"
   },
@@ -37,8 +37,8 @@ const faqs = [
     color: "from-indigo-500/40 to-blue-500/40"
   },
   {
-    question: "Is there a fee to use Medgate?",
-    answer: "Browsing programs and using our tools is completely free. Hospitals may have their own application requirements, but Medgate itself charges no fees for students.",
+    question: "Is there a fee to use Electivio?",
+    answer: "Browsing programs and using our tools is completely free. Hospitals may have their own application requirements, but Electivio itself charges no fees for students.",
     category: "General",
     color: "from-green-500/40 to-emerald-500/40"
   },
@@ -137,7 +137,7 @@ export default function FAQPage() {
             Frequently Asked Questions
           </h1>
           <p className="text-lg text-slate-300 max-w-2xl mx-auto">
-            Find answers to common questions about Medgate and your journey to medical excellence
+            Find answers to common questions about Electivio and your journey to medical excellence
           </p>
         </motion.div>
 

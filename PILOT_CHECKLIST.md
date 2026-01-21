@@ -1,4 +1,4 @@
-MEDGATE PILOT — BUILD CHECKLIST (TEAM VERSION)
+ELECTIVIO PILOT — BUILD CHECKLIST (TEAM VERSION)
 
 🔒 PILOT RULE (READ FIRST)
 
@@ -14,7 +14,7 @@ Everything below respects that rule.
 
 ✅ Scenario 2 — EHS
 • Student allocated externally
-• Hospital or student can trigger MedGate record
+• Hospital or student can trigger Electivio record
 • EHS reference field + status flag
 
 ✅ Scenario 3 — DHA / DoH
@@ -147,7 +147,7 @@ If all 5 pass → pilot ready.
 Anything beyond this is not a pilot.
 
 10. ONE-LINE PILOT DEFINITION (FOR THE TEAM)
-The pilot proves that MedGate documents exposure expectations and supervision clearly, without changing hospital processes.
+The pilot proves that Electivio documents exposure expectations and supervision clearly, without changing hospital processes.
 
 FINAL WARNING TO THE TEAM
 This pilot is not about showing capability.

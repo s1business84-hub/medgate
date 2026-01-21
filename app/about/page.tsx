@@ -50,10 +50,10 @@ export default function AboutPage() {
           className="text-center mb-16"
         >
           <h1 className="text-4xl md:text-5xl font-bold text-slate-100 mb-6">
-            <AnimatedGradientText>About MedGate</AnimatedGradientText>
+            <AnimatedGradientText>About Electivio</AnimatedGradientText>
           </h1>
           <p className="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
-            MedGate is being developed to connect medical students with structured clinical observership and elective opportunities across the UAE. The platform focuses on improving transparency, standardization, and communication between students and healthcare institutions.
+            Electivio is being developed to connect medical students with structured clinical observership and elective opportunities across the UAE. The platform focuses on improving transparency, standardization, and communication between students and healthcare institutions.
           </p>
         </motion.div>
 
@@ -79,13 +79,13 @@ export default function AboutPage() {
             
             <div className="relative z-10 space-y-6">
               <p className="text-lg text-slate-300 leading-relaxed mb-6">
-                MedGate is an early-stage platform being developed to address long-standing challenges in accessing and managing medical observership and elective programs.
+                Electivio is an early-stage platform being developed to address long-standing challenges in accessing and managing medical observership and elective programs.
               </p>
               <p className="text-lg text-slate-300 leading-relaxed mb-6">
                 Today, students often encounter fragmented information, unclear eligibility criteria, and slow, manual communication when seeking clinical exposure. At the same time, healthcare institutions lack standardized tools to publish requirements and manage applicant workflows efficiently.
               </p>
               <p className="text-lg text-slate-300 leading-relaxed mb-6">
-                MedGate aims to standardize how institutions define and publish program requirements, and how students discover and engage with them—creating a clearer, more transparent process for both sides. The platform is currently preparing for pilot collaborations with healthcare institutions in the UAE.
+                Electivio aims to standardize how institutions define and publish program requirements, and how students discover and engage with them—creating a clearer, more transparent process for both sides. The platform is currently preparing for pilot collaborations with healthcare institutions in the UAE.
               </p>
             </div>
           </div>
@@ -121,7 +121,7 @@ export default function AboutPage() {
               {
                 icon: Target,
                 title: 'Reduce Administrative Friction',
-                description: 'MedGate is designed to reduce repetitive back-and-forth by centralizing program information and application workflows.',
+                description: 'Electivio is designed to reduce repetitive back-and-forth by centralizing program information and application workflows.',
                 gradient: 'from-purple-500 to-pink-500',
                 bgGradient: 'from-fuchsia-400/20 to-pink-400/10',
                 number: '02'
@@ -206,7 +206,7 @@ export default function AboutPage() {
               </div>
               <h3 className="text-xl font-semibold text-slate-100 mb-2">Kashish Devnani</h3>
               <p className="text-slate-300">Founder & Program Director</p>
-              <p className="text-sm text-slate-400 mt-3">Leads MedGate&apos;s platform direction and institutional collaboration strategy, working closely with healthcare institutions to translate program requirements into structured, transparent workflows within the platform.</p>
+              <p className="text-sm text-slate-400 mt-3">Leads Electivio&apos;s platform direction and institutional collaboration strategy, working closely with healthcare institutions to translate program requirements into structured, transparent workflows within the platform.</p>
             </motion.div>
             
             <motion.div className="rounded-2xl bg-white/5 border border-white/10 p-8 hover:bg-white/10 transition-all duration-300" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.18 }} viewport={{ once: true }}>
@@ -215,7 +215,7 @@ export default function AboutPage() {
               </div>
               <h3 className="text-xl font-semibold text-slate-100 mb-2">Sanskaar Nair</h3>
               <p className="text-slate-300">Co-Founder & Lead Engineer</p>
-              <p className="text-sm text-slate-400 mt-3">Architects and engineers the MedGate platform, overseeing system design, backend infrastructure, and application workflows that support institutional onboarding and secure applicant management.</p>
+              <p className="text-sm text-slate-400 mt-3">Architects and engineers the Electivio platform, overseeing system design, backend infrastructure, and application workflows that support institutional onboarding and secure applicant management.</p>
             </motion.div>
           </div>
         </motion.section>
@@ -232,7 +232,7 @@ export default function AboutPage() {
             <AnimatedGradientText>Ready to Start Your Journey?</AnimatedGradientText>
           </h2>
           <p className="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
-            Explore structured observership and elective opportunities and stay informed as MedGate prepares for pilot collaborations across the UAE.
+            Explore structured observership and elective opportunities and stay informed as Electivio prepares for pilot collaborations across the UAE.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/programs">

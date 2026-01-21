@@ -279,12 +279,12 @@ export default function AdminPage() {
                   });
                   const payload = await resp.json();
                   // Persist to localStorage to mimic test setup
-                  if (payload.users) localStorage.setItem('medgate_users', JSON.stringify(payload.users));
-                  if (payload.students) localStorage.setItem('medgate_students', JSON.stringify(payload.students));
-                  if (payload.applications) localStorage.setItem('medgate_applications', JSON.stringify(payload.applications));
+                  if (payload.users) localStorage.setItem('electivio_users', JSON.stringify(payload.users));
+                  if (payload.students) localStorage.setItem('electivio_students', JSON.stringify(payload.students));
+                  if (payload.applications) localStorage.setItem('electivio_applications', JSON.stringify(payload.applications));
                   // set current user to student
                   const stu = payload.users?.find((u: any) => u.role === 'student') || payload.users?.[0];
-                  if (stu) localStorage.setItem('medgate_current_user', JSON.stringify(stu));
+                  if (stu) localStorage.setItem('electivio_current_user', JSON.stringify(stu));
                   showToast('Scenario 2 seeded — opening program page');
                   const programId = payload.programs?.[0]?.id || mockPrograms?.[0]?.id || 'demo';
                   router.push(`/programs/${programId}`);
@@ -307,7 +307,7 @@ export default function AdminPage() {
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = `medgate_accreditation_${new Date().toISOString().slice(0,10)}.csv`;
+                a.download = `electivio_accreditation_${new Date().toISOString().slice(0,10)}.csv`;
                 document.body.appendChild(a);
                 a.click();
                 a.remove();

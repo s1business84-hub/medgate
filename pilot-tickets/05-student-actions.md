@@ -5,7 +5,7 @@ Description
 
 Acceptance criteria
 - Student can submit an application via modal (`ApplicationModal`).
-- If an EHS allocation exists, student can claim it by entering reference/hospital and MedGate records it against their application.
+- If an EHS allocation exists, student can claim it by entering reference/hospital and Electivio records it against their application.
 - "Start Training" button is enabled only when all gating conditions are satisfied:
   - Application status is `Approved` or `Accepted`.
   - Exposure acknowledged is recorded.
