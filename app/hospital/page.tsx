@@ -12,6 +12,7 @@ import { getSupervisorConfirmations } from "@/lib/auditStore";
 import { Application } from "@/lib/types";
 import { CheckCircle, XCircle, FileText, Users, Clock } from "lucide-react";
 import { showToast } from "@/lib/toast";
+import { AuditExcelButton } from "@/components/audit-excel-button";
 
 export default function HospitalPortal() {
   const { user, logout } = useAuth();
@@ -169,6 +170,11 @@ export default function HospitalPortal() {
             <p className="text-slate-300">Manage observership applications</p>
           </div>
           <div className="flex gap-4">
+            <AuditExcelButton
+              dataTypes={["all"]}
+              filterApplications={(apps) => apps.filter((a) => a.hospitalId === user.hospitalId)}
+              className="border-white/15 bg-white/10 text-slate-100 hover:bg-white/20"
+            />
             <button
               onClick={() => setShowObsForm(true)}
               className="px-6 py-2 rounded-lg bg-indigo-600/90 hover:bg-indigo-600 text-white transition-colors font-medium shadow-sm"

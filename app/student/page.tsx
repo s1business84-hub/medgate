@@ -7,6 +7,7 @@ import { useAuth } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
 import { Heart, Users, CheckCircle, Upload, Menu, X } from "lucide-react";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
+import { AuditExcelButton } from "@/components/audit-excel-button";
 
 export default function StudentPortal() {
   const { user, logout } = useAuth();
@@ -28,6 +29,11 @@ export default function StudentPortal() {
               <p className="text-slate-300">Welcome back, {user.name}!</p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+              <AuditExcelButton
+                dataTypes={["applications", "exposureLogs", "completionAttestations"]}
+                filterApplications={(apps) => apps.filter((a) => a.studentId === user.id)}
+                className="border-white/30 bg-white/40 text-slate-800 hover:bg-white/50"
+              />
               <button
                 onClick={() => {
                   logout();
