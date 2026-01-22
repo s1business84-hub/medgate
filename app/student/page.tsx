@@ -29,17 +29,6 @@ export default function StudentPortal() {
               <p className="text-slate-300">Welcome back, {user.name}!</p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-              <div className="group relative">
-                <AuditExcelButton
-                  dataTypes={["applications", "exposureLogs", "completionAttestations"]}
-                  filterApplications={(apps) => apps.filter((a) => a.studentId === user.id)}
-                  className="border-white/30 bg-white/40 text-slate-800 hover:bg-white/50"
-                />
-                <div className="absolute bottom-full left-0 mb-2 hidden group-hover:block bg-slate-900 text-slate-100 text-sm rounded-lg p-3 w-48 border border-white/10 z-50">
-                  <p className="font-semibold text-white mb-1">📋 Audit Export</p>
-                  <p className="text-xs text-slate-300">Download a copy of your own applications, exposure logs, and training records. This is for your personal records only.</p>
-                </div>
-              </div>
               <button
                 onClick={() => {
                   logout();
@@ -55,7 +44,27 @@ export default function StudentPortal() {
             </div>
           </div>
 
-          <div className="space-y-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            {/* Left Sidebar - Audit Card */}
+            <div className="lg:col-span-1">
+              <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg p-4 sticky top-8">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="text-2xl">📋</div>
+                  <h3 className="text-lg font-semibold text-white">Your Records</h3>
+                </div>
+                <p className="text-xs text-slate-300 mb-4">Download copies of your applications, exposure logs, and training records.</p>
+                <div className="space-y-2">
+                  <AuditExcelButton
+                    dataTypes={["applications", "exposureLogs", "completionAttestations"]}
+                    filterApplications={(apps) => apps.filter((a) => a.studentId === user.id)}
+                    className="w-full border-white/30 bg-white/40 text-slate-800 hover:bg-white/50"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Main Content */}
+            <div className="lg:col-span-3 space-y-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
             <div className="text-center mb-12">
               <h1 className="text-4xl font-bold text-slate-100 mb-4">Welcome to Your Dashboard</h1>
               <p className="text-xl text-slate-300 max-w-3xl mx-auto">
@@ -99,6 +108,7 @@ export default function StudentPortal() {
                   </Button>
                 </Link>
               </div>
+            </div>
             </div>
           </div>
         </div>

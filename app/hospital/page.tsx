@@ -170,17 +170,6 @@ export default function HospitalPortal() {
             <p className="text-slate-300">Manage observership applications</p>
           </div>
           <div className="flex gap-4">
-            <div className="group relative">
-              <AuditExcelButton
-                dataTypes={["all"]}
-                filterApplications={(apps) => apps.filter((a) => a.hospitalId === user.hospitalId)}
-                className="border-white/15 bg-white/10 text-slate-100 hover:bg-white/20"
-              />
-              <div className="absolute bottom-full right-0 mb-2 hidden group-hover:block bg-slate-900 text-slate-100 text-sm rounded-lg p-3 w-56 border border-white/10 z-50">
-                <p className="font-semibold text-white mb-1">📊 Audit & Export</p>
-                <p className="text-xs text-slate-300">Download all training records for your hospital, including applications, students, exposure logs, and supervisors confirmations. Use this for compliance reporting and accreditation documentation.</p>
-              </div>
-            </div>
             <button
               onClick={() => setShowObsForm(true)}
               className="px-6 py-2 rounded-lg bg-indigo-600/90 hover:bg-indigo-600 text-white transition-colors font-medium shadow-sm"
@@ -202,104 +191,127 @@ export default function HospitalPortal() {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 mb-8">
-          {/* Stats */}
-          <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-lg shadow p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-slate-300 text-sm mb-2">Total Applications</p>
-                <p className="text-3xl font-bold text-slate-100">{applications.length}</p>
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          {/* Left Sidebar - Audit Card */}
+          <div className="lg:col-span-1">
+            <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg p-4 sticky top-8">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="text-2xl">📊</div>
+                <h3 className="text-lg font-semibold text-white">Audit & Export</h3>
               </div>
-              <Users className="w-12 h-12 text-blue-400 opacity-30" />
+              <p className="text-xs text-slate-300 mb-4">Download all training records, applications, and confirmations for compliance reporting and accreditation.</p>
+              <div className="space-y-2">
+                <AuditExcelButton
+                  dataTypes={["all"]}
+                  filterApplications={(apps) => apps.filter((a) => a.hospitalId === user.hospitalId)}
+                  className="w-full border-white/15 bg-white/10 text-slate-100 hover:bg-white/20"
+                />
+              </div>
             </div>
           </div>
 
-          <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-lg shadow p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-slate-300 text-sm mb-2">Pending Review</p>
-                <p className="text-3xl font-bold text-amber-400">
-                  {applications.filter(a => a.status === "Submitted").length}
-                </p>
-              </div>
-              <Clock className="w-12 h-12 text-amber-400 opacity-30" />
-            </div>
-          </div>
-
-          <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-lg shadow p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-slate-300 text-sm mb-2">Approved</p>
-                <p className="text-3xl font-bold text-emerald-400">
-                  {applications.filter(a => a.status === "Approved").length}
-                </p>
-              </div>
-              <CheckCircle className="w-12 h-12 text-emerald-400 opacity-30" />
-            </div>
-          </div>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-6">
-          {/* Applications List */}
-          <div className="md:col-span-2">
-            <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-lg shadow">
-              <div className="p-6 border-b border-white/10">
-                <h2 className="text-xl font-bold text-slate-100">Applications</h2>
-              </div>
-
-              {applications.length === 0 ? (
-                <div className="p-12 text-center text-slate-400">
-                  <FileText className="w-12 h-12 mx-auto mb-4 opacity-40" />
-                  <p>No applications yet</p>
+          {/* Main Content */}
+          <div className="lg:col-span-3 space-y-8">
+            {/* Stats Grid */}
+            <div className="grid md:grid-cols-3 gap-6">
+              {/* Stats */}
+              <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-lg shadow p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-slate-300 text-sm mb-2">Total Applications</p>
+                    <p className="text-3xl font-bold text-slate-100">{applications.length}</p>
+                  </div>
+                  <Users className="w-12 h-12 text-blue-400 opacity-30" />
                 </div>
-              ) : (
-                <div className="divide-y">
-                  {applications.map((app) => (
-                    <div
-                      key={app.id}
-                      onClick={() => setSelectedApp(app)}
-                      className={`p-4 cursor-pointer transition-colors ${
-                        selectedApp?.id === app.id ? "bg-indigo-950/40" : "hover:bg-white/5"
-                      }`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex-1">
-                          <p className="font-semibold text-slate-100">{getStudentName(app.studentId)}</p>
-                          <p className="text-sm text-slate-300">{getStudentEmail(app.studentId)}</p>
-                                <p className="text-xs text-slate-400 mt-1">
-                                  {new Date(app.submissionDate).toLocaleDateString()}
-                                </p>
-                                <div className="flex gap-2 mt-2">
-                                  {!app.regulatory || app.regulatory.type === 'None' ? (
-                                    <span className="text-amber-300 text-xs">No regulatory</span>
-                                  ) : app.regulatory.status !== 'Verified' ? (
-                                    <span className="text-yellow-300 text-xs">Regulatory: {app.regulatory.status || 'Pending'}</span>
-                                  ) : null}
-                                  {(!getSupervisorConfirmations().some(s => s.programId === app.programId && (s.studentId === app.studentId || !s.studentId))) && (
-                                    <span className="text-rose-300 text-xs">No supervisor confirmation</span>
-                                  )}
-                                </div>
-                        </div>
-                        <div className="text-right">
-                          <span
-                            className={`inline-block px-3 py-1 rounded-full text-sm font-medium border ${
-                              app.status === "Approved"
-                                ? "bg-emerald-900/30 text-emerald-300 border-emerald-700/40"
-                                : app.status === "Rejected"
-                                ? "bg-red-900/30 text-red-300 border-red-700/40"
-                                : "bg-amber-900/30 text-amber-300 border-amber-700/40"
-                            }`}
-                          >
-                            {app.status}
-                          </span>
-                        </div>
-                      </div>
+              </div>
+
+              <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-lg shadow p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-slate-300 text-sm mb-2">Pending Review</p>
+                    <p className="text-3xl font-bold text-amber-400">
+                      {applications.filter(a => a.status === "Submitted").length}
+                    </p>
+                  </div>
+                  <Clock className="w-12 h-12 text-amber-400 opacity-30" />
+                </div>
+              </div>
+
+              <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-lg shadow p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-slate-300 text-sm mb-2">Approved</p>
+                    <p className="text-3xl font-bold text-emerald-400">
+                      {applications.filter(a => a.status === "Approved").length}
+                    </p>
+                  </div>
+                  <CheckCircle className="w-12 h-12 text-emerald-400 opacity-30" />
+                </div>
+              </div>
+            </div>
+
+            {/* Applications and Details Grid */}
+            <div className="grid md:grid-cols-3 gap-6">
+              {/* Applications List */}
+              <div className="md:col-span-2">
+                <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-lg shadow">
+                  <div className="p-6 border-b border-white/10">
+                    <h2 className="text-xl font-bold text-slate-100">Applications</h2>
+                  </div>
+
+                  {applications.length === 0 ? (
+                    <div className="p-12 text-center text-slate-400">
+                      <FileText className="w-12 h-12 mx-auto mb-4 opacity-40" />
+                      <p>No applications yet</p>
                     </div>
-                  ))}
+                  ) : (
+                    <div className="divide-y">
+                      {applications.map((app) => (
+                        <div
+                          key={app.id}
+                          onClick={() => setSelectedApp(app)}
+                          className={`p-4 cursor-pointer transition-colors ${
+                            selectedApp?.id === app.id ? "bg-indigo-950/40" : "hover:bg-white/5"
+                          }`}
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="flex-1">
+                              <p className="font-semibold text-slate-100">{getStudentName(app.studentId)}</p>
+                              <p className="text-sm text-slate-300">{getStudentEmail(app.studentId)}</p>
+                              <p className="text-xs text-slate-400 mt-1">
+                                {new Date(app.submissionDate).toLocaleDateString()}
+                              </p>
+                              <div className="flex gap-2 mt-2">
+                                {!app.regulatory || app.regulatory.type === 'None' ? (
+                                  <span className="text-amber-300 text-xs">No regulatory</span>
+                                ) : app.regulatory.status !== 'Verified' ? (
+                                  <span className="text-yellow-300 text-xs">Regulatory: {app.regulatory.status || 'Pending'}</span>
+                                ) : null}
+                                {(!getSupervisorConfirmations().some(s => s.programId === app.programId && (s.studentId === app.studentId || !s.studentId))) && (
+                                  <span className="text-rose-300 text-xs">No supervisor confirmation</span>
+                                )}
+                              </div>
+                            </div>
+                            <div className="text-right">
+                              <span
+                                className={`inline-block px-3 py-1 rounded-full text-sm font-medium border ${
+                                  app.status === "Approved"
+                                    ? "bg-emerald-900/30 text-emerald-300 border-emerald-700/40"
+                                    : app.status === "Rejected"
+                                    ? "bg-red-900/30 text-red-300 border-red-700/40"
+                                    : "bg-amber-900/30 text-amber-300 border-amber-700/40"
+                                }`}
+                              >
+                                {app.status}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          </div>
+              </div>
 
           {/* Details Panel */}
           <div>
@@ -383,6 +395,8 @@ export default function HospitalPortal() {
                 <p>Select an application to view details</p>
               </div>
             )}
+          </div>
+            </div>
           </div>
         </div>
       </div>

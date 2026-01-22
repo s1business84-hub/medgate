@@ -413,7 +413,7 @@ A: Completion records kept for 7 years (UAE regulatory requirement). After 7 yea
 **Q: Who can see hospital data - Medgate staff?**
 A: Only Medgate security and compliance staff can access encrypted hospital data for audit purposes. Hospital data is isolated by default.
 
-**Q: What's the difference between verification and verification?**
+**Q: What's the difference between verification and verified?**
 A: **Verification** = process of checking credentials (identity, medical license, regulatory status). **Verified** = status indicating check passed. Breaches are "verified incidents" when confirmed true.
 
 **Q: Can we store data on our own servers?**
