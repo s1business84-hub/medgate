@@ -147,7 +147,7 @@ export default function TraineeRegistry() {
       <div className="rounded-lg overflow-hidden shadow border border-slate-200">
         <table className="w-full text-sm border-collapse">
           <thead>
-            <tr className="bg-gradient-to-r from-slate-700 to-slate-800 text-white">
+            <tr className="bg-linear-to-r from-slate-700 to-slate-800 text-white">
               <th className="p-3 text-left font-semibold border-b border-slate-600">Name</th>
               <th className="p-3 text-left font-semibold border-b border-slate-600">Department</th>
               <th className="p-3 text-left font-semibold border-b border-slate-600">Supervisor</th>
