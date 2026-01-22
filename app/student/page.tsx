@@ -29,11 +29,17 @@ export default function StudentPortal() {
               <p className="text-slate-300">Welcome back, {user.name}!</p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-              <AuditExcelButton
-                dataTypes={["applications", "exposureLogs", "completionAttestations"]}
-                filterApplications={(apps) => apps.filter((a) => a.studentId === user.id)}
-                className="border-white/30 bg-white/40 text-slate-800 hover:bg-white/50"
-              />
+              <div className="group relative">
+                <AuditExcelButton
+                  dataTypes={["applications", "exposureLogs", "completionAttestations"]}
+                  filterApplications={(apps) => apps.filter((a) => a.studentId === user.id)}
+                  className="border-white/30 bg-white/40 text-slate-800 hover:bg-white/50"
+                />
+                <div className="absolute bottom-full left-0 mb-2 hidden group-hover:block bg-slate-900 text-slate-100 text-sm rounded-lg p-3 w-48 border border-white/10 z-50">
+                  <p className="font-semibold text-white mb-1">📋 Audit Export</p>
+                  <p className="text-xs text-slate-300">Download a copy of your own applications, exposure logs, and training records. This is for your personal records only.</p>
+                </div>
+              </div>
               <button
                 onClick={() => {
                   logout();

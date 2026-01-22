@@ -170,11 +170,17 @@ export default function HospitalPortal() {
             <p className="text-slate-300">Manage observership applications</p>
           </div>
           <div className="flex gap-4">
-            <AuditExcelButton
-              dataTypes={["all"]}
-              filterApplications={(apps) => apps.filter((a) => a.hospitalId === user.hospitalId)}
-              className="border-white/15 bg-white/10 text-slate-100 hover:bg-white/20"
-            />
+            <div className="group relative">
+              <AuditExcelButton
+                dataTypes={["all"]}
+                filterApplications={(apps) => apps.filter((a) => a.hospitalId === user.hospitalId)}
+                className="border-white/15 bg-white/10 text-slate-100 hover:bg-white/20"
+              />
+              <div className="absolute bottom-full right-0 mb-2 hidden group-hover:block bg-slate-900 text-slate-100 text-sm rounded-lg p-3 w-56 border border-white/10 z-50">
+                <p className="font-semibold text-white mb-1">📊 Audit & Export</p>
+                <p className="text-xs text-slate-300">Download all training records for your hospital, including applications, students, exposure logs, and supervisors confirmations. Use this for compliance reporting and accreditation documentation.</p>
+              </div>
+            </div>
             <button
               onClick={() => setShowObsForm(true)}
               className="px-6 py-2 rounded-lg bg-indigo-600/90 hover:bg-indigo-600 text-white transition-colors font-medium shadow-sm"
