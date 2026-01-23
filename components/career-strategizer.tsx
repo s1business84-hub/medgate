@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { 
   GraduationCap, 
@@ -27,6 +27,12 @@ interface CareerStrategizerProps {
   completedSessions?: number
   skillsAcquired?: string[]
   yearOfStudy?: number
+  departmentPerformance?: {
+    department: string
+    averageRating: number
+    trend: "improving" | "stable" | "declining"
+    strengths: string[]
+  }[]
 }
 
 const stageIcons: Record<CareerStage, any> = {
@@ -53,7 +59,8 @@ export function CareerStrategizer({
   completedDepartments = [],
   completedSessions = 0,
   skillsAcquired = [],
-  yearOfStudy
+  yearOfStudy,
+  departmentPerformance = []
 }: CareerStrategizerProps) {
   const [viewMode, setViewMode] = useState<"overview" | "specialties" | "timeline">("overview")
 
@@ -72,6 +79,43 @@ export function CareerStrategizer({
   const [selectedSpecialty, setSelectedSpecialty] = useState<MedicalSpecialty | null>(
     recommendations.length > 0 ? recommendations[0].specialty : null
   )
+
+  const aiStrategy = useMemo(() => {
+    const bullets: string[] = []
+    const topRec = recommendations[0]
+    const topDept = departmentPerformance[0]
+    const nextDept = departmentPerformance.find(d => d.department !== topDept?.department)
+
+    if (topRec) {
+      bullets.push(
+        `Primary focus: ${topRec.specialty.name} (${topRec.score}% match) aligns with your completed departments.`
+      )
+    }
+
+    if (topDept) {
+      bullets.push(
+        `Highest performance in ${topDept.department} (avg ${topDept.averageRating.toFixed(1)}, trend ${topDept.trend}).`
+      )
+    }
+
+    if (skillsAcquired.length) {
+      bullets.push(`Leverage strengths: ${skillsAcquired.slice(0, 3).join(", ")}.`)
+    }
+
+    if (nextDept) {
+      bullets.push(`Diversify next with ${nextDept.department} to broaden your profile.`)
+    }
+
+    if (completedSessions < 3) {
+      bullets.push("Complete one more session to solidify your ratings and trend trajectory.")
+    }
+
+    return {
+      headline: topRec ? `AI suggests: ${topRec.specialty.name}` : "AI Strategy Pathway",
+      bullets,
+      topDept,
+    }
+  }, [recommendations, departmentPerformance, skillsAcquired, completedSessions])
 
   const getProgressPercentage = () => {
     const stages: CareerStage[] = ["medical_school", "observership", "internship", "residency", "fellowship", "consultant"]
@@ -218,6 +262,44 @@ export function CareerStrategizer({
                       </div>
                     )
                   })}
+                </div>
+              </div>
+            </div>
+
+            {/* AI Strategy Pathway */}
+            <div className="rounded-2xl border border-white/10 bg-linear-to-br from-purple-500/10 to-blue-500/10 backdrop-blur-xl p-6">
+              <div className="flex items-start justify-between mb-4">
+                <div>
+                  <h3 className="text-xl font-bold text-white">AI Strategy Pathway</h3>
+                  <p className="text-slate-300 text-sm">Guidance synthesized from your performance metrics and observership mix.</p>
+                </div>
+                <div className="px-3 py-1 rounded-full bg-white/10 border border-white/10 text-xs text-slate-200">GPT-style insight</div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="rounded-lg border border-white/10 bg-white/5 p-4">
+                  <p className="text-sm text-slate-400 mb-2">Primary Focus</p>
+                  <h4 className="text-lg font-semibold text-white">{aiStrategy.headline}</h4>
+                  {aiStrategy.topDept ? (
+                    <p className="text-sm text-slate-300 mt-2">
+                      Strongest department: {aiStrategy.topDept.department} ({aiStrategy.topDept.averageRating.toFixed(1)} avg, {aiStrategy.topDept.trend} trend)
+                    </p>
+                  ) : (
+                    <p className="text-sm text-slate-300 mt-2">Build more performance data to unlock targeted guidance.</p>
+                  )}
+                </div>
+
+                <div className="rounded-lg border border-white/10 bg-white/5 p-4">
+                  <p className="text-sm text-slate-400 mb-3">Next best moves</p>
+                  <ul className="space-y-2 list-disc list-inside text-slate-200 text-sm">
+                    {aiStrategy.bullets.length ? (
+                      aiStrategy.bullets.map((tip, idx) => (
+                        <li key={idx}>{tip}</li>
+                      ))
+                    ) : (
+                      <li>Complete an observership to receive AI-guided next steps.</li>
+                    )}
+                  </ul>
                 </div>
               </div>
             </div>

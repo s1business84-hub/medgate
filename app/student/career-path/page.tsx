@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/lib/auth-context"
-import { getApplications, getSessions } from "@/lib/storage"
+import { getApplications, getSessions, getPerformanceMetrics } from "@/lib/storage"
 import { mockPrograms, mockHospitals } from "@/lib/mockData"
 import { CareerStrategizer } from "@/components/career-strategizer"
 import { Application, Session, Program, Hospital } from "@/lib/types"
@@ -23,6 +23,12 @@ export default function CareerPathPage() {
   const [completedDepartments, setCompletedDepartments] = useState<string[]>([])
   const [completedSessionCount, setCompletedSessionCount] = useState(0)
   const [skillsAcquired, setSkillsAcquired] = useState<string[]>([])
+  const [departmentPerformance, setDepartmentPerformance] = useState<{
+    department: string
+    averageRating: number
+    trend: "improving" | "stable" | "declining"
+    strengths: string[]
+  }[]>([])
 
   const loadData = () => {
     try {
@@ -78,6 +84,42 @@ export default function CareerPathPage() {
         "Clinical Assessment"
       ].slice(0, Math.min(5, completed * 2))
       setSkillsAcquired(mockSkills)
+
+      // Map applications to departments to align performance metrics with observership types
+      const departmentLookup: Record<string, string> = {}
+      studentApplications.forEach(app => {
+        const program = mockPrograms.find(p => p.id === app.programId)
+        const hospital = program ? mockHospitals.find(h => h.id === program.hospitalId) : undefined
+        departmentLookup[app.id] = app.department || program?.name || hospital?.departments?.[0] || "General"
+      })
+
+      // Aggregate performance metrics per department
+      const perfMetrics = getPerformanceMetrics().filter(m => m.studentId === user?.id)
+      const perfBuckets: Record<string, { ratings: number[]; trends: string[]; strengths: string[] }> = {}
+
+      perfMetrics.forEach(m => {
+        const dept = departmentLookup[m.applicationId] || "General"
+        if (!perfBuckets[dept]) {
+          perfBuckets[dept] = { ratings: [], trends: [], strengths: [] }
+        }
+        perfBuckets[dept].ratings.push(m.averageRating)
+        perfBuckets[dept].trends.push(m.performanceTrend)
+        perfBuckets[dept].strengths.push(...m.keyStrengths)
+      })
+
+      const perfByDept = Object.entries(perfBuckets).map(([department, bucket]) => {
+        const avg = bucket.ratings.reduce((a, b) => a + b, 0) / (bucket.ratings.length || 1)
+        const trend = bucket.trends.sort((a, b) => bucket.trends.filter(t => t === a).length - bucket.trends.filter(t => t === b).length).pop() as any
+        const strengths = Array.from(new Set(bucket.strengths)).slice(0, 4)
+        return {
+          department,
+          averageRating: Number(avg.toFixed(1)),
+          trend: trend || "stable",
+          strengths,
+        }
+      }).sort((a, b) => b.averageRating - a.averageRating)
+
+      setDepartmentPerformance(perfByDept)
 
       setLoading(false)
     } catch (error) {
@@ -170,6 +212,7 @@ export default function CareerPathPage() {
             completedSessions={completedSessionCount}
             skillsAcquired={skillsAcquired}
             yearOfStudy={3} // Could be loaded from student profile
+            departmentPerformance={departmentPerformance}
           />
         )}
 
