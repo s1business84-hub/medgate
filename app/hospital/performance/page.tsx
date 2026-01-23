@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
-import { PerformanceInsights } from "@/components/performance-insights";
+import { PerformanceInsights } from "@/components";
 import { getPerformanceMetrics, getSessionFormSubmissions, getApplicationsByHospital } from "@/lib/storage";
 import { StudentPerformanceMetrics, SessionFormSubmission } from "@/lib/types";
 import { ArrowLeft, TrendingUp } from "lucide-react";
