@@ -1,0 +1,76 @@
+"use client"
+
+import { useState, useEffect } from "react"
+import { useAuth } from "@/lib/auth-context"
+import { useRouter } from "next/navigation"
+import { getApplications, getSessionFormSubmissions, getPerformanceMetrics } from "@/lib/storage"
+import { FormTrackingDashboard } from "@/components/form-tracking-dashboard"
+import { Application, SessionFormSubmission, StudentPerformanceMetrics } from "@/lib/types"
+
+export default function FormTrackingPage() {
+  const { user } = useAuth()
+  const router = useRouter()
+  const [submissions, setSubmissions] = useState<SessionFormSubmission[]>([])
+  const [metrics, setMetrics] = useState<StudentPerformanceMetrics[]>([])
+  const [applications, setApplications] = useState<Application[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    if (!user || (user.role !== "admin" && user.role !== "hospital")) {
+      router.push("/login")
+      return
+    }
+
+    try {
+      // Get all applications (admin sees all, hospital sees their hospital only)
+      let allApps = getApplications()
+      if (user.role === "hospital") {
+        // Filter by hospital ID if available
+        allApps = allApps.filter(a => a.hospitalId === user.hospitalId)
+      }
+      setApplications(allApps)
+
+      // Get form submissions
+      const allSubmissions = getSessionFormSubmissions()
+      if (user.role === "hospital") {
+        // Filter to only submissions from this hospital's applications
+        const filteredSubmissions = allSubmissions.filter(sub => {
+          const app = allApps.find(a => a.id === sub.applicationId)
+          return app?.hospitalId === user.hospitalId
+        })
+        setSubmissions(filteredSubmissions)
+      } else {
+        setSubmissions(allSubmissions)
+      }
+
+      // Get performance metrics
+      const allMetrics = getPerformanceMetrics()
+      setMetrics(allMetrics)
+
+      setLoading(false)
+    } catch (error) {
+      console.error("Error loading data:", error)
+      setLoading(false)
+    }
+  }, [user, router])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-slate-950 via-purple-900/20 to-slate-950 flex items-center justify-center">
+        <p className="text-slate-300">Loading tracking dashboard...</p>
+      </div>
+    )
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-purple-900/20 to-slate-950">
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        <FormTrackingDashboard
+          submissions={submissions}
+          metrics={metrics}
+          applications={applications}
+        />
+      </div>
+    </div>
+  )
+}

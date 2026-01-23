@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { getApplications, updateApplicationStatus, getStudents, createNotification, deleteApplication, addDocument, setApplicationAssignment, getUsers } from "@/lib/storage";
+import { getApplications, updateApplicationStatus, getStudents, createNotification, deleteApplication, addDocument, setApplicationAssignment, getUsers, createObservationForm, getObservationForms } from "@/lib/storage";
 import { getSupervisorConfirmations, addSupervisorConfirmation } from "@/lib/auditStore";
 import { showToast } from "@/lib/toast";
 import UI_COPY from '@/lib/uiCopy';
@@ -12,6 +12,7 @@ import { useAuth } from "@/lib/auth-context";
 import type { Application } from "@/lib/types";
 import { CheckCircle, XCircle, Clock } from "lucide-react";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
+import { AdminFormAssignment } from "@/components/admin-form-assignment";
 
 export default function AdminPage() {
   const { user, logout } = useAuth();
@@ -37,6 +38,8 @@ export default function AdminPage() {
   const [ehsReference, setEhsReference] = useState("");
   const [selectedSupervisorId, setSelectedSupervisorId] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState("");
+  const [showFormAssignment, setShowFormAssignment] = useState(false);
+  const [formAssignmentLoading, setFormAssignmentLoading] = useState(false);
   const [obsForm, setObsForm] = useState({
     name: "",
     description: "",
@@ -106,17 +109,18 @@ export default function AdminPage() {
 
   const handleAccept = (appId: string) => {
     setActionInProgress(true);
-    const updated = updateApplicationStatus(appId, "Accepted", "Accepted by admin");
+    const updated = updateApplicationStatus(appId, "Stage 2 Accepted", "Accepted by admin - awaiting form assignment");
     if (updated) {
       createNotification({
         userId: updated.studentId,
         type: "approval",
         title: "Application Accepted",
-        message: `Your application has been accepted. The hospital will follow up with next steps.`,
+        message: `Your application has been accepted. Admin will assign observation forms for your sessions.`,
         relatedApplicationId: appId,
       });
       setApplications(applications.map(app => app.id === appId ? updated : app));
       setSelectedApp(updated);
+      setShowFormAssignment(true);
     }
     setActionInProgress(false);
   };
@@ -172,6 +176,49 @@ export default function AdminPage() {
       setSelectedApp(updated);
     }
     setActionInProgress(false);
+  };
+
+  const handleAssignForm = async (formData: { title: string; description: string; fields: any[] }) => {
+    if (!selectedApp) return;
+
+    try {
+      setFormAssignmentLoading(true);
+      
+      // Create the observation form
+      const newForm = createObservationForm({
+        applicationId: selectedApp.id,
+        programId: selectedApp.programId,
+        hospitalId: selectedApp.hospitalId,
+        title: formData.title,
+        description: formData.description,
+        fields: formData.fields,
+        createdBy: user?.id || "admin",
+        status: "active",
+      });
+
+      // Update application to include form reference
+      const updated = updateApplicationStatus(selectedApp.id, "Stage 2 Accepted", `Form assigned: ${newForm.id}`);
+      
+      if (updated) {
+        setApplications(applications.map(app => app.id === selectedApp.id ? updated : app));
+        setSelectedApp(updated);
+        setShowFormAssignment(false);
+        showToast("Form assigned successfully. Student will see it in their next session.");
+        
+        createNotification({
+          userId: selectedApp.studentId,
+          type: "update",
+          title: "Observation Form Ready",
+          message: `Your observation form "${formData.title}" is ready. You'll fill it after each session.`,
+          relatedApplicationId: selectedApp.id,
+        });
+      }
+    } catch (error) {
+      console.error("Error assigning form:", error);
+      showToast("Failed to assign form");
+    } finally {
+      setFormAssignmentLoading(false);
+    }
   };
 
   const handleReject = (appId: string) => {
@@ -264,6 +311,9 @@ export default function AdminPage() {
           </Link>
           <Link href="/admin/ehs-audit" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-sky-700 hover:bg-sky-800 text-white font-semibold shadow transition-all">
             <span>📜</span> EHS Audit
+                    <Link href="/admin/form-tracking" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-semibold shadow transition-all">
+                      <span>📋</span> Form Tracking
+                    </Link>
           </Link>
           {process.env.NODE_ENV !== 'production' && (
             <button
@@ -585,6 +635,25 @@ export default function AdminPage() {
                       <button onClick={() => handleRemoveApplication(selectedApp.id)} className="w-full border border-white/15 bg-white/5 hover:bg-white/10 text-slate-100 font-semibold py-2 rounded-lg transition-colors flex items-center justify-center">
                         Remove Application
                       </button>
+                    </div>
+                  )}
+                  {selectedApp.status === "Stage 2 Accepted" && (
+                    <div className="pt-4 border-t border-white/10">
+                      {!showFormAssignment ? (
+                        <button
+                          onClick={() => setShowFormAssignment(true)}
+                          className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
+                        >
+                          Assign Observation Form
+                        </button>
+                      ) : (
+                        <AdminFormAssignment
+                          application={selectedApp}
+                          onAssignForm={handleAssignForm}
+                          loading={formAssignmentLoading}
+                          existingForms={getObservationForms(selectedApp.id)}
+                        />
+                      )}
                     </div>
                   )}
                   <div className="pt-4 border-t border-white/10 space-y-3">
