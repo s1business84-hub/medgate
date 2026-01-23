@@ -219,3 +219,77 @@ export interface Session {
   updatedAt: string;
 }
 
+/* CAREER PATH STRATEGIZER */
+export type CareerStage = 
+  | "medical_school" 
+  | "observership" 
+  | "internship" 
+  | "residency" 
+  | "fellowship" 
+  | "consultant";
+
+export interface CareerMilestone {
+  id: string;
+  stage: CareerStage;
+  title: string;
+  description: string;
+  typicalDuration: string; // e.g., "4-6 weeks", "1-3 years"
+  requirements: string[];
+  status: "not_started" | "in_progress" | "completed";
+  completedAt?: string;
+  relatedApplicationIds?: string[]; // Link to actual applications/sessions
+  order: number;
+}
+
+export interface MedicalSpecialty {
+  id: string;
+  name: string;
+  category: "Surgery" | "Internal Medicine" | "Pediatrics" | "Emergency" | "Diagnostics" | "Primary Care" | "Other";
+  description: string;
+  averageTrainingYears: number;
+  commonSubspecialties: string[];
+  typicalCareerPath: CareerStage[];
+  requiredCertifications: string[];
+  growthOutlook: "High" | "Moderate" | "Stable";
+  averageSalaryRange?: string; // e.g., "250k-400k AED"
+  workLifeBalance: "Excellent" | "Good" | "Moderate" | "Challenging";
+  relatedDepartments: string[]; // Maps to hospital departments
+}
+
+export interface CareerPathway {
+  id: string;
+  studentId: string;
+  targetSpecialty: MedicalSpecialty;
+  currentStage: CareerStage;
+  milestones: CareerMilestone[];
+  completedMilestones: number;
+  totalMilestones: number;
+  progressPercentage: number;
+  estimatedCompletionDate?: string;
+  recommendedPrograms: string[]; // Program IDs student should consider
+  skills: {
+    acquired: string[]; // Skills from completed sessions
+    recommended: string[]; // Skills they should develop
+  };
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CareerRecommendation {
+  id: string;
+  studentId: string;
+  recommendedSpecialties: {
+    specialty: MedicalSpecialty;
+    matchScore: number; // 0-100
+    reasons: string[];
+    nextSteps: string[];
+  }[];
+  basedOn: {
+    completedSessions: number;
+    departments: string[];
+    skillsAcquired: string[];
+    yearOfStudy?: number;
+  };
+  generatedAt: string;
+}
+
