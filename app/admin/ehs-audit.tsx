@@ -1,13 +1,13 @@
 "use client"
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, startTransition } from "react";
 import { getEhsConfirmations } from "@/lib/auditStore";
 
 export default function EhsAuditPage() {
   const [items, setItems] = useState<any[]>([]);
 
   useEffect(() => {
-    setItems(getEhsConfirmations());
+    startTransition(() => setItems(getEhsConfirmations()));
   }, []);
 
   return (

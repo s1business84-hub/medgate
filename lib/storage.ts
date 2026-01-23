@@ -1,6 +1,6 @@
 import type { 
   Student, Application, Document, Payment, AuditLog, User, Notification, ProgramReminder,
-  FormTemplate, FormResponse, Session
+  FormTemplate, FormResponse, Session, ObservationForm, SessionFormSubmission, StudentPerformanceMetrics
 } from "./types";
 
 const KEYS = {
@@ -18,6 +18,9 @@ const KEYS = {
   formTemplates: "electivio_form_templates",
   formResponses: "electivio_form_responses",
   sessions: "electivio_sessions",
+  observationForms: "electivio_observation_forms",
+  sessionFormSubmissions: "electivio_session_form_submissions",
+  performanceMetrics: "electivio_performance_metrics",
 };
 
 function readJSON<T>(key: string, fallback: T): T {
@@ -509,5 +512,163 @@ export function completeSession(id: string): Session | null {
     status: 'completed',
     completedAt: new Date().toISOString(),
   });
+}
+
+/* OBSERVATION FORMS - ADMIN FORM BUILDER */
+export function createObservationForm(input: Omit<ObservationForm, "id" | "createdAt" | "updatedAt">): ObservationForm {
+  const forms = readJSON<ObservationForm[]>(KEYS.observationForms, []);
+  const form: ObservationForm = {
+    id: newId("form"),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    ...input,
+  };
+  forms.push(form);
+  writeJSON(KEYS.observationForms, forms);
+  return form;
+}
+
+export function getObservationForms(applicationId?: string): ObservationForm[] {
+  const forms = readJSON<ObservationForm[]>(KEYS.observationForms, []);
+  if (applicationId) {
+    return forms.filter(f => f.applicationId === applicationId);
+  }
+  return forms;
+}
+
+export function getObservationFormById(formId: string): ObservationForm | null {
+  const forms = readJSON<ObservationForm[]>(KEYS.observationForms, []);
+  return forms.find(f => f.id === formId) || null;
+}
+
+export function updateObservationForm(formId: string, updates: Partial<ObservationForm>): ObservationForm | null {
+  const forms = readJSON<ObservationForm[]>(KEYS.observationForms, []);
+  const form = forms.find(f => f.id === formId);
+  if (!form) return null;
+  
+  const updated = {
+    ...form,
+    ...updates,
+    updatedAt: new Date().toISOString(),
+  };
+  const index = forms.indexOf(form);
+  forms[index] = updated;
+  writeJSON(KEYS.observationForms, forms);
+  return updated;
+}
+
+export function deleteObservationForm(formId: string): boolean {
+  const forms = readJSON<ObservationForm[]>(KEYS.observationForms, []);
+  const index = forms.findIndex(f => f.id === formId);
+  if (index === -1) return false;
+  forms.splice(index, 1);
+  writeJSON(KEYS.observationForms, forms);
+  return true;
+}
+
+/* SESSION FORM SUBMISSIONS - STUDENT SUBMISSIONS */
+export function createSessionFormSubmission(input: Omit<SessionFormSubmission, "id" | "submittedAt">): SessionFormSubmission {
+  const submissions = readJSON<SessionFormSubmission[]>(KEYS.sessionFormSubmissions, []);
+  const submission: SessionFormSubmission = {
+    id: newId("sub"),
+    submittedAt: new Date().toISOString(),
+    ...input,
+  };
+  submissions.push(submission);
+  writeJSON(KEYS.sessionFormSubmissions, submissions);
+  return submission;
+}
+
+export function getSessionFormSubmissions(sessionId?: string, studentId?: string): SessionFormSubmission[] {
+  const submissions = readJSON<SessionFormSubmission[]>(KEYS.sessionFormSubmissions, []);
+  let result = submissions;
+  
+  if (sessionId) {
+    result = result.filter(s => s.sessionId === sessionId);
+  }
+  if (studentId) {
+    result = result.filter(s => s.studentId === studentId);
+  }
+  
+  return result;
+}
+
+export function getSessionFormSubmissionById(submissionId: string): SessionFormSubmission | null {
+  const submissions = readJSON<SessionFormSubmission[]>(KEYS.sessionFormSubmissions, []);
+  return submissions.find(s => s.id === submissionId) || null;
+}
+
+export function updateSessionFormSubmission(submissionId: string, updates: Partial<SessionFormSubmission>): SessionFormSubmission | null {
+  const submissions = readJSON<SessionFormSubmission[]>(KEYS.sessionFormSubmissions, []);
+  const submission = submissions.find(s => s.id === submissionId);
+  if (!submission) return null;
+  
+  const updated = { ...submission, ...updates };
+  const index = submissions.indexOf(submission);
+  submissions[index] = updated;
+  writeJSON(KEYS.sessionFormSubmissions, submissions);
+  return updated;
+}
+
+export function reviewSessionFormSubmission(submissionId: string, notes: string, rating: number, reviewedBy: string): SessionFormSubmission | null {
+  return updateSessionFormSubmission(submissionId, {
+    status: 'reviewed',
+    supervisorReview: {
+      notes,
+      rating,
+      reviewedAt: new Date().toISOString(),
+      reviewedBy,
+    },
+  });
+}
+
+/* PERFORMANCE METRICS */
+export function calculatePerformanceMetrics(studentId: string, applicationId: string): StudentPerformanceMetrics | null {
+  const submissions = readJSON<SessionFormSubmission[]>(KEYS.sessionFormSubmissions, [])
+    .filter(s => s.studentId === studentId && s.applicationId === applicationId);
+  
+  if (submissions.length === 0) return null;
+
+  const ratings = submissions
+    .filter(s => s.supervisorReview?.rating)
+    .map(s => s.supervisorReview!.rating!);
+  
+  const averageRating = ratings.length > 0 ? ratings.reduce((a, b) => a + b, 0) / ratings.length : 0;
+  
+  // Determine trend (mock for demo)
+  const trend: "improving" | "stable" | "declining" = ratings.length >= 2
+    ? ratings[ratings.length - 1] > ratings[0] ? "improving" : ratings[ratings.length - 1] < ratings[0] ? "declining" : "stable"
+    : "stable";
+
+  return {
+    studentId,
+    applicationId,
+    sessionId: submissions[0]?.sessionId || "",
+    averageRating,
+    completedForms: submissions.length,
+    pendingForms: submissions.filter(s => s.status === 'submitted').length,
+    lastSubmissionDate: submissions.sort((a, b) => new Date(b.submittedAt).getTime() - new Date(a.submittedAt).getTime())[0]?.submittedAt,
+    performanceTrend: trend,
+    keyStrengths: ["Communication", "Professionalism", "Engagement"],
+    areasForImprovement: ["Time Management", "Note Taking"],
+  };
+}
+
+export function getPerformanceMetrics(applicationId?: string): StudentPerformanceMetrics[] {
+  const submissions = readJSON<SessionFormSubmission[]>(KEYS.sessionFormSubmissions, []);
+  const applications = getApplications();
+  
+  let relevantApps = applications;
+  if (applicationId) {
+    relevantApps = applications.filter(a => a.id === applicationId);
+  }
+
+  const metrics: StudentPerformanceMetrics[] = [];
+  relevantApps.forEach(app => {
+    const metric = calculatePerformanceMetrics(app.studentId, app.id);
+    if (metric) metrics.push(metric);
+  });
+
+  return metrics;
 }
 

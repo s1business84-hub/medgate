@@ -1,8 +1,9 @@
 import { test, expect } from '@playwright/test'
 
 test.describe('Form Workflow - Admin to Student to Supervisor', () => {
-  const adminUrl = 'http://localhost:3000/login'
-  const studentUrl = 'http://localhost:3000/login'
+  const base = process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:3001'
+  const adminUrl = `${base}/login`
+  const studentUrl = `${base}/login`
   const adminEmail = 'admin@example.com'
   const studentEmail = 'student@example.com'
   const adminPassword = 'demo'
@@ -17,7 +18,7 @@ test.describe('Form Workflow - Admin to Student to Supervisor', () => {
     await page.waitForNavigation()
 
     // Navigate to admin page
-    await page.goto('http://localhost:3000/admin')
+    await page.goto(`${base}/admin`)
     await page.waitForSelector('[data-testid="accept-application-button"]', { timeout: 5000 })
 
     // Accept first application

@@ -109,13 +109,13 @@ export default function AdminPage() {
 
   const handleAccept = (appId: string) => {
     setActionInProgress(true);
-    const updated = updateApplicationStatus(appId, "Stage 2 Accepted", "Accepted by admin - awaiting form assignment");
+    const updated = updateApplicationStatus(appId, "Stage 2 Accepted", "Accepted by supervisor - awaiting form assignment");
     if (updated) {
       createNotification({
         userId: updated.studentId,
         type: "approval",
         title: "Application Accepted",
-        message: `Your application has been accepted. Admin will assign observation forms for your sessions.`,
+        message: `Your application has been accepted. Supervisor will assign observation forms for your sessions.`,
         relatedApplicationId: appId,
       });
       setApplications(applications.map(app => app.id === appId ? updated : app));
@@ -375,7 +375,7 @@ export default function AdminPage() {
         </div>
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-slate-100 mb-2">Admin Dashboard</h1>
+            <h1 className="text-3xl font-bold text-slate-100 mb-2">Supervisor Portal</h1>
             <p className="text-slate-300">Review and manage observership applications</p>
           </div>
           <div className="flex gap-4 flex-wrap justify-end">

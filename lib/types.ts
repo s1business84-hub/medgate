@@ -29,8 +29,9 @@ export interface Application {
   studentId: string;
   programId: string;
   hospitalId?: string;
-  status: "Draft" | "Submitted" | "Under Review" | "Approved" | "Rejected" | "Waitlisted" | "Accepted" | "Deferred" | "Declined" | "In Training";
+  status: "Draft" | "Submitted" | "Under Review" | "Approved" | "Rejected" | "Waitlisted" | "Accepted" | "Stage 2 Accepted" | "Deferred" | "Declined" | "In Training" | "Completed";
   submissionDate: string;
+  acceptedAt?: string; // When moved to Stage 2 Accepted
   notes?: string;
   regulatory?: {
     type: "None" | "EHS" | "DHA" | "DoH";
@@ -291,5 +292,67 @@ export interface CareerRecommendation {
     yearOfStudy?: number;
   };
   generatedAt: string;
+}
+
+/* OBSERVERSHIP PERFORMANCE TRACKING */
+export type FormFieldType = "text" | "rating" | "checkbox" | "textarea" | "select";
+
+export interface FormField {
+  id: string;
+  label: string;
+  type: FormFieldType;
+  required: boolean;
+  placeholder?: string;
+  options?: string[]; // For select fields
+  helpText?: string;
+  order: number;
+}
+
+export interface ObservationForm {
+  id: string;
+  applicationId: string;
+  programId: string;
+  hospitalId: string;
+  title: string; // e.g., "Daily Observership Assessment"
+  description: string;
+  fields: FormField[];
+  createdAt: string;
+  updatedAt: string;
+  createdBy: string; // Admin ID
+  status: "active" | "archived";
+}
+
+export interface SessionFormSubmission {
+  id: string;
+  sessionId: string;
+  applicationId: string;
+  studentId: string;
+  formId: string;
+  responses: {
+    fieldId: string;
+    value: string | number | boolean | string[]; // text, rating, checkbox, textarea, select
+  }[];
+  submittedAt: string;
+  completedAt?: string;
+  status: "draft" | "submitted" | "reviewed";
+  supervisorReview?: {
+    notes: string;
+    rating?: number;
+    reviewedAt: string;
+    reviewedBy: string; // Admin/Supervisor ID
+  };
+}
+
+export interface StudentPerformanceMetrics {
+  studentId: string;
+  applicationId: string;
+  sessionId: string;
+  averageRating: number; // 1-5 scale
+  completedForms: number;
+  pendingForms: number;
+  lastSubmissionDate?: string;
+  performanceTrend: "improving" | "stable" | "declining";
+  keyStrengths: string[];
+  areasForImprovement: string[];
 }
 
