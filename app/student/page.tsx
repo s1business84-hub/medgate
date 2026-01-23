@@ -155,49 +155,143 @@ export default function StudentPortal() {
                 </div>
               ) : (
                 <>
-                  {/* Application Tabs */}
-                  <div className="flex gap-2 overflow-x-auto pb-2">
-                    {applications.map(app => (
-                      <button
-                        key={app.id}
-                        onClick={() => setSelectedApplicationId(app.id)}
-                        className={`px-4 py-2 rounded-lg whitespace-nowrap font-medium transition-all ${
-                          selectedApplicationId === app.id
-                            ? 'bg-linear-to-r from-cyan-500 to-indigo-600 text-white'
-                            : 'bg-white/10 text-slate-300 hover:bg-white/20'
-                        }`}
-                      >
-                        {app.programName}
-                      </button>
-                    ))}
+                  {/* Application List */}
+                  <div className="space-y-4">
+                    <h2 className="text-xl font-bold text-slate-100">Your Applications</h2>
+                    {applications.map(app => {
+                      const getStatusColor = (status: string) => {
+                        switch (status) {
+                          case 'Accepted':
+                          case 'Stage 2 Accepted':
+                          case 'In Training':
+                            return 'bg-green-500/20 text-green-300 border-green-500/30';
+                          case 'Pending':
+                          case 'Submitted':
+                            return 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30';
+                          case 'Rejected':
+                            return 'bg-red-500/20 text-red-300 border-red-500/30';
+                          case 'Completed':
+                            return 'bg-blue-500/20 text-blue-300 border-blue-500/30';
+                          default:
+                            return 'bg-slate-500/20 text-slate-300 border-slate-500/30';
+                        }
+                      };
+
+                      return (
+                        <button
+                          key={app.id}
+                          onClick={() => setSelectedApplicationId(app.id)}
+                          className={`w-full text-left p-4 rounded-lg transition-all ${
+                            selectedApplicationId === app.id
+                              ? 'bg-white/10 border-2 border-cyan-500/50'
+                              : 'bg-white/5 border border-white/10 hover:bg-white/10'
+                          }`}
+                        >
+                          <div className="flex items-center justify-between gap-4">
+                            <div className="flex-1">
+                              <h3 className="text-lg font-semibold text-slate-100 mb-1">{app.programName}</h3>
+                              <p className="text-sm text-slate-400 mb-2">{app.hospitalName}</p>
+                              <div className="flex items-center gap-2 text-xs text-slate-400">
+                                <span>{app.sessionCount || 1} session{(app.sessionCount || 1) > 1 ? 's' : ''}</span>
+                                <span>•</span>
+                                <span>Applied {new Date(app.submissionDate).toLocaleDateString()}</span>
+                              </div>
+                            </div>
+                            <div className="shrink-0">
+                              <span className={`px-3 py-1 rounded-full text-sm font-medium border ${getStatusColor(app.status)}`}>
+                                {app.status}
+                              </span>
+                            </div>
+                          </div>
+                        </button>
+                      );
+                    })}
                   </div>
 
                   {/* Selected Application Details */}
                   {selectedApplicationId && (() => {
                     const selected = applications.find(a => a.id === selectedApplicationId);
+                    if (!selected) return null;
+
+                    const getStatusColor = (status: string) => {
+                      switch (status) {
+                        case 'Accepted':
+                        case 'Stage 2 Accepted':
+                        case 'In Training':
+                          return 'bg-green-500/20 text-green-300 border-green-500/50';
+                        case 'Pending':
+                        case 'Submitted':
+                          return 'bg-yellow-500/20 text-yellow-300 border-yellow-500/50';
+                        case 'Rejected':
+                          return 'bg-red-500/20 text-red-300 border-red-500/50';
+                        case 'Completed':
+                          return 'bg-blue-500/20 text-blue-300 border-blue-500/50';
+                        default:
+                          return 'bg-slate-500/20 text-slate-300 border-slate-500/50';
+                      }
+                    };
+
+                    const getStatusIcon = (status: string) => {
+                      switch (status) {
+                        case 'Accepted':
+                        case 'Stage 2 Accepted':
+                        case 'In Training':
+                          return '✓';
+                        case 'Pending':
+                        case 'Submitted':
+                          return '⏳';
+                        case 'Rejected':
+                          return '✗';
+                        case 'Completed':
+                          return '🎓';
+                        default:
+                          return '•';
+                      }
+                    };
+
                     return (
                       <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg p-6">
                         <div className="mb-6">
-                          <h2 className="text-2xl font-bold text-slate-100 mb-2">{selected?.programName}</h2>
-                          <p className="text-slate-300 mb-4">{selected?.hospitalName}</p>
+                          <div className="flex items-start justify-between gap-4 mb-4">
+                            <div className="flex-1">
+                              <h2 className="text-2xl font-bold text-slate-100 mb-2">{selected?.programName}</h2>
+                              <p className="text-slate-300 mb-2">{selected?.hospitalName}</p>
+                            </div>
+                            <div className={`px-4 py-2 rounded-lg border-2 ${getStatusColor(selected?.status)} flex items-center gap-2`}>
+                              <span className="text-xl">{getStatusIcon(selected?.status)}</span>
+                              <div>
+                                <p className="text-xs opacity-80">Status</p>
+                                <p className="text-sm font-bold">{selected?.status}</p>
+                              </div>
+                            </div>
+                          </div>
+
+                          {selected?.notes && (
+                            <div className="mb-4 p-4 rounded-lg bg-white/10 border border-white/20">
+                              <p className="text-xs text-slate-400 mb-1">Notes from Hospital:</p>
+                              <p className="text-sm text-slate-200">{selected.notes}</p>
+                            </div>
+                          )}
                           
-                          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                             <div className="bg-white/10 rounded-lg p-3">
-                              <p className="text-xs text-slate-400">Status</p>
-                              <p className="text-sm font-semibold text-slate-100">{selected?.status}</p>
+                              <p className="text-xs text-slate-400 mb-1">Sessions</p>
+                              <p className="text-lg font-bold text-slate-100">{selected?.sessionCount || 1}</p>
                             </div>
                             <div className="bg-white/10 rounded-lg p-3">
-                              <p className="text-xs text-slate-400">Sessions</p>
-                              <p className="text-sm font-semibold text-slate-100">{selected?.sessionCount || 1}</p>
+                              <p className="text-xs text-slate-400 mb-1">Department</p>
+                              <p className="text-sm font-semibold text-slate-100">{selected?.department || "General"}</p>
                             </div>
                             <div className="bg-white/10 rounded-lg p-3">
-                              <p className="text-xs text-slate-400">Department</p>
-                              <p className="text-sm font-semibold text-slate-100">{selected?.department || "N/A"}</p>
-                            </div>
-                            <div className="bg-white/10 rounded-lg p-3">
-                              <p className="text-xs text-slate-400">Submitted</p>
+                              <p className="text-xs text-slate-400 mb-1">Submitted</p>
                               <p className="text-sm font-semibold text-slate-100">
                                 {new Date(selected?.submissionDate).toLocaleDateString()}
+                              </p>
+                            </div>
+                            <div className="bg-white/10 rounded-lg p-3">
+                              <p className="text-xs text-slate-400 mb-1">Regulatory</p>
+                              <p className="text-sm font-semibold text-slate-100">
+                                {selected?.regulatory?.type || "None"}
                               </p>
                             </div>
                           </div>
