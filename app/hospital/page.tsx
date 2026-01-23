@@ -159,7 +159,7 @@ export default function HospitalPortal() {
       // Create notification for student
       createNotification({
         userId: selectedApp.studentId,
-        type: "info",
+        type: "update",
         title: "New Observation Form",
         message: `A new observation form "${formData.title}" has been assigned to your Session ${formData.sessionNumber}.`,
         relatedApplicationId: selectedApp.id,
@@ -169,28 +169,6 @@ export default function HospitalPortal() {
       throw error
     }
   }
-
-  const handleRejection = (appId: string) => {
-    setActionInProgress(true);
-    const updated = updateApplicationStatus(appId, "Rejected", rejectionReason || "Application rejected");
-    
-    if (updated) {
-      // Create notification for student
-      createNotification({
-        userId: updated.studentId,
-        type: "rejection",
-        title: "Application Status Update",
-        message: `Your observership application has been reviewed. Status: ${updated.status}. ${rejectionReason ? `Reason: ${rejectionReason}` : ""}`,
-        relatedApplicationId: appId,
-      });
-
-      setApplications(applications.map(app => app.id === appId ? updated : app));
-      setSelectedApp(updated);
-      setShowRejectModal(false);
-      setRejectionReason("");
-    }
-    setActionInProgress(false);
-  };
 
   const handleCreateObservership = () => {
     // Placeholder: save observership to storage

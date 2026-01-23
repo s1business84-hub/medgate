@@ -224,7 +224,7 @@ export function HospitalFormModal({
                 <option value="">Select a session...</option>
                 {sessions.map(session => (
                   <option key={session.id} value={session.id}>
-                    Session {session.sessionNumber} {session.status !== 'pending' ? `(${session.status})` : ''}
+                    Session {session.sessionNumber} ({session.status.replace('_', ' ')})
                   </option>
                 ))}
               </select>
