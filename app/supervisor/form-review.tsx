@@ -72,7 +72,7 @@ export default function SupervisorFormReview({
   return (
     <div className="bg-white/5 border border-white/10 rounded-lg shadow-lg overflow-hidden">
       {/* Header */}
-      <div className="bg-gradient-to-r from-indigo-900/50 to-indigo-800/50 border-b border-white/10 p-6">
+      <div className="bg-linear-to-r from-indigo-900/50 to-indigo-800/50 border-b border-white/10 p-6">
         <h3 className="text-xl font-bold text-slate-100">Form Review</h3>
         <p className="text-sm text-slate-400 mt-2">{formTemplate.name}</p>
         <div className="flex gap-4 mt-4 text-sm">

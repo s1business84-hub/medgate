@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, startTransition } from "react"
 import { useAuth } from "@/lib/auth-context"
 import { useRouter } from "next/navigation"
 import { getApplications, getSessionFormSubmissions, getPerformanceMetrics } from "@/lib/storage"
@@ -28,7 +28,7 @@ export default function FormTrackingPage() {
         // Filter by hospital ID if available
         allApps = allApps.filter(a => a.hospitalId === user.hospitalId)
       }
-      setApplications(allApps)
+      startTransition(() => setApplications(allApps))
 
       // Get form submissions
       const allSubmissions = getSessionFormSubmissions()
@@ -38,32 +38,32 @@ export default function FormTrackingPage() {
           const app = allApps.find(a => a.id === sub.applicationId)
           return app?.hospitalId === user.hospitalId
         })
-        setSubmissions(filteredSubmissions)
+        startTransition(() => setSubmissions(filteredSubmissions))
       } else {
-        setSubmissions(allSubmissions)
+        startTransition(() => setSubmissions(allSubmissions))
       }
 
       // Get performance metrics
       const allMetrics = getPerformanceMetrics()
-      setMetrics(allMetrics)
+      startTransition(() => setMetrics(allMetrics))
 
-      setLoading(false)
+      startTransition(() => setLoading(false))
     } catch (error) {
       console.error("Error loading data:", error)
-      setLoading(false)
+      startTransition(() => setLoading(false))
     }
   }, [user, router])
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-slate-950 via-purple-900/20 to-slate-950 flex items-center justify-center">
+      <div className="min-h-screen bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950 flex items-center justify-center">
         <p className="text-slate-300">Loading tracking dashboard...</p>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-purple-900/20 to-slate-950">
+    <div className="min-h-screen bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950">
       <div className="max-w-7xl mx-auto px-4 py-12">
         <FormTrackingDashboard
           submissions={submissions}

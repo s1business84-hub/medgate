@@ -186,7 +186,7 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
               </button>
             </div>
 
-            <div className="px-4 sm:px-6 py-3 bg-gray-50 border-b border-gray-200 flex-shrink-0">
+            <div className="px-4 sm:px-6 py-3 bg-gray-50 border-b border-gray-200 shrink-0">
               <div className="flex flex-wrap items-center gap-2">
                 {[1, 2, 3].map(stepNumber => (
                   <div key={stepNumber} className="flex items-center">
@@ -558,7 +558,7 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
             </div>
 
             {!isSubmitted && (
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-4 sm:p-6 border-t border-gray-200 bg-gray-50 flex-shrink-0">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-4 sm:p-6 border-t border-gray-200 bg-gray-50 shrink-0">
                 <Button
                   data-testid="app-modal-cancel"
                   type="button"

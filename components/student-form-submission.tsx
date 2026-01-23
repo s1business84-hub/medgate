@@ -85,7 +85,7 @@ export function StudentFormSubmission({
           animate={{ opacity: 1, y: 0 }}
           className="mb-6 p-4 bg-red-500/20 border border-red-500/30 rounded-lg flex gap-3"
         >
-          <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+          <AlertCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
           <div>
             <p className="text-sm font-medium text-red-300 mb-1">Please fix the following:</p>
             <ul className="text-sm text-red-300/80 space-y-0.5">
@@ -192,7 +192,7 @@ export function StudentFormSubmission({
         <button
           onClick={handleSubmit}
           disabled={loading}
-          className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-lg font-medium transition-all disabled:opacity-50"
+          className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-linear-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-lg font-medium transition-all disabled:opacity-50"
         >
           <Send className="w-4 h-4" />
           {loading ? "Submitting..." : "Submit Form"}

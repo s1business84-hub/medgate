@@ -60,7 +60,6 @@ export default function FormSubmissionPage() {
         formId: selectedForm.id,
         responses,
         status: "submitted",
-        submittedAt: new Date().toISOString(),
       })
 
       if (submission) {
@@ -78,14 +77,14 @@ export default function FormSubmissionPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-slate-950 via-purple-900/20 to-slate-950 flex items-center justify-center">
+      <div className="min-h-screen bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950 flex items-center justify-center">
         <p className="text-slate-300">Loading forms...</p>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-purple-900/20 to-slate-950">
+    <div className="min-h-screen bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950">
       <div className="max-w-2xl mx-auto px-4 py-12">
         {selectedForm ? (
           <StudentFormSubmission

@@ -98,16 +98,18 @@ test.describe('Form Workflow - Admin to Student to Supervisor', () => {
     const stars = await page.locator('span:has-text("★")')
     if (await stars.first().isVisible()) {
       // Click 4th star for rating of 4
-      const starButtons = await page.locator('button').filter({ has: page.locator('span:has-text("★")') })
-      if (starButtons.count() >= 4) {
+      const starButtons = page.locator('button').filter({ has: page.locator('span:has-text("★")') })
+      const starCount = await starButtons.count()
+      if (starCount >= 4) {
         await starButtons.nth(3).click()
         await page.waitForTimeout(200)
       }
     }
 
     // Fill textarea
-    const textareas = await page.locator('textarea')
-    if (textareas.count() > 0) {
+    const textareas = page.locator('textarea')
+    const textareaCount = await textareas.count()
+    if (textareaCount > 0) {
       await textareas.first().fill('Student demonstrated strong clinical reasoning and attention to detail.')
     }
 

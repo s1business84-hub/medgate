@@ -2,8 +2,6 @@
 
 import { useState, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts"
 import { Search, TrendingUp, Award, AlertCircle } from "lucide-react"
 import { SessionFormSubmission, StudentPerformanceMetrics, Application } from "@/lib/types"
 
@@ -30,10 +28,10 @@ export function FormTrackingDashboard({
       if (!studentMap.has(app.studentId)) {
         studentMap.set(app.studentId, {
           studentId: app.studentId,
-          name: app.firstName && app.lastName ? `${app.firstName} ${app.lastName}` : `Student ${app.studentId.slice(0, 8)}`,
+          name: `Student ${app.studentId.slice(0, 8)}`,
           applicationId: app.id,
-          programName: app.programName,
-          hospitalName: app.hospitalName,
+          programName: app.programId,
+          hospitalName: app.hospitalId || "—",
           totalSubmissions: 0,
           completedForms: 0,
           averageRating: 0,
@@ -158,20 +156,56 @@ export function FormTrackingDashboard({
       </div>
 
       {/* Tabs */}
-      <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-        <TabsList className="bg-white/10 border border-white/20">
-          <TabsTrigger value="students">Students</TabsTrigger>
-          <TabsTrigger value="sessions" disabled={!selectedStudent}>
-            Sessions
-          </TabsTrigger>
-          <TabsTrigger value="forms" disabled={!selectedStudent}>
-            Forms
-          </TabsTrigger>
-          <TabsTrigger value="performance">Performance</TabsTrigger>
-        </TabsList>
+      {/* Tabs */}
+      <div className="flex gap-2 mb-6 border-b border-white/20">
+        <button
+          onClick={() => setSelectedTab("students")}
+          className={`px-4 py-2 font-medium transition-colors ${
+            selectedTab === "students"
+              ? "text-white border-b-2 border-purple-500"
+              : "text-slate-400 hover:text-white"
+          }`}
+        >
+          Students
+        </button>
+        <button
+          onClick={() => setSelectedTab("sessions")}
+          disabled={!selectedStudent}
+          className={`px-4 py-2 font-medium transition-colors ${
+            selectedTab === "sessions"
+              ? "text-white border-b-2 border-purple-500"
+              : "text-slate-400 hover:text-white disabled:opacity-50"
+          }`}
+        >
+          Sessions
+        </button>
+        <button
+          onClick={() => setSelectedTab("forms")}
+          disabled={!selectedStudent}
+          className={`px-4 py-2 font-medium transition-colors ${
+            selectedTab === "forms"
+              ? "text-white border-b-2 border-purple-500"
+              : "text-slate-400 hover:text-white disabled:opacity-50"
+          }`}
+        >
+          Forms
+        </button>
+        <button
+          onClick={() => setSelectedTab("performance")}
+          className={`px-4 py-2 font-medium transition-colors ${
+            selectedTab === "performance"
+              ? "text-white border-b-2 border-purple-500"
+              : "text-slate-400 hover:text-white"
+          }`}
+        >
+          Performance
+        </button>
+      </div>
 
+      <div className="mt-6">
         {/* Tab 1: Students List */}
-        <TabsContent value="students" className="space-y-4">
+        {selectedTab === "students" && (
+          <div className="space-y-4">
           {/* Search */}
           <div className="relative">
             <Search className="absolute left-3 top-3 w-5 h-5 text-slate-400" />
@@ -215,7 +249,7 @@ export function FormTrackingDashboard({
 
                   <div className="space-y-1 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-slate-400">{student.programName}</span>
+                      <span className="text-slate-400">{student.programName || "—"}</span>
                       <span className="text-slate-300 font-medium">{student.completedForms}/{student.totalSubmissions}</span>
                     </div>
                     <div className="flex justify-between">
@@ -243,16 +277,21 @@ export function FormTrackingDashboard({
               No students found matching your search.
             </div>
           )}
-        </TabsContent>
+        </div>
+        )}
 
         {/* Tab 2: Sessions */}
-        <TabsContent value="sessions" className="space-y-4">
+        {selectedTab === "sessions" && (
+          <div className="space-y-4">
           {selectedStudent && (
             <>
               {/* Student Info */}
               <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
                 <h3 className="font-medium text-white mb-2">
-                  {studentsData.find(s => s.studentId === selectedStudent)?.name}
+                  {(() => {
+                    const s = studentsData.find(s => s.studentId === selectedStudent)
+                    return s ? s.name : ""
+                  })()}
                 </h3>
                 <div className="grid grid-cols-3 gap-4 text-sm">
                   <div>
@@ -276,29 +315,6 @@ export function FormTrackingDashboard({
                 </div>
               </div>
 
-              {/* Chart */}
-              {chartData.length > 0 && (
-                <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
-                  <h3 className="font-medium text-white mb-4">Session Progress</h3>
-                  <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={chartData}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                      <XAxis dataKey="name" stroke="rgba(255,255,255,0.5)" />
-                      <YAxis stroke="rgba(255,255,255,0.5)" />
-                      <Tooltip 
-                        contentStyle={{ 
-                          backgroundColor: "rgba(15, 23, 42, 0.95)", 
-                          border: "1px solid rgba(255, 255, 255, 0.1)" 
-                        }}
-                        formatter={(value: any) => value.toFixed(1)}
-                      />
-                      <Legend />
-                      <Bar dataKey="completed" fill="#10b981" name="Completed Forms" />
-                      <Bar dataKey="total" fill="#6366f1" name="Total Forms" />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-              )}
 
               {/* Sessions List */}
               <div className="space-y-2">
@@ -330,10 +346,12 @@ export function FormTrackingDashboard({
               </div>
             </>
           )}
-        </TabsContent>
+        </div>
+        )}
 
         {/* Tab 3: Forms */}
-        <TabsContent value="forms" className="space-y-4">
+        {selectedTab === "forms" && (
+          <div className="space-y-4">
           {selectedStudent && formsData.length > 0 ? (
             <div className="space-y-3">
               {formsData.map((form, idx) => (
@@ -383,30 +401,30 @@ export function FormTrackingDashboard({
               No forms found for this student.
             </div>
           )}
-        </TabsContent>
+        </div>
+        )}
 
         {/* Tab 4: Performance Overview */}
-        <TabsContent value="performance" className="space-y-4">
+        {selectedTab === "performance" && (
+          <div className="space-y-4">
           <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
             <h3 className="font-medium text-white mb-4">Top Performing Students</h3>
             {performanceChartData.length > 0 ? (
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={performanceChartData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                  <XAxis dataKey="name" stroke="rgba(255,255,255,0.5)" />
-                  <YAxis stroke="rgba(255,255,255,0.5)" yAxisId="left" />
-                  <YAxis stroke="rgba(255,255,255,0.5)" yAxisId="right" orientation="right" />
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: "rgba(15, 23, 42, 0.95)", 
-                      border: "1px solid rgba(255, 255, 255, 0.1)" 
-                    }}
-                  />
-                  <Legend />
-                  <Bar yAxisId="left" dataKey="rating" fill="#fbbf24" name="Avg Rating" />
-                  <Bar yAxisId="right" dataKey="submissions" fill="#10b981" name="Forms Completed" />
-                </BarChart>
-              </ResponsiveContainer>
+              <div className="space-y-2">
+                {performanceChartData.map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-3">
+                    <span className="w-20 text-sm text-slate-400">{item.name}</span>
+                    <div className="flex-1 h-6 bg-white/10 rounded flex items-center overflow-hidden">
+                      <div
+                        className="h-full bg-linear-to-r from-yellow-500 to-orange-500 transition-all"
+                        style={{ width: `${(item.rating / 5) * 100}%` }}
+                      />
+                    </div>
+                    <span className="w-12 text-right text-sm text-yellow-400 font-medium">{item.rating}/5</span>
+                    <span className="w-12 text-right text-sm text-green-400">{item.submissions}✓</span>
+                  </div>
+                ))}
+              </div>
             ) : (
               <p className="text-slate-400 text-center py-8">No performance data available yet.</p>
             )}
@@ -431,8 +449,9 @@ export function FormTrackingDashboard({
               </p>
             </div>
           </div>
-        </TabsContent>
-      </Tabs>
+        </div>
+        )}
+      </div>
     </motion.div>
   )
 }
