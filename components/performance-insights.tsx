@@ -64,7 +64,7 @@ export function PerformanceInsights({ metrics, submissions = [], title = "Perfor
         className="space-y-4"
       >
         <div className="flex items-center gap-3">
-          <div className="p-3 rounded-xl bg-gradient-to-br from-cyan-500/20 to-indigo-500/20 border border-cyan-500/30">
+          <div className="p-3 rounded-xl bg-linear-to-br from-cyan-500/20 to-indigo-500/20 border border-cyan-500/30">
             <BarChart3 className="w-6 h-6 text-cyan-400" />
           </div>
           <div>
@@ -77,7 +77,7 @@ export function PerformanceInsights({ metrics, submissions = [], title = "Perfor
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <motion.div
             whileHover={{ scale: 1.02 }}
-            className="p-4 rounded-xl bg-gradient-to-br from-amber-500/10 to-orange-500/10 border border-amber-500/30 backdrop-blur-sm"
+            className="p-4 rounded-xl bg-linear-to-br from-amber-500/10 to-orange-500/10 border border-amber-500/30 backdrop-blur-sm"
           >
             <div className="flex items-center gap-3">
               <Award className="w-8 h-8 text-amber-400" />
@@ -93,7 +93,7 @@ export function PerformanceInsights({ metrics, submissions = [], title = "Perfor
 
           <motion.div
             whileHover={{ scale: 1.02 }}
-            className="p-4 rounded-xl bg-gradient-to-br from-emerald-500/10 to-green-500/10 border border-emerald-500/30 backdrop-blur-sm"
+            className="p-4 rounded-xl bg-linear-to-br from-emerald-500/10 to-green-500/10 border border-emerald-500/30 backdrop-blur-sm"
           >
             <div className="flex items-center gap-3">
               <Target className="w-8 h-8 text-emerald-400" />
@@ -107,7 +107,7 @@ export function PerformanceInsights({ metrics, submissions = [], title = "Perfor
 
           <motion.div
             whileHover={{ scale: 1.02 }}
-            className="p-4 rounded-xl bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border border-blue-500/30 backdrop-blur-sm"
+            className="p-4 rounded-xl bg-linear-to-br from-blue-500/10 to-cyan-500/10 border border-blue-500/30 backdrop-blur-sm"
           >
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
@@ -130,7 +130,7 @@ export function PerformanceInsights({ metrics, submissions = [], title = "Perfor
         transition={{ delay: 0.1 }}
       >
         <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-          <div className="w-1 h-5 bg-gradient-to-b from-cyan-500 to-indigo-500 rounded-full" />
+          <div className="w-1 h-5 bg-linear-to-b from-cyan-500 to-indigo-500 rounded-full" />
           Performance by Application
         </h3>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -144,7 +144,7 @@ export function PerformanceInsights({ metrics, submissions = [], title = "Perfor
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: idx * 0.05 }}
                 whileHover={{ scale: 1.03, y: -5 }}
-                className="p-5 rounded-xl bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 backdrop-blur-sm hover:border-cyan-500/40 transition-all shadow-lg"
+                className="p-5 rounded-xl bg-linear-to-br from-white/5 to-white/2 border border-white/10 backdrop-blur-sm hover:border-cyan-500/40 transition-all shadow-lg"
               >
                 <div className="flex items-start justify-between mb-3">
                   <div>
@@ -206,10 +206,10 @@ export function PerformanceInsights({ metrics, submissions = [], title = "Perfor
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="p-6 rounded-xl bg-gradient-to-br from-slate-900/50 to-slate-800/30 border border-white/10 backdrop-blur-sm"
+          className="p-6 rounded-xl bg-linear-to-br from-slate-900/50 to-slate-800/30 border border-white/10 backdrop-blur-sm"
         >
           <h3 className="text-lg font-semibold text-white mb-1 flex items-center gap-2">
-            <div className="w-1 h-5 bg-gradient-to-b from-cyan-500 to-indigo-500 rounded-full" />
+            <div className="w-1 h-5 bg-linear-to-b from-cyan-500 to-indigo-500 rounded-full" />
             Rating Timeline
           </h3>
           <p className="text-sm text-slate-400 mb-6">Performance evolution across sessions</p>
@@ -241,8 +241,8 @@ export function PerformanceInsights({ metrics, submissions = [], title = "Perfor
                     <div
                       className={`w-full rounded-t-lg transition-all duration-300 ${
                         isRecent
-                          ? "bg-gradient-to-t from-cyan-500 via-indigo-500 to-purple-500"
-                          : "bg-gradient-to-t from-slate-600 to-slate-500"
+                          ? "bg-linear-to-t from-cyan-500 via-indigo-500 to-purple-500"
+                          : "bg-linear-to-t from-slate-600 to-slate-500"
                       } group-hover:shadow-lg group-hover:shadow-cyan-500/50`}
                       style={{ height: `${Math.max(heightPercent, 10)}%` }}
                     />
