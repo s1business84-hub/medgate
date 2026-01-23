@@ -121,3 +121,84 @@ export interface ProgramReminder {
   createdAt: string;
   isActive: boolean;
 }
+
+// Post-Session Form System
+export type FormQuestionType = "text" | "textarea" | "dropdown" | "rating" | "checkbox" | "multiselect";
+
+export interface FormQuestion {
+  id: string;
+  text: string;
+  type: FormQuestionType;
+  required: boolean;
+  options?: string[]; // For dropdown/multiselect
+  placeholder?: string;
+  helpText?: string;
+  order: number;
+}
+
+export interface SkillTemplate {
+  id: string;
+  name: string; // e.g., "Patient Communication", "Technical Proficiency", "Team Collaboration"
+  department?: string; // Optional: specific to department
+}
+
+export interface FormTemplate {
+  id: string;
+  hospitalId: string;
+  name: string; // e.g., "Post-Session Assessment - Cardiology"
+  observershipId?: string; // Link to specific observership if department-specific
+  department: string; // e.g., "Cardiology", "Emergency Medicine"
+  description: string;
+  questions: FormQuestion[];
+  skills: SkillTemplate[];
+  criteria?: {
+    passingScore?: number; // e.g., 70% for auto-pass
+    requiresSupervisorApproval: boolean; // If true, must be reviewed
+  };
+  createdAt: string;
+  updatedAt: string;
+  isActive: boolean;
+}
+
+export interface FormResponse {
+  id: string;
+  formTemplateId: string;
+  observershipId: string; // Link to observership
+  applicationId: string; // Student's application
+  studentId: string;
+  supervisorId?: string;
+  answers: {
+    questionId: string;
+    answer: string | string[] | number; // Supports text, multiselect, rating
+  }[];
+  skillsLearned: string[]; // Selected skill IDs
+  submittedAt: string;
+  status: "draft" | "submitted" | "under_review" | "passed" | "needs_revision" | "rejected";
+  supervisorNotes?: string; // Notes added by supervisor during review
+  supervisorDecision?: {
+    status: "approved" | "needs_revision" | "rejected";
+    feedback: string;
+    decidedAt: string;
+    decidedBy: string; // Supervisor ID
+  };
+  score?: number; // Calculated or manual score
+  updatedAt: string;
+}
+
+export interface FormTracking {
+  id: string;
+  hospitalId: string;
+  formTemplateId: string;
+  totalSubmissions: number;
+  passedCount: number;
+  needsRevisionCount: number;
+  rejectedCount: number;
+  averageScore?: number;
+  commonSkillsLearned?: { skillId: string; count: number }[];
+  departmentTrends?: {
+    department: string;
+    completionRate: number;
+    averageScore: number;
+  }[];
+  lastUpdated: string;
+}
