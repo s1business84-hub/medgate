@@ -24,10 +24,15 @@ export default function StudentPortal() {
         try {
           const { getApplications, getStudents } = await import("@/lib/storage");
           const allApps = getApplications();
-          const myApps = allApps.filter((a: any) => a.studentId === user.id);
-          
-          // Load student/program details for enrichment
           const students = getStudents();
+          
+          // Find student record by email to get the correct studentId
+          const studentRecord = students.find((s: any) => s.email === user.email);
+          const myApps = allApps.filter((a: any) => 
+            studentRecord ? a.studentId === studentRecord.id : a.studentId === user.id
+          );
+          
+          // Load program details for enrichment
           const enrichedApps = await Promise.all(
             myApps.map(async (app: any) => {
               try {
