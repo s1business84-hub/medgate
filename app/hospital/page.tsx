@@ -7,12 +7,13 @@ import { useAuth } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
-import { getApplicationsByHospital, getStudents, updateApplicationStatus, createNotification } from "@/lib/storage";
+import { getApplicationsByHospital, getStudents, updateApplicationStatus, createNotification, createObservationForm, getObservationForms } from "@/lib/storage";
 import { getSupervisorConfirmations } from "@/lib/auditStore";
 import { Application } from "@/lib/types";
-import { CheckCircle, XCircle, FileText, Users, Clock } from "lucide-react";
+import { CheckCircle, XCircle, FileText, Users, Clock, Plus } from "lucide-react";
 import { showToast } from "@/lib/toast";
 import { AuditExcelButton } from "@/components/audit-excel-button";
+import { HospitalFormModal } from "@/components/hospital-form-modal";
 
 export default function HospitalPortal() {
   const { user, logout } = useAuth();
@@ -23,6 +24,7 @@ export default function HospitalPortal() {
   const [actionInProgress, setActionInProgress] = useState(false);
   const [rejectionReason, setRejectionReason] = useState("");
   const [showRejectModal, setShowRejectModal] = useState(false);
+  const [showFormModal, setShowFormModal] = useState(false);
   const [showObsForm, setShowObsForm] = useState(false);
   const [obsForm, setObsForm] = useState({
     name: "",
@@ -99,6 +101,72 @@ export default function HospitalPortal() {
     }
     setActionInProgress(false);
   };
+
+  const handleRejection = (appId: string) => {
+    if (!rejectionReason.trim()) {
+      showToast("Please provide a reason for rejection");
+      return;
+    }
+
+    setActionInProgress(true);
+    const updated = updateApplicationStatus(appId, "Rejected", rejectionReason);
+
+    if (updated) {
+      // Create notification for student
+      createNotification({
+        userId: updated.studentId,
+        type: "rejection",
+        title: "Application Update",
+        message: `Your application has been reviewed. Reason: ${rejectionReason}`,
+        relatedApplicationId: appId,
+      });
+
+      // Update local state
+      setApplications(applications.map(app => app.id === appId ? updated : app));
+      setSelectedApp(updated);
+      setShowRejectModal(false);
+      setRejectionReason("");
+    }
+    setActionInProgress(false);
+  };
+
+  const handleCreateForm = async (formData: {
+    title: string
+    description: string
+    fields: any[]
+    sessionId: string
+    sessionNumber: number
+  }) => {
+    if (!selectedApp) return
+
+    try {
+      const newForm = createObservationForm({
+        applicationId: selectedApp.id,
+        studentId: selectedApp.studentId,
+        sessionId: formData.sessionId,
+        sessionNumber: formData.sessionNumber,
+        title: formData.title,
+        description: formData.description,
+        fields: formData.fields,
+        status: 'active',
+      })
+
+      showToast(`Form "${formData.title}" created and assigned to Session ${formData.sessionNumber}`)
+      setShowFormModal(false)
+
+      // Create notification for student
+      createNotification({
+        userId: selectedApp.studentId,
+        type: "info",
+        title: "New Observation Form",
+        message: `A new observation form "${formData.title}" has been assigned to your Session ${formData.sessionNumber}.`,
+        relatedApplicationId: selectedApp.id,
+      })
+    } catch (error: any) {
+      showToast(error.message || "Failed to create form")
+      throw error
+    }
+  }
 
   const handleRejection = (appId: string) => {
     setActionInProgress(true);
@@ -388,6 +456,19 @@ export default function HospitalPortal() {
                       </Button>
                     </div>
                   )}
+
+                  {/* Create Form Button - Available for Approved/In Training */}
+                  {(selectedApp.status === "Approved" || selectedApp.status === "In Training" || selectedApp.status === "Stage 2 Accepted") && (
+                    <div className="pt-4 border-t border-white/10">
+                      <Button
+                        onClick={() => setShowFormModal(true)}
+                        className="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-medium py-2 rounded-lg transition-colors"
+                      >
+                        <Plus className="w-4 h-4 mr-2 inline" />
+                        Create Observation Form
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </div>
             ) : (
@@ -400,6 +481,17 @@ export default function HospitalPortal() {
           </div>
         </div>
       </div>
+
+      {/* Form Creation Modal */}
+      {selectedApp && (
+        <HospitalFormModal
+          isOpen={showFormModal}
+          onClose={() => setShowFormModal(false)}
+          application={selectedApp}
+          onSubmit={handleCreateForm}
+          existingForms={getObservationForms()}
+        />
+      )}
 
       {/* Rejection Modal */}
       {showRejectModal && (
