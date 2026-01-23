@@ -47,6 +47,8 @@ export interface Application {
   // Optional fields populated by admin/hospital after review
   supervisor?: string; // supervisor name or identifier
   department?: string;
+  // Session management (added for multi-session observerships)
+  sessionCount?: number; // Number of sessions for this observership (default: 1)
 }
 
 export interface Document {
@@ -202,3 +204,18 @@ export interface FormTracking {
   }[];
   lastUpdated: string;
 }
+
+/* OBSERVERSHIP SESSIONS */
+export interface Session {
+  id: string;
+  applicationId: string; // Links to observership application
+  sessionNumber: number; // 1, 2, 3 per observership
+  status: "not_started" | "in_progress" | "completed";
+  startedAt?: string; // ISO timestamp when student started session
+  completedAt?: string; // ISO timestamp when student completed session
+  formTemplateId?: string; // Form assigned to this session
+  formResponseId?: string; // Form response after student completes session
+  createdAt: string;
+  updatedAt: string;
+}
+

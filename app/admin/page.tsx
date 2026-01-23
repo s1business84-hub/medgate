@@ -760,7 +760,7 @@ export default function AdminPage() {
                 const { createApplication } = require('@/lib/storage');
                 const programAny = mockPrograms.find(p => p.id === ehsProgramId);
                 const hospitalId = programAny?.hospitalId || '';
-                const app = createApplication({ studentId: ehsStudentId, programId: ehsProgramId, hospitalId, regulatory: { type: 'EHS', reference: ehsReference || undefined, status: 'Verified' } });
+                const app = createApplication({ studentId: ehsStudentId, programId: ehsProgramId, hospitalId, regulatory: { type: 'EHS', reference: ehsReference || undefined, status: 'Verified' }, sessionCount: 1 });
                 try {
                   const { createNotification, logAudit } = require('@/lib/storage');
                   createNotification({ userId: ehsStudentId, type: 'update', title: 'EHS Allocation Recorded', message: `Your allocation via EHS has been recorded for ${programAny?.name || ehsProgramId}`, relatedApplicationId: app.id });

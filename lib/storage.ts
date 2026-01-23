@@ -1,4 +1,7 @@
-import type { Student, Application, Document, Payment, AuditLog, User, Notification, ProgramReminder } from "./types";
+import type { 
+  Student, Application, Document, Payment, AuditLog, User, Notification, ProgramReminder,
+  FormTemplate, FormResponse, Session
+} from "./types";
 
 const KEYS = {
   students: "electivio_students",
@@ -12,6 +15,9 @@ const KEYS = {
   reminders: "electivio_reminders",
   programCriteria: "electivio_program_criteria",
   programMetadata: "electivio_program_metadata",
+  formTemplates: "electivio_form_templates",
+  formResponses: "electivio_form_responses",
+  sessions: "electivio_sessions",
 };
 
 function readJSON<T>(key: string, fallback: T): T {
@@ -59,10 +65,18 @@ export function createApplication(input: Omit<Application, "id" | "status" | "su
     id: newId("app"),
     status: "Submitted",
     submissionDate: new Date().toISOString(),
+    sessionCount: input.sessionCount || 1, // Default to 1 session if not specified
     ...input,
   };
   applications.push(app);
   writeJSON(KEYS.applications, applications);
+  
+  // Auto-create Session records for this observership
+  const sessionCount = app.sessionCount || 1;
+  for (let i = 1; i <= sessionCount; i++) {
+    createSession(app.id, i);
+  }
+  
   return app;
 }
 
@@ -370,3 +384,130 @@ export function setProgramMetadata(programId: string, metadata: ProgramMetadata)
   map[programId] = metadata;
   writeJSON(KEYS.programMetadata, map);
 }
+
+/* FORM TEMPLATES */
+export function createFormTemplate(template: Omit<FormTemplate, 'id' | 'createdAt' | 'updatedAt'>): FormTemplate {
+  const templates = readJSON<FormTemplate[]>(KEYS.formTemplates, []);
+  const newTemplate: FormTemplate = {
+    ...template,
+    id: newId('form'),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+  templates.push(newTemplate);
+  writeJSON(KEYS.formTemplates, templates);
+  return newTemplate;
+}
+
+export function getFormTemplates(hospitalId?: string): FormTemplate[] {
+  const templates = readJSON<FormTemplate[]>(KEYS.formTemplates, []);
+  if (hospitalId) {
+    return templates.filter((t) => t.hospitalId === hospitalId);
+  }
+  return templates;
+}
+
+export function getFormTemplate(id: string): FormTemplate | null {
+  const templates = readJSON<FormTemplate[]>(KEYS.formTemplates, []);
+  return templates.find((t) => t.id === id) || null;
+}
+
+export function updateFormTemplate(id: string, updates: Partial<FormTemplate>): FormTemplate | null {
+  const templates = readJSON<FormTemplate[]>(KEYS.formTemplates, []);
+  const index = templates.findIndex((t) => t.id === id);
+  if (index === -1) return null;
+  templates[index] = { ...templates[index], ...updates, updatedAt: new Date().toISOString() };
+  writeJSON(KEYS.formTemplates, templates);
+  return templates[index];
+}
+
+/* FORM RESPONSES */
+export function submitFormResponse(response: Omit<FormResponse, 'id' | 'updatedAt'>): FormResponse {
+  const responses = readJSON<FormResponse[]>(KEYS.formResponses, []);
+  const newResponse: FormResponse = {
+    ...response,
+    id: newId('resp'),
+    updatedAt: new Date().toISOString(),
+  };
+  responses.push(newResponse);
+  writeJSON(KEYS.formResponses, responses);
+  return newResponse;
+}
+
+export function getFormResponses(observershipId?: string, studentId?: string): FormResponse[] {
+  const responses = readJSON<FormResponse[]>(KEYS.formResponses, []);
+  return responses.filter((r) => {
+    if (observershipId && r.observershipId !== observershipId) return false;
+    if (studentId && r.studentId !== studentId) return false;
+    return true;
+  });
+}
+
+export function getFormResponse(id: string): FormResponse | null {
+  const responses = readJSON<FormResponse[]>(KEYS.formResponses, []);
+  return responses.find((r) => r.id === id) || null;
+}
+
+export function updateFormResponse(id: string, updates: Partial<FormResponse>): FormResponse | null {
+  const responses = readJSON<FormResponse[]>(KEYS.formResponses, []);
+  const index = responses.findIndex((r) => r.id === id);
+  if (index === -1) return null;
+  responses[index] = { ...responses[index], ...updates, updatedAt: new Date().toISOString() };
+  writeJSON(KEYS.formResponses, responses);
+  return responses[index];
+}
+
+/* SESSIONS */
+export function createSession(applicationId: string, sessionNumber: number): Session {
+  const sessions = readJSON<Session[]>(KEYS.sessions, []);
+  const newSession: Session = {
+    id: newId('sess'),
+    applicationId,
+    sessionNumber,
+    status: 'not_started',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+  sessions.push(newSession);
+  writeJSON(KEYS.sessions, sessions);
+  return newSession;
+}
+
+export function getSessions(applicationId?: string): Session[] {
+  const sessions = readJSON<Session[]>(KEYS.sessions, []);
+  if (applicationId) {
+    return sessions
+      .filter((s) => s.applicationId === applicationId)
+      .sort((a, b) => a.sessionNumber - b.sessionNumber);
+  }
+  return sessions;
+}
+
+export function getSession(id: string): Session | null {
+  const sessions = readJSON<Session[]>(KEYS.sessions, []);
+  return sessions.find((s) => s.id === id) || null;
+}
+
+export function updateSession(id: string, updates: Partial<Session>): Session | null {
+  const sessions = readJSON<Session[]>(KEYS.sessions, []);
+  const index = sessions.findIndex((s) => s.id === id);
+  if (index === -1) return null;
+  sessions[index] = { ...sessions[index], ...updates, updatedAt: new Date().toISOString() };
+  writeJSON(KEYS.sessions, sessions);
+  return sessions[index];
+}
+
+export function startSession(id: string): Session | null {
+  return updateSession(id, {
+    status: 'in_progress',
+    startedAt: new Date().toISOString(),
+  });
+}
+
+export function completeSession(id: string): Session | null {
+  return updateSession(id, {
+    status: 'completed',
+    completedAt: new Date().toISOString(),
+  });
+}
+
