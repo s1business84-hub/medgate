@@ -313,6 +313,8 @@ export interface ObservationForm {
   applicationId: string;
   programId: string;
   hospitalId: string;
+  sessionId?: string; // optional: allow assigning form to a specific session
+  sessionNumber?: number; // human-friendly session label
   title: string; // e.g., "Daily Observership Assessment"
   description: string;
   fields: FormField[];

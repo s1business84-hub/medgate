@@ -142,12 +142,14 @@ export default function HospitalPortal() {
     try {
       const newForm = createObservationForm({
         applicationId: selectedApp.id,
-        studentId: selectedApp.studentId,
+        programId: selectedApp.programId,
+        hospitalId: selectedApp.hospitalId || user?.hospitalId || "",
         sessionId: formData.sessionId,
         sessionNumber: formData.sessionNumber,
         title: formData.title,
         description: formData.description,
         fields: formData.fields,
+        createdBy: user?.id || "hospital",
         status: 'active',
       })
 
@@ -489,7 +491,7 @@ export default function HospitalPortal() {
           onClose={() => setShowFormModal(false)}
           application={selectedApp}
           onSubmit={handleCreateForm}
-          existingForms={getObservationForms()}
+          existingForms={getObservationForms(selectedApp.id)}
         />
       )}
 

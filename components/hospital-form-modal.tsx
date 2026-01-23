@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { X, Plus, Trash2, Save } from "lucide-react"
 import { Application, ObservationForm, FormField, Session } from "@/lib/types"
@@ -27,6 +27,37 @@ export function HospitalFormModal({
   onSubmit,
   existingForms = [],
 }: HospitalFormModalProps) {
+  // Default performance evaluation template
+  const performanceTemplate: ObservationForm = useMemo(() => ({
+    id: "template_performance",
+    applicationId: application.id,
+    programId: application.programId,
+    hospitalId: application.hospitalId,
+    title: "Student Performance Evaluation",
+    description: "Summative evaluation of student performance for the session.",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    createdBy: "system",
+    status: "active",
+    fields: [
+      { id: "f_prof", label: "Professionalism", type: "rating", required: true, order: 0 },
+      { id: "f_clin", label: "Clinical Knowledge & Application", type: "rating", required: true, order: 1 },
+      { id: "f_comm", label: "Communication (Patients & Team)", type: "rating", required: true, order: 2 },
+      { id: "f_doc", label: "Documentation Quality", type: "rating", required: true, order: 3 },
+      { id: "f_team", label: "Teamwork & Collaboration", type: "rating", required: true, order: 4 },
+      { id: "f_punct", label: "Punctuality & Reliability", type: "rating", required: true, order: 5 },
+      { id: "f_safety", label: "Patient Safety Awareness", type: "rating", required: true, order: 6 },
+      { id: "f_overall", label: "Overall Performance", type: "rating", required: true, order: 7 },
+      { id: "f_strengths", label: "Key Strengths Observed", type: "textarea", required: false, order: 8 },
+      { id: "f_improve", label: "Areas for Improvement", type: "textarea", required: false, order: 9 },
+      { id: "f_actions", label: "Agreed Action Plan / Next Steps", type: "textarea", required: false, order: 10 },
+    ],
+  }), [application.id, application.programId, application.hospitalId])
+
+  const combinedTemplates = useMemo(() => {
+    return [performanceTemplate, ...existingForms]
+  }, [performanceTemplate, existingForms])
+
   const [mode, setMode] = useState<"select" | "create">("create")
   const [selectedFormId, setSelectedFormId] = useState<string>("")
   const [selectedSessionId, setSelectedSessionId] = useState<string>("")
@@ -130,7 +161,7 @@ export function HospitalFormModal({
           sessionNumber: selectedSession.sessionNumber,
         })
       } else {
-        const existingForm = existingForms.find(f => f.id === selectedFormId)
+        const existingForm = combinedTemplates.find(f => f.id === selectedFormId)
         if (existingForm) {
           await onSubmit({
             title: existingForm.title,
@@ -244,14 +275,14 @@ export function HospitalFormModal({
                   className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
                 >
                   <option value="">Choose a template...</option>
-                  {existingForms.map(form => (
+                  {combinedTemplates.map(form => (
                     <option key={form.id} value={form.id}>
                       {form.title} ({form.fields.length} fields)
                     </option>
                   ))}
                 </select>
-                {existingForms.length === 0 && (
-                  <p className="text-sm text-slate-400 mt-2">No existing templates available. Create a new form instead.</p>
+                {combinedTemplates.length === 0 && (
+                  <p className="text-sm text-slate-400 mt-2">No templates available. Create a new form instead.</p>
                 )}
               </div>
             ) : (
