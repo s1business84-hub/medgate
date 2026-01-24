@@ -43,19 +43,19 @@ export function Features() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: 0.12,
         delayChildren: 0.2,
       },
     },
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30, scale: 0.95 },
+    hidden: { opacity: 0, y: 40, scale: 0.85 },
     visible: {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: { duration: 0.6 },
+      transition: { duration: 0.7, ease: [0.34, 1.56, 0.64, 1] },
     },
   }
 
@@ -69,20 +69,25 @@ export function Features() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <motion.div
-            initial={{ opacity: 0, scale: 0.92 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
+            initial={{ opacity: 0, scale: 0.85, y: -20 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
             viewport={{ once: true }}
             className="inline-flex items-center justify-center gap-2 mb-6"
           >
-            <Zap className="w-6 h-6 text-amber-400 animate-pulse" />
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+            >
+              <Zap className="w-6 h-6 text-amber-400" />
+            </motion.div>
             <span className="text-sm font-semibold text-blue-200 uppercase tracking-wider">Powerful Features</span>
           </motion.div>
 
           <motion.h2
             initial={{ opacity: 0, y: 26 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
+            transition={{ duration: 0.7, ease: "easeOut", delay: 0.05 }}
             viewport={{ once: true }}
             className="text-4xl sm:text-5xl font-bold tracking-tight"
           >
@@ -92,7 +97,7 @@ export function Features() {
           <motion.p
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
+            transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
             viewport={{ once: true }}
             className="mt-6 text-lg leading-8 text-slate-200"
           >
