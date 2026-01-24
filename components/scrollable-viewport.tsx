@@ -26,6 +26,12 @@ export function ScrollableViewport({
   const [totalSections, setTotalSections] = useState(0);
   const [canScrollUp, setCanScrollUp] = useState(false);
   const [canScrollDown, setCanScrollDown] = useState(true);
+  const [mounted, setMounted] = useState(false);
+
+  // Only initialize scroll tracking after mount to avoid SSR issues
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     container: containerRef,
@@ -85,7 +91,7 @@ export function ScrollableViewport({
 
   const scrollBy = (direction: "up" | "down") => {
     const container = containerRef.current;
-    if (!container) return;
+    if (!container || typeof window === "undefined") return;
 
     const scrollAmount = window.innerHeight * 0.8;
     container.scrollBy({
@@ -93,6 +99,17 @@ export function ScrollableViewport({
       behavior: "smooth",
     });
   };
+
+  // Don't render until mounted to avoid hydration mismatch
+  if (!mounted) {
+    return (
+      <div className="relative w-full h-screen overflow-hidden">
+        <div className="w-full h-full overflow-y-auto overflow-x-hidden scroll-smooth">
+          {children}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
