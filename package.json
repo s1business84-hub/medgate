@@ -7,11 +7,16 @@
     "dev:test": "bash ./scripts/dev-test.sh",
     "build": "next build",
     "start": "next start",
+    "mobile:build": "next build && npx cap sync",
+    "mobile:open": "npx cap open ios",
     "test:e2e": "playwright test",
     "playwright:install": "playwright install",
     "lint": "eslint"
   },
   "dependencies": {
+    "@capacitor/cli": "^8.0.1",
+    "@capacitor/core": "^8.0.1",
+    "@capacitor/ios": "^8.0.1",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-slot": "^1.2.4",
     "@splinetool/react-spline": "^4.1.0",

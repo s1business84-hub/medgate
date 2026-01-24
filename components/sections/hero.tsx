@@ -122,7 +122,7 @@ export function Hero() {
             </Link>
             <Link href="/login">
               <Button variant="outline" size="lg" className="w-full sm:w-auto border-slate-300 hover:bg-slate-50 hover:border-slate-400 transition-all duration-300 text-base px-6 py-3">
-                Login / Sign Up
+                Join Us!
               </Button>
             </Link>
           </motion.div>
