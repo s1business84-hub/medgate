@@ -3,6 +3,7 @@ import { Features } from "@/components/sections/features"
 import { FigmaShowcase } from "@/components/sections/figma-showcase"
 import { FAQ } from "@/components/sections/faq"
 import { ScrollableViewport, ScrollSection } from "@/components/scrollable-viewport"
+import { ParallaxImage } from "@/components/parallax-image"
 
 // Force Vercel rebuild
 export default function Home() {
@@ -19,6 +20,14 @@ export default function Home() {
       >
         <ScrollSection id="hero">
           <Hero />
+        </ScrollSection>
+
+        <ScrollSection id="parallax">
+          <ParallaxImage
+            src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=2070"
+            alt="Medical Excellence Journey"
+            segments={4}
+          />
         </ScrollSection>
 
         <ScrollSection id="features">
