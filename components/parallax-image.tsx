@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useMemo, useRef } from "react";
+import { motion, useMotionValueEvent, useScroll } from "framer-motion";
+import { useMemo, useRef, useState } from "react";
 import Image from "next/image";
 
 interface ParallaxImageProps {
@@ -18,75 +18,52 @@ export function ParallaxImage({
   className = "",
 }: ParallaxImageProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  // Lock the segment count on first render to avoid changing hook call counts
-  const segmentCountRef = useRef(Math.max(1, Math.min(segments, 6)));
+  // Clamp and memoize segment count to keep hook order stable
+  const segmentCount = useMemo(() => Math.max(1, Math.min(segments, 6)), [segments]);
+  const [progress, setProgress] = useState(0);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"],
   });
 
+  // Track scroll progress once and derive values without multiple useTransform calls
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    setProgress(v);
+  });
+
   // Create segments that reveal progressively (stable across renders)
   const segmentArray = useMemo(
-    () => Array.from({ length: segmentCountRef.current }, (_, i) => i),
-    []
+    () => Array.from({ length: segmentCount }, (_, i) => i),
+    [segmentCount]
   );
 
-  // Precompute motion transforms for each segment to keep hooks in a stable order
-  const segmentTransforms = useMemo(
+  const segmentMeta = useMemo(
     () =>
       segmentArray.map((index) => {
-        const start = index / segmentCountRef.current;
-        const end = (index + 1) / segmentCountRef.current;
-
-        const opacity = useTransform(
-          scrollYProgress,
-          [start - 0.1, start, end, end + 0.1],
-          [0, 1, 1, 0]
-        );
-
-        const scale = useTransform(scrollYProgress, [start, end], [1.2, 1]);
-
-        const y = useTransform(scrollYProgress, [start, end], ["20%", "0%"]);
-
-        const clipPath = `inset(${(index * 100) / segmentCountRef.current}% 0 ${
-          ((segmentCountRef.current - index - 1) * 100) / segmentCountRef.current
+        const start = index / segmentCount;
+        const end = (index + 1) / segmentCount;
+        const clipPath = `inset(${(index * 100) / segmentCount}% 0 ${
+          ((segmentCount - index - 1) * 100) / segmentCount
         }% 0)`;
-
-        return { opacity, scale, y, clipPath, start, end };
+        return { start, end, clipPath };
       }),
-    [scrollYProgress, segmentArray]
-  );
-
-  const textTransforms = useMemo(
-    () =>
-      segmentArray.map((index) => {
-        const start = index / segmentCountRef.current;
-        const end = (index + 1) / segmentCountRef.current;
-
-        const textOpacity = useTransform(
-          scrollYProgress,
-          [start, start + 0.1, end - 0.1, end],
-          [0, 1, 1, 0]
-        );
-
-        const textY = useTransform(scrollYProgress, [start, end], ["30%", "-30%"]);
-
-        return { textOpacity, textY };
-      }),
-    [scrollYProgress, segmentArray]
+    [segmentArray, segmentCount]
   );
 
   return (
     <div
       ref={containerRef}
       className={`relative w-full overflow-hidden ${className}`}
-      style={{ height: `${segments * 100}vh` }}
+      style={{ height: `${segmentCount * 100}vh` }}
     >
       <div className="sticky top-0 h-screen w-full">
         <div className="relative h-full w-full">
           {segmentArray.map((index) => {
-            const { opacity, scale, y, clipPath } = segmentTransforms[index];
+            const { start, end, clipPath } = segmentMeta[index];
+            const opacity = interpRange(progress, [start - 0.1, start, end, end + 0.1], [0, 1, 1, 0]);
+            const scale = interpRange(progress, [start, end], [1.2, 1]);
+            const y = interpRange(progress, [start, end], [20, 0]);
 
             return (
               <motion.div
@@ -95,7 +72,7 @@ export function ParallaxImage({
                 style={{
                   opacity,
                   scale,
-                  y,
+                  y: `${y}%`,
                   clipPath,
                 }}
               >
@@ -111,7 +88,7 @@ export function ParallaxImage({
                   <div
                     className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-900/20"
                     style={{
-                      opacity: 0.3 + (index * 0.2) / segmentCountRef.current,
+                      opacity: 0.3 + (index * 0.2) / segmentCount,
                     }}
                   />
                 </div>
@@ -121,7 +98,9 @@ export function ParallaxImage({
 
           {/* Additional parallax text overlays */}
           {segmentArray.map((index) => {
-            const { textOpacity, textY } = textTransforms[index];
+            const { start, end } = segmentMeta[index];
+            const textOpacity = interpRange(progress, [start, start + 0.1, end - 0.1, end], [0, 1, 1, 0]);
+            const textY = interpRange(progress, [start, end], [30, -30]);
 
             return (
               <motion.div
@@ -129,12 +108,12 @@ export function ParallaxImage({
                 className="absolute inset-0 flex items-center justify-center pointer-events-none"
                 style={{
                   opacity: textOpacity,
-                  y: textY,
+                  y: `${textY}%`,
                 }}
               >
                 <div className="text-center px-4">
                   <h3 className="text-4xl md:text-6xl font-bold text-white/90 drop-shadow-2xl">
-                    {getSegmentTitle(index, segmentCountRef.current)}
+                    {getSegmentTitle(index)}
                   </h3>
                 </div>
               </motion.div>
@@ -146,7 +125,7 @@ export function ParallaxImage({
   );
 }
 
-function getSegmentTitle(index: number, total: number): string {
+function getSegmentTitle(index: number): string {
   const titles = [
     "Discover Excellence",
     "Transform Your Journey",
@@ -157,6 +136,32 @@ function getSegmentTitle(index: number, total: number): string {
   return titles[index] || `Section ${index + 1}`;
 }
 
+// Simple linear interpolation with clamping
+function interpRange(
+  value: number,
+  input: number[],
+  output: number[]
+): number {
+  if (input.length !== output.length) return output[output.length - 1] ?? 0;
+  if (value <= input[0]) return output[0];
+  if (value >= input[input.length - 1]) return output[output.length - 1];
+
+  for (let i = 0; i < input.length - 1; i++) {
+    const start = input[i];
+    const end = input[i + 1];
+    if (value >= start && value <= end) {
+      const t = (value - start) / (end - start);
+      return lerp(output[i], output[i + 1], t);
+    }
+  }
+
+  return output[output.length - 1];
+}
+
+function lerp(a: number, b: number, t: number): number {
+  return a + (b - a) * t;
+}
+
 // Simpler version with horizontal split
 export function SplitParallaxImage({
   src,
@@ -164,15 +169,17 @@ export function SplitParallaxImage({
   className = "",
 }: Omit<ParallaxImageProps, "segments">) {
   const containerRef = useRef<HTMLDivElement>(null);
-
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"],
   });
 
-  const leftX = useTransform(scrollYProgress, [0, 1], ["-50%", "0%"]);
-  const rightX = useTransform(scrollYProgress, [0, 1], ["50%", "0%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0, 1, 1]);
+  const [progress, setProgress] = useState(0);
+  useMotionValueEvent(scrollYProgress, "change", (v) => setProgress(v));
+
+  const leftX = interpRange(progress, [0, 1], [-50, 0]);
+  const rightX = interpRange(progress, [0, 1], [50, 0]);
+  const opacity = interpRange(progress, [0, 0.5, 1], [0, 1, 1]);
 
   return (
     <div
@@ -183,7 +190,7 @@ export function SplitParallaxImage({
         {/* Left half */}
         <motion.div
           className="relative w-1/2 h-full overflow-hidden"
-          style={{ x: leftX, opacity }}
+          style={{ x: `${leftX}%`, opacity }}
         >
           <Image
             src={src}
@@ -197,7 +204,7 @@ export function SplitParallaxImage({
         {/* Right half */}
         <motion.div
           className="relative w-1/2 h-full overflow-hidden"
-          style={{ x: rightX, opacity }}
+          style={{ x: `${rightX}%`, opacity }}
         >
           <Image
             src={src}
