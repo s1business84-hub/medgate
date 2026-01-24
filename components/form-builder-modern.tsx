@@ -88,16 +88,13 @@ export function FormBuilderModern({ onSave, onCancel, initialTemplate }: FormBui
     setExpandedQuestion(null);
   };
 
-  const duplicateQuestion = useCallback((id: string) => {
-    setQuestions(prevQuestions => {
-      const q = prevQuestions.find(x => x.id === id);
-      if (q) {
-        const newQ = { ...q, id: `q-${Date.now()}-${Math.random().toString(36).slice(2)}`, order: prevQuestions.length };
-        return [...prevQuestions, newQ];
-      }
-      return prevQuestions;
-    });
-  }, []);
+  const duplicateQuestion = (id: string) => {
+    const q = questions.find(x => x.id === id);
+    if (q) {
+      const newQ = { ...q, id: `q-${Date.now()}`, order: questions.length };
+      setQuestions(prev => [...prev, newQ]);
+    }
+  };
 
   const moveQuestion = (id: string, direction: "up" | "down") => {
     const idx = questions.findIndex(q => q.id === id);
