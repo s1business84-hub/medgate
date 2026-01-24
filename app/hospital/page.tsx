@@ -218,6 +218,13 @@ export default function HospitalPortal() {
             <p className="text-slate-300">Manage observership applications</p>
           </div>
           <div className="flex gap-4">
+            <Link
+              href="/hospital/forms"
+              className="px-6 py-2 rounded-lg bg-cyan-600/90 hover:bg-cyan-600 text-white transition-colors font-medium shadow-sm flex items-center gap-2"
+            >
+              <FileText className="w-4 h-4" />
+              Form Tracking
+            </Link>
             <button
               onClick={() => setShowObsForm(true)}
               className="px-6 py-2 rounded-lg bg-indigo-600/90 hover:bg-indigo-600 text-white transition-colors font-medium shadow-sm"
