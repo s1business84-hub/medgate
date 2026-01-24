@@ -6,6 +6,7 @@ import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text"
+import { HeroOrb } from "@/components/hero-orb"
 
 const stats = [
   {
@@ -44,13 +45,9 @@ export function Hero() {
         <div className="h-96 w-96 rounded-full bg-linear-to-tr from-indigo-500 to-purple-500 opacity-15 blur-3xl" />
       </div>
 
-      {/* 3D animated lattice */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="hero-3d-perspective">
-          <div className="hero-3d-grid" />
-          <div className="hero-3d-orb hero-3d-orb--left" />
-          <div className="hero-3d-orb hero-3d-orb--right" />
-        </div>
+      {/* 3D Spline Orb with Electivio Branding */}
+      <div className="relative w-full">
+        <HeroOrb />
       </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 py-16 sm:py-24 lg:px-8">
@@ -125,7 +122,7 @@ export function Hero() {
             </Link>
             <Link href="/login">
               <Button variant="outline" size="lg" className="w-full sm:w-auto border-slate-300 hover:bg-slate-50 hover:border-slate-400 transition-all duration-300 text-base px-6 py-3">
-                Login / Sign Up
+                Join Us!
               </Button>
             </Link>
           </motion.div>

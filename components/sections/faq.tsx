@@ -122,7 +122,7 @@ export function FAQ() {
           className="mx-auto mt-16 max-w-3xl"
         >
           <div className="space-y-5">
-            <AnimatePresence mode="wait">
+            <AnimatePresence>
               {faqs.map((faq, index) => (
                 <motion.div key={index} variants={itemVariants} className="group">
                   {/** Card with dynamic liquid color change when expanded **/}

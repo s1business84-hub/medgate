@@ -1,4 +1,7 @@
-import type { Student, Application, Document, Payment, AuditLog, User, Notification, ProgramReminder } from "./types";
+import type { 
+  Student, Application, Document, Payment, AuditLog, User, Notification, ProgramReminder,
+  FormTemplate, FormResponse, Session, ObservationForm, SessionFormSubmission, StudentPerformanceMetrics
+} from "./types";
 
 const KEYS = {
   students: "electivio_students",
@@ -12,6 +15,12 @@ const KEYS = {
   reminders: "electivio_reminders",
   programCriteria: "electivio_program_criteria",
   programMetadata: "electivio_program_metadata",
+  formTemplates: "electivio_form_templates",
+  formResponses: "electivio_form_responses",
+  sessions: "electivio_sessions",
+  observationForms: "electivio_observation_forms",
+  sessionFormSubmissions: "electivio_session_form_submissions",
+  performanceMetrics: "electivio_performance_metrics",
 };
 
 function readJSON<T>(key: string, fallback: T): T {
@@ -59,10 +68,18 @@ export function createApplication(input: Omit<Application, "id" | "status" | "su
     id: newId("app"),
     status: "Submitted",
     submissionDate: new Date().toISOString(),
+    sessionCount: input.sessionCount || 1, // Default to 1 session if not specified
     ...input,
   };
   applications.push(app);
   writeJSON(KEYS.applications, applications);
+  
+  // Auto-create Session records for this observership
+  const sessionCount = app.sessionCount || 1;
+  for (let i = 1; i <= sessionCount; i++) {
+    createSession(app.id, i);
+  }
+  
   return app;
 }
 
@@ -370,3 +387,288 @@ export function setProgramMetadata(programId: string, metadata: ProgramMetadata)
   map[programId] = metadata;
   writeJSON(KEYS.programMetadata, map);
 }
+
+/* FORM TEMPLATES */
+export function createFormTemplate(template: Omit<FormTemplate, 'id' | 'createdAt' | 'updatedAt'>): FormTemplate {
+  const templates = readJSON<FormTemplate[]>(KEYS.formTemplates, []);
+  const newTemplate: FormTemplate = {
+    ...template,
+    id: newId('form'),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+  templates.push(newTemplate);
+  writeJSON(KEYS.formTemplates, templates);
+  return newTemplate;
+}
+
+export function getFormTemplates(hospitalId?: string): FormTemplate[] {
+  const templates = readJSON<FormTemplate[]>(KEYS.formTemplates, []);
+  if (hospitalId) {
+    return templates.filter((t) => t.hospitalId === hospitalId);
+  }
+  return templates;
+}
+
+export function getFormTemplate(id: string): FormTemplate | null {
+  const templates = readJSON<FormTemplate[]>(KEYS.formTemplates, []);
+  return templates.find((t) => t.id === id) || null;
+}
+
+export function updateFormTemplate(id: string, updates: Partial<FormTemplate>): FormTemplate | null {
+  const templates = readJSON<FormTemplate[]>(KEYS.formTemplates, []);
+  const index = templates.findIndex((t) => t.id === id);
+  if (index === -1) return null;
+  templates[index] = { ...templates[index], ...updates, updatedAt: new Date().toISOString() };
+  writeJSON(KEYS.formTemplates, templates);
+  return templates[index];
+}
+
+/* FORM RESPONSES */
+export function submitFormResponse(response: Omit<FormResponse, 'id' | 'updatedAt'>): FormResponse {
+  const responses = readJSON<FormResponse[]>(KEYS.formResponses, []);
+  const newResponse: FormResponse = {
+    ...response,
+    id: newId('resp'),
+    updatedAt: new Date().toISOString(),
+  };
+  responses.push(newResponse);
+  writeJSON(KEYS.formResponses, responses);
+  return newResponse;
+}
+
+export function getFormResponses(observershipId?: string, studentId?: string): FormResponse[] {
+  const responses = readJSON<FormResponse[]>(KEYS.formResponses, []);
+  return responses.filter((r) => {
+    if (observershipId && r.observershipId !== observershipId) return false;
+    if (studentId && r.studentId !== studentId) return false;
+    return true;
+  });
+}
+
+export function getFormResponse(id: string): FormResponse | null {
+  const responses = readJSON<FormResponse[]>(KEYS.formResponses, []);
+  return responses.find((r) => r.id === id) || null;
+}
+
+export function updateFormResponse(id: string, updates: Partial<FormResponse>): FormResponse | null {
+  const responses = readJSON<FormResponse[]>(KEYS.formResponses, []);
+  const index = responses.findIndex((r) => r.id === id);
+  if (index === -1) return null;
+  responses[index] = { ...responses[index], ...updates, updatedAt: new Date().toISOString() };
+  writeJSON(KEYS.formResponses, responses);
+  return responses[index];
+}
+
+/* SESSIONS */
+export function createSession(applicationId: string, sessionNumber: number): Session {
+  const sessions = readJSON<Session[]>(KEYS.sessions, []);
+  const newSession: Session = {
+    id: newId('sess'),
+    applicationId,
+    sessionNumber,
+    status: 'not_started',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+  sessions.push(newSession);
+  writeJSON(KEYS.sessions, sessions);
+  return newSession;
+}
+
+export function getSessions(applicationId?: string): Session[] {
+  const sessions = readJSON<Session[]>(KEYS.sessions, []);
+  if (applicationId) {
+    return sessions
+      .filter((s) => s.applicationId === applicationId)
+      .sort((a, b) => a.sessionNumber - b.sessionNumber);
+  }
+  return sessions;
+}
+
+export function getSession(id: string): Session | null {
+  const sessions = readJSON<Session[]>(KEYS.sessions, []);
+  return sessions.find((s) => s.id === id) || null;
+}
+
+export function updateSession(id: string, updates: Partial<Session>): Session | null {
+  const sessions = readJSON<Session[]>(KEYS.sessions, []);
+  const index = sessions.findIndex((s) => s.id === id);
+  if (index === -1) return null;
+  sessions[index] = { ...sessions[index], ...updates, updatedAt: new Date().toISOString() };
+  writeJSON(KEYS.sessions, sessions);
+  return sessions[index];
+}
+
+export function startSession(id: string): Session | null {
+  return updateSession(id, {
+    status: 'in_progress',
+    startedAt: new Date().toISOString(),
+  });
+}
+
+export function completeSession(id: string): Session | null {
+  return updateSession(id, {
+    status: 'completed',
+    completedAt: new Date().toISOString(),
+  });
+}
+
+/* OBSERVATION FORMS - ADMIN FORM BUILDER */
+export function createObservationForm(input: Omit<ObservationForm, "id" | "createdAt" | "updatedAt">): ObservationForm {
+  const forms = readJSON<ObservationForm[]>(KEYS.observationForms, []);
+  const form: ObservationForm = {
+    id: newId("form"),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    ...input,
+  };
+  forms.push(form);
+  writeJSON(KEYS.observationForms, forms);
+  return form;
+}
+
+export function getObservationForms(applicationId?: string): ObservationForm[] {
+  const forms = readJSON<ObservationForm[]>(KEYS.observationForms, []);
+  if (applicationId) {
+    return forms.filter(f => f.applicationId === applicationId);
+  }
+  return forms;
+}
+
+export function getObservationFormById(formId: string): ObservationForm | null {
+  const forms = readJSON<ObservationForm[]>(KEYS.observationForms, []);
+  return forms.find(f => f.id === formId) || null;
+}
+
+export function updateObservationForm(formId: string, updates: Partial<ObservationForm>): ObservationForm | null {
+  const forms = readJSON<ObservationForm[]>(KEYS.observationForms, []);
+  const form = forms.find(f => f.id === formId);
+  if (!form) return null;
+  
+  const updated = {
+    ...form,
+    ...updates,
+    updatedAt: new Date().toISOString(),
+  };
+  const index = forms.indexOf(form);
+  forms[index] = updated;
+  writeJSON(KEYS.observationForms, forms);
+  return updated;
+}
+
+export function deleteObservationForm(formId: string): boolean {
+  const forms = readJSON<ObservationForm[]>(KEYS.observationForms, []);
+  const index = forms.findIndex(f => f.id === formId);
+  if (index === -1) return false;
+  forms.splice(index, 1);
+  writeJSON(KEYS.observationForms, forms);
+  return true;
+}
+
+/* SESSION FORM SUBMISSIONS - STUDENT SUBMISSIONS */
+export function createSessionFormSubmission(input: Omit<SessionFormSubmission, "id" | "submittedAt">): SessionFormSubmission {
+  const submissions = readJSON<SessionFormSubmission[]>(KEYS.sessionFormSubmissions, []);
+  const submission: SessionFormSubmission = {
+    id: newId("sub"),
+    submittedAt: new Date().toISOString(),
+    ...input,
+  };
+  submissions.push(submission);
+  writeJSON(KEYS.sessionFormSubmissions, submissions);
+  return submission;
+}
+
+export function getSessionFormSubmissions(sessionId?: string, studentId?: string): SessionFormSubmission[] {
+  const submissions = readJSON<SessionFormSubmission[]>(KEYS.sessionFormSubmissions, []);
+  let result = submissions;
+  
+  if (sessionId) {
+    result = result.filter(s => s.sessionId === sessionId);
+  }
+  if (studentId) {
+    result = result.filter(s => s.studentId === studentId);
+  }
+  
+  return result;
+}
+
+export function getSessionFormSubmissionById(submissionId: string): SessionFormSubmission | null {
+  const submissions = readJSON<SessionFormSubmission[]>(KEYS.sessionFormSubmissions, []);
+  return submissions.find(s => s.id === submissionId) || null;
+}
+
+export function updateSessionFormSubmission(submissionId: string, updates: Partial<SessionFormSubmission>): SessionFormSubmission | null {
+  const submissions = readJSON<SessionFormSubmission[]>(KEYS.sessionFormSubmissions, []);
+  const submission = submissions.find(s => s.id === submissionId);
+  if (!submission) return null;
+  
+  const updated = { ...submission, ...updates };
+  const index = submissions.indexOf(submission);
+  submissions[index] = updated;
+  writeJSON(KEYS.sessionFormSubmissions, submissions);
+  return updated;
+}
+
+export function reviewSessionFormSubmission(submissionId: string, notes: string, rating: number, reviewedBy: string): SessionFormSubmission | null {
+  return updateSessionFormSubmission(submissionId, {
+    status: 'reviewed',
+    supervisorReview: {
+      notes,
+      rating,
+      reviewedAt: new Date().toISOString(),
+      reviewedBy,
+    },
+  });
+}
+
+/* PERFORMANCE METRICS */
+export function calculatePerformanceMetrics(studentId: string, applicationId: string): StudentPerformanceMetrics | null {
+  const submissions = readJSON<SessionFormSubmission[]>(KEYS.sessionFormSubmissions, [])
+    .filter(s => s.studentId === studentId && s.applicationId === applicationId);
+  
+  if (submissions.length === 0) return null;
+
+  const ratings = submissions
+    .filter(s => s.supervisorReview?.rating)
+    .map(s => s.supervisorReview!.rating!);
+  
+  const averageRating = ratings.length > 0 ? ratings.reduce((a, b) => a + b, 0) / ratings.length : 0;
+  
+  // Determine trend (mock for demo)
+  const trend: "improving" | "stable" | "declining" = ratings.length >= 2
+    ? ratings[ratings.length - 1] > ratings[0] ? "improving" : ratings[ratings.length - 1] < ratings[0] ? "declining" : "stable"
+    : "stable";
+
+  return {
+    studentId,
+    applicationId,
+    sessionId: submissions[0]?.sessionId || "",
+    averageRating,
+    completedForms: submissions.length,
+    pendingForms: submissions.filter(s => s.status === 'submitted').length,
+    lastSubmissionDate: submissions.sort((a, b) => new Date(b.submittedAt).getTime() - new Date(a.submittedAt).getTime())[0]?.submittedAt,
+    performanceTrend: trend,
+    keyStrengths: ["Communication", "Professionalism", "Engagement"],
+    areasForImprovement: ["Time Management", "Note Taking"],
+  };
+}
+
+export function getPerformanceMetrics(applicationId?: string): StudentPerformanceMetrics[] {
+  const submissions = readJSON<SessionFormSubmission[]>(KEYS.sessionFormSubmissions, []);
+  const applications = getApplications();
+  
+  let relevantApps = applications;
+  if (applicationId) {
+    relevantApps = applications.filter(a => a.id === applicationId);
+  }
+
+  const metrics: StudentPerformanceMetrics[] = [];
+  relevantApps.forEach(app => {
+    const metric = calculatePerformanceMetrics(app.studentId, app.id);
+    if (metric) metrics.push(metric);
+  });
+
+  return metrics;
+}
+

@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
+import path from "path";
 
 const nextConfig: NextConfig = {
+  images: {
+    unoptimized: true,
+  },
   allowedDevOrigins: ["192.168.0.179", "localhost"],
   reactStrictMode: true,
   productionBrowserSourceMaps: false,
@@ -8,7 +12,7 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ["lucide-react"],
   },
   turbopack: {
-    root: "./",
+    root: path.resolve(process.cwd()),
   },
 };
 

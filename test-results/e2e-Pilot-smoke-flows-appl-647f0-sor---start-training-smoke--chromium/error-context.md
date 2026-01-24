@@ -1,0 +1,457 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]:
+      - link "Electivio Your Gateway" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - img [ref=e6]
+        - generic [ref=e12]:
+          - text: Electivio
+          - paragraph [ref=e13]: Your Gateway
+      - navigation [ref=e14]:
+        - link "About" [ref=e15] [cursor=pointer]:
+          - /url: /about
+        - link "Purpose" [ref=e16] [cursor=pointer]:
+          - /url: /purpose
+        - link "Programs" [ref=e17] [cursor=pointer]:
+          - /url: /programs
+        - link "FAQ" [ref=e18] [cursor=pointer]:
+          - /url: /faq
+        - link "Student Portal" [ref=e19] [cursor=pointer]:
+          - /url: /student
+        - link "For Hospitals" [ref=e20] [cursor=pointer]:
+          - /url: /for-hospitals
+      - link "Login" [ref=e22] [cursor=pointer]:
+        - /url: /login
+        - button "Login" [ref=e23]
+      - generic [ref=e24]:
+        - link "Login" [ref=e25] [cursor=pointer]:
+          - /url: /login
+          - button "Login" [ref=e26]
+        - button [ref=e27]:
+          - img [ref=e28]
+  - main [ref=e29]:
+    - main [ref=e30]:
+      - generic [ref=e31]:
+        - generic [ref=e32]:
+          - heading "Prototype Program Listings" [level=1] [ref=e33]
+          - paragraph [ref=e34]: Prototype listings for demonstration only
+          - generic [ref=e36]:
+            - paragraph [ref=e37]:
+              - strong [ref=e38]: "Prototype Listings:"
+              - text: The programs shown below are example listings for demonstration purposes only. Final observership and elective programs will be published by participating institutions during pilot onboarding.
+            - paragraph [ref=e39]:
+              - strong [ref=e40]: "Program Scope:"
+              - text: Electivio supports formal, institution-approved observership and elective programs only. Internships, residency, and fellowship placements are not offered or facilitated through the platform.
+        - generic [ref=e43]:
+          - generic [ref=e44]:
+            - img [ref=e45]
+            - generic [ref=e47]:
+              - heading "Filter Programs" [level=3] [ref=e48]
+              - paragraph [ref=e49]: Organize by program characteristics
+          - button "Show Filters" [ref=e50]
+        - generic [ref=e52]:
+          - generic [ref=e53]:
+            - heading "Minimum Requirements & Eligibility" [level=3] [ref=e54]
+            - paragraph [ref=e55]: These must be met for all programs.
+          - generic [ref=e56]:
+            - generic [ref=e57]:
+              - img [ref=e58]
+              - paragraph [ref=e61]: Proof of active medical student status (enrollment letter or student ID)
+            - generic [ref=e62]:
+              - img [ref=e63]
+              - paragraph [ref=e66]: Valid passport copy
+            - generic [ref=e67]:
+              - img [ref=e68]
+              - paragraph [ref=e71]: Valid visa status or legal presence in UAE (tourist or resident)
+            - generic [ref=e72]:
+              - img [ref=e73]
+              - paragraph [ref=e76]: Updated CV or resume
+            - generic [ref=e77]:
+              - img [ref=e78]
+              - paragraph [ref=e81]: Passport-style photograph
+            - generic [ref=e82]:
+              - img [ref=e83]
+              - paragraph [ref=e86]: Vaccinations and screenings (required by some programs)
+          - generic [ref=e87]:
+            - strong [ref=e88]: "Note:"
+            - text: Requirements vary by institution. Each program sets its own eligibility criteria, documentation needs, and approval process. Academic transcripts, vaccinations, and screenings are required by some programs but not all.
+        - generic [ref=e90]:
+          - heading "Hospital Locations" [level=2] [ref=e91]
+          - paragraph [ref=e92]: Map locations are illustrative and do not represent confirmed participating institutions.
+        - generic [ref=e93]:
+          - generic [ref=e94]:
+            - generic [ref=e95]:
+              - generic [ref=e96]:
+                - img [ref=e98]
+                - generic [ref=e100]:
+                  - heading "General Surgery Observership (Example Listing - Demo Data)" [level=2] [ref=e101]
+                  - paragraph [ref=e102]: Observership • Dubai Medical Center
+              - generic [ref=e103]:
+                - text: "Program NotesCapacity: Institution-defined"
+                - button "Set reminder for this program" [ref=e104]:
+                  - img [ref=e105]
+                - generic [ref=e108]:
+                  - button "View on map and get directions" [ref=e109]:
+                    - img [ref=e110]
+                  - menu "Map actions" [ref=e113]:
+                    - link "View on Google Maps" [ref=e114] [cursor=pointer]:
+                      - /url: https://www.google.com/maps/search/Dubai Medical Center+Al Barsha+Dubai+UAE
+                      - img [ref=e115]
+                      - text: View on Google Maps
+                    - link "Get Directions" [ref=e118] [cursor=pointer]:
+                      - /url: https://www.google.com/maps/dir/?api=1&destination=25.1242,55.2183
+                      - img [ref=e119]
+                      - text: Get Directions
+                - button "Show Details" [ref=e122]:
+                  - img [ref=e123]
+                  - text: Show Details
+            - generic [ref=e125]:
+              - generic [ref=e126]:
+                - img [ref=e127]
+                - text: Dubai, Al Barsha
+              - generic [ref=e130]:
+                - img [ref=e131]
+                - text: 4 weeks • 6h/day
+              - generic [ref=e133]:
+                - img [ref=e134]
+                - text: observe
+              - generic [ref=e136]:
+                - img [ref=e137]
+                - text: "Fee: Set by institution"
+          - generic [ref=e139]:
+            - generic [ref=e140]:
+              - generic [ref=e141]:
+                - img [ref=e143]
+                - generic [ref=e145]:
+                  - heading "Internal Medicine Observership (Example Listing - Demo Data)" [level=2] [ref=e146]
+                  - paragraph [ref=e147]: Observership • Sharjah Teaching Clinic
+              - generic [ref=e148]:
+                - text: "Capacity: Institution-defined"
+                - button "Set reminder for this program" [ref=e149]:
+                  - img [ref=e150]
+                - generic [ref=e153]:
+                  - button "View on map and get directions" [ref=e154]:
+                    - img [ref=e155]
+                  - menu "Map actions" [ref=e158]:
+                    - link "View on Google Maps" [ref=e159] [cursor=pointer]:
+                      - /url: https://www.google.com/maps/search/Sharjah Teaching Clinic+Al Majaz+Sharjah+UAE
+                      - img [ref=e160]
+                      - text: View on Google Maps
+                    - link "Get Directions" [ref=e163] [cursor=pointer]:
+                      - /url: https://www.google.com/maps/dir/?api=1&destination=25.3548,55.4164
+                      - img [ref=e164]
+                      - text: Get Directions
+                - button "Show Details" [ref=e167]:
+                  - img [ref=e168]
+                  - text: Show Details
+            - generic [ref=e170]:
+              - generic [ref=e171]:
+                - img [ref=e172]
+                - text: Sharjah, Al Majaz
+              - generic [ref=e175]:
+                - img [ref=e176]
+                - text: 4 weeks • 6h/day
+              - generic [ref=e178]:
+                - img [ref=e179]
+                - text: observe
+              - generic [ref=e181]:
+                - img [ref=e182]
+                - text: "Fee: Set by institution"
+          - generic [ref=e184]:
+            - generic [ref=e185]:
+              - generic [ref=e186]:
+                - img [ref=e188]
+                - generic [ref=e190]:
+                  - heading "Cardiology Observership (Example Listing - Demo Data)" [level=2] [ref=e191]
+                  - paragraph [ref=e192]: Observership • Abu Dhabi Medical Center
+              - generic [ref=e193]:
+                - text: "Capacity: Institution-defined"
+                - button "Set reminder for this program" [ref=e194]:
+                  - img [ref=e195]
+                - generic [ref=e198]:
+                  - button "View on map and get directions" [ref=e199]:
+                    - img [ref=e200]
+                  - menu "Map actions" [ref=e203]:
+                    - link "View on Google Maps" [ref=e204] [cursor=pointer]:
+                      - /url: https://www.google.com/maps/search/Abu Dhabi Medical Center+Al Bateen+Abu Dhabi+UAE
+                      - img [ref=e205]
+                      - text: View on Google Maps
+                    - link "Get Directions" [ref=e208] [cursor=pointer]:
+                      - /url: https://www.google.com/maps/dir/?api=1&destination=24.4539,54.3773
+                      - img [ref=e209]
+                      - text: Get Directions
+                - button "Show Details" [ref=e212]:
+                  - img [ref=e213]
+                  - text: Show Details
+            - generic [ref=e215]:
+              - generic [ref=e216]:
+                - img [ref=e217]
+                - text: Abu Dhabi, Al Bateen
+              - generic [ref=e220]:
+                - img [ref=e221]
+                - text: 4 weeks • 6h/day
+              - generic [ref=e223]:
+                - img [ref=e224]
+                - text: observe
+              - generic [ref=e226]:
+                - img [ref=e227]
+                - text: "Fee: Set by institution"
+          - generic [ref=e229]:
+            - generic [ref=e230]:
+              - generic [ref=e231]:
+                - img [ref=e233]
+                - generic [ref=e235]:
+                  - heading "Orthopedic Surgery Elective (Example Listing - Demo Data)" [level=2] [ref=e236]
+                  - paragraph [ref=e237]: Elective • Abu Dhabi Medical Center
+              - generic [ref=e238]:
+                - text: "Program NotesCapacity: Institution-defined"
+                - button "Set reminder for this program" [ref=e239]:
+                  - img [ref=e240]
+                - generic [ref=e243]:
+                  - button "View on map and get directions" [ref=e244]:
+                    - img [ref=e245]
+                  - menu "Map actions" [ref=e248]:
+                    - link "View on Google Maps" [ref=e249] [cursor=pointer]:
+                      - /url: https://www.google.com/maps/search/Abu Dhabi Medical Center+Al Bateen+Abu Dhabi+UAE
+                      - img [ref=e250]
+                      - text: View on Google Maps
+                    - link "Get Directions" [ref=e253] [cursor=pointer]:
+                      - /url: https://www.google.com/maps/dir/?api=1&destination=24.4539,54.3773
+                      - img [ref=e254]
+                      - text: Get Directions
+                - button "Show Details" [ref=e257]:
+                  - img [ref=e258]
+                  - text: Show Details
+            - generic [ref=e260]:
+              - generic [ref=e261]:
+                - img [ref=e262]
+                - text: Abu Dhabi, Al Bateen
+              - generic [ref=e265]:
+                - img [ref=e266]
+                - text: 2 weeks • 8h/day
+              - generic [ref=e268]:
+                - img [ref=e269]
+                - text: Limited supervised exposure
+              - generic [ref=e271]:
+                - img [ref=e272]
+                - text: "Fee: Set by institution"
+          - generic [ref=e274]:
+            - generic [ref=e275]:
+              - generic [ref=e276]:
+                - img [ref=e278]
+                - generic [ref=e280]:
+                  - heading "Emergency Medicine Observership (Example Listing - Demo Data)" [level=2] [ref=e281]
+                  - paragraph [ref=e282]: Observership • Dubai General Hospital
+              - generic [ref=e283]:
+                - text: "Capacity: Institution-defined"
+                - button "Set reminder for this program" [ref=e284]:
+                  - img [ref=e285]
+                - generic [ref=e288]:
+                  - button "View on map and get directions" [ref=e289]:
+                    - img [ref=e290]
+                  - menu "Map actions" [ref=e293]:
+                    - link "View on Google Maps" [ref=e294] [cursor=pointer]:
+                      - /url: https://www.google.com/maps/search/Dubai General Hospital+Deira+Dubai+UAE
+                      - img [ref=e295]
+                      - text: View on Google Maps
+                    - link "Get Directions" [ref=e298] [cursor=pointer]:
+                      - /url: https://www.google.com/maps/dir/?api=1&destination=25.2854,55.3157
+                      - img [ref=e299]
+                      - text: Get Directions
+                - button "Show Details" [ref=e302]:
+                  - img [ref=e303]
+                  - text: Show Details
+            - generic [ref=e305]:
+              - generic [ref=e306]:
+                - img [ref=e307]
+                - text: Dubai, Deira
+              - generic [ref=e310]:
+                - img [ref=e311]
+                - text: 4 weeks • 6h/day
+              - generic [ref=e313]:
+                - img [ref=e314]
+                - text: observe
+              - generic [ref=e316]:
+                - img [ref=e317]
+                - text: "Fee: Set by institution"
+          - generic [ref=e319]:
+            - generic [ref=e320]:
+              - generic [ref=e321]:
+                - img [ref=e323]
+                - generic [ref=e325]:
+                  - heading "Radiology Elective (Example Listing - Demo Data)" [level=2] [ref=e326]
+                  - paragraph [ref=e327]: Elective • Dubai General Hospital
+              - generic [ref=e328]:
+                - text: "Capacity: Institution-defined"
+                - button "Set reminder for this program" [ref=e329]:
+                  - img [ref=e330]
+                - generic [ref=e333]:
+                  - button "View on map and get directions" [ref=e334]:
+                    - img [ref=e335]
+                  - menu "Map actions" [ref=e338]:
+                    - link "View on Google Maps" [ref=e339] [cursor=pointer]:
+                      - /url: https://www.google.com/maps/search/Dubai General Hospital+Deira+Dubai+UAE
+                      - img [ref=e340]
+                      - text: View on Google Maps
+                    - link "Get Directions" [ref=e343] [cursor=pointer]:
+                      - /url: https://www.google.com/maps/dir/?api=1&destination=25.2854,55.3157
+                      - img [ref=e344]
+                      - text: Get Directions
+                - button "Show Details" [ref=e347]:
+                  - img [ref=e348]
+                  - text: Show Details
+            - generic [ref=e350]:
+              - generic [ref=e351]:
+                - img [ref=e352]
+                - text: Dubai, Deira
+              - generic [ref=e355]:
+                - img [ref=e356]
+                - text: 2 weeks • 8h/day
+              - generic [ref=e358]:
+                - img [ref=e359]
+                - text: Limited supervised exposure
+              - generic [ref=e361]:
+                - img [ref=e362]
+                - text: "Fee: Set by institution"
+          - generic [ref=e364]:
+            - generic [ref=e365]:
+              - generic [ref=e366]:
+                - img [ref=e368]
+                - generic [ref=e370]:
+                  - heading "Neurology Observership (Example Listing - Demo Data)" [level=2] [ref=e371]
+                  - paragraph [ref=e372]: Observership • Al Ain Speciality Hospital
+              - generic [ref=e373]:
+                - text: "Capacity: Institution-defined"
+                - button "Set reminder for this program" [ref=e374]:
+                  - img [ref=e375]
+                - generic [ref=e378]:
+                  - button "View on map and get directions" [ref=e379]:
+                    - img [ref=e380]
+                  - menu "Map actions" [ref=e383]:
+                    - link "View on Google Maps" [ref=e384] [cursor=pointer]:
+                      - /url: https://www.google.com/maps/search/Al Ain Speciality Hospital+Al Ain+Abu Dhabi+UAE
+                      - img [ref=e385]
+                      - text: View on Google Maps
+                    - link "Get Directions" [ref=e388] [cursor=pointer]:
+                      - /url: https://www.google.com/maps/dir/?api=1&destination=24.2155,55.7671
+                      - img [ref=e389]
+                      - text: Get Directions
+                - button "Show Details" [ref=e392]:
+                  - img [ref=e393]
+                  - text: Show Details
+            - generic [ref=e395]:
+              - generic [ref=e396]:
+                - img [ref=e397]
+                - text: Abu Dhabi, Al Ain
+              - generic [ref=e400]:
+                - img [ref=e401]
+                - text: 4 weeks • 6h/day
+              - generic [ref=e403]:
+                - img [ref=e404]
+                - text: observe
+              - generic [ref=e406]:
+                - img [ref=e407]
+                - text: "Fee: Set by institution"
+          - generic [ref=e409]:
+            - generic [ref=e410]:
+              - generic [ref=e411]:
+                - img [ref=e413]
+                - generic [ref=e415]:
+                  - heading "Dermatology Elective (Example Listing - Demo Data)" [level=2] [ref=e416]
+                  - paragraph [ref=e417]: Elective • Al Ain Speciality Hospital
+              - generic [ref=e418]:
+                - text: "Capacity: Institution-defined"
+                - button "Set reminder for this program" [ref=e419]:
+                  - img [ref=e420]
+                - generic [ref=e423]:
+                  - button "View on map and get directions" [ref=e424]:
+                    - img [ref=e425]
+                  - menu "Map actions" [ref=e428]:
+                    - link "View on Google Maps" [ref=e429] [cursor=pointer]:
+                      - /url: https://www.google.com/maps/search/Al Ain Speciality Hospital+Al Ain+Abu Dhabi+UAE
+                      - img [ref=e430]
+                      - text: View on Google Maps
+                    - link "Get Directions" [ref=e433] [cursor=pointer]:
+                      - /url: https://www.google.com/maps/dir/?api=1&destination=24.2155,55.7671
+                      - img [ref=e434]
+                      - text: Get Directions
+                - button "Show Details" [ref=e437]:
+                  - img [ref=e438]
+                  - text: Show Details
+            - generic [ref=e440]:
+              - generic [ref=e441]:
+                - img [ref=e442]
+                - text: Abu Dhabi, Al Ain
+              - generic [ref=e445]:
+                - img [ref=e446]
+                - text: 2 weeks • 8h/day
+              - generic [ref=e448]:
+                - img [ref=e449]
+                - text: Limited supervised exposure
+              - generic [ref=e451]:
+                - img [ref=e452]
+                - text: "Fee: Set by institution"
+        - link "← Back to Home" [ref=e455] [cursor=pointer]:
+          - /url: /
+  - contentinfo [ref=e456]:
+    - generic [ref=e457]:
+      - generic [ref=e458]:
+        - generic [ref=e459]:
+          - generic [ref=e460]:
+            - img [ref=e462]
+            - text: Electivio
+          - paragraph [ref=e466]: Connecting medical students with clinical training opportunities across the UAE. Building the future of medical education.
+          - generic [ref=e467]:
+            - generic [ref=e468]:
+              - img [ref=e469]
+              - text: helloelectivio@gmail.com
+            - generic [ref=e472]:
+              - img [ref=e473]
+              - text: +971 54 453 0209 (Founder)
+            - generic [ref=e475]:
+              - img [ref=e476]
+              - text: Dubai, UAE
+        - generic [ref=e479]:
+          - generic [ref=e480]:
+            - heading "Product" [level=3] [ref=e481]
+            - list [ref=e482]:
+              - listitem [ref=e483]:
+                - link "Browse Programs" [ref=e484] [cursor=pointer]:
+                  - /url: /programs
+              - listitem [ref=e485]:
+                - link "Student Portal" [ref=e486] [cursor=pointer]:
+                  - /url: /student
+              - listitem [ref=e487]:
+                - link "For Hospitals" [ref=e488] [cursor=pointer]:
+                  - /url: /for-hospitals
+          - generic [ref=e489]:
+            - heading "Company" [level=3] [ref=e490]
+            - list [ref=e491]:
+              - listitem [ref=e492]:
+                - link "About" [ref=e493] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e494]:
+                - link "Purpose" [ref=e495] [cursor=pointer]:
+                  - /url: /purpose
+          - generic [ref=e496]:
+            - heading "Support" [level=3] [ref=e497]
+            - list [ref=e498]:
+              - listitem [ref=e499]:
+                - link "Legal Disclaimer & Terms" [ref=e500] [cursor=pointer]:
+                  - /url: /legal
+        - generic [ref=e501]:
+          - heading "Stay Updated" [level=3] [ref=e502]
+          - paragraph [ref=e503]: Get the latest updates on new programs and features.
+          - generic [ref=e504]:
+            - textbox "Enter your email" [ref=e505]
+            - button "Subscribe" [ref=e506]
+      - generic [ref=e508]:
+        - paragraph [ref=e509]: © 2025 Electivio. All rights reserved.
+        - paragraph [ref=e510]:
+          - text: Made with
+          - img [ref=e511]
+          - text: in Dubai
+```

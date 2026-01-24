@@ -172,7 +172,7 @@ export default function FAQPage() {
           animate="visible"
           className="space-y-4"
         >
-          <AnimatePresence mode="wait">
+          <AnimatePresence>
             {filteredFaqs.map((faq, index) => (
               <motion.div
                 key={`${selectedCategory}-${index}`}

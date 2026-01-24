@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
@@ -8,11 +8,62 @@ import { Button } from "@/components/ui/button";
 import { Heart, Users, CheckCircle, Upload, Menu, X } from "lucide-react";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
 import { AuditExcelButton } from "@/components/audit-excel-button";
+import { StudentSessions } from "./sessions";
 
 export default function StudentPortal() {
   const { user, logout } = useAuth();
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [applications, setApplications] = useState<any[]>([]);
+  const [selectedApplicationId, setSelectedApplicationId] = useState<string | null>(null);
+  const [loadingApps, setLoadingApps] = useState(true);
+
+  useEffect(() => {
+    if (user && user.role === "student") {
+      const loadApplications = async () => {
+        try {
+          const { getApplications, getStudents } = await import("@/lib/storage");
+          const allApps = getApplications();
+          const students = getStudents();
+          
+          // Find student record by email to get the correct studentId
+          const studentRecord = students.find((s: any) => s.email === user.email);
+          const myApps = allApps.filter((a: any) => 
+            studentRecord ? a.studentId === studentRecord.id : a.studentId === user.id
+          );
+          
+          // Load program details for enrichment
+          const enrichedApps = await Promise.all(
+            myApps.map(async (app: any) => {
+              try {
+                const mockProgramsRaw = localStorage.getItem("mockPrograms");
+                const mockPrograms = mockProgramsRaw ? JSON.parse(mockProgramsRaw) : [];
+                const program = mockPrograms.find((p: any) => p.id === app.programId);
+                return {
+                  ...app,
+                  programName: program?.name || "Unknown Program",
+                  hospitalName: program?.hospitalName || "Unknown Hospital",
+                };
+              } catch {
+                return app;
+              }
+            })
+          );
+          
+          setApplications(enrichedApps);
+          if (enrichedApps.length > 0 && !selectedApplicationId) {
+            setSelectedApplicationId(enrichedApps[0].id);
+          }
+        } catch (error) {
+          console.error("Error loading applications:", error);
+        } finally {
+          setLoadingApps(false);
+        }
+      };
+
+      loadApplications();
+    }
+  }, [user, selectedApplicationId]);
 
   // If user is logged in and is a student, show full portal
   if (user && user.role === "student") {
@@ -29,11 +80,24 @@ export default function StudentPortal() {
               <p className="text-slate-300">Welcome back, {user.name}!</p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-              <AuditExcelButton
-                dataTypes={["applications", "exposureLogs", "completionAttestations"]}
-                filterApplications={(apps) => apps.filter((a) => a.studentId === user.id)}
-                className="border-white/30 bg-white/40 text-slate-800 hover:bg-white/50"
-              />
+              <Link
+                href="/student/career-path"
+                className="btn-secondary hover-scale px-4 sm:px-6 py-2 sm:py-3 rounded-lg backdrop-blur-md border-purple-500/30 bg-linear-to-r from-purple-500/20 to-blue-500/20 hover:from-purple-500/30 hover:to-blue-500/30 text-white font-medium flex items-center justify-center gap-2"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+                Career Path
+              </Link>
+              <Link
+                href="/student/form-submission"
+                className="btn-secondary hover-scale px-4 sm:px-6 py-2 sm:py-3 rounded-lg backdrop-blur-md border-blue-500/30 bg-linear-to-r from-blue-500/20 to-cyan-500/20 hover:from-blue-500/30 hover:to-cyan-500/30 text-white font-medium flex items-center justify-center gap-2"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Forms
+              </Link>
               <button
                 onClick={() => {
                   logout();
@@ -49,50 +113,210 @@ export default function StudentPortal() {
             </div>
           </div>
 
-          <div className="space-y-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            <div className="text-center mb-12">
-              <h1 className="text-4xl font-bold text-slate-100 mb-4">Welcome to Your Dashboard</h1>
-              <p className="text-xl text-slate-300 max-w-3xl mx-auto">
-                Manage your applications and track your progress towards your dream clinical training opportunity.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.45)] p-6 text-center">
-                <Users className="w-12 h-12 text-cyan-200 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-slate-100 mb-2">Pilot Platform</h3>
-                <p className="text-slate-300">Preparing for UAE pilot collaborations</p>
-              </div>
-              <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.45)] p-6 text-center">
-                <CheckCircle className="w-12 h-12 text-emerald-200 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-slate-100 mb-2">UAE Coverage</h3>
-                <p className="text-slate-300">Targeting major healthcare institutions</p>
-              </div>
-              <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.45)] p-6 text-center">
-                <Heart className="w-12 h-12 text-rose-200 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-slate-100 mb-2">Active Development</h3>
-                <p className="text-slate-300">Platform features in progress</p>
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            {/* Left Sidebar - Audit Card */}
+            <div className="lg:col-span-1">
+              <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg p-4 sticky top-8">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="text-2xl">📋</div>
+                  <h3 className="text-lg font-semibold text-white">Your Records</h3>
+                </div>
+                <p className="text-xs text-slate-300 mb-4">Download copies of your applications, exposure logs, and training records.</p>
+                <div className="space-y-2">
+                  <AuditExcelButton
+                    dataTypes={["applications", "exposureLogs", "completionAttestations"]}
+                    filterApplications={(apps) => apps.filter((a) => a.studentId === user.id)}
+                    className="w-full border-white/30 bg-white/40 text-slate-800 hover:bg-white/50"
+                  />
+                </div>
               </div>
             </div>
 
-            <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg p-12 text-center">
-              <Upload className="w-24 h-24 text-cyan-300 mx-auto mb-6" />
-              <h2 className="text-3xl font-bold text-slate-100 mb-4">Manage Your Applications</h2>
-              <p className="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
-                View and manage your submitted applications, track statuses, and prepare for upcoming interviews.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/programs">
-                  <Button size="lg" className="bg-linear-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white shadow-lg">
-                    Browse More Programs
-                  </Button>
-                </Link>
-                <Link href="/">
-                  <Button variant="outline" size="lg" className="border-white/25 text-slate-100 hover:bg-white/10">
-                    Back to Home
-                  </Button>
-                </Link>
-              </div>
+            {/* Main Content */}
+            <div className="lg:col-span-3 space-y-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              {loadingApps ? (
+                <div className="space-y-4">
+                  {[1, 2, 3].map(i => (
+                    <div key={i} className="h-32 bg-white/5 rounded-lg animate-pulse" />
+                  ))}
+                </div>
+              ) : applications.length === 0 ? (
+                <div className="text-center py-12">
+                  <Upload className="w-24 h-24 text-slate-400 mx-auto mb-6" />
+                  <h2 className="text-3xl font-bold text-slate-100 mb-4">No Active Applications</h2>
+                  <p className="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
+                    You don't have any submitted applications yet. Browse available programs and submit your application.
+                  </p>
+                  <Link href="/programs">
+                    <Button size="lg" className="bg-linear-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white shadow-lg">
+                      Browse Programs
+                    </Button>
+                  </Link>
+                </div>
+              ) : (
+                <>
+                  {/* Application List */}
+                  <div className="space-y-4">
+                    <h2 className="text-xl font-bold text-slate-100">Your Applications</h2>
+                    {applications.map(app => {
+                      const getStatusColor = (status: string) => {
+                        switch (status) {
+                          case 'Accepted':
+                          case 'Stage 2 Accepted':
+                          case 'In Training':
+                            return 'bg-green-500/20 text-green-300 border-green-500/30';
+                          case 'Pending':
+                          case 'Submitted':
+                            return 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30';
+                          case 'Rejected':
+                            return 'bg-red-500/20 text-red-300 border-red-500/30';
+                          case 'Completed':
+                            return 'bg-blue-500/20 text-blue-300 border-blue-500/30';
+                          default:
+                            return 'bg-slate-500/20 text-slate-300 border-slate-500/30';
+                        }
+                      };
+
+                      return (
+                        <button
+                          key={app.id}
+                          onClick={() => setSelectedApplicationId(app.id)}
+                          className={`w-full text-left p-4 rounded-lg transition-all ${
+                            selectedApplicationId === app.id
+                              ? 'bg-white/10 border-2 border-cyan-500/50'
+                              : 'bg-white/5 border border-white/10 hover:bg-white/10'
+                          }`}
+                        >
+                          <div className="flex items-center justify-between gap-4">
+                            <div className="flex-1">
+                              <h3 className="text-lg font-semibold text-slate-100 mb-1">{app.programName}</h3>
+                              <p className="text-sm text-slate-400 mb-2">{app.hospitalName}</p>
+                              <div className="flex items-center gap-2 text-xs text-slate-400">
+                                <span>{app.sessionCount || 1} session{(app.sessionCount || 1) > 1 ? 's' : ''}</span>
+                                <span>•</span>
+                                <span>Applied {new Date(app.submissionDate).toLocaleDateString()}</span>
+                              </div>
+                            </div>
+                            <div className="shrink-0">
+                              <span className={`px-3 py-1 rounded-full text-sm font-medium border ${getStatusColor(app.status)}`}>
+                                {app.status}
+                              </span>
+                            </div>
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Selected Application Details */}
+                  {selectedApplicationId && (() => {
+                    const selected = applications.find(a => a.id === selectedApplicationId);
+                    if (!selected) return null;
+
+                    const getStatusColor = (status: string) => {
+                      switch (status) {
+                        case 'Accepted':
+                        case 'Stage 2 Accepted':
+                        case 'In Training':
+                          return 'bg-green-500/20 text-green-300 border-green-500/50';
+                        case 'Pending':
+                        case 'Submitted':
+                          return 'bg-yellow-500/20 text-yellow-300 border-yellow-500/50';
+                        case 'Rejected':
+                          return 'bg-red-500/20 text-red-300 border-red-500/50';
+                        case 'Completed':
+                          return 'bg-blue-500/20 text-blue-300 border-blue-500/50';
+                        default:
+                          return 'bg-slate-500/20 text-slate-300 border-slate-500/50';
+                      }
+                    };
+
+                    const getStatusIcon = (status: string) => {
+                      switch (status) {
+                        case 'Accepted':
+                        case 'Stage 2 Accepted':
+                        case 'In Training':
+                          return '✓';
+                        case 'Pending':
+                        case 'Submitted':
+                          return '⏳';
+                        case 'Rejected':
+                          return '✗';
+                        case 'Completed':
+                          return '🎓';
+                        default:
+                          return '•';
+                      }
+                    };
+
+                    return (
+                      <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg p-6">
+                        <div className="mb-6">
+                          <div className="flex items-start justify-between gap-4 mb-4">
+                            <div className="flex-1">
+                              <h2 className="text-2xl font-bold text-slate-100 mb-2">{selected?.programName}</h2>
+                              <p className="text-slate-300 mb-2">{selected?.hospitalName}</p>
+                            </div>
+                            <div className={`px-4 py-2 rounded-lg border-2 ${getStatusColor(selected?.status)} flex items-center gap-2`}>
+                              <span className="text-xl">{getStatusIcon(selected?.status)}</span>
+                              <div>
+                                <p className="text-xs opacity-80">Status</p>
+                                <p className="text-sm font-bold">{selected?.status}</p>
+                              </div>
+                            </div>
+                          </div>
+
+                          {selected?.notes && (
+                            <div className="mb-4 p-4 rounded-lg bg-white/10 border border-white/20">
+                              <p className="text-xs text-slate-400 mb-1">Notes from Hospital:</p>
+                              <p className="text-sm text-slate-200">{selected.notes}</p>
+                            </div>
+                          )}
+                          
+                          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div className="bg-white/10 rounded-lg p-3">
+                              <p className="text-xs text-slate-400 mb-1">Sessions</p>
+                              <p className="text-lg font-bold text-slate-100">{selected?.sessionCount || 1}</p>
+                            </div>
+                            <div className="bg-white/10 rounded-lg p-3">
+                              <p className="text-xs text-slate-400 mb-1">Department</p>
+                              <p className="text-sm font-semibold text-slate-100">{selected?.department || "General"}</p>
+                            </div>
+                            <div className="bg-white/10 rounded-lg p-3">
+                              <p className="text-xs text-slate-400 mb-1">Submitted</p>
+                              <p className="text-sm font-semibold text-slate-100">
+                                {new Date(selected?.submissionDate).toLocaleDateString()}
+                              </p>
+                            </div>
+                            <div className="bg-white/10 rounded-lg p-3">
+                              <p className="text-xs text-slate-400 mb-1">Regulatory</p>
+                              <p className="text-sm font-semibold text-slate-100">
+                                {selected?.regulatory?.type || "None"}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Sessions Component */}
+                        <div className="border-t border-white/10 pt-6">
+                          <StudentSessions
+                            applicationId={selected?.id}
+                            onSessionStart={(sessionId, sessionNum) => {
+                              console.log(`Started session ${sessionNum}`);
+                            }}
+                            onSessionComplete={(sessionId, sessionNum) => {
+                              console.log(`Completed session ${sessionNum}`);
+                            }}
+                            onFillForm={(sessionId, sessionNum) => {
+                              console.log(`Fill form for session ${sessionNum}`);
+                            }}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })()}
+                </>
+              )}
             </div>
           </div>
         </div>

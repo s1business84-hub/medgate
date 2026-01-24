@@ -33,6 +33,7 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
     allocationSource: "Student" as "Student" | "EHS" | "Hospital",
     allocatedHospitalInput: "",
     allocationEhsReference: "",
+    sessionCount: 1, // Number of sessions for this observership
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -101,6 +102,7 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
         programId: programId || "",
         hospitalId: hospitalId || "",
         regulatory,
+        sessionCount: formData.sessionCount,
         ...(allocationPayload ? { allocation: allocationPayload } : {}),
       })
 
@@ -135,6 +137,7 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
         allocationSource: "Student",
         allocatedHospitalInput: "",
         allocationEhsReference: "",
+        sessionCount: 1,
       })
     }, 3000)
   }
@@ -183,7 +186,7 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
               </button>
             </div>
 
-            <div className="px-4 sm:px-6 py-3 bg-gray-50 border-b border-gray-200 flex-shrink-0">
+            <div className="px-4 sm:px-6 py-3 bg-gray-50 border-b border-gray-200 shrink-0">
               <div className="flex flex-wrap items-center gap-2">
                 {[1, 2, 3].map(stepNumber => (
                   <div key={stepNumber} className="flex items-center">
@@ -367,6 +370,24 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
                         </div>
 
                         <div className="space-y-2">
+                          <label className="block text-sm font-medium text-gray-700">Number of Sessions *</label>
+                          <select
+                            name="sessionCount"
+                            value={formData.sessionCount}
+                            onChange={handleInputChange}
+                            className="form-select"
+                            required
+                          >
+                            <option value="1">1 Session</option>
+                            <option value="2">2 Sessions</option>
+                            <option value="3">3 Sessions</option>
+                            <option value="4">4 Sessions</option>
+                            <option value="5">5 Sessions</option>
+                          </select>
+                          <p className="text-xs text-gray-500">Each session can have its own assessment form after completion</p>
+                        </div>
+
+                        <div className="space-y-2">
                           <label className="block text-sm font-medium text-gray-700">Relevant Experience (Optional)</label>
                           <textarea
                             name="experience"
@@ -537,7 +558,7 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
             </div>
 
             {!isSubmitted && (
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-4 sm:p-6 border-t border-gray-200 bg-gray-50 flex-shrink-0">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-4 sm:p-6 border-t border-gray-200 bg-gray-50 shrink-0">
                 <Button
                   data-testid="app-modal-cancel"
                   type="button"

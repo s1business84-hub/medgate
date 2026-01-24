@@ -43,7 +43,7 @@ fi
 
 if [ "${SKIP_START}" -eq 0 ]; then
   echo "Starting Next dev server on port ${PORT}... (logs -> ${LOGFILE})"
-  nohup npm run dev > "${LOGFILE}" 2>&1 &
+  PORT=${PORT} nohup npm run dev > "${LOGFILE}" 2>&1 &
   NEXT_PID=$!
   STARTED_NEXT=1
   echo "Next PID: ${NEXT_PID}"
@@ -82,7 +82,7 @@ echo "Seeding demo data via /api/test/seed..."
 curl -sSf -X POST "${BASE_URL}/api/test/seed" -H "Content-Type: application/json" -d "${SEED_PAYLOAD}" || true
 
 echo "Running Playwright tests..."
-PLAYWRIGHT_BASE_URL=${BASE_URL} npx playwright test "${ARGS[@]}"
+PLAYWRIGHT_BASE_URL=${BASE_URL} npx playwright test ${ARGS[@]:-}
 EXIT_CODE=$?
 
 echo "Playwright finished with exit code ${EXIT_CODE}. Cleaning up..."
