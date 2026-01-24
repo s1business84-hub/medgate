@@ -6,8 +6,6 @@ import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text"
-import { HeroOrb } from "@/components/hero-orb"
-
 const stats = [
   {
     label: "Infrastructure",
@@ -46,9 +44,7 @@ export function Hero() {
       </div>
 
       {/* 3D Spline Orb with Electivio Branding */}
-      <div className="relative w-full">
-        <HeroOrb />
-      </div>
+      {/* Removed */}
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 py-16 sm:py-24 lg:px-8">
         <div className="mx-auto max-w-4xl text-center">
