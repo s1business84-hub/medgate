@@ -1,5 +1,6 @@
 import { Hero } from "@/components/sections/hero"
 import { Features } from "@/components/sections/features"
+import { FigmaShowcase } from "@/components/sections/figma-showcase"
 import { FAQ } from "@/components/sections/faq"
 
 // Force Vercel rebuild
@@ -11,6 +12,12 @@ export default function Home() {
 
       <Hero />
       <Features />
+      
+      {/* Figma Design Showcase */}
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+        <FigmaShowcase />
+      </div>
+
       <FAQ />
     </main>
   )
