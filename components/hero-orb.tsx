@@ -1,36 +1,53 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 
 // Dynamically import Spline to avoid SSR issues
-const Spline = dynamic(() => import("@splinetool/react-spline"), {
-  ssr: false,
-  loading: () => (
+const Spline = dynamic(
+  () => import("@splinetool/react-spline").catch(() => () => null),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="w-32 h-32 border-4 border-cyan-400/40 border-t-cyan-400 rounded-full animate-spin" />
+      </div>
+    ),
+  }
+);
+
+function FallbackOrb() {
+  return (
     <div className="absolute inset-0 flex items-center justify-center">
-      <div className="w-32 h-32 border-4 border-cyan-400/40 border-t-cyan-400 rounded-full animate-spin" />
+      {/* Animated gradient orb fallback */}
+      <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96">
+        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-500/30 via-blue-500/30 to-indigo-600/30 blur-2xl animate-pulse" />
+        <div className="absolute inset-4 rounded-full bg-gradient-to-tr from-blue-400/20 to-purple-500/20 blur-xl animate-pulse" style={{ animationDelay: "0.5s" }} />
+        <div className="absolute inset-8 rounded-full bg-gradient-to-br from-cyan-400/40 via-blue-500/40 to-indigo-500/40 blur-lg" />
+      </div>
     </div>
-  ),
-});
+  );
+}
 
 export function HeroOrb() {
+  const [hasError, setHasError] = useState(false);
+
   return (
     <div className="relative w-full h-full min-h-[500px] md:min-h-[600px] lg:min-h-[700px]">
-      {/* Spline 3D Orb */}
+      {/* Spline 3D Orb or Fallback */}
       <div className="absolute inset-0 z-0">
-        <Suspense
-          fallback={
-            <div className="absolute inset-0 flex items-center justify-center bg-slate-900/50">
-              <div className="w-32 h-32 border-4 border-cyan-400/40 border-t-cyan-400 rounded-full animate-spin" />
-            </div>
-          }
-        >
-          <Spline
-            scene="https://prod.spline.design/pfe2UgQYwfrRHzNtMG7TPygq/scene.splinecode"
-            className="w-full h-full"
-          />
-        </Suspense>
+        {hasError ? (
+          <FallbackOrb />
+        ) : (
+          <Suspense fallback={<FallbackOrb />}>
+            <Spline
+              scene="https://prod.spline.design/pfe2UgQYwfrRHzNtMG7TPygq/scene.splinecode"
+              className="w-full h-full"
+              onError={() => setHasError(true)}
+            />
+          </Suspense>
+        )}
       </div>
 
       {/* Electivio Branding Overlay */}
