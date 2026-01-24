@@ -201,7 +201,7 @@ export function CareerStrategizer({
         </div>
       </div>
 
-      <AnimatePresence mode="wait">
+      <AnimatePresence>
         {viewMode === "overview" && (
           <motion.div
             key="overview"
