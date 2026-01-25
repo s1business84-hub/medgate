@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, startTransition } from "react"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/lib/auth-context"
 import Link from "next/link"
@@ -39,10 +39,12 @@ export default function StudentProgressPage() {
     }
 
     const saved = localStorage.getItem(`progress_${user.id}`)
-    if (saved) {
-      setEntries(JSON.parse(saved))
-    }
-    setLoading(false)
+    startTransition(() => {
+      if (saved) {
+        setEntries(JSON.parse(saved))
+      }
+      setLoading(false)
+    })
   }, [user, router])
 
   const handleAddEntry = () => {

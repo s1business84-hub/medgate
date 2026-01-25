@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, startTransition } from "react"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/lib/auth-context"
 import Link from "next/link"
@@ -58,8 +58,10 @@ export default function HospitalAnalyticsPage() {
       }
     })
 
-    setStudentData(allData)
-    setLoading(false)
+    startTransition(() => {
+      setStudentData(allData)
+      setLoading(false)
+    })
   }, [user, router])
 
   const categories = [
