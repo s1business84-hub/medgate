@@ -290,9 +290,8 @@ export function validateMagicBytes(
 export async function generateDocumentHash(
   fileBuffer: Uint8Array | Buffer
 ): Promise<DocumentHashResult> {
-  const contentHash = await hashSHA256(
-    fileBuffer instanceof Buffer ? new Uint8Array(fileBuffer) : fileBuffer
-  );
+  const contentBytes = fileBuffer instanceof Buffer ? new Uint8Array(fileBuffer) : fileBuffer;
+  const contentHash = await sha256Hex(contentBytes);
 
   return {
     contentHash,

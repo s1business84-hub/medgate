@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, cubicBezier } from "framer-motion"
 import {
   Search,
   FileCheck,
@@ -55,7 +55,7 @@ export function Features() {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+      transition: { duration: 0.8, ease: cubicBezier(0.16, 1, 0.3, 1) },
     },
   }
 
@@ -87,7 +87,7 @@ export function Features() {
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
+            transition={{ duration: 0.8, ease: cubicBezier(0.16, 1, 0.3, 1), delay: 0.05 }}
             viewport={{ once: true }}
             className="text-4xl sm:text-5xl font-bold tracking-tight"
           >
@@ -97,7 +97,7 @@ export function Features() {
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.8, delay: 0.15, ease: cubicBezier(0.16, 1, 0.3, 1) }}
             viewport={{ once: true }}
             className="mt-6 text-lg leading-8 text-slate-200"
           >

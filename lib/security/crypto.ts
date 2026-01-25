@@ -374,7 +374,8 @@ export function decryptAESGCMNode(input: DecryptionInput): Uint8Array {
  */
 export async function sha256(data: Uint8Array): Promise<Uint8Array> {
   if (typeof crypto !== 'undefined' && crypto.subtle) {
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const input = data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength) as ArrayBuffer;
+    const hashBuffer = await crypto.subtle.digest('SHA-256', input);
     return new Uint8Array(hashBuffer);
   }
   
@@ -450,7 +451,7 @@ export async function deriveKey(
   if (typeof crypto !== 'undefined' && crypto.subtle) {
     const baseKey = await crypto.subtle.importKey(
       'raw',
-      passwordBytes,
+      passwordBytes.buffer.slice(passwordBytes.byteOffset, passwordBytes.byteOffset + passwordBytes.byteLength) as ArrayBuffer,
       'PBKDF2',
       false,
       ['deriveBits']
@@ -459,7 +460,7 @@ export async function deriveKey(
     const derivedBits = await crypto.subtle.deriveBits(
       {
         name: 'PBKDF2',
-        salt,
+        salt: salt.buffer.slice(salt.byteOffset, salt.byteOffset + salt.byteLength) as ArrayBuffer,
         iterations,
         hash: 'SHA-256'
       },
