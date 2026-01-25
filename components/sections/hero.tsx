@@ -35,26 +35,54 @@ const features = [
 
 export function Hero() {
   return (
-    <section className="relative overflow-visible bg-linear-to-br from-slate-900 via-slate-800 to-indigo-900">
-      {/* Background Elements */}
+    <section className="relative overflow-visible bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-900">
+      {/* Background Elements with Flow Design Agency effects */}
       <div className="absolute inset-0 bg-grid-slate-700 mask-[linear-gradient(0deg,rgba(0,0,0,0.4),rgba(255,255,255,0.05))] -z-10" />
-      <div className="absolute top-0 right-0 -z-10">
-        <div className="h-96 w-96 rounded-full bg-linear-to-br from-blue-500 to-indigo-500 opacity-20 blur-3xl" />
-      </div>
-      <div className="absolute bottom-0 left-0 -z-10">
-        <div className="h-96 w-96 rounded-full bg-linear-to-tr from-indigo-500 to-purple-500 opacity-15 blur-3xl" />
-      </div>
+      <motion.div 
+        className="absolute top-0 right-0 -z-10"
+        animate={{ 
+          scale: [1, 1.2, 1],
+          opacity: [0.2, 0.3, 0.2]
+        }}
+        transition={{ 
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      >
+        <div className="h-96 w-96 rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 blur-3xl" />
+      </motion.div>
+      <motion.div 
+        className="absolute bottom-0 left-0 -z-10"
+        animate={{ 
+          scale: [1, 1.15, 1],
+          opacity: [0.15, 0.25, 0.15]
+        }}
+        transition={{ 
+          duration: 10,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1
+        }}
+      >
+        <div className="h-96 w-96 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 blur-3xl" />
+      </motion.div>
 
       {/* 3D Spline Orb with Electivio Branding */}
       {/* Removed */}
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 py-16 sm:py-24 lg:px-8">
         <div className="mx-auto max-w-4xl text-center">
-          {/* Animated Electivio Logo */}
+          {/* Animated Electivio Logo with Flow Design smooth entrance */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: -20 }}
+            initial={{ opacity: 0, scale: 0.9, y: -30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ 
+              duration: 1.2, 
+              ease: [0.16, 1, 0.3, 1],
+              delay: 0.2
+            }}
+            whileHover={{ scale: 1.02 }}
             className="mb-8 sm:mb-12"
           >
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold">
@@ -141,7 +169,7 @@ export function Hero() {
           </motion.div>
         </div>
 
-        {/* Stats */}
+        {/* Stats with Flow Design Agency hover effects */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -154,19 +182,39 @@ export function Hero() {
                 key={stat.label}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
+                whileHover={{ 
+                  scale: 1.05,
+                  y: -5,
+                  transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] }
+                }}
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.6 + index * 0.1 }}
-                className="relative overflow-hidden rounded-2xl bg-white/10 backdrop-blur-md p-6 sm:p-8 shadow-lg ring-1 ring-white/20 hover:bg-white/15 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl bg-white/10 backdrop-blur-md p-6 sm:p-8 shadow-lg ring-1 ring-white/20 hover:bg-white/15 hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-500 cursor-pointer group"
               >
                 <div className="flex items-center">
-                  <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-linear-to-r from-blue-400 to-indigo-400 shadow-lg">
+                  <motion.div 
+                    className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-gradient-to-r from-blue-400 to-indigo-400 shadow-lg"
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.6 }}
+                  >
                     <stat.icon className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
-                  </div>
+                  </motion.div>
                   <div className="ml-3 sm:ml-4">
-                    <div className="text-2xl sm:text-3xl font-bold text-white">{stat.value}</div>
-                    <div className="text-xs sm:text-sm text-blue-200">{stat.label}</div>
+                    <div className="text-2xl sm:text-3xl font-bold text-white group-hover:text-blue-200 transition-colors">{stat.value}</div>
+                    <div className="text-xs sm:text-sm text-blue-200 group-hover:text-blue-100 transition-colors">{stat.label}</div>
                   </div>
                 </div>
-                <div className="absolute -right-2 -top-2 sm:-right-4 sm:-top-4 h-16 w-16 sm:h-24 sm:w-24 rounded-full bg-linear-to-br from-blue-400 to-indigo-400 opacity-10" />
+                <motion.div 
+                  className="absolute -right-2 -top-2 sm:-right-4 sm:-top-4 h-16 w-16 sm:h-24 sm:w-24 rounded-full bg-gradient-to-br from-blue-400 to-indigo-400"
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.1, 0.2, 0.1]
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
               </motion.div>
             ))}
           </div>
