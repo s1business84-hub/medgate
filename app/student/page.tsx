@@ -93,6 +93,15 @@ export default function StudentPortal() {
                 Career Path
               </Link>
               <Link
+                href="/student/progress"
+                className="btn-secondary hover-scale px-4 sm:px-6 py-2 sm:py-3 rounded-lg backdrop-blur-md border-cyan-500/30 bg-linear-to-r from-cyan-500/20 to-indigo-500/20 hover:from-cyan-500/30 hover:to-indigo-500/30 text-white font-medium flex items-center justify-center gap-2"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7H7v10h6V7z M17 7h-2v4h2V7z M5 20h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v13a2 2 0 002 2z" />
+                </svg>
+                Progress
+              </Link>
+              <Link
                 href="/student/form-submission"
                 className="btn-secondary hover-scale px-4 sm:px-6 py-2 sm:py-3 rounded-lg backdrop-blur-md border-blue-500/30 bg-linear-to-r from-blue-500/20 to-cyan-500/20 hover:from-blue-500/30 hover:to-cyan-500/30 text-white font-medium flex items-center justify-center gap-2"
               >
