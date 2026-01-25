@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
 import { createUser, getCurrentUser, findUserByEmail } from "@/lib/storage";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
+import { DemoButton } from "@/components/demo-button";
 
 type WelcomeVariant = "welcome-student" | "welcome-hospital"
 
@@ -124,6 +125,10 @@ export default function LoginForm() {
               </button>
             </div>
             <p className="text-xs text-slate-400 mt-2">Toggle to choose whether you&apos;re signing in as a student or hospital admin.</p>
+          </div>
+
+          <div className="mb-8 flex justify-center">
+            <DemoButton />
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-7">

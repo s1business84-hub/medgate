@@ -7,12 +7,20 @@ import { LiquidParallax } from "@/components/ui/liquid-parallax";
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ScrollableViewport, ScrollSection } from "@/components/scrollable-viewport";
 
 export default function PurposePage() {
   const [activeCard, setActiveCard] = useState<"students" | "hospitals">("students");
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
+    <ScrollableViewport
+      showProgress={true}
+      showNavigationDots={true}
+      showArrows={true}
+      snapToSections={false}
+    >
+      <ScrollSection id="purpose">
+      <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
       <LiquidParallax />
       
       {/* Animated gradient background */}
@@ -321,6 +329,8 @@ export default function PurposePage() {
           </div>
         </section>
       </div>
-    </div>
+      </div>
+      </ScrollSection>
+    </ScrollableViewport>
   );
 }

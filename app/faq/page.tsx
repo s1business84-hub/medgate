@@ -6,6 +6,7 @@ import { ChevronDown, Sparkles, MessageCircle, Star, Zap, Heart } from "lucide-r
 import Link from "next/link"
 
 import { LiquidParallax } from "@/components/ui/liquid-parallax"
+import { ScrollableViewport, ScrollSection } from "@/components/scrollable-viewport"
 
 const faqs = [
   {
@@ -97,7 +98,14 @@ export default function FAQPage() {
   }
 
   return (
-    <main className="relative min-h-screen overflow-visible bg-slate-950 text-slate-100">
+    <ScrollableViewport
+      showProgress={true}
+      showNavigationDots={true}
+      showArrows={true}
+      snapToSections={false}
+    >
+      <ScrollSection id="faq">
+      <main className="relative min-h-screen overflow-visible bg-slate-950 text-slate-100">
       <LiquidParallax className="opacity-80" depth={16} />
       {/* Animated background orbs */}
       <motion.div
@@ -328,6 +336,8 @@ export default function FAQPage() {
           </div>
         </motion.div>
       </div>
-    </main>
+      </main>
+      </ScrollSection>
+    </ScrollableViewport>
   )
 }

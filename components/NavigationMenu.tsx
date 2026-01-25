@@ -23,7 +23,6 @@ export default function NavigationMenu() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
-        <span className="relative z-10">Continue to</span>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.3 }}
@@ -31,6 +30,7 @@ export default function NavigationMenu() {
         >
           <ChevronDown className="w-5 h-5" />
         </motion.div>
+        <span className="relative z-10">Continue to</span>
         
         {/* Animated background */}
         <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

@@ -6,22 +6,30 @@ import { ArrowLeft, Users, Award, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
+import { ScrollableViewport, ScrollSection } from "@/components/scrollable-viewport"
 
 export default function AboutPage() {
   return (
-    <div className="relative min-h-screen overflow-hidden text-slate-100">
-      <LiquidParallax />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(34,211,238,0.15),transparent_40%),radial-gradient(circle_at_80%_20%,rgba(99,102,241,0.12),transparent_35%),radial-gradient(circle_at_40%_80%,rgba(139,92,246,0.13),transparent_38%),linear-gradient(180deg,#0a0e1a_0%,#0f172a_50%,#0a0e1a_100%)]" />
-      <motion.div
-        className="absolute inset-0 pointer-events-none opacity-50"
-        animate={{ opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <div className="absolute top-10 left-10 w-56 h-56 rounded-full bg-cyan-400/20 blur-3xl" />
-        <div className="absolute bottom-10 right-8 w-64 h-64 rounded-full bg-purple-500/15 blur-3xl" />
-      </motion.div>
-      
-      <div className="relative max-w-4xl mx-auto px-6 py-16">
+    <ScrollableViewport
+      showProgress={true}
+      showNavigationDots={true}
+      showArrows={true}
+      snapToSections={false}
+    >
+      <ScrollSection id="about">
+        <div className="relative min-h-screen overflow-hidden text-slate-100">
+        <LiquidParallax />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(34,211,238,0.15),transparent_40%),radial-gradient(circle_at_80%_20%,rgba(99,102,241,0.12),transparent_35%),radial-gradient(circle_at_40%_80%,rgba(139,92,246,0.13),transparent_38%),linear-gradient(180deg,#0a0e1a_0%,#0f172a_50%,#0a0e1a_100%)]" />
+        <motion.div
+          className="absolute inset-0 pointer-events-none opacity-50"
+          animate={{ opacity: [0.3, 0.5, 0.3] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <div className="absolute top-10 left-10 w-56 h-56 rounded-full bg-cyan-400/20 blur-3xl" />
+          <div className="absolute bottom-10 right-8 w-64 h-64 rounded-full bg-purple-500/15 blur-3xl" />
+        </motion.div>
+        
+        <div className="relative max-w-4xl mx-auto px-6 py-16">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
@@ -248,6 +256,8 @@ export default function AboutPage() {
           </div>
         </motion.section>
       </div>
-    </div>
+      </div>
+      </ScrollSection>
+    </ScrollableViewport>
   );
 }

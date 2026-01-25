@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
 import { motion, AnimatePresence } from "framer-motion";
+import { ScrollableViewport, ScrollSection } from "@/components/scrollable-viewport";
 
 async function sendOnboardingEmail(email: string) {
   const res = await fetch("/api/send-onboarding-email", {
@@ -50,11 +51,18 @@ export default function ForHospitalsPage() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden text-slate-100">
-      <LiquidParallax />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(34,211,238,0.15),transparent_40%),radial-gradient(circle_at_80%_20%,rgba(99,102,241,0.12),transparent_35%),radial-gradient(circle_at_40%_80%,rgba(139,92,246,0.13),transparent_38%),linear-gradient(180deg,#0a0e1a_0%,#0f172a_50%,#0a0e1a_100%)]" />
-      
-      <div className="relative max-w-6xl mx-auto px-6 py-16">
+    <ScrollableViewport
+      showProgress={true}
+      showNavigationDots={true}
+      showArrows={true}
+      snapToSections={false}
+    >
+      <ScrollSection id="for-hospitals">
+        <div className="relative min-h-screen overflow-hidden text-slate-100">
+          <LiquidParallax />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(34,211,238,0.15),transparent_40%),radial-gradient(circle_at_80%_20%,rgba(99,102,241,0.12),transparent_35%),radial-gradient(circle_at_40%_80%,rgba(139,92,246,0.13),transparent_38%),linear-gradient(180deg,#0a0e1a_0%,#0f172a_50%,#0a0e1a_100%)]" />
+          
+          <div className="relative max-w-6xl mx-auto px-6 py-16">
         {/* Header */}
         <div className="flex items-center justify-between mb-12 animate-fade-in">
           <Link href="/" className="flex items-center text-cyan-300 hover:text-cyan-200 transition-all duration-300 hover:translate-x-1">
@@ -375,6 +383,8 @@ export default function ForHospitalsPage() {
           </div>
         </section>
       </div>
-    </div>
+      </div>
+      </ScrollSection>
+    </ScrollableViewport>
   );
 }
