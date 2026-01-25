@@ -50,12 +50,12 @@ export function Features() {
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 40, scale: 0.85 },
+    hidden: { opacity: 0, y: 40, scale: 0.92 },
     visible: {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: { duration: 0.7, ease: [0.34, 1.56, 0.64, 1] },
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
     },
   }
 
@@ -85,9 +85,9 @@ export function Features() {
           </motion.div>
 
           <motion.h2
-            initial={{ opacity: 0, y: 26 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut", delay: 0.05 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
             viewport={{ once: true }}
             className="text-4xl sm:text-5xl font-bold tracking-tight"
           >
@@ -95,9 +95,9 @@ export function Features() {
             <AnimatedGradientText>Building</AnimatedGradientText>
           </motion.h2>
           <motion.p
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
+            transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             viewport={{ once: true }}
             className="mt-6 text-lg leading-8 text-slate-200"
           >
