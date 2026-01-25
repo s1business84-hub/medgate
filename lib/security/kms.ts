@@ -79,7 +79,6 @@ export class AWSKMSClient implements KMSClient {
 
   private async initializeClient(): Promise<void> {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
       const { KMSClient } = require('@aws-sdk/client-kms');
       this.kmsClient = new KMSClient({ region: securityConfig.kms.region });
     } catch {
@@ -96,7 +95,6 @@ export class AWSKMSClient implements KMSClient {
     }
 
     try {
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
       const { GenerateDataKeyCommand } = require('@aws-sdk/client-kms');
       
       const command = new GenerateDataKeyCommand({
@@ -134,7 +132,6 @@ export class AWSKMSClient implements KMSClient {
     }
 
     try {
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
       const { DecryptCommand } = require('@aws-sdk/client-kms');
       
       const command = new DecryptCommand({
@@ -165,7 +162,6 @@ export class AWSKMSClient implements KMSClient {
     }
 
     try {
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
       const { EncryptCommand } = require('@aws-sdk/client-kms');
       
       const command = new EncryptCommand({
@@ -208,7 +204,6 @@ export class AWSKMSClient implements KMSClient {
     }
 
     try {
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
       const { DescribeKeyCommand } = require('@aws-sdk/client-kms');
       
       const command = new DescribeKeyCommand({ KeyId: kmsKeyId });

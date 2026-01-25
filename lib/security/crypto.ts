@@ -313,7 +313,6 @@ export function encryptAESGCMNode(
   key: Uint8Array,
   additionalData?: Uint8Array
 ): EncryptionResult {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const nodeCrypto = require('crypto');
   
   const iv = generateIV();
@@ -341,7 +340,6 @@ export function encryptAESGCMNode(
  * Decrypt using Node.js crypto (server-side fallback)
  */
 export function decryptAESGCMNode(input: DecryptionInput): Uint8Array {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const nodeCrypto = require('crypto');
   
   const { ciphertext, iv, authTag, key, additionalData } = input;
@@ -380,7 +378,6 @@ export async function sha256(data: Uint8Array): Promise<Uint8Array> {
   }
   
   // Node.js fallback
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const nodeCrypto = require('crypto');
   const hash = nodeCrypto.createHash('sha256').update(data).digest();
   return new Uint8Array(hash);
@@ -427,7 +424,6 @@ export async function hmacSha256(
   }
   
   // Node.js fallback
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const nodeCrypto = require('crypto');
   const hmac = nodeCrypto.createHmac('sha256', key).update(data).digest();
   return new Uint8Array(hmac);
@@ -472,7 +468,6 @@ export async function deriveKey(
   }
   
   // Node.js fallback
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const nodeCrypto = require('crypto');
   const derived = nodeCrypto.pbkdf2Sync(
     passwordBytes,
