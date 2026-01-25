@@ -4,6 +4,7 @@ import { useState, ChangeEvent } from "react";
 import { getStudents, getApplications, getUsers } from "@/lib/storage";
 import { ComplianceAuditExportButton } from "@/components/compliance-audit-export-button";
 import { useAuth } from "@/lib/auth-context";
+import { ALLOW_EXPORT } from "@/lib/featureFlags";
 import * as XLSX from "xlsx";
 
 export default function TraineeRegistry() {
@@ -110,17 +111,21 @@ export default function TraineeRegistry() {
             </p>
           </div>
           <div className="flex gap-2 flex-wrap">
-            <ComplianceAuditExportButton
-              hospitalId={user?.hospitalId}
-              variant="outline"
-              className="border-emerald-500 text-emerald-600 hover:bg-emerald-50"
-            />
-            <button
-              onClick={handleExportFile}
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition text-sm font-medium"
-            >
-              📥 Export Excel
-            </button>
+            {ALLOW_EXPORT && (
+              <>
+                <ComplianceAuditExportButton
+                  hospitalId={user?.hospitalId}
+                  variant="outline"
+                  className="border-emerald-500 text-emerald-600 hover:bg-emerald-50"
+                />
+                <button
+                  onClick={handleExportFile}
+                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition text-sm font-medium"
+                >
+                  📥 Export Excel
+                </button>
+              </>
+            )}
             <label className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition text-sm font-medium cursor-pointer">
               📤 Import Excel
               <input

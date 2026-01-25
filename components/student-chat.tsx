@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, User, Users, ArrowLeft, Search } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
@@ -30,6 +30,14 @@ export function StudentChat() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const loadConversations = useCallback(() => {
+    if (!user) return;
+    const convs = getConversations(user.id, "supervisor");
+    setConversations(convs.sort((a, b) => 
+      new Date(b.lastMessageAt).getTime() - new Date(a.lastMessageAt).getTime()
+    ));
+  }, [user]);
+
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
@@ -38,15 +46,7 @@ export function StudentChat() {
     if (isOpen && user) {
       loadConversations();
     }
-  }, [isOpen, user]);
-
-  const loadConversations = () => {
-    if (!user) return;
-    const convs = getConversations(user.id, "supervisor");
-    setConversations(convs.sort((a, b) => 
-      new Date(b.lastMessageAt).getTime() - new Date(a.lastMessageAt).getTime()
-    ));
-  };
+  }, [isOpen, user, loadConversations]);
 
   const loadMessages = (conversationId: string) => {
     const msgs = getMessages(conversationId);
@@ -131,7 +131,7 @@ export function StudentChat() {
       {/* Chat Button */}
       <motion.button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-40 p-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-full shadow-2xl hover:shadow-green-500/50 transition-all duration-300"
+        className="fixed bottom-6 right-6 z-40 p-4 bg-linear-to-r from-green-600 to-emerald-600 text-white rounded-full shadow-2xl hover:shadow-green-500/50 transition-all duration-300"
         whileHover={{ scale: 1.15, rotate: 5 }}
         whileTap={{ scale: 0.95 }}
         initial={{ opacity: 0, y: 100 }}
@@ -157,10 +157,10 @@ export function StudentChat() {
             initial={{ opacity: 0, y: 100, scale: 0.8 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 100, scale: 0.8 }}
-            className="fixed bottom-24 right-6 z-50 w-96 max-w-[calc(100vw-3rem)] h-[32rem] bg-gradient-to-br from-slate-900 to-slate-950 border border-white/20 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+            className="fixed bottom-24 right-6 z-50 w-96 max-w-[calc(100vw-3rem)] h-128 bg-linear-to-br from-slate-900 to-slate-950 border border-white/20 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-white/10 bg-gradient-to-r from-green-600/30 to-emerald-600/30 backdrop-blur-sm">
+            <div className="flex items-center justify-between p-4 border-b border-white/10 bg-linear-to-r from-green-600/30 to-emerald-600/30 backdrop-blur-sm">
               <div className="flex items-center gap-3">
                 {view === "chat" && (
                   <button
@@ -215,7 +215,7 @@ export function StudentChat() {
                 <div className="p-3">
                   <button
                     onClick={() => setView("new")}
-                    className="w-full p-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white rounded-lg font-semibold transition-all flex items-center justify-center gap-2"
+                    className="w-full p-3 bg-linear-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white rounded-lg font-semibold transition-all flex items-center justify-center gap-2"
                   >
                     <MessageCircle className="w-4 h-4" />
                     Start New Conversation
@@ -241,7 +241,7 @@ export function StudentChat() {
                         >
                           <div className="flex items-start justify-between mb-1">
                             <div className="flex items-center gap-2">
-                              <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold">
+                              <div className="w-10 h-10 rounded-full bg-linear-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold">
                                 {studentInfo.name.charAt(0)}
                               </div>
                               <div>
@@ -292,7 +292,7 @@ export function StudentChat() {
                       className="w-full p-3 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-left transition-all"
                     >
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold">
+                        <div className="w-10 h-10 rounded-full bg-linear-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold">
                           {student.name.charAt(0)}
                         </div>
                         <div>
@@ -327,7 +327,7 @@ export function StudentChat() {
                       <div
                         className={`max-w-[80%] p-3 rounded-2xl shadow-lg ${
                           message.senderRole === "supervisor"
-                            ? "bg-gradient-to-r from-green-600 to-emerald-600 text-white"
+                            ? "bg-linear-to-r from-green-600 to-emerald-600 text-white"
                             : "bg-white/10 backdrop-blur-sm text-slate-200 border border-white/10"
                         }`}
                       >
@@ -341,7 +341,7 @@ export function StudentChat() {
                   <div ref={messagesEndRef} />
                 </div>
 
-                <div className="p-4 border-t border-white/10 bg-gradient-to-t from-slate-950 to-transparent">
+                <div className="p-4 border-t border-white/10 bg-linear-to-t from-slate-950 to-transparent">
                   <div className="flex gap-2">
                     <input
                       type="text"
@@ -355,7 +355,7 @@ export function StudentChat() {
                       onClick={handleSendMessage}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="p-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 rounded-xl transition-all shadow-lg hover:shadow-green-500/30"
+                      className="p-3 bg-linear-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 rounded-xl transition-all shadow-lg hover:shadow-green-500/30"
                     >
                       <Send className="w-5 h-5 text-white" />
                     </motion.button>

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { getApplications, updateApplicationStatus, getStudents, createNotification, deleteApplication, addDocument, setApplicationAssignment, getUsers, createObservationForm, getObservationForms } from "@/lib/storage";
 import { getSupervisorConfirmations, addSupervisorConfirmation } from "@/lib/auditStore";
 import { showToast } from "@/lib/toast";
+import { ALLOW_EXPORT } from "@/lib/featureFlags";
 import UI_COPY from '@/lib/uiCopy';
 import { mockPrograms, mockHospitals } from "@/lib/mockData";
 import { useAuth } from "@/lib/auth-context";
@@ -348,30 +349,32 @@ export default function AdminPage() {
               🚀 Run Scenario 2
             </button>
           )}
-          <button
-            onClick={async () => {
-              try {
-                const { exportAccreditationCSV } = await import('@/lib/auditStore');
-                const csv = exportAccreditationCSV();
-                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `electivio_accreditation_${new Date().toISOString().slice(0,10)}.csv`;
-                document.body.appendChild(a);
-                a.click();
-                a.remove();
-                URL.revokeObjectURL(url);
-                try { (await import('@/lib/toast')).showToast('Export ready — download should begin shortly'); } catch {}
-              } catch (err) {
-                console.error('Export failed', err);
-                try { (await import('@/lib/toast')).showToast('Export failed'); } catch {}
-              }
-            }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-semibold shadow transition-all"
-          >
-            <span>⬇️</span> Export Accreditation CSV
-          </button>
+          {ALLOW_EXPORT && (
+            <button
+              onClick={async () => {
+                try {
+                  const { exportAccreditationCSV } = await import('@/lib/auditStore');
+                  const csv = exportAccreditationCSV();
+                  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = `electivio_accreditation_${new Date().toISOString().slice(0,10)}.csv`;
+                  document.body.appendChild(a);
+                  a.click();
+                  a.remove();
+                  URL.revokeObjectURL(url);
+                  try { (await import('@/lib/toast')).showToast('Export ready — download should begin shortly'); } catch {}
+                } catch (err) {
+                  console.error('Export failed', err);
+                  try { (await import('@/lib/toast')).showToast('Export failed'); } catch {}
+                }
+              }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-semibold shadow transition-all"
+            >
+              <span>⬇️</span> Export Accreditation CSV
+            </button>
+          )}
         </div>
         <div className="flex items-center justify-between mb-8">
           <div>

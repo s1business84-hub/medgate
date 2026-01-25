@@ -35,7 +35,7 @@ const features = [
 
 export function Hero() {
   return (
-    <section className="relative overflow-visible bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-900">
+    <section className="relative overflow-visible bg-linear-to-br from-slate-900 via-slate-800 to-indigo-900">
       {/* Background Elements with Flow Design Agency effects */}
       <div className="absolute inset-0 bg-grid-slate-700 mask-[linear-gradient(0deg,rgba(0,0,0,0.4),rgba(255,255,255,0.05))] -z-10" />
       <motion.div 
@@ -50,7 +50,7 @@ export function Hero() {
           ease: "easeInOut"
         }}
       >
-        <div className="h-96 w-96 rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 blur-3xl" />
+        <div className="h-96 w-96 rounded-full bg-linear-to-br from-blue-500 to-indigo-500 blur-3xl" />
       </motion.div>
       <motion.div 
         className="absolute bottom-0 left-0 -z-10"

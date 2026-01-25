@@ -101,7 +101,7 @@ export function ScrollableViewport({
       /*shown at scale*/}
       {showProgress && mounted && (
         <motion.div
-          className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500 origin-left z-50"
+          className="fixed top-0 left-0 right-0 h-1 bg-linear-to-r from-cyan-500 via-blue-500 to-indigo-500 origin-left z-50"
           style={{ scaleX }}
         />
       )}

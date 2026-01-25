@@ -29,6 +29,7 @@ export function SupervisorChat() {
   const [activeConversation, setActiveConversation] = useState<Conversation | null>(null);
   const [hasRealMessages, setHasRealMessages] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
+  const messageIdCounterRef = useRef(0);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -133,7 +134,7 @@ export function SupervisorChat() {
     } else {
       // Fallback to automated responses
       const newMessage: Message = {
-        id: Date.now().toString(),
+        id: `auto-${messageIdCounterRef.current++}`,
         text: userMessage,
         sender: "student",
         timestamp: new Date(),
@@ -144,7 +145,7 @@ export function SupervisorChat() {
       // Simulate supervisor response
       setTimeout(() => {
         const response: Message = {
-          id: (Date.now() + 1).toString(),
+          id: `auto-${messageIdCounterRef.current++}`,
           text: getAutomatedResponse(userMessage),
           sender: "supervisor",
           timestamp: new Date(),
@@ -186,7 +187,7 @@ export function SupervisorChat() {
       {/* Chat Button with Flow Design smooth animation */}
       <motion.button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-40 p-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full shadow-2xl hover:shadow-blue-500/50 transition-all duration-300"
+        className="fixed bottom-6 right-6 z-40 p-4 bg-linear-to-r from-blue-600 to-indigo-600 text-white rounded-full shadow-2xl hover:shadow-blue-500/50 transition-all duration-300"
         whileHover={{ scale: 1.15, rotate: 5 }}
         whileTap={{ scale: 0.95 }}
         initial={{ opacity: 0, y: 100 }}
@@ -218,13 +219,13 @@ export function SupervisorChat() {
             initial={{ opacity: 0, y: 100, scale: 0.8 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 100, scale: 0.8 }}
-            className="fixed bottom-24 right-6 z-50 w-96 max-w-[calc(100vw-3rem)] h-[32rem] bg-gradient-to-br from-slate-900 to-slate-950 border border-white/20 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+            className="fixed bottom-24 right-6 z-50 w-96 max-w-[calc(100vw-3rem)] h-128 bg-linear-to-br from-slate-900 to-slate-950 border border-white/20 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
           >
             {/* Header with enhanced gradient */}
-            <div className="flex items-center justify-between p-4 border-b border-white/10 bg-gradient-to-r from-blue-600/30 to-indigo-600/30 backdrop-blur-sm">
+            <div className="flex items-center justify-between p-4 border-b border-white/10 bg-linear-to-r from-blue-600/30 to-indigo-600/30 backdrop-blur-sm">
               <div className="flex items-center gap-3">
                 <motion.div 
-                  className="p-2 bg-gradient-to-r from-blue-500/30 to-indigo-500/30 rounded-full"
+                  className="p-2 bg-linear-to-r from-blue-500/30 to-indigo-500/30 rounded-full"
                   animate={{ rotate: [0, 10, -10, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                 >
@@ -265,7 +266,7 @@ export function SupervisorChat() {
                   <div
                     className={`max-w-[80%] p-3 rounded-2xl shadow-lg ${
                       message.sender === "student"
-                        ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white"
+                        ? "bg-linear-to-r from-blue-600 to-indigo-600 text-white"
                         : "bg-white/10 backdrop-blur-sm text-slate-200 border border-white/10"
                     }`}
                   >
@@ -284,7 +285,7 @@ export function SupervisorChat() {
               <motion.div 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="p-4 border-t border-white/10 space-y-2 bg-gradient-to-b from-transparent to-blue-500/5"
+                className="p-4 border-t border-white/10 space-y-2 bg-linear-to-b from-transparent to-blue-500/5"
               >
                 <p className="text-xs text-slate-400 mb-2 font-semibold">Quick questions:</p>
                 <div className="space-y-2">
@@ -299,7 +300,7 @@ export function SupervisorChat() {
                         setInputText(q);
                         setTimeout(() => handleSendMessage(), 100);
                       }}
-                      className="w-full text-left text-xs p-3 rounded-lg bg-white/5 hover:bg-gradient-to-r hover:from-blue-500/20 hover:to-indigo-500/20 text-slate-300 hover:text-white transition-all duration-300 border border-white/5 hover:border-blue-500/30"
+                      className="w-full text-left text-xs p-3 rounded-lg bg-white/5 hover:bg-linear-to-r hover:from-blue-500/20 hover:to-indigo-500/20 text-slate-300 hover:text-white transition-all duration-300 border border-white/5 hover:border-blue-500/30"
                     >
                       {q}
                     </motion.button>
@@ -309,7 +310,7 @@ export function SupervisorChat() {
             )}
 
             {/* Input with enhanced styling */}
-            <div className="p-4 border-t border-white/10 bg-gradient-to-t from-slate-950 to-transparent">
+            <div className="p-4 border-t border-white/10 bg-linear-to-t from-slate-950 to-transparent">
               <div className="flex gap-2">
                 <input
                   type="text"
@@ -323,7 +324,7 @@ export function SupervisorChat() {
                   onClick={handleSendMessage}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="p-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 rounded-xl transition-all shadow-lg hover:shadow-blue-500/30"
+                  className="p-3 bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 rounded-xl transition-all shadow-lg hover:shadow-blue-500/30"
                 >
                   <Send className="w-5 h-5 text-white" />
                 </motion.button>

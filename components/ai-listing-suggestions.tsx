@@ -223,7 +223,7 @@ export function AIListingSuggestions() {
       {/* Trigger Button */}
       <motion.button
         onClick={() => setIsOpen(true)}
-        className="group relative px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300"
+        className="group relative px-6 py-3 bg-linear-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
@@ -231,7 +231,7 @@ export function AIListingSuggestions() {
           <Sparkles className="w-5 h-5" />
           <span>Get AI Program Suggestions</span>
         </div>
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl -z-10" />
+        <div className="absolute inset-0 bg-linear-to-r from-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl -z-10" />
       </motion.button>
 
       {/* Dialog */}
@@ -256,13 +256,13 @@ export function AIListingSuggestions() {
               onClick={closeDialog}
             >
               <div
-                className="relative w-full max-w-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-white/20 rounded-2xl shadow-2xl max-h-[85vh] overflow-hidden"
+                className="relative w-full max-w-2xl bg-linear-to-br from-slate-900 to-slate-950 border border-white/20 rounded-2xl shadow-2xl max-h-[85vh] overflow-hidden"
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-white/10">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-lg">
+                    <div className="p-2 bg-linear-to-r from-purple-500/20 to-pink-500/20 rounded-lg">
                       <Sparkles className="w-6 h-6 text-purple-400" />
                     </div>
                     <div>
@@ -332,7 +332,7 @@ export function AIListingSuggestions() {
                           <ul className="space-y-2">
                             {selectedProgram.requirements?.map((req, idx) => (
                               <li key={idx} className="flex items-start gap-3 text-slate-300">
-                                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-purple-500/20 text-purple-300 text-xs mt-0.5 flex-shrink-0">✓</span>
+                                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-purple-500/20 text-purple-300 text-xs mt-0.5 shrink-0">✓</span>
                                 {req}
                               </li>
                             ))}
@@ -353,7 +353,7 @@ export function AIListingSuggestions() {
                         <div className="flex gap-3 pt-4">
                           <Link
                             href={`/programs/${selectedProgram.programId}`}
-                            className="flex-1 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-semibold rounded-lg transition-all text-center"
+                            className="flex-1 px-6 py-3 bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-semibold rounded-lg transition-all text-center"
                           >
                             Apply Now
                           </Link>
@@ -377,7 +377,7 @@ export function AIListingSuggestions() {
                         </div>
                         <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
                           <motion.div
-                            className="h-full bg-gradient-to-r from-purple-500 to-pink-500"
+                            className="h-full bg-linear-to-r from-purple-500 to-pink-500"
                             initial={{ width: 0 }}
                             animate={{ width: `${((currentStep + 1) / questions.length) * 100}%` }}
                             transition={{ duration: 0.3 }}
@@ -450,7 +450,7 @@ export function AIListingSuggestions() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: idx * 0.1 }}
-                            className="p-4 rounded-xl border border-white/10 bg-gradient-to-br from-purple-500/10 to-pink-500/10 hover:border-purple-500/50 transition-all cursor-pointer"
+                            className="p-4 rounded-xl border border-white/10 bg-linear-to-br from-purple-500/10 to-pink-500/10 hover:border-purple-500/50 transition-all cursor-pointer"
                             onClick={() => setSelectedProgram(rec)}
                           >
                             <div className="flex items-start justify-between gap-4 mb-3">
@@ -473,7 +473,7 @@ export function AIListingSuggestions() {
                                 e.stopPropagation();
                                 setSelectedProgram(rec);
                               }}
-                              className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white text-sm font-semibold rounded-lg transition-all"
+                              className="inline-flex items-center gap-2 px-4 py-2 bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white text-sm font-semibold rounded-lg transition-all"
                             >
                               View Full Details
                               <ChevronRight className="w-4 h-4" />

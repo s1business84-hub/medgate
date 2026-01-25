@@ -161,7 +161,7 @@ export default function StudentDemoPage() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
       <LiquidParallax />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
+      <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
 
       <motion.div
         className="relative max-w-6xl mx-auto px-4 py-20"
@@ -181,7 +181,7 @@ export default function StudentDemoPage() {
 
         {/* Header */}
         <motion.div variants={itemVariants} className="mb-12">
-          <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+          <h1 className="text-5xl font-bold mb-4 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
             Student Portal Demo
           </h1>
           <p className="text-xl text-slate-300">
@@ -200,7 +200,7 @@ export default function StudentDemoPage() {
             <motion.div
               key={idx}
               variants={itemVariants}
-              className={`rounded-xl border border-white/10 bg-gradient-to-br ${stat.color}/10 p-6 backdrop-blur-sm hover:border-white/20 transition-colors`}
+              className={`rounded-xl border border-white/10 bg-linear-to-br ${stat.color}/10 p-6 backdrop-blur-sm hover:border-white/20 transition-colors`}
             >
               <stat.icon className="w-6 h-6 mb-3 text-white" />
               <p className="text-slate-400 text-sm mb-1">{stat.label}</p>
@@ -243,7 +243,7 @@ export default function StudentDemoPage() {
                 {/* Progress Bar */}
                 <div className="bg-slate-700/50 rounded-full h-2 overflow-hidden">
                   <motion.div
-                    className="h-full bg-gradient-to-r from-cyan-500 to-blue-500"
+                    className="h-full bg-linear-to-r from-cyan-500 to-blue-500"
                     initial={{ width: 0 }}
                     animate={{ width: `${program.progress}%` }}
                     transition={{ duration: 1, delay: idx * 0.2 }}
@@ -262,7 +262,7 @@ export default function StudentDemoPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
               onClick={() => setShowAI(true)}
-              className="group relative px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300"
+              className="group relative px-8 py-3 bg-linear-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300"
             >
               <div className="flex items-center gap-2">
                 <Sparkles className="w-5 h-5" />
@@ -271,7 +271,7 @@ export default function StudentDemoPage() {
             </button>
             
             <Link href="/login">
-              <button className="px-8 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 font-semibold hover:shadow-lg hover:shadow-cyan-500/50 transition-all">
+              <button className="px-8 py-3 rounded-lg bg-linear-to-r from-cyan-500 to-blue-500 font-semibold hover:shadow-lg hover:shadow-cyan-500/50 transition-all">
                 Go Back to Login
               </button>
             </Link>
@@ -299,13 +299,13 @@ export default function StudentDemoPage() {
               onClick={closeAI}
             >
               <div
-                className="relative w-full max-w-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-white/20 rounded-2xl shadow-2xl max-h-[85vh] overflow-hidden"
+                className="relative w-full max-w-2xl bg-linear-to-br from-slate-900 to-slate-950 border border-white/20 rounded-2xl shadow-2xl max-h-[85vh] overflow-hidden"
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-white/10">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-lg">
+                    <div className="p-2 bg-linear-to-r from-purple-500/20 to-pink-500/20 rounded-lg">
                       <Sparkles className="w-6 h-6 text-purple-400" />
                     </div>
                     <div>
@@ -372,7 +372,7 @@ export default function StudentDemoPage() {
                           <ul className="space-y-2">
                             {selectedProgram.requirements?.map((req: string, idx: number) => (
                               <li key={idx} className="flex items-start gap-3 text-slate-300">
-                                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-purple-500/20 text-purple-300 text-xs mt-0.5 flex-shrink-0">✓</span>
+                                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-purple-500/20 text-purple-300 text-xs mt-0.5 shrink-0">✓</span>
                                 {req}
                               </li>
                             ))}
@@ -392,7 +392,7 @@ export default function StudentDemoPage() {
 
                         <div className="p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
                           <div className="flex items-start gap-3">
-                            <AlertCircle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                            <AlertCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
                             <div className="text-left text-sm text-slate-300">
                               <p className="font-semibold text-yellow-300 mb-2">Demo Disclaimer:</p>
                               <p className="text-xs">This is a sample program for demonstration purposes. Create an account to browse real programs and submit applications.</p>
@@ -407,7 +407,7 @@ export default function StudentDemoPage() {
                               setTimeout(resetAI, 300);
                               router.push("/programs");
                             }}
-                            className="flex-1 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-semibold rounded-lg transition-all"
+                            className="flex-1 px-6 py-3 bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-semibold rounded-lg transition-all"
                           >
                             Browse Real Programs
                           </button>
@@ -428,7 +428,7 @@ export default function StudentDemoPage() {
                         </div>
                         <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
                           <motion.div
-                            className="h-full bg-gradient-to-r from-purple-500 to-pink-500"
+                            className="h-full bg-linear-to-r from-purple-500 to-pink-500"
                             initial={{ width: 0 }}
                             animate={{ width: `${((currentStep + 1) / questions.length) * 100}%` }}
                             transition={{ duration: 0.3 }}
