@@ -65,7 +65,10 @@ async function handler(request: NextRequest, context: AuthContext) {
     
     if (!validation.valid) {
       return NextResponse.json(
-        { error: validation.error },
+        {
+          error: validation.errors[0]?.message || 'Invalid document upload',
+          errors: validation.errors,
+        },
         { status: 400 }
       );
     }
