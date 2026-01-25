@@ -342,7 +342,7 @@ export function isSensitiveField(
 /**
  * Validate document upload parameters
  */
-export function validateDocumentUpload(
+export function validateDocumentUploadConfig(
   documentType: keyof typeof documentTypeConfig,
   mimeType: string,
   sizeBytes: number

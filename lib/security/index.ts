@@ -73,7 +73,7 @@ export {
   hasPermission,
   getPermissions,
   isSensitiveField,
-  validateDocumentUpload,
+  validateDocumentUploadConfig,
   validateEnvironment,
   isDevelopment,
   isProduction,

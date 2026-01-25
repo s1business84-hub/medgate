@@ -6,7 +6,7 @@
  */
 
 import { DocumentType, DocumentStatus, DocumentMetadata } from './types';
-import { hashSHA256, generateRandomString } from './crypto';
+import { sha256Hex, generateSecureId } from './crypto';
 
 // ============================================================================
 // CONSTANTS & CONFIGURATION
@@ -333,7 +333,7 @@ export function createDocumentMetadata(
 ): DocumentMetadata {
   return {
     ...input,
-    id: `doc_${Date.now()}_${generateRandomString(8)}`,
+    id: generateSecureId('doc'),
     status: 'pending_upload' as DocumentStatus,
     uploadedAt: new Date().toISOString(),
     contentHash: '', // Will be filled after upload
