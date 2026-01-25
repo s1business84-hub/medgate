@@ -1,16 +1,28 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, Zap } from "lucide-react";
+import { ArrowLeft, Zap, Plane } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ScrollableViewport, ScrollSection } from "@/components/scrollable-viewport";
+import { useRef, useState } from "react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 
 export default function PurposePage() {
   const [activeCard, setActiveCard] = useState<"students" | "hospitals">("students");
+  const lookingAheadRef = useRef<HTMLDivElement | null>(null);
+  const { scrollYProgress } = useScroll({ target: lookingAheadRef, offset: ["start end", "end start"] });
+  // Background red overlay opacity on scroll
+  const redBgOpacity = useTransform(scrollYProgress, [0, 1], [0, 0.35]);
+  // Heading color transition from slate-100 to red-500
+  const headingColor = useTransform(scrollYProgress, [0, 1], ["#e2e8f0", "#ef4444"]);
+  // Border highlight to subtle red on scroll
+  const borderRedOpacity = useTransform(scrollYProgress, [0, 1], [0.1, 0.4]);
+  const borderShadow = useTransform(borderRedOpacity, (o) => `0 0 0 1px rgba(239,68,68,${o})`);
+  // Plane flight path
+  const planeX = useTransform(scrollYProgress, [0, 1], [0, 320]);
+  const planeY = useTransform(scrollYProgress, [0, 1], [0, -20]);
+  const planeRotate = useTransform(scrollYProgress, [0, 1], [0, 8]);
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-slate-950 text-slate-100">
@@ -145,11 +157,54 @@ export default function PurposePage() {
             </section>
 
             <section className="mb-24">
-              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="bg-white/5 border border-white/10 rounded-3xl backdrop-blur-xl p-8 md:p-12">
-                <h2 className="text-3xl font-bold text-slate-100 mb-6">Looking Ahead</h2>
-                <p className="text-lg text-slate-300 leading-relaxed">
-                  As the platform evolves, Electivio aims to expand coverage across all UAE emirates and continue improving how clinical training opportunities are accessed and managed—without compromising institutional autonomy or academic standards.
-                </p>
+              <motion.div
+                ref={lookingAheadRef}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.3 }}
+                transition={{ duration: 0.6 }}
+                className="relative overflow-hidden rounded-3xl backdrop-blur-xl p-8 md:p-12"
+                style={{
+                  // Base background with subtle white tint; red overlay comes via absolute layer
+                  background: "rgba(255,255,255,0.05)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                }}
+              >
+                {/* Red overlay that intensifies with scroll */}
+                <motion.div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 bg-red-600"
+                  style={{ opacity: redBgOpacity, mixBlendMode: "multiply" }}
+                />
+                {/* Subtle red border glow on scroll */}
+                <motion.div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 rounded-3xl"
+                  style={{ boxShadow: borderShadow }}
+                />
+
+                <motion.h2
+                  className="text-3xl font-bold mb-6"
+                  style={{ color: headingColor }}
+                >
+                  Looking Ahead
+                </motion.h2>
+
+                <div className="relative">
+                  <p className="text-lg text-slate-300 leading-relaxed pr-16">
+                    As the platform evolves, Electivio aims to expand coverage across all UAE emirates and continue improving how clinical training opportunities are accessed and managed—without compromising institutional autonomy or academic standards.
+                  </p>
+                  {/* Plane flying from the paragraph as you scroll */}
+                  <motion.div
+                    aria-hidden
+                    className="absolute top-1/2 left-0 -translate-y-1/2"
+                    style={{ x: planeX, y: planeY, rotate: planeRotate }}
+                  >
+                    <div className="w-10 h-10 rounded-full bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center shadow-lg">
+                      <Plane className="w-5 h-5 text-red-400" />
+                    </div>
+                  </motion.div>
+                </div>
               </motion.div>
             </section>
 

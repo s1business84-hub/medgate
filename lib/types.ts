@@ -10,6 +10,13 @@ export interface Student {
   createdAt: string;
 }
 
+export interface StudentProgress {
+  studentId: string;
+  xpPoints: number; // Total XP accumulated
+  reflectionsCompleted: number; // Total reflections answered
+  lastUpdated: string;
+}
+
 export interface Program {
   id: string;
   hospitalId?: string;
@@ -357,4 +364,34 @@ export interface StudentPerformanceMetrics {
   keyStrengths: string[];
   areasForImprovement: string[];
 }
+
+  export interface ChatMessage {
+    id: string;
+    conversationId: string; // Unique ID for each student-supervisor conversation
+    senderId: string; // User ID of sender
+    senderRole: "student" | "supervisor" | "admin";
+    recipientId: string; // User ID of recipient
+    message: string;
+    timestamp: string; // ISO date string
+    isRead: boolean;
+    attachments?: {
+      name: string;
+      url: string;
+      type: string;
+    }[];
+  }
+
+  export interface Conversation {
+    id: string;
+    studentId: string;
+    supervisorId: string;
+    applicationId?: string; // Optional link to specific application
+    lastMessageAt: string;
+    lastMessage: string;
+    unreadCount: {
+      student: number;
+      supervisor: number;
+    };
+    createdAt: string;
+  }
 

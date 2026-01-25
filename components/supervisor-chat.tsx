@@ -1,8 +1,17 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, User, Sparkles } from "lucide-react";
+import { useAuth } from "@/lib/auth-context";
+import { 
+  getConversations, 
+  getMessages, 
+  sendMessage, 
+  markMessagesAsRead,
+  getUsers
+} from "@/lib/storage";
+import type { Conversation, ChatMessage as ChatMsg } from "@/lib/types";
 
 interface Message {
   id: string;
@@ -12,17 +21,14 @@ interface Message {
 }
 
 export function SupervisorChat() {
+  const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: "1",
-      text: "Hello! I'm here to help answer your questions about the program, requirements, and next steps.",
-      sender: "supervisor",
-      timestamp: new Date(),
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [activeConversation, setActiveConversation] = useState<Conversation | null>(null);
+  const [hasRealMessages, setHasRealMessages] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -32,6 +38,65 @@ export function SupervisorChat() {
     scrollToBottom();
   }, [messages]);
 
+  // Load conversations and messages
+  const loadMessages = useCallback(() => {
+    if (!user) return;
+    
+    const conversations = getConversations(user.id, "student");
+    
+    if (conversations.length > 0) {
+      // Get the most recent conversation
+      const conv = conversations.sort((a, b) => 
+        new Date(b.lastMessageAt).getTime() - new Date(a.lastMessageAt).getTime()
+      )[0];
+      
+      setActiveConversation(conv);
+      
+      const msgs = getMessages(conv.id);
+      
+      if (msgs.length > 0) {
+        setHasRealMessages(true);
+        
+        // Convert to Message format
+        const formattedMessages: Message[] = msgs.map(m => ({
+          id: m.id,
+          text: m.message,
+          sender: m.senderRole === "student" ? "student" : "supervisor",
+          timestamp: new Date(m.timestamp),
+        }));
+        
+        setMessages(formattedMessages);
+        
+        // Mark as read when opened
+        if (isOpen) {
+          markMessagesAsRead(conv.id, user.id);
+        }
+      }
+      
+      // Calculate unread
+      const totalUnread = conversations.reduce((sum, c) => sum + c.unreadCount.student, 0);
+      setUnreadCount(totalUnread);
+    } else {
+      // No real conversations, show welcome message
+      setMessages([{
+        id: "1",
+        text: "Hello! I'm here to help answer your questions about the program, requirements, and next steps.",
+        sender: "supervisor",
+        timestamp: new Date(),
+      }]);
+    }
+  }, [user, isOpen]);
+
+  useEffect(() => {
+    loadMessages();
+    
+    // Poll for new messages every 5 seconds when open
+    if (isOpen) {
+      const interval = setInterval(loadMessages, 5000);
+      return () => clearInterval(interval);
+    }
+  }, [isOpen, loadMessages]);
+
   const quickQuestions = [
     "What are the program requirements?",
     "How do I submit my application?",
@@ -40,29 +105,53 @@ export function SupervisorChat() {
   ];
 
   const handleSendMessage = () => {
-    if (!inputText.trim()) return;
+    if (!inputText.trim() || !user) return;
 
     const userMessage = inputText;
-    const newMessage: Message = {
-      id: Date.now().toString(),
-      text: userMessage,
-      sender: "student",
-      timestamp: new Date(),
-    };
-
-    setMessages((prev) => [...prev, newMessage]);
     setInputText("");
-
-    // Simulate supervisor response
-    setTimeout(() => {
-      const response: Message = {
-        id: (Date.now() + 1).toString(),
-        text: getAutomatedResponse(userMessage),
-        sender: "supervisor",
+    
+    // If we have a real conversation, send real message
+    if (activeConversation && hasRealMessages) {
+      const supervisorId = activeConversation.supervisorId;
+      
+      const chatMsg = sendMessage({
+        conversationId: activeConversation.id,
+        senderId: user.id,
+        senderRole: "student",
+        recipientId: supervisorId,
+        message: userMessage,
+      });
+      
+      const newMessage: Message = {
+        id: chatMsg.id,
+        text: chatMsg.message,
+        sender: "student",
+        timestamp: new Date(chatMsg.timestamp),
+      };
+      
+      setMessages((prev) => [...prev, newMessage]);
+    } else {
+      // Fallback to automated responses
+      const newMessage: Message = {
+        id: Date.now().toString(),
+        text: userMessage,
+        sender: "student",
         timestamp: new Date(),
       };
-      setMessages((prev) => [...prev, response]);
-    }, 1000);
+      
+      setMessages((prev) => [...prev, newMessage]);
+
+      // Simulate supervisor response
+      setTimeout(() => {
+        const response: Message = {
+          id: (Date.now() + 1).toString(),
+          text: getAutomatedResponse(userMessage),
+          sender: "supervisor",
+          timestamp: new Date(),
+        };
+        setMessages((prev) => [...prev, response]);
+      }, 1000);
+    }
   };
 
   const getAutomatedResponse = (question: string): string => {
@@ -105,11 +194,21 @@ export function SupervisorChat() {
         transition={{ delay: 1, type: "spring", stiffness: 200 }}
       >
         <MessageCircle className="w-6 h-6" />
-        <motion.div 
-          className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full"
-          animate={{ scale: [1, 1.2, 1] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        />
+        {unreadCount > 0 ? (
+          <motion.div 
+            className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-xs font-bold"
+            animate={{ scale: [1, 1.2, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            {unreadCount}
+          </motion.div>
+        ) : (
+          <motion.div 
+            className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full"
+            animate={{ scale: [1, 1.2, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          />
+        )}
       </motion.button>
 
       {/* Chat Window */}
@@ -133,10 +232,16 @@ export function SupervisorChat() {
                 </motion.div>
                 <div>
                   <h3 className="text-white font-semibold flex items-center gap-2">
-                    Supervisor Assistant
-                    <span className="text-xs bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full">Online</span>
+                    {hasRealMessages ? "Supervisor" : "Supervisor Assistant"}
+                    {hasRealMessages ? (
+                      <span className="text-xs bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full">Real-time</span>
+                    ) : (
+                      <span className="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full">AI Assistant</span>
+                    )}
                   </h3>
-                  <p className="text-xs text-slate-400">Typically replies instantly</p>
+                  <p className="text-xs text-slate-400">
+                    {hasRealMessages ? "Connected to your supervisor" : "AI-powered help"}
+                  </p>
                 </div>
               </div>
               <button
@@ -175,7 +280,7 @@ export function SupervisorChat() {
             </div>
 
             {/* Quick Questions with hover effects */}
-            {messages.length <= 1 && (
+            {!hasRealMessages && messages.length <= 1 && (
               <motion.div 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}

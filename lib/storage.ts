@@ -1,6 +1,7 @@
 import type { 
   Student, Application, Document, Payment, AuditLog, User, Notification, ProgramReminder,
-  FormTemplate, FormResponse, Session, ObservationForm, SessionFormSubmission, StudentPerformanceMetrics
+   FormTemplate, FormResponse, Session, ObservationForm, SessionFormSubmission, StudentPerformanceMetrics,
+   ChatMessage, Conversation, StudentProgress
 } from "./types";
 
 const KEYS = {
@@ -21,6 +22,9 @@ const KEYS = {
   observationForms: "electivio_observation_forms",
   sessionFormSubmissions: "electivio_session_form_submissions",
   performanceMetrics: "electivio_performance_metrics",
+  chatMessages: "electivio_chat_messages",
+  conversations: "electivio_conversations",
+  studentProgress: "electivio_student_progress",
 };
 
 function readJSON<T>(key: string, fallback: T): T {
@@ -670,5 +674,168 @@ export function getPerformanceMetrics(applicationId?: string): StudentPerformanc
   });
 
   return metrics;
+}
+
+  /* CHAT MESSAGES */
+  export function createConversation(studentId: string, supervisorId: string, applicationId?: string): Conversation {
+    const conversations = readJSON<Conversation[]>(KEYS.conversations, []);
+  
+    // Check if conversation already exists
+    const existing = conversations.find(
+      c => c.studentId === studentId && c.supervisorId === supervisorId
+    );
+  
+    if (existing) return existing;
+  
+    const conversation: Conversation = {
+      id: newId("conv"),
+      studentId,
+      supervisorId,
+      applicationId,
+      lastMessageAt: new Date().toISOString(),
+      lastMessage: "Conversation started",
+      unreadCount: {
+        student: 0,
+        supervisor: 0,
+      },
+      createdAt: new Date().toISOString(),
+    };
+  
+    conversations.push(conversation);
+    writeJSON(KEYS.conversations, conversations);
+    return conversation;
+  }
+
+  export function getConversations(userId: string, role: "student" | "supervisor"): Conversation[] {
+    const conversations = readJSON<Conversation[]>(KEYS.conversations, []);
+  
+    if (role === "student") {
+      return conversations.filter(c => c.studentId === userId);
+    } else {
+      return conversations.filter(c => c.supervisorId === userId);
+    }
+  }
+
+  export function getConversation(conversationId: string): Conversation | null {
+    const conversations = readJSON<Conversation[]>(KEYS.conversations, []);
+    return conversations.find(c => c.id === conversationId) || null;
+  }
+
+  export function sendMessage(input: Omit<ChatMessage, "id" | "timestamp" | "isRead">): ChatMessage {
+    const messages = readJSON<ChatMessage[]>(KEYS.chatMessages, []);
+    const conversations = readJSON<Conversation[]>(KEYS.conversations, []);
+  
+    const message: ChatMessage = {
+      id: newId("msg"),
+      timestamp: new Date().toISOString(),
+      isRead: false,
+      ...input,
+    };
+  
+    messages.push(message);
+    writeJSON(KEYS.chatMessages, messages);
+  
+    // Update conversation
+    const convIndex = conversations.findIndex(c => c.id === input.conversationId);
+    if (convIndex >= 0) {
+      conversations[convIndex].lastMessageAt = message.timestamp;
+      conversations[convIndex].lastMessage = message.message.slice(0, 100);
+    
+      // Increment unread count for recipient
+      if (input.senderRole === "student") {
+        conversations[convIndex].unreadCount.supervisor += 1;
+      } else {
+        conversations[convIndex].unreadCount.student += 1;
+      }
+    
+      writeJSON(KEYS.conversations, conversations);
+    }
+  
+    return message;
+  }
+
+  export function getMessages(conversationId: string): ChatMessage[] {
+    const messages = readJSON<ChatMessage[]>(KEYS.chatMessages, []);
+    return messages.filter(m => m.conversationId === conversationId)
+      .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+  }
+
+  export function markMessagesAsRead(conversationId: string, userId: string): void {
+    const messages = readJSON<ChatMessage[]>(KEYS.chatMessages, []);
+    const conversations = readJSON<Conversation[]>(KEYS.conversations, []);
+  
+    // Mark messages as read
+    const updatedMessages = messages.map(msg => {
+      if (msg.conversationId === conversationId && msg.recipientId === userId && !msg.isRead) {
+        return { ...msg, isRead: true };
+      }
+      return msg;
+    });
+  
+    writeJSON(KEYS.chatMessages, updatedMessages);
+  
+    // Reset unread count
+    const convIndex = conversations.findIndex(c => c.id === conversationId);
+    if (convIndex >= 0) {
+      const conv = conversations[convIndex];
+      if (conv.studentId === userId) {
+        conversations[convIndex].unreadCount.student = 0;
+      } else if (conv.supervisorId === userId) {
+        conversations[convIndex].unreadCount.supervisor = 0;
+      }
+      writeJSON(KEYS.conversations, conversations);
+    }
+  }
+
+/* STUDENT PROGRESS & XP */
+export function getOrCreateStudentProgress(studentId: string): StudentProgress {
+  const allProgress = readJSON<StudentProgress[]>(KEYS.studentProgress, []);
+  let progress = allProgress.find(p => p.studentId === studentId);
+  
+  if (!progress) {
+    progress = {
+      studentId,
+      xpPoints: 0,
+      reflectionsCompleted: 0,
+      lastUpdated: new Date().toISOString(),
+    };
+    allProgress.push(progress);
+    writeJSON(KEYS.studentProgress, allProgress);
+  }
+  
+  return progress;
+}
+
+export function addXP(studentId: string, xpAmount: number): StudentProgress {
+  const allProgress = readJSON<StudentProgress[]>(KEYS.studentProgress, []);
+  let progress = allProgress.find(p => p.studentId === studentId);
+  
+  if (!progress) {
+    progress = {
+      studentId,
+      xpPoints: xpAmount,
+      reflectionsCompleted: 1,
+      lastUpdated: new Date().toISOString(),
+    };
+  } else {
+    progress.xpPoints += xpAmount;
+    progress.reflectionsCompleted += 1;
+    progress.lastUpdated = new Date().toISOString();
+  }
+  
+  const idx = allProgress.findIndex(p => p.studentId === studentId);
+  if (idx >= 0) {
+    allProgress[idx] = progress;
+  } else {
+    allProgress.push(progress);
+  }
+  
+  writeJSON(KEYS.studentProgress, allProgress);
+  return progress;
+}
+
+export function getStudentProgress(studentId: string): StudentProgress | null {
+  const allProgress = readJSON<StudentProgress[]>(KEYS.studentProgress, []);
+  return allProgress.find(p => p.studentId === studentId) || null;
 }
 

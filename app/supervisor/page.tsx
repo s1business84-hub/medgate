@@ -6,6 +6,7 @@ import { TrendingUp, Users, Target, BarChart3, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
 import Reveal from "@/components/Reveal";
+import { StudentChat } from "@/components/student-chat";
 
 interface Observership {
   id: string;
@@ -945,6 +946,9 @@ export default function SupervisorDashboard() {
           </div>
         )}
       </div>
+     
+       {/* Student Chat */}
+       <StudentChat />
     </div>
   );
 }

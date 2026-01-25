@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
-import { Heart, Users, CheckCircle, Upload, Menu, X } from "lucide-react";
+import { Heart, Users, CheckCircle, Upload, Menu, X, Zap } from "lucide-react";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
 import { AuditExcelButton } from "@/components/audit-excel-button";
 import { StudentSessions } from "./sessions";
@@ -21,12 +21,13 @@ export default function StudentPortal() {
   const [applications, setApplications] = useState<any[]>([]);
   const [selectedApplicationId, setSelectedApplicationId] = useState<string | null>(null);
   const [loadingApps, setLoadingApps] = useState(true);
+  const [xpData, setXpData] = useState({ xpPoints: 0, reflectionsCompleted: 0 });
 
   useEffect(() => {
     if (user && user.role === "student") {
       const loadApplications = async () => {
         try {
-          const { getApplications, getStudents } = await import("@/lib/storage");
+          const { getApplications, getStudents, getStudentProgress } = await import("@/lib/storage");
           const allApps = getApplications();
           const students = getStudents();
           
@@ -35,6 +36,14 @@ export default function StudentPortal() {
           const myApps = allApps.filter((a: any) => 
             studentRecord ? a.studentId === studentRecord.id : a.studentId === user.id
           );
+          
+          // Load XP data
+          if (studentRecord) {
+            const progress = getStudentProgress(studentRecord.id);
+            if (progress) {
+              setXpData(progress);
+            }
+          }
           
           // Load program details for enrichment
           const enrichedApps = await Promise.all(
@@ -77,12 +86,31 @@ export default function StudentPortal() {
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(34,211,238,0.15),transparent_40%),radial-gradient(circle_at_80%_20%,rgba(99,102,241,0.12),transparent_35%),radial-gradient(circle_at_40%_80%,rgba(139,92,246,0.13),transparent_38%),linear-gradient(180deg,#0a0e1a_0%,#0f172a_50%,#0a0e1a_100%)]" />
 
         <div className="relative max-w-7xl mx-auto px-6 py-8">
-          {/* Header */}
+          {/* Header with XP Meter */}
           <Reveal>
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
-            <div>
+            <div className="flex-1">
               <h1 className="text-3xl sm:text-4xl font-bold bg-clip-text bg-linear-to-r from-slate-900 via-blue-800 to-slate-900 text-transparent mb-2">Student Portal</h1>
               <p className="text-slate-300">Welcome back, {user.name}!</p>
+              {/* XP Meter */}
+              <div className="mt-4 max-w-sm">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="flex items-center gap-2 text-sm text-yellow-400 font-semibold">
+                    <Zap className="w-4 h-4" />
+                    Level Progress
+                  </span>
+                  <span className="text-sm font-bold text-yellow-300">{xpData.xpPoints} / 100 XP</span>
+                </div>
+                <div className="h-3 w-full rounded-full bg-white/10 overflow-hidden border border-yellow-500/20">
+                  <motion.div
+                    className="h-full bg-gradient-to-r from-yellow-400 to-orange-400"
+                    initial={{ width: 0 }}
+                    animate={{ width: `${Math.min((xpData.xpPoints / 100) * 100, 100)}%` }}
+                    transition={{ type: "spring", stiffness: 100, damping: 20 }}
+                  />
+                </div>
+                <p className="text-xs text-slate-400 mt-1">{xpData.reflectionsCompleted} reflections completed</p>
+              </div>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
               <Link

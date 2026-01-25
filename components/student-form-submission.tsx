@@ -1,8 +1,9 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { motion } from "framer-motion"
-import { Send, AlertCircle } from "lucide-react"
+import { Send, AlertCircle, Zap } from "lucide-react"
+import { useAuth } from "@/lib/auth-context"
 import { ObservationForm } from "@/lib/types"
 
 interface FormFieldValue {
@@ -23,15 +24,50 @@ export function StudentFormSubmission({
   onSubmit,
   loading = false,
 }: StudentFormSubmissionProps) {
+  const { user } = useAuth()
   const [responses, setResponses] = useState<Record<string, string | number | boolean | string[]>>({})
   const [submitted, setSubmitted] = useState(false)
   const [errors, setErrors] = useState<string[]>([])
+  const [xpGained, setXpGained] = useState(0)
+  // Reflection assistant
+  const reflectionQuestions = useMemo(
+    () => [
+      { id: "rq1", prompt: "What went particularly well in this session?" },
+      { id: "rq2", prompt: "Describe one challenge you faced and how you addressed it." },
+      { id: "rq3", prompt: "What is one concrete skill you improved today?" },
+      { id: "rq4", prompt: "What will you do differently next session?" },
+    ],
+    []
+  )
+  const [reflectionAnswers, setReflectionAnswers] = useState<Record<string, string>>({})
+  const answeredCount = Object.values(reflectionAnswers).filter(v => (v || "").trim().length > 0).length
+  const progressPct = Math.round((answeredCount / reflectionQuestions.length) * 100)
+  // XP calculation: +5 per reflection answer
+  const totalXpEarnable = answeredCount * 5
+
+  // Demo data per session per form
+  const [showDemo, setShowDemo] = useState(false)
+  const demoValues = useMemo(() => {
+    const out: Record<string, string | number | boolean | string[]> = {}
+    form.fields.forEach((f, idx) => {
+      if (f.type === "text") out[f.id] = `Sample text for ${f.label}`
+      if (f.type === "textarea") out[f.id] = `Demo reflection for ${f.label} (Session ${sessionNumber}).`
+      if (f.type === "rating") out[f.id] = ((idx % 5) + 1)
+      if (f.type === "checkbox") out[f.id] = idx % 2 === 0
+      if (f.type === "select") out[f.id] = f.options?.[0] || ""
+    })
+    return out
+  }, [form.fields, sessionNumber])
 
   const handleFieldChange = (fieldId: string, value: string | number | boolean | string[]) => {
     setResponses(prev => ({
       ...prev,
       [fieldId]: value,
     }))
+  }
+
+  const handleReflectionChange = (qid: string, value: string) => {
+    setReflectionAnswers(prev => ({ ...prev, [qid]: value }))
   }
 
   const validate = () => {
@@ -49,6 +85,13 @@ export function StudentFormSubmission({
     if (!validate()) return
 
     try {
+      // Award XP for each reflection answer
+      if (user && answeredCount > 0) {
+        const { addXP } = await import("@/lib/storage")
+        const result = addXP(user.id, totalXpEarnable)
+        setXpGained(totalXpEarnable)
+      }
+
       const formattedResponses: FormFieldValue[] = form.fields.map(field => ({
         fieldId: field.id,
         value: responses[field.id] || "",
@@ -78,6 +121,30 @@ export function StudentFormSubmission({
         </div>
       </div>
 
+      {/* AI Reflection Progress with XP Display */}
+      <div className="mb-6">
+        <div className="flex items-center justify-between mb-2">
+          <p className="text-sm text-slate-300">Reflection Progress</p>
+          <div className="flex items-center gap-2">
+            <p className="text-sm text-slate-400">{progressPct}%</p>
+            {answeredCount > 0 && (
+              <div className="flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-500/20 border border-yellow-500/30">
+                <Zap className="w-4 h-4 text-yellow-400" />
+                <span className="text-sm font-semibold text-yellow-400">+{totalXpEarnable} XP</span>
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="h-2 w-full rounded bg-white/10 overflow-hidden">
+          <motion.div
+            className="h-full bg-gradient-to-r from-purple-500 to-pink-500"
+            initial={{ width: 0 }}
+            animate={{ width: `${progressPct}%` }}
+            transition={{ type: "spring", stiffness: 200, damping: 24 }}
+          />
+        </div>
+      </div>
+
       {/* Errors */}
       {errors.length > 0 && (
         <motion.div
@@ -97,8 +164,10 @@ export function StudentFormSubmission({
         </motion.div>
       )}
 
-      {/* Form Fields */}
-      <div className="space-y-6 mb-6">
+      {/* Two-column: Form fields + Reflection Assistant */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        {/* Form Fields */}
+        <div className="lg:col-span-2 space-y-6">
         {form.fields.map((field, index) => (
           <motion.div
             key={field.id}
@@ -185,6 +254,57 @@ export function StudentFormSubmission({
             )}
           </motion.div>
         ))}
+        </div>
+
+        {/* Reflection Assistant */}
+        <div className="rounded-xl border border-white/10 bg-white/5 p-4">
+          <p className="text-sm font-semibold text-white mb-3">Reflection Assistant</p>
+          <div className="space-y-4">
+            {reflectionQuestions.map((q, idx) => (
+              <div key={q.id}>
+                <label className="block text-xs text-slate-300 mb-1">{idx + 1}. {q.prompt}</label>
+                <textarea
+                  value={reflectionAnswers[q.id] || ""}
+                  onChange={(e) => handleReflectionChange(q.id, e.target.value)}
+                  rows={3}
+                  placeholder="Type your reflection..."
+                  className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-purple-500 transition-colors resize-none"
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* AI Insight summary (simple heuristic) */}
+          {answeredCount > 0 && (
+            <div className="mt-4 p-3 rounded-lg bg-purple-500/10 border border-purple-500/20">
+              <p className="text-xs text-purple-200">
+                Insight: Your reflections highlight growth in <span className="font-semibold">communication and clinical reasoning</span>. Consider setting a specific goal for next session to reinforce learning.
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Demo data per session per form */}
+      <div className="mb-6">
+        <button
+          onClick={() => setShowDemo(s => !s)}
+          className="text-xs px-3 py-1 rounded-md bg-white/10 border border-white/20 text-slate-300 hover:bg-white/15 transition-colors"
+        >
+          {showDemo ? "Hide" : "Show"} Demo Data for Session {sessionNumber}
+        </button>
+        {showDemo && (
+          <div className="mt-3 p-4 rounded-lg bg-white/5 border border-white/10">
+            <p className="text-xs text-slate-400 mb-2">Example responses:</p>
+            <ul className="text-xs text-slate-300 space-y-1">
+              {form.fields.map(f => (
+                <li key={f.id}>
+                  <span className="text-slate-400">{f.label}:</span> {String(demoValues[f.id] ?? "")}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
 
       {/* Submit Button */}
@@ -199,17 +319,28 @@ export function StudentFormSubmission({
         </button>
       </div>
 
-      {/* Success Message */}
+      {/* Success Message with XP Gained */}
       {submitted && (
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 10 }}
-          className="mt-4 p-4 bg-green-500/20 border border-green-500/30 rounded-lg text-center text-green-300"
+          className="mt-4 p-4 bg-green-500/20 border border-green-500/30 rounded-lg text-center"
         >
-          ✓ Form submitted successfully! Your supervisor will review it.
+          <p className="text-green-300 mb-2">✓ Form submitted successfully! Your supervisor will review it. Reflection saved.</p>
+          {xpGained > 0 && (
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              className="flex items-center justify-center gap-2 mt-2 text-yellow-300 font-semibold"
+            >
+              <Zap className="w-5 h-5" />
+              <span>+{xpGained} XP Earned!</span>
+            </motion.div>
+          )}
         </motion.div>
       )}
     </motion.div>
   )
 }
+
