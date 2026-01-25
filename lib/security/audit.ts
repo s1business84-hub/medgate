@@ -130,7 +130,7 @@ export class AuditLogger {
    * Log document access events
    */
   async logDocumentAccess(
-    action: 'document:viewed' | 'document:decrypted' | 'document:downloaded' | 'document:verified' | 'document:rejected' | 'document:deleted',
+    action: 'document:upload_initiated' | 'document:viewed' | 'document:decrypted' | 'document:downloaded' | 'document:verified' | 'document:rejected' | 'document:deleted',
     documentId: string,
     outcome: AuditOutcome,
     context: AuthContext,
