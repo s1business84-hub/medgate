@@ -18,7 +18,7 @@ import {
 } from '@/lib/security';
 
 // Mock application data type
-interface ApplicationData {
+interface ApplicationData extends Record<string, unknown> {
   id: string;
   studentId: string;
   hospitalId: string;
