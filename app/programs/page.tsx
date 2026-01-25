@@ -11,6 +11,8 @@ import { useState } from "react";
 import { ChevronDown, ChevronUp, Bell, MapPin } from "lucide-react";
 import { ApplicationModal } from "@/components/application-modal";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
+import { motion, cubicBezier } from "framer-motion";
+import Reveal from "@/components/Reveal";
 
 export default function ProgramsPage() {
   const [expandedProgram, setExpandedProgram] = useState<string | null>(null);
@@ -51,7 +53,8 @@ export default function ProgramsPage() {
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
         {/* Header */}
-        <div className="text-center mb-8 sm:mb-12 animate-fade-in space-y-3">
+        <Reveal>
+        <div className="text-center mb-8 sm:mb-12 space-y-3">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-clip-text bg-linear-to-r from-cyan-300 via-sky-200 to-indigo-200 text-transparent mb-3 sm:mb-4">Prototype Program Listings</h1>
           <p className="text-base sm:text-lg lg:text-xl text-slate-300 max-w-2xl mx-auto px-4">
             Prototype listings for demonstration only
@@ -68,36 +71,50 @@ export default function ProgramsPage() {
             </div>
           </div>
         </div>
+        </Reveal>
 
         {/* Program Filters */}
-        <div className="mb-8 animate-fade-in" style={{ animationDelay: '0.1s' }}>
+        <Reveal delay={0.1}>
+        <div className="mb-8">
           <ProgramFilters />
         </div>
+        </Reveal>
 
         {/* Eligibility Checker */}
-        <div className="mb-12 animate-fade-in" style={{ animationDelay: '0.15s' }}>
+        <Reveal delay={0.2}>
+        <div className="mb-12">
           <EligibilityChecker />
         </div>
+        </Reveal>
 
         {/* Hospitals Map */}
-        <div className="mb-12 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+        <Reveal delay={0.3}>
+        <div className="mb-12">
           <div className="mb-4">
             <h2 className="text-2xl font-bold text-slate-100">Hospital Locations</h2>
             <p className="text-slate-300 mt-2">Map locations are illustrative and do not represent confirmed participating institutions.</p>
           </div>
           <HospitalsMap />
         </div>
+        </Reveal>
 
         {/* Programs Grid */}
-        <div className="space-y-4 animate-fade-in" style={{ animationDelay: '0.25s' }}>
+        <div className="space-y-4">
           {programs.map((p, index) => {
             const h = hospitals.find((x) => x.id === p.hospitalId);
             const isExpanded = expandedProgram === p.id;
             return (
-              <div
+              <motion.div
                 key={p.id}
-                className="group relative rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.5)] transition-all duration-500 overflow-hidden animate-slide-in p-5 sm:p-7 lg:p-8 hover:-translate-y-1 hover:shadow-[0_25px_110px_rgba(0,0,0,0.55)] break-words"
-                style={{ animationDelay: `${0.3 + index * 0.1}s` }}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ 
+                  duration: 0.5, 
+                  delay: index * 0.1,
+                  ease: cubicBezier(0.16, 1, 0.3, 1)
+                }}
+                className="group relative rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.5)] transition-all duration-500 overflow-hidden p-5 sm:p-7 lg:p-8 hover:-translate-y-1 hover:shadow-[0_25px_110px_rgba(0,0,0,0.55)] break-words"
               >
                 <div className="absolute inset-0 bg-linear-to-r from-cyan-400/10 via-transparent to-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-25 transition-opacity duration-500">
@@ -312,17 +329,19 @@ export default function ProgramsPage() {
                     </div>
                   </div>
                 )}
-              </div>
+              </motion.div>
             );
           })}
         </div>
 
         {/* Back to Home */}
-        <div className="text-center mt-12 animate-fade-in" style={{ animationDelay: '1s' }}>
+        <Reveal delay={0.2}>
+        <div className="text-center mt-12">
           <Link href="/" className="inline-flex items-center justify-center px-5 py-3 rounded-xl border border-white/15 bg-white/5 text-slate-100 font-semibold hover:bg-white/10 transition-all hover-scale">
             ← Back to Home
           </Link>
         </div>
+        </Reveal>
       </div>
 
       {/* Application Modal */}

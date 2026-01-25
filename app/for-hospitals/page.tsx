@@ -177,10 +177,18 @@ export default function ForHospitalsPage() {
                 index: 3
               }
             ].map((benefit) => (
-              <div 
+              <motion.div 
                 key={benefit.title}
-                className="group relative rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg hover:shadow-2xl overflow-hidden transition-all duration-300 animate-fade-in"
-                style={{ animationDelay: `${0.3 + benefit.index * 0.1}s` }}
+                className="group relative rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg hover:shadow-2xl overflow-hidden transition-all duration-300"
+                initial={{ opacity: 0, y: 50, rotateX: 10 }}
+                whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: benefit.index * 0.12,
+                  ease: [0.16, 1, 0.3, 1]
+                }}
+                whileHover={{ y: -8, transition: { duration: 0.2 } }}
               >
                 {/* Animated gradient overlay */}
                 <div className={`absolute inset-0 bg-linear-to-br from-cyan-600/10 via-transparent to-indigo-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
@@ -202,13 +210,19 @@ export default function ForHospitalsPage() {
                   </p>
                   <div className={`mt-6 h-1 bg-linear-to-r ${benefit.gradient} rounded-full transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500`} />
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </section>
 
         {/* Features Section */}
-        <section className="mb-20 animate-fade-in" style={{ animationDelay: '0.4s' }}>
+        <motion.section 
+          className="mb-20"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        >
           <div className="relative bg-linear-to-br from-cyan-600 via-indigo-600 to-purple-600 rounded-3xl p-8 md:p-12 text-white overflow-hidden group border border-white/10">
             {/* Animated background elements */}
             <div className="absolute top-0 right-0 w-96 h-96 bg-white opacity-5 rounded-full blur-3xl -mr-48 -mt-48 group-hover:scale-125 transition-transform duration-500" />
@@ -225,10 +239,14 @@ export default function ForHospitalsPage() {
                   { icon: BarChart3, title: 'Status Visibility Tools (In Development)', desc: 'Dashboard to track application progress and program workflows' },
                   { icon: Shield, title: 'Role-Based Access for Administrators', desc: 'Secure access controls for program coordinators and reviewers' },
                   { icon: Shield, title: 'Secure Data Handling', desc: 'Privacy-focused architecture with encrypted data management' }
-                ].map((feature) => (
-                  <div 
+                ].map((feature, idx) => (
+                  <motion.div 
                     key={feature.title}
                     className="backdrop-blur-sm bg-white/10 rounded-xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300"
+                    initial={{ opacity: 0, x: -30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
                   >
                     <div className="flex items-start">
                       <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center mr-4 shrink-0">
@@ -239,12 +257,12 @@ export default function ForHospitalsPage() {
                         <p className="text-slate-100">{feature.desc}</p>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* How It Works */}
         <section className="mb-20 animate-fade-in" style={{ animationDelay: '0.6s' }}>

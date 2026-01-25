@@ -9,6 +9,8 @@ import { Heart, Users, CheckCircle, Upload, Menu, X } from "lucide-react";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
 import { AuditExcelButton } from "@/components/audit-excel-button";
 import { StudentSessions } from "./sessions";
+import { motion } from "framer-motion";
+import Reveal from "@/components/Reveal";
 
 export default function StudentPortal() {
   const { user, logout } = useAuth();
@@ -74,7 +76,8 @@ export default function StudentPortal() {
 
         <div className="relative max-w-7xl mx-auto px-6 py-8">
           {/* Header */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 animate-fade-in gap-4">
+          <Reveal>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
             <div>
               <h1 className="text-3xl sm:text-4xl font-bold bg-clip-text bg-linear-to-r from-slate-900 via-blue-800 to-slate-900 text-transparent mb-2">Student Portal</h1>
               <p className="text-slate-300">Welcome back, {user.name}!</p>
@@ -112,6 +115,7 @@ export default function StudentPortal() {
               </Link>
             </div>
           </div>
+          </Reveal>
 
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             {/* Left Sidebar - Audit Card */}

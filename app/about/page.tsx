@@ -137,12 +137,12 @@ export default function AboutPage() {
             ].map((item, index) => (
               <motion.div 
                 key={item.title} 
-                className="group relative rounded-2xl overflow-hidden backdrop-blur-xl bg-white/5 border border-white/10 hover:border-white/20 shadow-lg hover:shadow-2xl transition-all duration-300 animate-fade-in p-8"
-                style={{ animationDelay: `${0.3 + index * 0.1}s` }}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut", delay: 0.05 * index }}
-                viewport={{ once: true }}
+                className="group relative rounded-2xl overflow-hidden backdrop-blur-xl bg-white/5 border border-white/10 hover:border-white/20 shadow-lg hover:shadow-2xl transition-all duration-300 p-8"
+                initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: index * 0.15 }}
+                viewport={{ once: true, margin: "-50px" }}
+                whileHover={{ scale: 1.02 }}
               >
                 {/* Animated gradient overlay */}
                 <div className={`absolute inset-0 bg-linear-to-br ${item.bgGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
