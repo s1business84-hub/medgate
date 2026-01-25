@@ -12,6 +12,7 @@ import { StudentSessions } from "./sessions";
 import { motion } from "framer-motion";
 import Reveal from "@/components/Reveal";
 import { AIListingSuggestions } from "@/components/ai-listing-suggestions";
+import { SupervisorChat } from "@/components/supervisor-chat";
 
 export default function StudentPortal() {
   const { user, logout } = useAuth();
@@ -458,6 +459,9 @@ export default function StudentPortal() {
           </div>
         </div>
       </div>
+      
+      {/* Supervisor Chat */}
+      <SupervisorChat />
     </div>
   );
 }

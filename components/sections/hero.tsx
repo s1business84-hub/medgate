@@ -81,6 +81,21 @@ export function Hero() {
             Electivio is being developed to help hospitals and medical students manage formal observership and elective programs through structured eligibility criteria, transparent requirements, and standardized workflows.
           </Reveal>
 
+          {/* Why Button */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.23 }}
+            viewport={{ once: true }}
+            className="mt-4 flex justify-center"
+          >
+            <Link href="/purpose">
+              <button className="px-6 py-2 text-sm font-semibold text-white bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+                Why? Learn Our Purpose →
+              </button>
+            </Link>
+          </motion.div>
+
           {/* Pilot Phase Disclaimer */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}

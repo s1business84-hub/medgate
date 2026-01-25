@@ -13,41 +13,38 @@ export default function PurposePage() {
   const [activeCard, setActiveCard] = useState<"students" | "hospitals">("students");
 
   return (
-    <div className="w-full h-screen overflow-hidden">
-      <ScrollableViewport showProgress={true} showNavigationDots={true} showArrows={true} snapToSections={false}>
-        <ScrollSection id="purpose">
-        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: false, amount: 0.3 }} transition={{ duration: 0.6, ease: "easeInOut" }} className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
-          <LiquidParallax />
-          <div className="pointer-events-none absolute inset-0">
-            <div className="absolute inset-0 bg-linear-to-r from-cyan-600/0 via-indigo-600/10 to-emerald-600/0 animate-pulse" />
-            <div className="absolute inset-0 bg-linear-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
-            <div className="absolute top-0 right-1/4 w-96 h-96 bg-cyan-500/15 rounded-full blur-3xl animate-[float_8s_ease-in-out_infinite]" />
-            <div className="absolute bottom-1/3 left-1/3 w-80 h-80 bg-indigo-500/15 rounded-full blur-3xl animate-[float_10s_ease-in-out_infinite_2s]" />
-          </div>
+    <div className="relative min-h-screen overflow-x-hidden bg-slate-950 text-slate-100">
+      <LiquidParallax />
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute inset-0 bg-linear-to-r from-cyan-600/0 via-indigo-600/10 to-emerald-600/0 animate-pulse" />
+        <div className="absolute inset-0 bg-linear-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-cyan-500/15 rounded-full blur-3xl animate-[float_8s_ease-in-out_infinite]" />
+        <div className="absolute bottom-1/3 left-1/3 w-80 h-80 bg-indigo-500/15 rounded-full blur-3xl animate-[float_10s_ease-in-out_infinite_2s]" />
+      </div>
 
-          <div className="relative max-w-4xl mx-auto px-6 py-16">
-            <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }} className="flex items-center justify-between mb-12">
-              <Link href="/" className="inline-flex items-center px-3 py-2 rounded-xl border border-white/15 bg-white/5 text-slate-100 hover:bg-white/10 transition-all hover:translate-x-1">
-                <ArrowLeft className="w-5 h-5 mr-2" />
-                Back to Home
-              </Link>
-            </motion.div>
+      <div className="relative max-w-4xl mx-auto px-6 py-16">
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }} className="flex items-center justify-between mb-12">
+          <Link href="/" className="inline-flex items-center px-3 py-2 rounded-xl border border-white/15 bg-white/5 text-slate-100 hover:bg-white/10 transition-all hover:translate-x-1">
+            <ArrowLeft className="w-5 h-5 mr-2" />
+            Back to Home
+          </Link>
+        </motion.div>
 
-            <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.2 }} className="text-center mb-20">
-              <h1 className="text-5xl md:text-7xl font-bold text-slate-100 mb-8">
-                Our <AnimatedGradientText className="text-5xl md:text-7xl font-bold">Purpose</AnimatedGradientText>
-              </h1>
-            </motion.div>
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.2 }} className="text-center mb-20">
+          <h1 className="text-5xl md:text-7xl font-bold text-slate-100 mb-8">
+            Our <AnimatedGradientText className="text-5xl md:text-7xl font-bold">Purpose</AnimatedGradientText>
+          </h1>
+        </motion.div>
 
-            <section className="mb-24">
-              <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: "easeOut" }} viewport={{ once: true }} className="group relative bg-white/5 border border-white/10 rounded-3xl backdrop-blur-xl p-8 md:p-12 mb-12 overflow-hidden hover:border-cyan-400/30 transition-all duration-500">
-                <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 1, delay: 0.3 }} viewport={{ once: true }} className="absolute inset-0 bg-linear-to-br from-cyan-500/5 via-transparent to-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                  <motion.div animate={{ y: [0, -20, 0], x: [0, 10, 0], opacity: [0.3, 0.6, 0.3] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }} className="absolute top-10 right-20 w-32 h-32 bg-cyan-400/10 rounded-full blur-3xl" />
-                  <motion.div animate={{ y: [0, 30, 0], x: [0, -15, 0], opacity: [0.2, 0.5, 0.2] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }} className="absolute bottom-20 left-20 w-40 h-40 bg-indigo-400/10 rounded-full blur-3xl" />
-                </div>
+        <section className="mb-24">
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: "easeOut" }} viewport={{ once: true }} className="group relative bg-white/5 border border-white/10 rounded-3xl backdrop-blur-xl p-8 md:p-12 mb-12 overflow-hidden hover:border-cyan-400/30 transition-all duration-500">
+            <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 1, delay: 0.3 }} viewport={{ once: true }} className="absolute inset-0 bg-linear-to-br from-cyan-500/5 via-transparent to-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              <motion.div animate={{ y: [0, -20, 0], x: [0, 10, 0], opacity: [0.3, 0.6, 0.3] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }} className="absolute top-10 right-20 w-32 h-32 bg-cyan-400/10 rounded-full blur-3xl" />
+              <motion.div animate={{ y: [0, 30, 0], x: [0, -15, 0], opacity: [0.2, 0.5, 0.2] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }} className="absolute bottom-20 left-20 w-40 h-40 bg-indigo-400/10 rounded-full blur-3xl" />
+            </div>
 
-                <div className="relative z-10">
+            <div className="relative z-10">
                   <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.2 }} viewport={{ once: true }} className="mb-6">
                     <div className="inline-flex items-center gap-3 mb-4">
                       <motion.div animate={{ rotate: 360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} className="w-12 h-12 bg-linear-to-br from-cyan-400 to-indigo-500 rounded-xl flex items-center justify-center shadow-lg">
@@ -224,9 +221,6 @@ export default function PurposePage() {
               </div>
             </section>
           </div>
-        </motion.div>
-      </ScrollSection>
-    </ScrollableViewport>
-    </div>
+        </div>
   );
 }
