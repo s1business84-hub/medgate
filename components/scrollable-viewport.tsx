@@ -26,7 +26,7 @@ export function ScrollableViewport({
   const [totalSections, setTotalSections] = useState(0);
   const [canScrollUp, setCanScrollUp] = useState(false);
   const [canScrollDown, setCanScrollDown] = useState(true);
-  const [mounted] = useState(true);
+  const mounted = true;
 
   const { scrollYProgress } = useScroll({
     container: containerRef,
@@ -86,7 +86,7 @@ export function ScrollableViewport({
 
   const scrollBy = (direction: "up" | "down") => {
     const container = containerRef.current;
-    if (!container) return;
+    if (!container || !mounted) return;
 
     const scrollAmount = window.innerHeight * 0.8;
     container.scrollBy({
