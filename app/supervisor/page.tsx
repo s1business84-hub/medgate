@@ -220,6 +220,137 @@ export default function SupervisorDashboard() {
       window.localStorage.removeItem("supervisor_students");
     } catch {}
   };
+
+  const updateSessionCount = (studentId: string, obsId: string, delta: number) => {
+    setStudents((prev) =>
+      prev.map((s) =>
+        s.id === studentId
+          ? {
+              ...s,
+              observerships: (s.observerships || []).map((obs) =>
+                obs.id === obsId
+                  ? {
+                      ...obs,
+                      sessionsCompleted: Math.max(
+                        0,
+                        Math.min(obs.totalSessions, obs.sessionsCompleted + delta)
+                      ),
+                    }
+                  : obs
+              ),
+            }
+          : s
+      )
+    );
+  };
+
+  const exportToCSV = () => {
+    const headers = [
+      "ID",
+      "Name",
+      "GMUID",
+      "Year",
+      "Level",
+      "Role",
+      "FormProgress",
+      "AvgProgress",
+      "Entries",
+      "CompletedPrograms",
+      "FormsAssigned",
+      "Observerships",
+      "Applications",
+    ];
+    const rows = students.map((s) => [
+      s.id,
+      s.name,
+      s.gmuid,
+      s.year,
+      s.level,
+      s.role || "",
+      s.formProgress,
+      s.avgProgress,
+      s.entries,
+      s.completedPrograms,
+      (s.formsAssigned || []).join(";"),
+      (s.observerships || [])
+        .map((o) => `${o.title}|${o.type}|${o.totalSessions}|${o.sessionsCompleted}`)
+        .join(";"),
+      (s.applications || [])
+        .map((a) => `${a.program}|${a.status}|${a.appliedOn}`)
+        .join(";"),
+    ]);
+    const csv = [headers, ...rows].map((row) => row.join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `supervisor-data-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const importFromCSV = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const text = e.target?.result as string;
+        const lines = text.split("\n");
+        const headers = lines[0].split(",");
+        const imported: StudentData[] = [];
+        for (let i = 1; i < lines.length; i++) {
+          if (!lines[i].trim()) continue;
+          const values = lines[i].split(",");
+          const formsAssigned = values[10] ? values[10].split(";").filter(Boolean) : [];
+          const observerships = values[11]
+            ? values[11].split(";").filter(Boolean).map((o) => {
+                const [title, type, totalSessions, sessionsCompleted] = o.split("|");
+                return {
+                  id: `OBS-${Math.random().toString(36).slice(2, 7)}`,
+                  title,
+                  type: type as "observership" | "elective",
+                  totalSessions: parseInt(totalSessions, 10),
+                  sessionsCompleted: parseInt(sessionsCompleted, 10),
+                };
+              })
+            : [];
+          const applications = values[12]
+            ? values[12].split(";").filter(Boolean).map((a) => {
+                const [program, status, appliedOn] = a.split("|");
+                return {
+                  id: `APP-${Math.random().toString(36).slice(2, 7)}`,
+                  program,
+                  status: status as "pending" | "approved" | "declined" | "waitlisted",
+                  appliedOn,
+                };
+              })
+            : [];
+          imported.push({
+            id: values[0],
+            name: values[1],
+            gmuid: values[2],
+            year: parseInt(values[3], 10),
+            level: parseInt(values[4], 10),
+            role: values[5] || undefined,
+            formProgress: parseInt(values[6], 10),
+            avgProgress: parseInt(values[7], 10),
+            entries: parseInt(values[8], 10),
+            completedPrograms: parseInt(values[9], 10),
+            formsAssigned,
+            observerships,
+            applications,
+            category: "Imported",
+            lastUpdate: new Date().toISOString().slice(0, 10),
+          });
+        }
+        setStudents(imported);
+      } catch (err) {
+        alert("Failed to import CSV. Please check file format.");
+      }
+    };
+    reader.readAsText(file);
+  };
   const categories = [
     { id: "all", label: "All Students", emoji: "👥" },
     { id: "year-4", label: "Year 4", emoji: "🎓" },
@@ -309,36 +440,30 @@ export default function SupervisorDashboard() {
                 <ArrowLeft className="w-6 h-6 text-slate-300" />
               </Link>
               <div>
-                <h1 className="text-4xl font-bold text-white flex items-center gap-2">
-                  <BarChart3 className="w-8 h-8 text-purple-400" />
+                <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent flex items-center gap-2">
                   Supervisor Dashboard
                 </h1>
-                <p className="text-slate-300">Track student progress and clinical development</p>
+                <p className="text-xl text-slate-300">Track student progress, visualize clinical development, and gain AI-powered insights</p>
               </div>
             </div>
           </div>
         </Reveal>
 
         {/* KPI Cards */}
-        <div className="grid md:grid-cols-4 gap-6 mb-8">
+        <div className="grid md:grid-cols-4 gap-4 mb-8">
           {[
-            { label: "Total Students", value: overallStats.totalStudents, icon: Users },
-            { label: "Avg Form Progress", value: `${overallStats.avgFormProgress}%`, icon: TrendingUp },
-            { label: "Avg Entries", value: overallStats.avgEntries, icon: Target },
-            { label: "Programs Completed", value: overallStats.completedPrograms, icon: BarChart3 },
+            { label: "Total Students", value: overallStats.totalStudents, icon: Users, color: "from-purple-500 to-pink-500" },
+            { label: "Avg Form Progress", value: `${overallStats.avgFormProgress}%`, icon: TrendingUp, color: "from-blue-500 to-cyan-500" },
+            { label: "Avg Entries", value: overallStats.avgEntries, icon: Target, color: "from-green-500 to-emerald-500" },
+            { label: "Programs Completed", value: overallStats.completedPrograms, icon: BarChart3, color: "from-orange-500 to-yellow-500" },
           ].map((stat, idx) => (
             <Reveal key={stat.label} delay={0.1 * idx} y={20}>
               <motion.div
                 whileHover={{ y: -4 }}
-                className="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl hover:bg-white/10 transition-all"
+                className={`p-6 rounded-xl border border-white/10 bg-gradient-to-br ${stat.color}/10 backdrop-blur-sm hover:border-white/20 transition-all`}
               >
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-slate-400 mb-1">{stat.label}</p>
-                    <p className="text-3xl font-bold text-white">{stat.value}</p>
-                  </div>
-                  <stat.icon className="w-12 h-12 text-purple-400/30" />
-                </div>
+                <p className="text-slate-400 text-sm mb-2">{stat.label}</p>
+                <p className="text-3xl font-bold text-white">{stat.value}</p>
               </motion.div>
             </Reveal>
           ))}
@@ -432,10 +557,17 @@ export default function SupervisorDashboard() {
           ))}
         </div>
 
-        <div className="mb-6 flex gap-3">
-          <button onClick={resetDemo} className="px-4 py-2 rounded-md bg-white/10 hover:bg-white/20 text-slate-200">
+        <div className="mb-6 flex flex-wrap gap-3">
+          <button onClick={resetDemo} className="px-4 py-2 rounded-md bg-white/10 hover:bg-white/20 text-slate-200 text-sm">
             Reset Demo Data
           </button>
+          <button onClick={exportToCSV} className="px-4 py-2 rounded-md bg-gradient-to-r from-green-600 to-emerald-600 hover:opacity-90 text-white text-sm">
+            Export to CSV
+          </button>
+          <label className="px-4 py-2 rounded-md bg-gradient-to-r from-blue-600 to-cyan-600 hover:opacity-90 text-white text-sm cursor-pointer">
+            Import from CSV
+            <input type="file" accept=".csv" onChange={importFromCSV} className="hidden" />
+          </label>
         </div>
 
         {/* Student Progress Grid */}
@@ -569,7 +701,23 @@ export default function SupervisorDashboard() {
                           <div className="w-full bg-white/10 rounded-full h-2">
                             <motion.div initial={{ width: 0 }} whileInView={{ width: `${pct}%` }} transition={{ duration: 0.8, ease: "easeOut" }} className="bg-gradient-to-r from-cyan-500 to-indigo-500 h-2 rounded-full" />
                           </div>
-                          <p className="text-xs text-slate-400 mt-2">Sessions: {obs.sessionsCompleted}/{obs.totalSessions}</p>
+                          <div className="flex items-center justify-between mt-2">
+                            <p className="text-xs text-slate-400">Sessions: {obs.sessionsCompleted}/{obs.totalSessions}</p>
+                            <div className="flex gap-1">
+                              <button
+                                onClick={() => updateSessionCount(student.id, obs.id, -1)}
+                                className="px-2 py-0.5 text-xs rounded bg-white/10 hover:bg-white/20"
+                              >
+                                -
+                              </button>
+                              <button
+                                onClick={() => updateSessionCount(student.id, obs.id, 1)}
+                                className="px-2 py-0.5 text-xs rounded bg-white/10 hover:bg-white/20"
+                              >
+                                +
+                              </button>
+                            </div>
+                          </div>
                         </div>
                       );
                     })}
@@ -621,9 +769,25 @@ export default function SupervisorDashboard() {
                             className="bg-gradient-to-r from-cyan-500 to-indigo-500 h-2 rounded-full"
                           />
                         </div>
-                        <p className="text-xs text-slate-400 mt-2">
-                          Sessions: {obs.sessionsCompleted}/{obs.totalSessions}
-                        </p>
+                        <div className="flex items-center justify-between mt-2">
+                          <p className="text-xs text-slate-400">
+                            Sessions: {obs.sessionsCompleted}/{obs.totalSessions}
+                          </p>
+                          <div className="flex gap-1">
+                            <button
+                              onClick={() => updateSessionCount(student.id, obs.id, -1)}
+                              className="px-2 py-0.5 text-xs rounded bg-white/10 hover:bg-white/20"
+                            >
+                              -
+                            </button>
+                            <button
+                              onClick={() => updateSessionCount(student.id, obs.id, 1)}
+                              className="px-2 py-0.5 text-xs rounded bg-white/10 hover:bg-white/20"
+                            >
+                              +
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     );
                   })}

@@ -11,6 +11,7 @@ import { AuditExcelButton } from "@/components/audit-excel-button";
 import { StudentSessions } from "./sessions";
 import { motion } from "framer-motion";
 import Reveal from "@/components/Reveal";
+import { AIListingSuggestions } from "@/components/ai-listing-suggestions";
 
 export default function StudentPortal() {
   const { user, logout } = useAuth();
@@ -160,11 +161,14 @@ export default function StudentPortal() {
                   <p className="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
                     You don't have any submitted applications yet. Browse available programs and submit your application.
                   </p>
-                  <Link href="/programs">
-                    <Button size="lg" className="bg-linear-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white shadow-lg">
-                      Browse Programs
-                    </Button>
-                  </Link>
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <Link href="/programs">
+                      <Button size="lg" className="bg-linear-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white shadow-lg">
+                        Browse Programs
+                      </Button>
+                    </Link>
+                    <AIListingSuggestions />
+                  </div>
                 </div>
               ) : (
                 <>

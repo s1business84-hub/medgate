@@ -20,7 +20,7 @@ export default function NavigationMenu() {
     <div className="relative">
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
-        className="group relative inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
+        className="group relative inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
@@ -31,10 +31,10 @@ export default function NavigationMenu() {
         >
           <ChevronDown className="w-5 h-5" />
         </motion.div>
-        <span className="relative z-10">Continue to</span>
+        <span className="relative z-10 whitespace-nowrap">Continue to</span>
         
         {/* Animated background */}
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
       </motion.button>
 
       <AnimatePresence>
