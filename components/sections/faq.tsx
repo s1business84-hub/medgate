@@ -1,6 +1,6 @@
 "use client"
 
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence, cubicBezier } from "framer-motion"
 import { ChevronDown, MessageCircle, HelpCircle, Sparkles } from "lucide-react"
 import * as React from "react"
 
@@ -46,7 +46,7 @@ export function FAQ() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+      transition: { duration: 0.7, ease: cubicBezier(0.16, 1, 0.3, 1) },
     },
   }
 
@@ -96,7 +96,7 @@ export function FAQ() {
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.8, ease: cubicBezier(0.16, 1, 0.3, 1) }}
             viewport={{ once: true }}
             className="text-4xl sm:text-5xl font-bold tracking-tight bg-linear-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent drop-shadow-[0_10px_35px_rgba(56,189,248,0.25)]"
           >
