@@ -7,6 +7,21 @@ import Link from "next/link";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
 import Reveal from "@/components/Reveal";
 
+interface Observership {
+  id: string;
+  title: string;
+  type: "observership" | "elective";
+  totalSessions: number;
+  sessionsCompleted: number;
+}
+
+interface ApplicationRecord {
+  id: string;
+  program: string;
+  status: "pending" | "approved" | "declined" | "waitlisted";
+  appliedOn: string;
+}
+
 interface StudentData {
   id: string;
   name: string;
@@ -18,6 +33,11 @@ interface StudentData {
   entries: number;
   lastUpdate: string;
   completedPrograms: number;
+  level: number; // 1-5
+  role?: string;
+  formsAssigned?: string[];
+  observerships?: Observership[];
+  applications?: ApplicationRecord[];
 }
 
 // Mock demo data
@@ -33,6 +53,17 @@ const mockStudents: StudentData[] = [
     entries: 12,
     lastUpdate: "2025-01-23",
     completedPrograms: 3,
+    level: 4,
+    role: "Observer",
+    formsAssigned: ["Consent", "Checklist"],
+    observerships: [
+      { id: "OBS-1", title: "Internal Medicine", type: "observership", totalSessions: 10, sessionsCompleted: 8 },
+      { id: "ELC-1", title: "Cardiology Elective", type: "elective", totalSessions: 12, sessionsCompleted: 9 },
+    ],
+    applications: [
+      { id: "APP-101", program: "Surgery Observership", status: "approved", appliedOn: "2025-01-05" },
+      { id: "APP-102", program: "Radiology Elective", status: "pending", appliedOn: "2025-01-18" },
+    ],
   },
   {
     id: "STU002",
@@ -45,6 +76,16 @@ const mockStudents: StudentData[] = [
     entries: 9,
     lastUpdate: "2025-01-22",
     completedPrograms: 2,
+    level: 3,
+    role: "Observer",
+    formsAssigned: ["Consent"],
+    observerships: [
+      { id: "OBS-2", title: "Pediatrics", type: "observership", totalSessions: 8, sessionsCompleted: 5 },
+      { id: "ELC-2", title: "Dermatology Elective", type: "elective", totalSessions: 6, sessionsCompleted: 3 },
+    ],
+    applications: [
+      { id: "APP-103", program: "Neurology Observership", status: "waitlisted", appliedOn: "2025-01-10" },
+    ],
   },
   {
     id: "STU003",
@@ -57,6 +98,15 @@ const mockStudents: StudentData[] = [
     entries: 8,
     lastUpdate: "2025-01-20",
     completedPrograms: 1,
+    level: 2,
+    role: "Observer",
+    formsAssigned: [],
+    observerships: [
+      { id: "OBS-3", title: "Emergency Medicine", type: "observership", totalSessions: 10, sessionsCompleted: 4 },
+    ],
+    applications: [
+      { id: "APP-104", program: "Orthopedics Elective", status: "declined", appliedOn: "2025-01-12" },
+    ],
   },
   {
     id: "STU004",
@@ -69,6 +119,16 @@ const mockStudents: StudentData[] = [
     entries: 15,
     lastUpdate: "2025-01-24",
     completedPrograms: 4,
+    level: 5,
+    role: "Team Lead",
+    formsAssigned: ["Consent", "Checklist", "Feedback"],
+    observerships: [
+      { id: "OBS-4", title: "Surgery", type: "observership", totalSessions: 12, sessionsCompleted: 12 },
+      { id: "ELC-3", title: "ICU Elective", type: "elective", totalSessions: 8, sessionsCompleted: 7 },
+    ],
+    applications: [
+      { id: "APP-105", program: "Pathology Observership", status: "approved", appliedOn: "2025-01-08" },
+    ],
   },
   {
     id: "STU005",
@@ -81,6 +141,15 @@ const mockStudents: StudentData[] = [
     entries: 5,
     lastUpdate: "2025-01-19",
     completedPrograms: 0,
+    level: 1,
+    role: "Observer",
+    formsAssigned: [],
+    observerships: [
+      { id: "OBS-5", title: "Family Medicine", type: "observership", totalSessions: 6, sessionsCompleted: 2 },
+    ],
+    applications: [
+      { id: "APP-106", program: "Anesthesiology Elective", status: "pending", appliedOn: "2025-01-21" },
+    ],
   },
 ];
 
@@ -88,77 +157,69 @@ export default function SupervisorDashboard() {
   const [students, setStudents] = useState<StudentData[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
+  const [activeTab, setActiveTab] = useState<
+    "overview" | "observerships" | "students" | "forms" | "roles" | "applications"
+  >("overview");
 
-  // Mock demo data
-  const mockStudentsLocal: StudentData[] = [
-    {
-      id: "STU001",
-      name: "Ahmed Al Mansouri",
-      gmuid: "GMU-2024-001",
-      year: 4,
-      formProgress: 85,
-      category: "Clinical Skills",
-      avgProgress: 82,
-      entries: 12,
-      lastUpdate: "2025-01-23",
-      completedPrograms: 3,
-    },
-    {
-      id: "STU002",
-      name: "Fatima Al Kaabi",
-      gmuid: "GMU-2024-002",
-      year: 3,
-      formProgress: 72,
-      category: "Medical Knowledge",
-      avgProgress: 75,
-      entries: 9,
-      lastUpdate: "2025-01-22",
-      completedPrograms: 2,
-    },
-    {
-      id: "STU003",
-      name: "Mohammed Al Owais",
-      gmuid: "GMU-2024-003",
-      year: 2,
-      formProgress: 65,
-      category: "Communication",
-      avgProgress: 68,
-      entries: 8,
-      lastUpdate: "2025-01-20",
-      completedPrograms: 1,
-    },
-    {
-      id: "STU004",
-      name: "Layla Al Mansouri",
-      gmuid: "GMU-2024-004",
-      year: 4,
-      formProgress: 90,
-      category: "Professionalism",
-      avgProgress: 88,
-      entries: 15,
-      lastUpdate: "2025-01-24",
-      completedPrograms: 4,
-    },
-    {
-      id: "STU005",
-      name: "Hassan Al Noor",
-      gmuid: "GMU-2024-005",
-      year: 1,
-      formProgress: 45,
-      category: "Clinical Skills",
-      avgProgress: 52,
-      entries: 5,
-      lastUpdate: "2025-01-19",
-      completedPrograms: 0,
-    },
-  ];
+  // (removed unused mockStudentsLocal)
 
   useEffect(() => {
+    const saved = typeof window !== "undefined" ? window.localStorage.getItem("supervisor_students") : null;
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved) as StudentData[];
+        setStudents(parsed);
+        setLoading(false);
+        return;
+      } catch {}
+    }
     setTimeout(() => {
       setStudents(mockStudents);
       setLoading(false);
     }, 800);
   }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      try {
+        window.localStorage.setItem("supervisor_students", JSON.stringify(students));
+      } catch {}
+    }
+  }, [students, loading]);
+
+  const promoteStudent = (id: string) => {
+    setStudents((prev) =>
+      prev.map((s) =>
+        s.id === id ? { ...s, level: Math.min(s.level + 1, 5) } : s
+      )
+    );
+  };
+
+  const levelBadge = (level: number) => {
+    const labels = ["Novice", "Junior", "Intermediate", "Advanced", "Leader"];
+    const colors = [
+      "bg-slate-600",
+      "bg-blue-600",
+      "bg-indigo-600",
+      "bg-purple-600",
+      "bg-pink-600",
+    ];
+    return { label: labels[level - 1], color: colors[level - 1] };
+  };
+
+  const addObservership = (id: string, obs: Omit<Observership, "id">) => {
+    const newObs: Observership = { id: `OBS-${Math.random().toString(36).slice(2, 7)}`, ...obs };
+    setStudents((prev) =>
+      prev.map((s) => (s.id === id ? { ...s, observerships: [...(s.observerships || []), newObs] } : s))
+    );
+  };
+
+  const resetDemo = () => {
+    setStudents(mockStudents);
+    try {
+      window.localStorage.removeItem("supervisor_students");
+    } catch {}
+  };
   const categories = [
     { id: "all", label: "All Students", emoji: "👥" },
     { id: "year-4", label: "Year 4", emoji: "🎓" },
@@ -347,10 +408,41 @@ export default function SupervisorDashboard() {
           </div>
         </Reveal>
 
+        {/* Tabs */}
+        <div className="mb-6 flex flex-wrap gap-2">
+          {[
+            { id: "overview", label: "Overview" },
+            { id: "observerships", label: "Observerships" },
+            { id: "students", label: "Students" },
+            { id: "forms", label: "Forms" },
+            { id: "roles", label: "Roles" },
+            { id: "applications", label: "Applications" },
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id as any)}
+              className={`px-4 py-2 rounded-full font-medium transition-all ${
+                activeTab === tab.id
+                  ? "bg-linear-to-r from-purple-500 to-pink-600 text-white shadow-lg"
+                  : "bg-white/10 text-slate-300 hover:bg-white/20"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="mb-6 flex gap-3">
+          <button onClick={resetDemo} className="px-4 py-2 rounded-md bg-white/10 hover:bg-white/20 text-slate-200">
+            Reset Demo Data
+          </button>
+        </div>
+
         {/* Student Progress Grid */}
-        {filteredStudents.length > 0 ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredStudents.map((student, idx) => (
+        {activeTab === "overview" && (
+          filteredStudents.length > 0 ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredStudents.map((student, idx) => (
               <Reveal key={student.id} delay={0.05 * idx} y={20}>
                 <motion.div
                   whileHover={{ y: -4 }}
@@ -358,7 +450,12 @@ export default function SupervisorDashboard() {
                 >
                   {/* Header */}
                   <div className="mb-4">
-                    <h3 className="text-lg font-bold text-white">{student.name}</h3>
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-lg font-bold text-white">{student.name}</h3>
+                      <span className={`text-xs px-2 py-1 rounded-full text-white ${levelBadge(student.level).color}`}>
+                        {levelBadge(student.level).label}
+                      </span>
+                    </div>
                     <p className="text-xs text-purple-300 font-mono mb-1">GMUID: {student.gmuid}</p>
                     <p className="text-sm text-slate-400">Year {student.year} | {student.completedPrograms} programs completed</p>
                   </div>
@@ -395,20 +492,293 @@ export default function SupervisorDashboard() {
                   <p className="text-xs text-slate-500 mt-3">
                     Last update: {new Date(student.lastUpdate).toLocaleDateString()}
                   </p>
+
+                  {/* Promote Action */}
+                  <div className="mt-4 flex justify-end">
+                    <button
+                      onClick={() => promoteStudent(student.id)}
+                      className="text-xs px-3 py-1 rounded-md bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:opacity-90"
+                    >
+                      Promote Level
+                    </button>
+                  </div>
                 </motion.div>
               </Reveal>
+              ))}
+            </div>
+          ) : (
+            <Reveal delay={0.2}>
+              <div className="text-center py-16 px-6">
+                <BarChart3 className="w-16 h-16 text-slate-400 mx-auto mb-4" />
+                <h2 className="text-2xl font-bold text-slate-200 mb-2">No Students Found</h2>
+                <p className="text-slate-400">
+                  Adjust your filters to see student data.
+                </p>
+              </div>
+            </Reveal>
+          )
+        )}
+
+        {/* Students Tab */}
+        {activeTab === "students" && (
+          <div className="space-y-6">
+            {filteredStudents.map((student) => (
+              <div key={student.id} className="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl">
+                <div className="flex items-center justify-between mb-3">
+                  <div>
+                    <h3 className="text-lg font-bold text-white">{student.name}</h3>
+                    <p className="text-xs text-purple-300">GMUID: {student.gmuid} | Year {student.year}</p>
+                  </div>
+                  <span className={`text-xs px-2 py-1 rounded-full text-white ${levelBadge(student.level).color}`}>
+                    {levelBadge(student.level).label}
+                  </span>
+                </div>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="p-3 rounded-lg bg-white/5 border border-white/10">
+                    <p className="text-xs text-slate-400 mb-2">Role</p>
+                    <p className="text-sm text-slate-200">{student.role || "None"}</p>
+                  </div>
+                  <div className="p-3 rounded-lg bg-white/5 border border-white/10">
+                    <p className="text-xs text-slate-400 mb-2">Assigned Forms</p>
+                    <div className="flex flex-wrap gap-2">
+                      {(student.formsAssigned || []).length === 0 ? (
+                        <span className="text-xs text-slate-400">None</span>
+                      ) : (
+                        (student.formsAssigned || []).map((f) => (
+                          <span key={f} className="text-xs px-2 py-1 rounded-full bg-purple-500/20 text-purple-300">
+                            {f}
+                          </span>
+                        ))
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <p className="text-xs text-slate-400 mb-2">Observerships / Electives</p>
+                  <div className="grid md:grid-cols-2 gap-3">
+                    {(student.observerships || []).map((obs) => {
+                      const pct = Math.round((obs.sessionsCompleted / obs.totalSessions) * 100);
+                      return (
+                        <div key={obs.id} className="p-3 rounded-lg bg-white/5 border border-white/10">
+                          <div className="flex justify-between items-center mb-2">
+                            <p className="text-sm text-slate-300">
+                              {obs.title} <span className="text-xs text-slate-400">({obs.type})</span>
+                            </p>
+                            <p className="text-sm font-bold text-cyan-400">{pct}%</p>
+                          </div>
+                          <div className="w-full bg-white/10 rounded-full h-2">
+                            <motion.div initial={{ width: 0 }} whileInView={{ width: `${pct}%` }} transition={{ duration: 0.8, ease: "easeOut" }} className="bg-gradient-to-r from-cyan-500 to-indigo-500 h-2 rounded-full" />
+                          </div>
+                          <p className="text-xs text-slate-400 mt-2">Sessions: {obs.sessionsCompleted}/{obs.totalSessions}</p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <p className="text-xs text-slate-400 mb-2">Applications</p>
+                  <div className="space-y-2">
+                    {(student.applications || []).map((app) => (
+                      <div key={app.id} className="p-3 rounded-lg bg-white/5 border border-white/10 flex items-center justify-between">
+                        <div>
+                          <p className="text-sm text-slate-300">{app.program}</p>
+                          <p className="text-xs text-slate-400">Applied: {new Date(app.appliedOn).toLocaleDateString()}</p>
+                        </div>
+                        <span className="text-xs px-2 py-1 rounded-full bg-white/10 text-slate-300">{app.status}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
-        ) : (
-          <Reveal delay={0.2}>
-            <div className="text-center py-16 px-6">
-              <BarChart3 className="w-16 h-16 text-slate-400 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-slate-200 mb-2">No Students Found</h2>
-              <p className="text-slate-400">
-                Adjust your filters to see student data.
-              </p>
-            </div>
-          </Reveal>
+        )}
+        {/* Observerships Tab */}
+        {activeTab === "observerships" && (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredStudents.map((student) => (
+              <div key={student.id} className="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl">
+                <div className="mb-4">
+                  <h3 className="text-lg font-bold text-white">{student.name}</h3>
+                  <p className="text-xs text-purple-300">GMUID: {student.gmuid}</p>
+                </div>
+                <div className="space-y-3">
+                  {(student.observerships || []).map((obs) => {
+                    const pct = Math.round((obs.sessionsCompleted / obs.totalSessions) * 100);
+                    return (
+                      <div key={obs.id} className="p-3 rounded-lg bg-white/5 border border-white/10">
+                        <div className="flex justify-between items-center mb-2">
+                          <p className="text-sm text-slate-300">
+                            {obs.title} <span className="text-xs text-slate-400">({obs.type})</span>
+                          </p>
+                          <p className="text-sm font-bold text-cyan-400">{pct}%</p>
+                        </div>
+                        <div className="w-full bg-white/10 rounded-full h-2">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            whileInView={{ width: `${pct}%` }}
+                            transition={{ duration: 0.8, ease: "easeOut" }}
+                            className="bg-gradient-to-r from-cyan-500 to-indigo-500 h-2 rounded-full"
+                          />
+                        </div>
+                        <p className="text-xs text-slate-400 mt-2">
+                          Sessions: {obs.sessionsCompleted}/{obs.totalSessions}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+                {/* Quick add observership */}
+                <div className="mt-4 p-3 rounded-lg bg-white/5 border border-white/10">
+                  <p className="text-xs text-slate-400 mb-2">Create Observership/Elective</p>
+                  <div className="grid grid-cols-2 gap-2">
+                    <input id={`title-${student.id}`} placeholder="Title" className="px-2 py-1 text-xs rounded bg-white/10 text-slate-200" />
+                    <select id={`type-${student.id}`} className="px-2 py-1 text-xs rounded bg-white/10 text-slate-200">
+                      <option value="observership">Observership</option>
+                      <option value="elective">Elective</option>
+                    </select>
+                    <input id={`total-${student.id}`} type="number" placeholder="Total Sessions" className="px-2 py-1 text-xs rounded bg-white/10 text-slate-200" />
+                    <input id={`done-${student.id}`} type="number" placeholder="Completed" className="px-2 py-1 text-xs rounded bg-white/10 text-slate-200" />
+                  </div>
+                  <div className="mt-2 flex justify-end">
+                    <button
+                      className="text-xs px-3 py-1 rounded-md bg-gradient-to-r from-cyan-600 to-indigo-600 text-white"
+                      onClick={() => {
+                        const title = (document.getElementById(`title-${student.id}`) as HTMLInputElement)?.value || "Untitled";
+                        const type = ((document.getElementById(`type-${student.id}`) as HTMLSelectElement)?.value as any) || "observership";
+                        const totalSessions = parseInt((document.getElementById(`total-${student.id}`) as HTMLInputElement)?.value || "6", 10);
+                        const sessionsCompleted = parseInt((document.getElementById(`done-${student.id}`) as HTMLInputElement)?.value || "0", 10);
+                        addObservership(student.id, { title, type, totalSessions, sessionsCompleted });
+                      }}
+                    >
+                      Add
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Roles Tab */}
+        {activeTab === "roles" && (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredStudents.map((student) => (
+              <div key={student.id} className="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-lg font-bold text-white">{student.name}</h3>
+                  <span className="text-xs text-slate-400">Current: {student.role || "None"}</span>
+                </div>
+                <div className="flex gap-2">
+                  {["Observer", "Elective", "Team Lead"].map((r) => (
+                    <button
+                      key={r}
+                      onClick={() =>
+                        setStudents((prev) => prev.map((s) => (s.id === student.id ? { ...s, role: r } : s)))
+                      }
+                      className="text-xs px-3 py-1 rounded-md bg-white/10 hover:bg-white/20"
+                    >
+                      {r}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Forms Tab */}
+        {activeTab === "forms" && (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredStudents.map((student) => (
+              <div key={student.id} className="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl">
+                <h3 className="text-lg font-bold text-white mb-2">{student.name}</h3>
+                <div className="mb-3">
+                  <p className="text-xs text-slate-400">Assigned Forms:</p>
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {(student.formsAssigned || []).map((f) => (
+                      <span key={f} className="text-xs px-2 py-1 rounded-full bg-purple-500/20 text-purple-300">
+                        {f}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  {["Consent", "Checklist", "Feedback"].map((f) => (
+                    <button
+                      key={f}
+                      onClick={() =>
+                        setStudents((prev) =>
+                          prev.map((s) =>
+                            s.id === student.id
+                              ? { ...s, formsAssigned: Array.from(new Set([...(s.formsAssigned || []), f])) }
+                              : s
+                          )
+                        )
+                      }
+                      className="text-xs px-3 py-1 rounded-md bg-white/10 hover:bg-white/20"
+                    >
+                      Assign {f}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Applications Tab */}
+        {activeTab === "applications" && (
+          <div className="space-y-4">
+            {filteredStudents.map((student) => (
+              <div key={student.id} className="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl">
+                <h3 className="text-lg font-bold text-white mb-3">{student.name}</h3>
+                <div className="space-y-3">
+                  {(student.applications || []).map((app) => (
+                    <div key={app.id} className="p-3 rounded-lg bg-white/5 border border-white/10">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm text-slate-300">{app.program}</p>
+                          <p className="text-xs text-slate-400">Applied: {new Date(app.appliedOn).toLocaleDateString()}</p>
+                        </div>
+                        <span className="text-xs px-2 py-1 rounded-full bg-white/10 text-slate-300">
+                          {app.status}
+                        </span>
+                      </div>
+                      <div className="mt-2 flex gap-2">
+                        {[
+                          { label: "Approve", status: "approved" },
+                          { label: "Decline", status: "declined" },
+                          { label: "Waitlist", status: "waitlisted" },
+                        ].map((action) => (
+                          <button
+                            key={action.label}
+                            onClick={() =>
+                              setStudents((prev) =>
+                                prev.map((s) =>
+                                  s.id === student.id
+                                    ? {
+                                        ...s,
+                                        applications: (s.applications || []).map((a) =>
+                                          a.id === app.id ? { ...a, status: action.status as any } : a
+                                        ),
+                                      }
+                                    : s
+                                )
+                              )
+                            }
+                            className="text-xs px-3 py-1 rounded-md bg-white/10 hover:bg-white/20"
+                          >
+                            {action.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </div>
