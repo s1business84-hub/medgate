@@ -5,6 +5,8 @@ import { motion, AnimatePresence, Variants } from "framer-motion"
 import { ChevronDown, Sparkles, MessageCircle, Star, Zap, Heart } from "lucide-react"
 import Link from "next/link"
 
+import { LiquidParallax } from "@/components/ui/liquid-parallax"
+
 const faqs = [
   {
     question: "What is Electivio?",
@@ -95,7 +97,8 @@ export default function FAQPage() {
   }
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
+    <main className="relative min-h-screen overflow-visible bg-slate-950 text-slate-100">
+      <LiquidParallax className="opacity-80" depth={16} />
       {/* Animated background orbs */}
       <motion.div
         variants={orbVariants}

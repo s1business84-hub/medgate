@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 import { getApplications, getSessionFormSubmissions, getPerformanceMetrics } from "@/lib/storage"
 import { FormTrackingDashboard } from "@/components/form-tracking-dashboard"
 import { Application, SessionFormSubmission, StudentPerformanceMetrics } from "@/lib/types"
+import { LiquidParallax } from "@/components/ui/liquid-parallax"
 
 export default function FormTrackingPage() {
   const { user } = useAuth()
@@ -56,15 +57,17 @@ export default function FormTrackingPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950 flex items-center justify-center">
+      <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950 flex items-center justify-center">
+        <LiquidParallax depth={14} className="opacity-70" />
         <p className="text-slate-300">Loading tracking dashboard...</p>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950">
-      <div className="max-w-7xl mx-auto px-4 py-12">
+    <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950">
+      <LiquidParallax depth={14} className="opacity-70" />
+      <div className="max-w-7xl mx-auto px-4 py-12 relative z-10">
         <FormTrackingDashboard
           submissions={submissions}
           metrics={metrics}

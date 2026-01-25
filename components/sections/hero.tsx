@@ -1,14 +1,13 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { ArrowRight, CheckCircle, Users, Award } from "lucide-react"
+import { CheckCircle, Users, Award } from "lucide-react"
 import Link from "next/link"
 
-import { Button } from "@/components/ui/button"
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text"
-import MagneticButton from "@/components/MagneticButton"
 import Reveal from "@/components/Reveal"
 import NavigationMenu from "@/components/NavigationMenu"
+import MagneticButton from "@/components/MagneticButton"
 const stats = [
   {
     label: "Infrastructure",
@@ -36,7 +35,7 @@ const features = [
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden bg-linear-to-br from-slate-900 via-slate-800 to-indigo-900">
+    <section className="relative overflow-visible bg-linear-to-br from-slate-900 via-slate-800 to-indigo-900">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-grid-slate-700 mask-[linear-gradient(0deg,rgba(0,0,0,0.4),rgba(255,255,255,0.05))] -z-10" />
       <div className="absolute top-0 right-0 -z-10">

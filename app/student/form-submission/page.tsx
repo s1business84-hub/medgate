@@ -7,6 +7,7 @@ import { getApplications, getObservationForms, createSessionFormSubmission } fro
 import { StudentFormSubmission } from "@/components/student-form-submission"
 import { showToast } from "@/lib/toast"
 import { ObservationForm } from "@/lib/types"
+import { LiquidParallax } from "@/components/ui/liquid-parallax"
 
 export default function FormSubmissionPage() {
   const { user } = useAuth()
@@ -77,15 +78,17 @@ export default function FormSubmissionPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950 flex items-center justify-center">
-        <p className="text-slate-300">Loading forms...</p>
+      <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950 flex items-center justify-center">
+        <LiquidParallax depth={14} className="opacity-70" />
+        <p className="text-slate-300 relative z-10">Loading forms...</p>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950">
-      <div className="max-w-2xl mx-auto px-4 py-12">
+    <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950">
+      <LiquidParallax depth={14} className="opacity-70" />
+      <div className="max-w-2xl mx-auto px-4 py-12 relative z-10">
         {selectedForm ? (
           <StudentFormSubmission
             form={selectedForm}
