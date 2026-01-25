@@ -16,6 +16,7 @@ import {
 import type { Conversation, ChatMessage } from "@/lib/types";
 
 export function StudentChat() {
+  "use no memo";
   const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [view, setView] = useState<"list" | "chat" | "new">("list"); // list = conversations, chat = active chat, new = select student
@@ -43,6 +44,7 @@ export function StudentChat() {
   }, [messages]);
 
   useEffect(() => {
+    // Synchronizing with external system (localStorage) - necessary for loading conversations
     if (isOpen && user) {
       loadConversations();
     }

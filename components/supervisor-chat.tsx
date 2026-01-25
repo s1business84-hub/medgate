@@ -21,6 +21,7 @@ interface Message {
 }
 
 export function SupervisorChat() {
+  "use no memo";
   const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -89,6 +90,7 @@ export function SupervisorChat() {
   }, [user, isOpen]);
 
   useEffect(() => {
+    // Synchronizing with external system (localStorage) - necessary for loading messages
     loadMessages();
     
     // Poll for new messages every 5 seconds when open
