@@ -17,7 +17,12 @@ export default function AboutPage() {
       snapToSections={false}
     >
       <ScrollSection id="about">
-        <div className="relative min-h-screen overflow-hidden text-slate-100">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: false, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
+          className="relative min-h-screen overflow-hidden text-slate-100">
         <LiquidParallax />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(34,211,238,0.15),transparent_40%),radial-gradient(circle_at_80%_20%,rgba(99,102,241,0.12),transparent_35%),radial-gradient(circle_at_40%_80%,rgba(139,92,246,0.13),transparent_38%),linear-gradient(180deg,#0a0e1a_0%,#0f172a_50%,#0a0e1a_100%)]" />
         <motion.div
@@ -256,7 +261,7 @@ export default function AboutPage() {
           </div>
         </motion.section>
       </div>
-      </div>
+      </motion.div>
       </ScrollSection>
     </ScrollableViewport>
   );

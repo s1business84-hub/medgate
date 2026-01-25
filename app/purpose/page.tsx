@@ -20,7 +20,13 @@ export default function PurposePage() {
       snapToSections={false}
     >
       <ScrollSection id="purpose">
-      <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: false, amount: 0.3 }}
+        transition={{ duration: 0.6, ease: "easeInOut" }}
+        className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100"
+      >
       <LiquidParallax />
       
       {/* Animated gradient background */}
@@ -329,7 +335,7 @@ export default function PurposePage() {
           </div>
         </section>
       </div>
-      </div>
+      </motion.div>
       </ScrollSection>
     </ScrollableViewport>
   );

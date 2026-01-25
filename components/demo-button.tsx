@@ -30,6 +30,13 @@ export function DemoButton() {
       href: "/demo/admin",
       icon: "⚙️",
     },
+    {
+      id: "supervisor",
+      label: "Supervisor Demo",
+      description: "Track student progress",
+      href: "/demo/supervisor",
+      icon: "📊",
+    },
   ]
 
   return (

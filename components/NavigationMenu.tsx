@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
-import { ChevronDown, Info, Target, BookOpen, LogIn } from "lucide-react"
+import { ChevronDown, Info, Target, BookOpen, LogIn, Users } from "lucide-react"
 
 export default function NavigationMenu() {
   const [isOpen, setIsOpen] = useState(false)
@@ -12,6 +12,7 @@ export default function NavigationMenu() {
     { href: "/about", label: "About", icon: Info },
     { href: "/purpose", label: "Purpose", icon: Target },
     { href: "/programs", label: "Programs", icon: BookOpen },
+    { href: "/for-hospitals", label: "For Hospitals", icon: Users },
     { href: "/login", label: "Login", icon: LogIn },
   ]
 
