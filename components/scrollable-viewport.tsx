@@ -97,7 +97,8 @@ export function ScrollableViewport({
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
-      {/* Progress Bar */}
+      {/* Progress Bar */
+      /*shown at scale*/}
       {showProgress && mounted && (
         <motion.div
           className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500 origin-left z-50"

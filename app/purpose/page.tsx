@@ -13,8 +13,9 @@ export default function PurposePage() {
   const [activeCard, setActiveCard] = useState<"students" | "hospitals">("students");
 
   return (
-    <ScrollableViewport showProgress={true} showNavigationDots={true} showArrows={true} snapToSections={false}>
-      <ScrollSection id="purpose">
+    <div className="w-full h-screen overflow-hidden">
+      <ScrollableViewport showProgress={true} showNavigationDots={true} showArrows={true} snapToSections={false}>
+        <ScrollSection id="purpose">
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: false, amount: 0.3 }} transition={{ duration: 0.6, ease: "easeInOut" }} className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
           <LiquidParallax />
           <div className="pointer-events-none absolute inset-0">
@@ -226,5 +227,6 @@ export default function PurposePage() {
         </motion.div>
       </ScrollSection>
     </ScrollableViewport>
+    </div>
   );
 }
