@@ -94,24 +94,27 @@ export function Hero() {
             </span>
           </motion.div>
 
-          {/* Navigation Menu */}
-          <Reveal delay={0.3} y={30} className="mt-8 sm:mt-10 flex justify-center">
-            <NavigationMenu />
-          </Reveal>
+          {/* Primary CTA Buttons + Navigation Menu */}
+          <div className="mt-8 sm:mt-10 space-y-6 sm:space-y-0">
+            {/* Top Row: Main CTAs */}
+            <Reveal delay={0.3} y={30} className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4">
+              <Link href="/for-hospitals">
+                <MagneticButton className="w-full sm:w-auto bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all duration-300 text-base px-6 py-3 rounded-lg text-white font-medium">
+                  For Hospitals
+                </MagneticButton>
+              </Link>
+              <Link href="/login">
+                <MagneticButton className="w-full sm:w-auto border border-slate-300 hover:bg-slate-50 hover:border-slate-400 transition-all duration-300 text-base px-6 py-3 rounded-lg bg-white text-slate-900 font-medium">
+                  Join Us!
+                </MagneticButton>
+              </Link>
+            </Reveal>
 
-          {/* Quick Access Links */}
-          <Reveal delay={0.4} y={30} className="mt-6 flex flex-wrap items-center justify-center gap-4">
-            <Link href="/for-hospitals">
-              <MagneticButton className="w-full sm:w-auto bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all duration-300 text-base px-6 py-3 rounded-lg text-white font-medium">
-                For Hospitals
-              </MagneticButton>
-            </Link>
-            <Link href="/login">
-              <MagneticButton className="w-full sm:w-auto border border-slate-300 hover:bg-slate-50 hover:border-slate-400 transition-all duration-300 text-base px-6 py-3 rounded-lg bg-white text-slate-900 font-medium">
-                Join Us!
-              </MagneticButton>
-            </Link>
-          </Reveal>
+            {/* Bottom Row: Navigation Menu "Continue to" */}
+            <Reveal delay={0.4} y={30} className="flex justify-center">
+              <NavigationMenu />
+            </Reveal>
+          </div>
 
           {/* Features List */}
           <motion.div

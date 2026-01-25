@@ -43,7 +43,7 @@ export default function NavigationMenu() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="absolute top-full mt-2 left-0 min-w-[200px] bg-slate-900/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl overflow-hidden z-50"
+            className="absolute top-full mt-3 left-1/2 -translate-x-1/2 w-[240px] bg-slate-900/98 backdrop-blur-xl border border-white/15 rounded-2xl shadow-2xl overflow-hidden z-50"
           >
             {menuItems.map((item, index) => (
               <motion.div
