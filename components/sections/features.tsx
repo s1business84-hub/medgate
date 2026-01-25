@@ -9,6 +9,8 @@ import {
   Zap
 } from "lucide-react"
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text"
+import TiltCard from "@/components/TiltCard"
+import Reveal from "@/components/Reveal"
 
 const features = [
   {
@@ -84,25 +86,15 @@ export function Features() {
             <span className="text-sm font-semibold text-blue-200 uppercase tracking-wider">Powerful Features</span>
           </motion.div>
 
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: cubicBezier(0.16, 1, 0.3, 1), delay: 0.05 }}
-            viewport={{ once: true }}
-            className="text-4xl sm:text-5xl font-bold tracking-tight"
-          >
-            What We&apos;re <br />
-            <AnimatedGradientText>Building</AnimatedGradientText>
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.15, ease: cubicBezier(0.16, 1, 0.3, 1) }}
-            viewport={{ once: true }}
-            className="mt-6 text-lg leading-8 text-slate-200"
-          >
+          <Reveal delay={0.05} y={30}>
+            <h2 className="text-4xl sm:text-5xl font-bold tracking-tight">
+              What We&apos;re <br />
+              <AnimatedGradientText>Building</AnimatedGradientText>
+            </h2>
+          </Reveal>
+          <Reveal delay={0.15} y={30} className="mt-6 text-lg leading-8 text-slate-200">
             Developing a comprehensive platform to support observership and elective program management.
-          </motion.p>
+          </Reveal>
         </div>
 
         <motion.div
@@ -122,14 +114,7 @@ export function Features() {
                   className="group"
                   transition={{ delay: 0.08 * idx }}
                 >
-                  <motion.div
-                    className="relative h-full overflow-hidden rounded-2xl bg-white/5 p-8 shadow-xl border border-white/10 backdrop-blur-lg"
-                    whileHover={{
-                      y: -8,
-                      boxShadow: "0 25px 50px rgba(0,0,0,0.35)",
-                    }}
-                    transition={{ duration: 0.3 }}
-                  >
+                  <TiltCard className="relative h-full overflow-hidden bg-white/5 p-8 shadow-xl border border-white/10 backdrop-blur-lg">
                     {/* Animated gradient overlay */}
                     <div
                       className={`absolute inset-0 bg-linear-to-br ${feature.gradient} opacity-0 group-hover:opacity-20 transition-opacity duration-500`}
@@ -178,7 +163,7 @@ export function Features() {
                       whileHover={{ opacity: 1, scaleX: 1 }}
                       transition={{ duration: 0.3 }}
                     />
-                  </motion.div>
+                  </TiltCard>
                 </motion.div>
               )
             })}

@@ -3,11 +3,23 @@
 import { motion, useReducedMotion } from "framer-motion"
 import React, { useRef, useState } from "react"
 
-type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  strength?: number // px
+type Props = {
+  strength?: number
+  className?: string
+  children?: React.ReactNode
+  onClick?: () => void
+  type?: "button" | "submit" | "reset"
+  disabled?: boolean
 }
 
-export default function MagneticButton({ strength = 8, className, ...props }: Props) {
+export default function MagneticButton({ 
+  strength = 8, 
+  className, 
+  children,
+  onClick,
+  type = "button",
+  disabled = false
+}: Props) {
   const reduce = useReducedMotion()
   const ref = useRef<HTMLButtonElement | null>(null)
   const [pos, setPos] = useState({ x: 0, y: 0 })
@@ -33,7 +45,11 @@ export default function MagneticButton({ strength = 8, className, ...props }: Pr
       animate={{ x: pos.x, y: pos.y }}
       transition={{ type: "spring", stiffness: 260, damping: 18 }}
       className={className}
-      {...props}
-    />
+      onClick={onClick}
+      type={type}
+      disabled={disabled}
+    >
+      {children}
+    </motion.button>
   )
 }

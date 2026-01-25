@@ -6,6 +6,8 @@ import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text"
+import MagneticButton from "@/components/MagneticButton"
+import Reveal from "@/components/Reveal"
 const stats = [
   {
     label: "Infrastructure",
@@ -51,33 +53,23 @@ export function Hero() {
           {/* Badge removed as per pilot copy guidance */}
 
           {/* Headline */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
-            viewport={{ once: true }}
-            className="text-3xl sm:text-4xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-white leading-tight"
-          >
-            A Centralized Platform for
-            <br />
-            <span className="block">
-              <AnimatedGradientText>Medical&nbsp;Observerships</AnimatedGradientText>
-            </span>
-            <span className="block">
-              <AnimatedGradientText>and&nbsp;Electives</AnimatedGradientText>
-            </span>
-          </motion.h1>
+          <Reveal delay={0.1} y={20}>
+            <h1 className="text-3xl sm:text-4xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-white leading-tight">
+              A Centralized Platform for
+              <br />
+              <span className="block">
+                <AnimatedGradientText>Medical&nbsp;Observerships</AnimatedGradientText>
+              </span>
+              <span className="block">
+                <AnimatedGradientText>and&nbsp;Electives</AnimatedGradientText>
+              </span>
+            </h1>
+          </Reveal>
 
           {/* Subheadline */}
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-            viewport={{ once: true }}
-            className="mt-4 sm:mt-6 text-base sm:text-lg lg:text-xl leading-7 sm:leading-8 text-blue-100 max-w-2xl mx-auto px-4"
-          >
+          <Reveal delay={0.2} y={30} className="mt-4 sm:mt-6 text-base sm:text-lg lg:text-xl leading-7 sm:leading-8 text-blue-100 max-w-2xl mx-auto px-4">
             Electivio is being developed to help hospitals and medical students manage formal observership and elective programs through structured eligibility criteria, transparent requirements, and standardized workflows.
-          </motion.p>
+          </Reveal>
 
           {/* Pilot Phase Disclaimer */}
           <motion.div
@@ -93,35 +85,29 @@ export function Hero() {
           </motion.div>
 
           {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
-            viewport={{ once: true }}
-            className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
-          >
+          <Reveal delay={0.3} y={30} className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
             <Link href="/programs">
-              <Button size="lg" className="w-full sm:w-auto bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg hover:shadow-xl transition-all duration-300 text-base px-6 py-3">
+              <MagneticButton className="w-full sm:w-auto bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg hover:shadow-xl transition-all duration-300 text-base px-6 py-3 rounded-lg text-white font-medium">
                 Browse Programs
                 <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
+              </MagneticButton>
             </Link>
             <Link href="/login">
-              <Button size="lg" className="w-full sm:w-auto bg-linear-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 shadow-lg hover:shadow-xl transition-all duration-300 text-base px-6 py-3">
+              <MagneticButton className="w-full sm:w-auto bg-linear-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 shadow-lg hover:shadow-xl transition-all duration-300 text-base px-6 py-3 rounded-lg text-white font-medium">
                 For Trainees
-              </Button>
+              </MagneticButton>
             </Link>
             <Link href="/for-hospitals">
-              <Button size="lg" className="w-full sm:w-auto bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all duration-300 text-base px-6 py-3">
+              <MagneticButton className="w-full sm:w-auto bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all duration-300 text-base px-6 py-3 rounded-lg text-white font-medium">
                 For Hospitals
-              </Button>
+              </MagneticButton>
             </Link>
             <Link href="/login">
-              <Button variant="outline" size="lg" className="w-full sm:w-auto border-slate-300 hover:bg-slate-50 hover:border-slate-400 transition-all duration-300 text-base px-6 py-3">
+              <MagneticButton className="w-full sm:w-auto border border-slate-300 hover:bg-slate-50 hover:border-slate-400 transition-all duration-300 text-base px-6 py-3 rounded-lg bg-white text-slate-900 font-medium">
                 Join Us!
-              </Button>
+              </MagneticButton>
             </Link>
-          </motion.div>
+          </Reveal>
 
           {/* Features List */}
           <motion.div
