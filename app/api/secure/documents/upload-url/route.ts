@@ -56,11 +56,12 @@ async function handler(request: NextRequest, context: AuthContext) {
     }
 
     // Validate document parameters
-    const validation = validateDocumentUpload(
-      documentType as DocumentType,
+    const validation = validateDocumentUpload({
+      documentType: documentType as DocumentType,
+      filename,
       mimeType,
-      sizeBytes
-    );
+      sizeBytes,
+    });
     
     if (!validation.valid) {
       return NextResponse.json(
