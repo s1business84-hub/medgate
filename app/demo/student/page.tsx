@@ -12,6 +12,7 @@ export default function StudentDemoPage() {
   const [showAI, setShowAI] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [selectedProgram, setSelectedProgram] = useState<any>(null);
   
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -78,6 +79,45 @@ export default function StudentDemoPage() {
     },
   ];
 
+  const demoPrograms = [
+    {
+      id: "cardio-001",
+      name: "Advanced Cardiac Imaging Fellowship",
+      institution: "Cleveland Clinic Abu Dhabi",
+      specialty: "Cardiology",
+      location: "Abu Dhabi",
+      duration: "3-6 months",
+      description: "Intensive fellowship focusing on advanced cardiac imaging techniques including echocardiography, CT, and MRI protocols.",
+      requirements: ["USMLE/PLAB certification", "Cardiology experience preferred", "English proficiency"],
+      startDate: "March 2026",
+      applicationDeadline: "February 15, 2026",
+    },
+    {
+      id: "em-002",
+      name: "Emergency Medicine Rotation",
+      institution: "Dubai Hospital",
+      specialty: "Emergency Medicine",
+      location: "Dubai",
+      duration: "1-2 months",
+      description: "Comprehensive EM rotation covering trauma, critical cases, and emergency procedures.",
+      requirements: ["Medical degree or equivalent", "Current vaccination records", "Travel arrangements"],
+      startDate: "February 2026",
+      applicationDeadline: "January 31, 2026",
+    },
+    {
+      id: "surg-003",
+      name: "General Surgery Observership",
+      institution: "Sheikh Khalifa Medical City",
+      specialty: "General Surgery",
+      location: "Abu Dhabi",
+      duration: "1-2 weeks",
+      description: "Observership program for clinical students to observe diverse surgical procedures and OR protocols.",
+      requirements: ["Current medical student status", "Proof of enrollment", "Liability insurance"],
+      startDate: "Monthly intake",
+      applicationDeadline: "2 weeks before start date",
+    },
+  ];
+
   const handleAnswer = (questionId: string, answer: string) => {
     const newAnswers = { ...answers, [questionId]: answer };
     setAnswers(newAnswers);
@@ -85,34 +125,32 @@ export default function StudentDemoPage() {
     if (currentStep < questions.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
-      // Redirect to appropriate demo based on answers
-      redirectToDemo(newAnswers);
+      // Show matching program based on answers
+      const specialty = newAnswers.specialty?.toLowerCase();
+      let matchedProgram = demoPrograms[0]; // Default
+      
+      if (specialty?.includes("surgery")) {
+        matchedProgram = demoPrograms[2];
+      } else if (specialty?.includes("cardiology")) {
+        matchedProgram = demoPrograms[0];
+      } else if (specialty?.includes("emergency")) {
+        matchedProgram = demoPrograms[1];
+      }
+      
+      setSelectedProgram(matchedProgram);
     }
   };
 
-  const redirectToDemo = (allAnswers: Record<string, string>) => {
-    // Simple mapping logic - you can expand this
-    const specialty = allAnswers.specialty?.toLowerCase();
-    
-    // For demo purposes, we'll redirect based on specialty
-    if (specialty?.includes("surgery")) {
-      setTimeout(() => {
-        router.push("/demo/hospital");
-      }, 2000);
-    } else if (specialty?.includes("cardiology") || specialty?.includes("emergency")) {
-      setTimeout(() => {
-        router.push("/demo/supervisor");
-      }, 2000);
-    } else {
-      setTimeout(() => {
-        router.push("/programs");
-      }, 2000);
+  const handleViewProgram = () => {
+    if (selectedProgram) {
+      router.push("/programs");
     }
   };
 
   const resetAI = () => {
     setCurrentStep(0);
     setAnswers({});
+    setSelectedProgram(null);
   };
 
   const closeAI = () => {
@@ -285,39 +323,100 @@ export default function StudentDemoPage() {
 
                 {/* Content */}
                 <div className="p-6 overflow-y-auto max-h-[calc(85vh-180px)]">
-                  {currentStep === questions.length && Object.keys(answers).length === questions.length ? (
-                    // Redirecting message
-                    <div className="text-center py-12 space-y-6">
-                      <motion.div
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                        className="w-16 h-16 mx-auto"
+                  {selectedProgram ? (
+                    // Program Details View
+                    <div className="space-y-6">
+                      <button
+                        onClick={() => {
+                          setSelectedProgram(null);
+                          setCurrentStep(0);
+                          setAnswers({});
+                        }}
+                        className="text-slate-400 hover:text-white transition-colors text-sm flex items-center gap-2"
                       >
-                        <Sparkles className="w-full h-full text-purple-400" />
-                      </motion.div>
-                      
-                      <div className="space-y-4">
-                        <h3 className="text-2xl font-bold text-white">Finding Your Perfect Match!</h3>
-                        <p className="text-slate-400">
-                          Based on your preferences, we're redirecting you to the most appropriate demo...
-                        </p>
-                        
+                        ← Try another program
+                      </button>
+
+                      <div className="space-y-6">
+                        <div>
+                          <h3 className="text-2xl font-bold text-white mb-2">{selectedProgram.name}</h3>
+                          <p className="text-lg text-slate-300 mb-4">{selectedProgram.institution}</p>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                            <p className="text-xs text-slate-400 mb-1">Specialty</p>
+                            <p className="text-white font-semibold">{selectedProgram.specialty}</p>
+                          </div>
+                          <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                            <p className="text-xs text-slate-400 mb-1">Location</p>
+                            <p className="text-white font-semibold">{selectedProgram.location}</p>
+                          </div>
+                          <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                            <p className="text-xs text-slate-400 mb-1">Duration</p>
+                            <p className="text-white font-semibold">{selectedProgram.duration}</p>
+                          </div>
+                          <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                            <p className="text-xs text-slate-400 mb-1">Type</p>
+                            <p className="text-white font-semibold">Observership</p>
+                          </div>
+                        </div>
+
+                        <div>
+                          <h4 className="text-lg font-semibold text-white mb-3">About the Program</h4>
+                          <p className="text-slate-300 leading-relaxed">{selectedProgram.description}</p>
+                        </div>
+
+                        <div>
+                          <h4 className="text-lg font-semibold text-white mb-3">Requirements</h4>
+                          <ul className="space-y-2">
+                            {selectedProgram.requirements?.map((req: string, idx: number) => (
+                              <li key={idx} className="flex items-start gap-3 text-slate-300">
+                                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-purple-500/20 text-purple-300 text-xs mt-0.5 flex-shrink-0">✓</span>
+                                {req}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                            <p className="text-xs text-slate-400 mb-1">Start Date</p>
+                            <p className="text-blue-300 font-semibold">{selectedProgram.startDate}</p>
+                          </div>
+                          <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
+                            <p className="text-xs text-slate-400 mb-1">Application Deadline</p>
+                            <p className="text-orange-300 font-semibold">{selectedProgram.applicationDeadline}</p>
+                          </div>
+                        </div>
+
                         <div className="p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
                           <div className="flex items-start gap-3">
                             <AlertCircle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                             <div className="text-left text-sm text-slate-300">
                               <p className="font-semibold text-yellow-300 mb-2">Demo Disclaimer:</p>
-                              <ul className="space-y-1 text-xs">
-                                <li>• This is a demonstration with sample data</li>
-                                <li>• Actual programs may vary in availability and requirements</li>
-                                <li>• Create a real account to access live program listings</li>
-                                <li>• All demo data is for illustrative purposes only</li>
-                              </ul>
+                              <p className="text-xs">This is a sample program for demonstration purposes. Create an account to browse real programs and submit applications.</p>
                             </div>
                           </div>
                         </div>
+
+                        <div className="flex gap-3 pt-4">
+                          <button
+                            onClick={() => {
+                              setShowAI(false);
+                              setTimeout(resetAI, 300);
+                              router.push("/programs");
+                            }}
+                            className="flex-1 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-semibold rounded-lg transition-all"
+                          >
+                            Browse Real Programs
+                          </button>
+                        </div>
                       </div>
                     </div>
+                  ) : currentStep === questions.length && Object.keys(answers).length === questions.length ? (
+                    // This condition shouldn't be reached now since we set selectedProgram instead
+                    <div></div>
                   ) : (
                     // Questions Flow
                     <div className="space-y-6">

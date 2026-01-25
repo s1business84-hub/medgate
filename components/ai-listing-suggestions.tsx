@@ -17,6 +17,14 @@ interface Recommendation {
   hospitalName: string;
   matchScore: number;
   reason: string;
+  specialty?: string;
+  location?: string;
+  duration?: string;
+  level?: string;
+  description?: string;
+  requirements?: string[];
+  startDate?: string;
+  applicationDeadline?: string;
 }
 
 export function AIListingSuggestions() {
@@ -24,6 +32,7 @@ export function AIListingSuggestions() {
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
+  const [selectedProgram, setSelectedProgram] = useState<Recommendation | null>(null);
 
   const questions: Question[] = [
     {
@@ -97,6 +106,10 @@ export function AIListingSuggestions() {
         location: "Abu Dhabi",
         duration: "3-6 months",
         level: "Resident",
+        description: "Intensive fellowship focusing on advanced cardiac imaging techniques including echocardiography, CT, and MRI protocols. Participants gain hands-on experience in image interpretation and clinical decision-making.",
+        requirements: ["USMLE/PLAB certification", "Cardiology experience preferred", "English proficiency"],
+        startDate: "March 2026",
+        applicationDeadline: "February 15, 2026",
       },
       {
         programId: "em-002",
@@ -106,6 +119,10 @@ export function AIListingSuggestions() {
         location: "Dubai",
         duration: "1-2 months",
         level: "Clinical (Years 3-4)",
+        description: "Comprehensive EM rotation covering trauma, critical cases, and emergency procedures. Learn from experienced consultants in a high-volume tertiary care center.",
+        requirements: ["Medical degree or equivalent", "Current vaccination records", "Travel arrangements"],
+        startDate: "February 2026",
+        applicationDeadline: "January 31, 2026",
       },
       {
         programId: "surg-003",
@@ -115,6 +132,10 @@ export function AIListingSuggestions() {
         location: "Abu Dhabi",
         duration: "1-2 weeks",
         level: "Clinical (Years 3-4)",
+        description: "Observership program for clinical students to observe diverse surgical procedures and OR protocols. Includes case discussions and bedside teaching.",
+        requirements: ["Current medical student status", "Proof of enrollment", "Liability insurance"],
+        startDate: "Monthly intake",
+        applicationDeadline: "2 weeks before start date",
       },
       {
         programId: "neuro-004",
@@ -124,6 +145,10 @@ export function AIListingSuggestions() {
         location: "Dubai",
         duration: "3-4 weeks",
         level: "Pre-clinical (Years 1-2)",
+        description: "Foundational neurology elective covering fundamentals of neurological assessment, common pathologies, and diagnostic approaches.",
+        requirements: ["Basic medical knowledge", "Valid ID/Passport", "Reference from medical school"],
+        startDate: "Rolling admissions",
+        applicationDeadline: "Rolling admissions",
       },
       {
         programId: "peds-005",
@@ -133,6 +158,10 @@ export function AIListingSuggestions() {
         location: "Dubai",
         duration: "1-2 months",
         level: "Intern",
+        description: "Structured PICU rotation with exposure to pediatric critical care management, ventilation strategies, and family-centered care principles.",
+        requirements: ["Pediatrics exposure or rotation completion", "ACLS certification", "Passport/visa"],
+        startDate: "Quarterly",
+        applicationDeadline: "30 days before start date",
       },
     ];
 
@@ -173,14 +202,7 @@ export function AIListingSuggestions() {
     // Sort by match score and take top 3
     const topMatches = scored
       .sort((a, b) => b.matchScore - a.matchScore)
-      .slice(0, 3)
-      .map(({ programId, programName, hospitalName, matchScore, reason }) => ({
-        programId,
-        programName,
-        hospitalName,
-        matchScore,
-        reason,
-      }));
+      .slice(0, 3);
 
     setRecommendations(topMatches);
   };
@@ -258,7 +280,93 @@ export function AIListingSuggestions() {
 
                 {/* Content */}
                 <div className="p-6 overflow-y-auto max-h-[calc(85vh-180px)]">
-                  {recommendations.length === 0 ? (
+                  {selectedProgram ? (
+                    // Program Details View
+                    <div className="space-y-6">
+                      <button
+                        onClick={() => setSelectedProgram(null)}
+                        className="text-slate-400 hover:text-white transition-colors text-sm flex items-center gap-2"
+                      >
+                        ← Back to recommendations
+                      </button>
+
+                      <div className="space-y-6">
+                        <div>
+                          <div className="flex items-start justify-between mb-3">
+                            <div>
+                              <h3 className="text-2xl font-bold text-white mb-2">{selectedProgram.programName}</h3>
+                              <p className="text-lg text-slate-300">{selectedProgram.hospitalName}</p>
+                            </div>
+                            <div className="px-3 py-1 bg-purple-500/20 rounded text-sm font-semibold text-purple-300">
+                              {selectedProgram.matchScore}% Match
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                            <p className="text-xs text-slate-400 mb-1">Specialty</p>
+                            <p className="text-white font-semibold">{selectedProgram.specialty}</p>
+                          </div>
+                          <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                            <p className="text-xs text-slate-400 mb-1">Location</p>
+                            <p className="text-white font-semibold">{selectedProgram.location}</p>
+                          </div>
+                          <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                            <p className="text-xs text-slate-400 mb-1">Duration</p>
+                            <p className="text-white font-semibold">{selectedProgram.duration}</p>
+                          </div>
+                          <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                            <p className="text-xs text-slate-400 mb-1">Level</p>
+                            <p className="text-white font-semibold text-sm">{selectedProgram.level}</p>
+                          </div>
+                        </div>
+
+                        <div>
+                          <h4 className="text-lg font-semibold text-white mb-3">About the Program</h4>
+                          <p className="text-slate-300 leading-relaxed">{selectedProgram.description}</p>
+                        </div>
+
+                        <div>
+                          <h4 className="text-lg font-semibold text-white mb-3">Requirements</h4>
+                          <ul className="space-y-2">
+                            {selectedProgram.requirements?.map((req, idx) => (
+                              <li key={idx} className="flex items-start gap-3 text-slate-300">
+                                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-purple-500/20 text-purple-300 text-xs mt-0.5 flex-shrink-0">✓</span>
+                                {req}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                            <p className="text-xs text-slate-400 mb-1">Start Date</p>
+                            <p className="text-blue-300 font-semibold">{selectedProgram.startDate}</p>
+                          </div>
+                          <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
+                            <p className="text-xs text-slate-400 mb-1">Application Deadline</p>
+                            <p className="text-orange-300 font-semibold">{selectedProgram.applicationDeadline}</p>
+                          </div>
+                        </div>
+
+                        <div className="flex gap-3 pt-4">
+                          <Link
+                            href={`/programs/${selectedProgram.programId}`}
+                            className="flex-1 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-semibold rounded-lg transition-all text-center"
+                          >
+                            Apply Now
+                          </Link>
+                          <button
+                            onClick={() => setSelectedProgram(null)}
+                            className="px-6 py-3 border border-white/20 hover:bg-white/5 text-white rounded-lg transition-colors"
+                          >
+                            Back
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ) : recommendations.length === 0 ? (
                     // Questions Flow
                     <div className="space-y-6">
                       {/* Progress Bar */}
@@ -342,7 +450,8 @@ export function AIListingSuggestions() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: idx * 0.1 }}
-                            className="p-4 rounded-xl border border-white/10 bg-gradient-to-br from-purple-500/10 to-pink-500/10 hover:border-purple-500/50 transition-all"
+                            className="p-4 rounded-xl border border-white/10 bg-gradient-to-br from-purple-500/10 to-pink-500/10 hover:border-purple-500/50 transition-all cursor-pointer"
+                            onClick={() => setSelectedProgram(rec)}
                           >
                             <div className="flex items-start justify-between gap-4 mb-3">
                               <div className="flex-1">
@@ -359,13 +468,16 @@ export function AIListingSuggestions() {
                                 )}
                               </div>
                             </div>
-                            <Link
-                              href={`/programs/${rec.programId}`}
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedProgram(rec);
+                              }}
                               className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white text-sm font-semibold rounded-lg transition-all"
                             >
-                              View Program Details
+                              View Full Details
                               <ChevronRight className="w-4 h-4" />
-                            </Link>
+                            </button>
                           </motion.div>
                         ))}
                       </div>
