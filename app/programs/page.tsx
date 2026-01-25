@@ -47,9 +47,9 @@ export default function ProgramsPage() {
     });
   };
   return (
-    <main className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
+    <main className="relative min-h-screen overflow-hidden text-slate-100">
       <LiquidParallax />
-      <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(34,211,238,0.15),transparent_40%),radial-gradient(circle_at_80%_20%,rgba(99,102,241,0.12),transparent_35%),radial-gradient(circle_at_40%_80%,rgba(139,92,246,0.13),transparent_38%),linear-gradient(180deg,#0a0e1a_0%,#0f172a_50%,#0a0e1a_100%)]" />
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
         {/* Header */}

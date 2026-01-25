@@ -9,17 +9,17 @@ import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
 
 export default function AboutPage() {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
+    <div className="relative min-h-screen overflow-hidden text-slate-100">
+      <LiquidParallax />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(34,211,238,0.15),transparent_40%),radial-gradient(circle_at_80%_20%,rgba(99,102,241,0.12),transparent_35%),radial-gradient(circle_at_40%_80%,rgba(139,92,246,0.13),transparent_38%),linear-gradient(180deg,#0a0e1a_0%,#0f172a_50%,#0a0e1a_100%)]" />
       <motion.div
-        className="absolute inset-0 pointer-events-none"
-        animate={{ opacity: [0.9, 1, 0.9] }}
+        className="absolute inset-0 pointer-events-none opacity-50"
+        animate={{ opacity: [0.3, 0.5, 0.3] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
       >
-        <div className="absolute top-10 left-10 w-56 h-56 rounded-full bg-linear-to-br from-cyan-400/20 via-blue-500/15 to-indigo-500/15 blur-3xl" />
-        <div className="absolute bottom-10 right-8 w-64 h-64 rounded-full bg-linear-to-tr from-fuchsia-400/18 via-purple-500/15 to-blue-500/12 blur-3xl" />
+        <div className="absolute top-10 left-10 w-56 h-56 rounded-full bg-cyan-400/20 blur-3xl" />
+        <div className="absolute bottom-10 right-8 w-64 h-64 rounded-full bg-purple-500/15 blur-3xl" />
       </motion.div>
-      <LiquidParallax />
-      <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
       
       <div className="relative max-w-4xl mx-auto px-6 py-16">
         {/* Header */}

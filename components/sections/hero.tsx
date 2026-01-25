@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text"
 import MagneticButton from "@/components/MagneticButton"
 import Reveal from "@/components/Reveal"
+import NavigationMenu from "@/components/NavigationMenu"
 const stats = [
   {
     label: "Infrastructure",
@@ -50,7 +51,17 @@ export function Hero() {
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 py-16 sm:py-24 lg:px-8">
         <div className="mx-auto max-w-4xl text-center">
-          {/* Badge removed as per pilot copy guidance */}
+          {/* Animated Electivio Logo */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, y: -20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-8 sm:mb-12"
+          >
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold">
+              <AnimatedGradientText>Electivio</AnimatedGradientText>
+            </h1>
+          </motion.div>
 
           {/* Headline */}
           <Reveal delay={0.1} y={20}>
@@ -84,19 +95,13 @@ export function Hero() {
             </span>
           </motion.div>
 
-          {/* CTA Buttons */}
-          <Reveal delay={0.3} y={30} className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-            <Link href="/programs">
-              <MagneticButton className="w-full sm:w-auto bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg hover:shadow-xl transition-all duration-300 text-base px-6 py-3 rounded-lg text-white font-medium">
-                Browse Programs
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </MagneticButton>
-            </Link>
-            <Link href="/login">
-              <MagneticButton className="w-full sm:w-auto bg-linear-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 shadow-lg hover:shadow-xl transition-all duration-300 text-base px-6 py-3 rounded-lg text-white font-medium">
-                For Trainees
-              </MagneticButton>
-            </Link>
+          {/* Navigation Menu */}
+          <Reveal delay={0.3} y={30} className="mt-8 sm:mt-10 flex justify-center">
+            <NavigationMenu />
+          </Reveal>
+
+          {/* Quick Access Links */}
+          <Reveal delay={0.4} y={30} className="mt-6 flex flex-wrap items-center justify-center gap-4">
             <Link href="/for-hospitals">
               <MagneticButton className="w-full sm:w-auto bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all duration-300 text-base px-6 py-3 rounded-lg text-white font-medium">
                 For Hospitals
