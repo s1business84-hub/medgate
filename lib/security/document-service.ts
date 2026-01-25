@@ -20,7 +20,7 @@ import {
   Role,
   SecurityError,
 } from './types';
-import { securityConfig, documentTypeConfig, validateDocumentUpload } from './config';
+import { securityConfig, documentTypeConfig, validateDocumentUploadConfig } from './config';
 import { getEnvelopeEncryptionService } from './envelope';
 import { sha256Prefixed, generateSecureId } from './crypto';
 
@@ -37,7 +37,7 @@ export class SecureDocumentService {
    */
   async generateUploadUrl(request: PresignedUrlRequest): Promise<PresignedUrlResponse> {
     // Validate upload parameters
-    const validation = validateDocumentUpload(
+    const validation = validateDocumentUploadConfig(
       request.documentType,
       request.mimeType,
       request.sizeBytes
