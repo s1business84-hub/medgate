@@ -2,6 +2,7 @@
 
 import { useState, ChangeEvent } from "react";
 import { getStudents, getApplications, getUsers } from "@/lib/storage";
+import { getSupervisorConfirmations } from "@/lib/auditStore";
 import { ComplianceAuditExportButton } from "@/components/compliance-audit-export-button";
 import { useAuth } from "@/lib/auth-context";
 import { ALLOW_EXPORT } from "@/lib/featureFlags";
@@ -11,10 +12,12 @@ export default function TraineeRegistry() {
   const { user } = useAuth();
   const [query, setQuery] = useState<string>("");
   const [importing, setImporting] = useState<boolean>(false);
+  const [showConfirmedOnly, setShowConfirmedOnly] = useState<boolean>(false);
 
   const students = getStudents();
   const applications = getApplications();
   const users = getUsers();
+  const confirmations = getSupervisorConfirmations();
 
   // Check authorization
   const canViewRegistry = user && (user.role === "admin" || user.role === "hospital" || user.role === "student");
@@ -33,6 +36,12 @@ export default function TraineeRegistry() {
       const supervisorName = appAny.supervisor
         ? users.find((u) => u.id === appAny.supervisor)?.name || appAny.supervisor
         : "-";
+      
+      // Check for program-level confirmation
+      const programConfirmation = confirmations.find(c => c.programId === a.programId && !c.studentId);
+      const studentConfirmation = confirmations.find(c => c.studentId === a.studentId);
+      const hasConfirmation = !!(programConfirmation || studentConfirmation);
+      
       return {
         id: a.id,
         name: student.name,
@@ -43,12 +52,15 @@ export default function TraineeRegistry() {
         regulatory: appAny.regulatory?.type || "None",
         regulatoryStatus: appAny.regulatory?.status || "-",
         status: a.status,
+        hasConfirmation,
+        confirmationType: programConfirmation ? "program" : studentConfirmation ? "student" : "none",
       };
     })
     .filter(
       (r: any) =>
-        r.name.toLowerCase().includes(query.toLowerCase()) ||
-        r.department.toLowerCase().includes(query.toLowerCase())
+        (r.name.toLowerCase().includes(query.toLowerCase()) ||
+        r.department.toLowerCase().includes(query.toLowerCase())) &&
+        (!showConfirmedOnly || r.hasConfirmation)
     );
 
   // Handle file import
@@ -146,6 +158,17 @@ export default function TraineeRegistry() {
             value={query}
             onChange={(e: ChangeEvent<HTMLInputElement>) => setQuery(e.target.value)}
           />
+          <button
+            onClick={() => setShowConfirmedOnly(!showConfirmedOnly)}
+            className={`px-4 py-2 rounded font-medium transition text-sm whitespace-nowrap ${
+              showConfirmedOnly
+                ? "bg-cyan-600 text-white hover:bg-cyan-700"
+                : "bg-slate-200 text-slate-700 hover:bg-slate-300"
+            }`}
+            title="Filter to show only program-confirmed trainees"
+          >
+            {showConfirmedOnly ? "✓ Confirmed Only" : "Show Confirmed"}
+          </button>
         </div>
       </div>
 
@@ -160,13 +183,14 @@ export default function TraineeRegistry() {
               <th className="p-3 text-left font-semibold border-b border-slate-600">Dates</th>
               <th className="p-3 text-left font-semibold border-b border-slate-600">Regulatory Type</th>
               <th className="p-3 text-left font-semibold border-b border-slate-600">Reg. Status</th>
+              <th className="p-3 text-left font-semibold border-b border-slate-600">Confirmation</th>
               <th className="p-3 text-left font-semibold border-b border-slate-600">Training Status</th>
             </tr>
           </thead>
           <tbody>
             {rows.length === 0 ? (
               <tr>
-                <td colSpan={8} className="p-4 text-center text-slate-500">
+                <td colSpan={9} className="p-4 text-center text-slate-500">
                   No trainees found. {query && "Try a different search."}
                 </td>
               </tr>
@@ -207,6 +231,15 @@ export default function TraineeRegistry() {
                     >
                       {t.regulatoryStatus}
                     </span>
+                  </td>
+                  <td className="p-3 border-b border-slate-200">
+                    {t.hasConfirmation ? (
+                      <span className="px-2 py-1 bg-cyan-100 text-cyan-700 rounded text-xs font-medium" title={t.confirmationType === "program" ? "Program-level confirmation" : "Student-specific confirmation"}>
+                        ✓ {t.confirmationType === "program" ? "Program" : "Student"}
+                      </span>
+                    ) : (
+                      <span className="px-2 py-1 bg-gray-100 text-gray-500 rounded text-xs">None</span>
+                    )}
                   </td>
                   <td className="p-3 border-b border-slate-200">
                     <span
