@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { motion } from "framer-motion";
-import { TrendingUp, TrendingDown, Minus, Award, Target, BarChart3, CheckCircle2, TrendingUpIcon } from "lucide-react";
+import { TrendingUp, TrendingDown, Minus, Award, Target, BarChart3, CheckCircle2, TrendingUpIcon, Lightbulb, ThumbsUp, AlertCircle } from "lucide-react";
 import { SessionFormSubmission, StudentPerformanceMetrics } from "@/lib/types";
 
 interface PerformanceInsightsProps {
@@ -270,6 +270,100 @@ export function PerformanceInsights({ metrics, submissions = [], title = "Perfor
               ))}
             </div>
           </div>
+        </motion.div>
+      )}
+
+      {/* AI Insights Section */}
+      {submissions.filter(s => s.aiInsights).length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="space-y-4"
+        >
+          <h3 className="text-xl font-semibold text-white flex items-center gap-2">
+            <Lightbulb className="w-5 h-5 text-yellow-400" />
+            AI-Powered Insights
+          </h3>
+          
+          {submissions
+            .filter(s => s.aiInsights && s.status === 'reviewed')
+            .sort((a, b) => new Date(b.aiInsights!.generatedAt).getTime() - new Date(a.aiInsights!.generatedAt).getTime())
+            .slice(0, 3)
+            .map((sub, idx) => (
+              <motion.div
+                key={sub.id}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.4 + idx * 0.1 }}
+                className="p-6 rounded-xl bg-linear-to-br from-indigo-900/20 to-purple-900/20 border border-indigo-500/30 backdrop-blur-sm space-y-4"
+              >
+                <div className="flex items-start justify-between">
+                  <div>
+                    <p className="text-sm text-slate-400">
+                      Form Review - {new Date(sub.submittedAt).toLocaleDateString()}
+                    </p>
+                    <p className="text-lg font-semibold text-white mt-1">{sub.aiInsights!.summary}</p>
+                  </div>
+                  <div className="flex gap-1">
+                    {renderStars(sub.supervisorReview?.rating || 0)}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {/* Strengths */}
+                  {sub.aiInsights!.strengths.length > 0 && (
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 text-emerald-400">
+                        <ThumbsUp className="w-4 h-4" />
+                        <span className="text-sm font-semibold">Strengths</span>
+                      </div>
+                      <ul className="space-y-1">
+                        {sub.aiInsights!.strengths.map((strength, i) => (
+                          <li key={i} className="text-sm text-slate-300 pl-4 border-l-2 border-emerald-500/40">
+                            {strength}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Areas for Improvement */}
+                  {sub.aiInsights!.areasForImprovement.length > 0 && (
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 text-amber-400">
+                        <AlertCircle className="w-4 h-4" />
+                        <span className="text-sm font-semibold">Focus Areas</span>
+                      </div>
+                      <ul className="space-y-1">
+                        {sub.aiInsights!.areasForImprovement.map((area, i) => (
+                          <li key={i} className="text-sm text-slate-300 pl-4 border-l-2 border-amber-500/40">
+                            {area}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Recommendations */}
+                  {sub.aiInsights!.recommendations.length > 0 && (
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 text-cyan-400">
+                        <Target className="w-4 h-4" />
+                        <span className="text-sm font-semibold">Next Steps</span>
+                      </div>
+                      <ul className="space-y-1">
+                        {sub.aiInsights!.recommendations.slice(0, 2).map((rec, i) => (
+                          <li key={i} className="text-sm text-slate-300 pl-4 border-l-2 border-cyan-500/40">
+                            {rec}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            ))}
         </motion.div>
       )}
     </div>

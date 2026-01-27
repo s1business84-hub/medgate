@@ -615,7 +615,7 @@ export function updateSessionFormSubmission(submissionId: string, updates: Parti
 }
 
 export function reviewSessionFormSubmission(submissionId: string, notes: string, rating: number, reviewedBy: string): SessionFormSubmission | null {
-  return updateSessionFormSubmission(submissionId, {
+  const updated = updateSessionFormSubmission(submissionId, {
     status: 'reviewed',
     supervisorReview: {
       notes,
@@ -624,6 +624,76 @@ export function reviewSessionFormSubmission(submissionId: string, notes: string,
       reviewedBy,
     },
   });
+  
+  // Generate AI insights after supervisor review
+  if (updated) {
+    const aiInsights = generateAIInsightsForSubmission(updated);
+    return updateSessionFormSubmission(submissionId, { aiInsights });
+  }
+  
+  return updated;
+}
+
+/**
+ * Generate AI-powered insights for a form submission
+ */
+function generateAIInsightsForSubmission(submission: SessionFormSubmission): SessionFormSubmission['aiInsights'] {
+  const rating = submission.supervisorReview?.rating || 0;
+  const notes = submission.supervisorReview?.notes || '';
+  
+  // Mock AI analysis based on rating and notes
+  // In production, this would call an actual AI API
+  const strengths: string[] = [];
+  const areasForImprovement: string[] = [];
+  const recommendations: string[] = [];
+  
+  // Analyze based on rating
+  if (rating >= 4) {
+    strengths.push('Demonstrates strong clinical skills');
+    strengths.push('Shows excellent professional communication');
+    recommendations.push('Consider advanced clinical rotations');
+  } else if (rating >= 3) {
+    strengths.push('Meets expected competency levels');
+    areasForImprovement.push('Opportunity to develop more advanced techniques');
+    recommendations.push('Focus on consistent documentation practices');
+  } else {
+    areasForImprovement.push('Needs additional practice with core procedures');
+    areasForImprovement.push('Work on clinical reasoning skills');
+    recommendations.push('Schedule remediation sessions with supervisor');
+    recommendations.push('Review relevant clinical guidelines');
+  }
+  
+  // Analyze supervisor notes for keywords
+  const notesLower = notes.toLowerCase();
+  if (notesLower.includes('excellent') || notesLower.includes('outstanding')) {
+    strengths.push('Receives positive supervisor feedback');
+  }
+  if (notesLower.includes('improve') || notesLower.includes('needs work')) {
+    areasForImprovement.push('Supervisor identified specific areas needing attention');
+  }
+  if (notesLower.includes('communication')) {
+    if (notesLower.includes('good') || notesLower.includes('great')) {
+      strengths.push('Strong communication skills noted');
+    } else {
+      areasForImprovement.push('Communication skills require development');
+    }
+  }
+  
+  // Add generic recommendations
+  recommendations.push('Continue regular feedback sessions with supervisor');
+  recommendations.push('Maintain detailed reflection on clinical experiences');
+  
+  return {
+    summary: rating >= 4 
+      ? 'Strong performance with excellent clinical competency demonstrated'
+      : rating >= 3
+      ? 'Satisfactory performance meeting core training requirements'
+      : 'Performance requires additional support and development',
+    strengths: strengths.length > 0 ? strengths : ['Engaged in learning process'],
+    areasForImprovement: areasForImprovement.length > 0 ? areasForImprovement : ['Continue building clinical experience'],
+    recommendations,
+    generatedAt: new Date().toISOString(),
+  };
 }
 
 /* PERFORMANCE METRICS */

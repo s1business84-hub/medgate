@@ -350,6 +350,13 @@ export interface SessionFormSubmission {
     reviewedAt: string;
     reviewedBy: string; // Admin/Supervisor ID
   };
+  aiInsights?: {
+    summary: string;
+    strengths: string[];
+    areasForImprovement: string[];
+    recommendations: string[];
+    generatedAt: string;
+  };
 }
 
 export interface StudentPerformanceMetrics {
