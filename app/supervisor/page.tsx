@@ -34,7 +34,7 @@ interface StudentData {
   entries: number;
   lastUpdate: string;
   completedPrograms: number;
-  level: number; // 1-5
+  level: number; // 1-7
   role?: string;
   formsAssigned?: string[];
   observerships?: Observership[];
@@ -161,6 +161,7 @@ export default function SupervisorDashboard() {
   const [activeTab, setActiveTab] = useState<
     "overview" | "observerships" | "students" | "forms" | "roles" | "applications"
   >("overview");
+  const [promotionAlert, setPromotionAlert] = useState<{ studentName: string; newLevel: number } | null>(null);
 
   // (removed unused mockStudentsLocal)
 
@@ -195,21 +196,50 @@ export default function SupervisorDashboard() {
   }, [students, loading]);
 
   const promoteStudent = (id: string) => {
+    const student = students.find(s => s.id === id);
+    setStudents((prev) =>
+      prev.map((s) => {
+        if (s.id === id) {
+          const newLevel = Math.min(s.level + 1, 7);
+          if (newLevel > s.level) {
+            // Show promotion alert
+            setPromotionAlert({ studentName: s.name, newLevel });
+            // Auto-hide after 4 seconds
+            setTimeout(() => setPromotionAlert(null), 4000);
+          }
+          return { ...s, level: newLevel };
+        }
+        return s;
+      })
+    );
+  };
+
+  const demoteStudent = (id: string) => {
     setStudents((prev) =>
       prev.map((s) =>
-        s.id === id ? { ...s, level: Math.min(s.level + 1, 5) } : s
+        s.id === id ? { ...s, level: Math.max(s.level - 1, 1) } : s
       )
     );
   };
 
   const levelBadge = (level: number) => {
-    const labels = ["Novice", "Junior", "Intermediate", "Advanced", "Leader"];
+    const labels = [
+      "Novice",
+      "Junior",
+      "Intermediate",
+      "Advanced",
+      "Leader",
+      "Master",
+      "Expert",
+    ];
     const colors = [
       "bg-slate-600",
       "bg-blue-600",
       "bg-indigo-600",
       "bg-purple-600",
       "bg-pink-600",
+      "bg-rose-600",
+      "bg-amber-600",
     ];
     return { label: labels[level - 1], color: colors[level - 1] };
   };
@@ -441,6 +471,26 @@ export default function SupervisorDashboard() {
     <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950">
       <LiquidParallax depth={14} className="opacity-70" />
 
+      {/* Promotion Alert */}
+      {promotionAlert && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          className="fixed top-4 right-4 z-50 max-w-sm"
+        >
+          <div className="p-4 rounded-lg border-2 border-yellow-500/50 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 backdrop-blur-xl">
+            <div className="flex items-center gap-3">
+              <div className="text-3xl">🎉</div>
+              <div>
+                <p className="font-bold text-white">{promotionAlert.studentName} Promoted!</p>
+                <p className="text-sm text-yellow-200">Advanced to {levelBadge(promotionAlert.newLevel).label} (Level {promotionAlert.newLevel})</p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      )}
+
       <div className="max-w-7xl mx-auto px-4 py-12 relative z-10">
         {/* Header */}
         <Reveal>
@@ -638,14 +688,24 @@ export default function SupervisorDashboard() {
                     Last update: {new Date(student.lastUpdate).toLocaleDateString()}
                   </p>
 
-                  {/* Promote Action */}
-                  <div className="mt-4 flex justify-end">
-                    <button
-                      onClick={() => promoteStudent(student.id)}
-                      className="text-xs px-3 py-1 rounded-md bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:opacity-90"
-                    >
-                      Promote Level
-                    </button>
+                  {/* Promote/Demote Actions */}
+                  <div className="mt-4 flex justify-end gap-2">
+                    {student.level > 1 && (
+                      <button
+                        onClick={() => demoteStudent(student.id)}
+                        className="text-xs px-3 py-1 rounded-md bg-gradient-to-r from-red-600 to-pink-600 text-white hover:opacity-90"
+                      >
+                        Demote Level
+                      </button>
+                    )}
+                    {student.level < 7 && (
+                      <button
+                        onClick={() => promoteStudent(student.id)}
+                        className="text-xs px-3 py-1 rounded-md bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:opacity-90"
+                      >
+                        Promote Level
+                      </button>
+                    )}
                   </div>
                 </motion.div>
               </Reveal>

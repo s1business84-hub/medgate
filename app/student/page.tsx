@@ -92,24 +92,32 @@ export default function StudentPortal() {
             <div className="flex-1">
               <h1 className="text-3xl sm:text-4xl font-bold bg-clip-text bg-linear-to-r from-slate-900 via-blue-800 to-slate-900 text-transparent mb-2">Student Portal</h1>
               <p className="text-slate-300">Welcome back, {user.name}!</p>
-              {/* XP Meter */}
-              <div className="mt-4 max-w-sm">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="flex items-center gap-2 text-sm text-yellow-400 font-semibold">
-                    <Zap className="w-4 h-4" />
-                    Level Progress
-                  </span>
-                  <span className="text-sm font-bold text-yellow-300">{xpData.xpPoints} / 100 XP</span>
+              {/* Level & XP Section */}
+              <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center gap-4 max-w-lg">
+                {/* Level Badge */}
+                <div className="flex items-center gap-2">
+                  <div className="px-3 py-1 rounded-full text-sm font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600">
+                    Level {Math.ceil(xpData.xpPoints / 100)}
+                  </div>
                 </div>
-                <div className="h-3 w-full rounded-full bg-white/10 overflow-hidden border border-yellow-500/20">
-                  <motion.div
-                    className="h-full bg-gradient-to-r from-yellow-400 to-orange-400"
-                    initial={{ width: 0 }}
-                    animate={{ width: `${Math.min((xpData.xpPoints / 100) * 100, 100)}%` }}
-                    transition={{ type: "spring", stiffness: 100, damping: 20 }}
-                  />
+                {/* XP Meter */}
+                <div className="flex-1">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="flex items-center gap-2 text-sm text-yellow-400 font-semibold">
+                      <Zap className="w-4 h-4" />
+                      XP Progress
+                    </span>
+                    <span className="text-sm font-bold text-yellow-300">{xpData.xpPoints % 100} / 100 XP</span>
+                  </div>
+                  <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden border border-yellow-500/20">
+                    <motion.div
+                      className="h-full bg-gradient-to-r from-yellow-400 to-orange-400"
+                      initial={{ width: 0 }}
+                      animate={{ width: `${Math.min((xpData.xpPoints % 100) * 1, 100)}%` }}
+                      transition={{ type: "spring", stiffness: 100, damping: 20 }}
+                    />
+                  </div>
                 </div>
-                <p className="text-xs text-slate-400 mt-1">{xpData.reflectionsCompleted} reflections completed</p>
               </div>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
@@ -177,6 +185,16 @@ export default function StudentPortal() {
 
             {/* Main Content */}
             <div className="lg:col-span-3 space-y-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              {/* XP System Disclaimer */}
+              <div className="p-4 rounded-lg border border-yellow-500/30 bg-yellow-500/10 backdrop-blur-sm">
+                <p className="text-sm text-yellow-200 flex items-start gap-2">
+                  <span className="text-lg">💡</span>
+                  <span>
+                    <strong>How XP increases:</strong> Earn +10 XP per form completion, +5 XP per application submission, +15 XP per program completion, +20 XP per certification earned, and +3 XP per reflection logged. Reach 100 XP to advance to the next level!
+                  </span>
+                </p>
+              </div>
+
               {loadingApps ? (
                 <div className="space-y-4">
                   {[1, 2, 3].map(i => (
@@ -308,6 +326,61 @@ export default function StudentPortal() {
                               <div>
                                 <p className="text-xs opacity-80">Status</p>
                                 <p className="text-sm font-bold">{selected?.status}</p>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Program Progress Section */}
+                          <div className="mt-6 p-4 rounded-lg bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20">
+                            <h3 className="text-sm font-bold text-white mb-4">Program Progress</h3>
+                            
+                            {/* Overall Progress */}
+                            <div className="space-y-4">
+                              <div>
+                                <div className="flex justify-between items-center mb-2">
+                                  <span className="text-sm text-slate-300">Overall Completion</span>
+                                  <span className="text-sm font-bold text-purple-300">65%</span>
+                                </div>
+                                <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
+                                  <motion.div
+                                    className="h-full bg-gradient-to-r from-purple-500 to-pink-500"
+                                    initial={{ width: 0 }}
+                                    animate={{ width: '65%' }}
+                                    transition={{ duration: 0.8 }}
+                                  />
+                                </div>
+                              </div>
+
+                              {/* Form Completion */}
+                              <div>
+                                <div className="flex justify-between items-center mb-2">
+                                  <span className="text-sm text-slate-300">Form Completion</span>
+                                  <span className="text-sm font-bold text-blue-300">52%</span>
+                                </div>
+                                <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
+                                  <motion.div
+                                    className="h-full bg-gradient-to-r from-blue-500 to-cyan-500"
+                                    initial={{ width: 0 }}
+                                    animate={{ width: '52%' }}
+                                    transition={{ duration: 0.8, delay: 0.2 }}
+                                  />
+                                </div>
+                              </div>
+
+                              {/* Module Completion */}
+                              <div>
+                                <div className="flex justify-between items-center mb-2">
+                                  <span className="text-sm text-slate-300">Module Completion</span>
+                                  <span className="text-sm font-bold text-emerald-300">78%</span>
+                                </div>
+                                <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
+                                  <motion.div
+                                    className="h-full bg-gradient-to-r from-emerald-500 to-teal-500"
+                                    initial={{ width: 0 }}
+                                    animate={{ width: '78%' }}
+                                    transition={{ duration: 0.8, delay: 0.4 }}
+                                  />
+                                </div>
                               </div>
                             </div>
                           </div>

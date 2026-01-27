@@ -13,6 +13,8 @@ export default function StudentDemoPage() {
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [selectedProgram, setSelectedProgram] = useState<any>(null);
+  const [xpPoints] = useState(65); // Demo XP value
+  const [selectedProgramData, setSelectedProgramData] = useState<any>(null);
   
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -181,12 +183,26 @@ export default function StudentDemoPage() {
 
         {/* Header */}
         <motion.div variants={itemVariants} className="mb-12">
-          <h1 className="text-5xl font-bold mb-4 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
-            Student Portal Demo
-          </h1>
-          <p className="text-xl text-slate-300">
-            Welcome to your medical education dashboard. Track your progress across multiple programs and institutions.
-          </p>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
+            <div className="flex-1">
+              <h1 className="text-5xl font-bold mb-4 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                Student Portal Demo
+              </h1>
+              <p className="text-xl text-slate-300">
+                Welcome to your medical education dashboard. Track your progress across multiple programs and institutions.
+              </p>
+            </div>
+            {/* Level & XP Display */}
+            <div className="flex items-center gap-3 bg-gradient-to-r from-purple-600 to-pink-600 px-4 py-2 rounded-lg">
+              <div>
+                <p className="text-xs text-purple-100">Level {Math.ceil(xpPoints / 100) + 1}</p>
+                <p className="font-bold text-white">{xpPoints} XP</p>
+              </div>
+              <div className="text-right">
+                <p className="text-xs text-purple-100">{100 - (xpPoints % 100)} XP to next level</p>
+              </div>
+            </div>
+          </div>
         </motion.div>
 
         {/* Stats Grid */}
@@ -211,13 +227,24 @@ export default function StudentDemoPage() {
 
         {/* Programs Section */}
         <motion.div variants={itemVariants}>
+          {/* XP System Disclaimer */}
+          <div className="p-4 rounded-lg border border-yellow-500/30 bg-yellow-500/10 backdrop-blur-sm mb-6">
+            <p className="text-sm text-yellow-200 flex items-start gap-2">
+              <span className="text-lg">💡</span>
+              <span>
+                <strong>How XP increases:</strong> Earn +10 XP per form completion, +5 XP per application submission, +15 XP per program completion, +20 XP per certification earned, and +3 XP per reflection logged. Reach 100 XP to advance to the next level!
+              </span>
+            </p>
+          </div>
+
           <h2 className="text-2xl font-bold mb-6">Your Programs</h2>
           <div className="space-y-4">
             {samplePrograms.map((program, idx) => (
               <motion.div
                 key={program.id}
+                onClick={() => setSelectedProgramData(program)}
                 variants={itemVariants}
-                className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 hover:bg-white/10 transition-colors"
+                className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 hover:bg-white/10 transition-colors cursor-pointer"
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-start gap-4">
@@ -254,6 +281,93 @@ export default function StudentDemoPage() {
             ))}
           </div>
         </motion.div>
+
+        {/* Program Details Modal when clicked */}
+        {selectedProgramData && (
+          <motion.div 
+            variants={itemVariants}
+            className="mt-12 p-8 rounded-2xl border border-purple-500/30 bg-purple-500/10 backdrop-blur-xl"
+          >
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-white">{selectedProgramData.name}</h2>
+              <button
+                onClick={() => setSelectedProgramData(null)}
+                className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            
+            {/* Progress Section */}
+            <div className="space-y-4 mb-8">
+              <div>
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-sm text-slate-300">Overall Progress</span>
+                  <span className="text-sm font-bold text-purple-300">{selectedProgramData.progress}%</span>
+                </div>
+                <div className="h-3 w-full bg-white/10 rounded-full overflow-hidden">
+                  <motion.div
+                    className="h-full bg-gradient-to-r from-purple-500 to-pink-500"
+                    initial={{ width: 0 }}
+                    animate={{ width: `${selectedProgramData.progress}%` }}
+                    transition={{ duration: 0.8 }}
+                  />
+                </div>
+              </div>
+
+              {/* Form Completion */}
+              <div>
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-sm text-slate-300">Form Completion</span>
+                  <span className="text-sm font-bold text-blue-300">{Math.round(selectedProgramData.progress * 0.8)}%</span>
+                </div>
+                <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
+                  <motion.div
+                    className="h-full bg-gradient-to-r from-blue-500 to-cyan-500"
+                    initial={{ width: 0 }}
+                    animate={{ width: `${Math.round(selectedProgramData.progress * 0.8)}%` }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                  />
+                </div>
+              </div>
+
+              {/* Module Completion */}
+              <div>
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-sm text-slate-300">Module Completion</span>
+                  <span className="text-sm font-bold text-emerald-300">{Math.round(selectedProgramData.progress * 1.1)}%</span>
+                </div>
+                <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
+                  <motion.div
+                    className="h-full bg-gradient-to-r from-emerald-500 to-teal-500"
+                    initial={{ width: 0 }}
+                    animate={{ width: `${Math.round(Math.min(selectedProgramData.progress * 1.1, 100))}%` }}
+                    transition={{ duration: 0.8, delay: 0.4 }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Details Grid */}
+            <div className="grid grid-cols-2 gap-4 mb-6">
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="text-xs text-slate-400 mb-1">Status</p>
+                <p className="text-white font-semibold">{selectedProgramData.status}</p>
+              </div>
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="text-xs text-slate-400 mb-1">Institution</p>
+                <p className="text-white font-semibold text-sm">{selectedProgramData.institution}</p>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setSelectedProgramData(null)}
+              className="w-full px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors"
+            >
+              Close Details
+            </button>
+          </motion.div>
+        )}
 
         {/* Call to Action */}
         <motion.div variants={itemVariants} className="mt-12 text-center space-y-6">
