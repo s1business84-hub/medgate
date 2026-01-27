@@ -61,23 +61,23 @@ export function FAQ() {
   return (
     <section
       id="faq"
-      className="py-24 sm:py-32 relative overflow-hidden text-slate-50"
+      className="py-24 sm:py-32 relative overflow-hidden text-slate-900"
     >
-      {/* Decorative Elements */}
+      {/* Light gradient decorative elements */}
       <motion.div
         animate={{ y: [0, -10, 0], rotate: [0, 4, -2, 0] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-0 right-10 w-80 h-80 bg-linear-to-br from-cyan-400/25 via-indigo-400/25 to-purple-500/20 rounded-full mix-blend-screen blur-3xl opacity-70 -z-10"
+        className="absolute top-0 right-10 w-80 h-80 bg-gradient-to-br from-blue-200/30 via-indigo-200/25 to-purple-200/20 rounded-full blur-3xl opacity-70 -z-10"
       />
       <motion.div
         animate={{ y: [0, 12, 0], rotate: [0, -3, 2, 0] }}
         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-0 left-6 w-96 h-96 bg-linear-to-tr from-fuchsia-400/20 via-purple-400/25 to-blue-400/20 rounded-full mix-blend-screen blur-3xl opacity-70 -z-10"
+        className="absolute bottom-0 left-6 w-96 h-96 bg-gradient-to-tr from-fuchsia-200/20 via-purple-200/25 to-blue-200/20 rounded-full blur-3xl opacity-70 -z-10"
       />
       <motion.div
         animate={{ scale: [1, 1.05, 1] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.08),transparent_30%),radial-gradient(circle_at_70%_40%,rgba(236,72,153,0.08),transparent_26%),radial-gradient(circle_at_40%_80%,rgba(16,185,129,0.08),transparent_24%)] -z-10"
+        className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(147,197,253,0.12),transparent_30%),radial-gradient(circle_at_70%_40%,rgba(196,181,253,0.12),transparent_26%),radial-gradient(circle_at_40%_80%,rgba(167,243,208,0.1),transparent_24%)] -z-10"
       />
 
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
@@ -89,8 +89,8 @@ export function FAQ() {
             viewport={{ once: true }}
             className="inline-flex items-center justify-center gap-2 mb-6"
           >
-            <HelpCircle className="w-6 h-6 text-blue-200" />
-            <span className="text-sm font-semibold text-blue-200 uppercase tracking-wider">Questions & Answers</span>
+            <HelpCircle className="w-6 h-6 text-blue-600" />
+            <span className="text-sm font-semibold text-blue-600 uppercase tracking-wider">Questions & Answers</span>
           </motion.div>
 
           <motion.h2
@@ -98,7 +98,7 @@ export function FAQ() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: cubicBezier(0.16, 1, 0.3, 1) }}
             viewport={{ once: true }}
-            className="text-4xl sm:text-5xl font-bold tracking-tight bg-linear-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent drop-shadow-[0_10px_35px_rgba(56,189,248,0.25)]"
+            className="text-4xl sm:text-5xl font-bold tracking-tight text-slate-900"
           >
             Frequently asked questions
           </motion.h2>
@@ -107,7 +107,7 @@ export function FAQ() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
             viewport={{ once: true }}
-            className="mt-6 text-lg leading-8 text-slate-200"
+            className="mt-6 text-lg leading-8 text-slate-600"
           >
             Everything you need to know about getting started with Electivio.
             Can&apos;t find the answer you&apos;re looking for? Reach out to our support team.
@@ -125,34 +125,34 @@ export function FAQ() {
             <AnimatePresence>
               {faqs.map((faq, index) => (
                 <motion.div key={index} variants={itemVariants} className="group">
-                  {/** Card with dynamic liquid color change when expanded **/}
+                  {/** Card with liquid glass effect **/}
                   <motion.div
-                    className={`relative rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-400 overflow-hidden backdrop-blur-xl ${openIndex === index ? "bg-white/12 border border-white/20" : "bg-white/6 border border-white/10"}`}
+                    className={`relative rounded-3xl shadow-lg hover:shadow-xl transition-all duration-400 overflow-hidden backdrop-blur-xl ${openIndex === index ? "bg-white/80 border border-slate-300" : "bg-white/60 border border-slate-200"}`}
                     whileHover={{ y: -6, scale: 1.01 }}
                   >
-                    {/* Animated gradient background on hover */}
-                    <div className={`absolute inset-0 bg-linear-to-r ${accentGradients[index % accentGradients.length]} opacity-0 group-hover:opacity-90 transition-opacity duration-400 blur-[1px]`} />
+                    {/* Subtle gradient background on hover */}
+                    <div className={`absolute inset-0 bg-gradient-to-br from-blue-50/60 via-purple-50/40 to-pink-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-400`} />
 
                     {/* Liquid glass shine effect */}
-                    <div className={`absolute inset-0 transition-opacity duration-300 ${openIndex === index ? "opacity-25" : "opacity-0 group-hover:opacity-20"}`}>
-                      <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-linear-to-br from-white to-transparent rounded-full blur-xl" />
-                      <div className="absolute bottom-0 right-0 w-2/5 h-2/5 bg-linear-to-tr from-blue-300/40 to-purple-300/40 rounded-full blur-xl" />
+                    <div className={`absolute inset-0 transition-opacity duration-300 ${openIndex === index ? "opacity-100" : "opacity-0 group-hover:opacity-80"}`}>
+                      <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-blue-100/40 via-white/30 to-transparent rounded-full blur-2xl" />
+                      <div className="absolute bottom-0 left-0 w-2/5 h-2/5 bg-gradient-to-tr from-purple-100/30 to-transparent rounded-full blur-xl" />
                     </div>
 
-                    {/* Active state gradient overlay */}
+                    {/* Active state subtle overlay */}
                     {openIndex === index && (
                       <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="absolute inset-0 bg-linear-to-br from-white/8 via-white/6 to-white/4"
+                        className="absolute inset-0 bg-gradient-to-br from-blue-50/40 via-purple-50/30 to-transparent"
                       />
                     )}
 
-                    {/* Glow ring */}
+                    {/* Soft glow ring */}
                     <motion.div
-                      animate={{ opacity: openIndex === index ? 0.6 : 0 }}
-                      className="absolute -inset-px rounded-2xl bg-[conic-gradient(from_90deg_at_50%_50%,rgba(59,130,246,0.35),rgba(236,72,153,0.3),rgba(16,185,129,0.3),rgba(59,130,246,0.35))] blur-[14px]"
+                      animate={{ opacity: openIndex === index ? 0.3 : 0 }}
+                      className="absolute -inset-px rounded-3xl bg-gradient-to-r from-blue-300/20 via-purple-300/20 to-pink-300/20 blur-sm"
                     />
 
                     <button
@@ -165,9 +165,9 @@ export function FAQ() {
                           transition={{ duration: 0.2 }}
                           className="shrink-0"
                         >
-                            <MessageCircle className="h-5 w-5 text-blue-50 drop-shadow-[0_0_12px_rgba(125,211,252,0.5)]" />
+                            <MessageCircle className="h-5 w-5 text-blue-600" />
                         </motion.div>
-                          <h3 className="text-lg font-semibold text-white group-hover:text-blue-200 transition-colors">
+                          <h3 className="text-lg font-semibold text-slate-900 group-hover:text-blue-700 transition-colors">
                           {faq.question}
                         </h3>
                       </div>
@@ -176,7 +176,7 @@ export function FAQ() {
                         transition={{ duration: 0.2 }}
                         className="shrink-0"
                       >
-                          <ChevronDown className="h-5 w-5 text-slate-100" />
+                          <ChevronDown className="h-5 w-5 text-slate-600" />
                       </motion.div>
                     </button>
 
@@ -187,17 +187,17 @@ export function FAQ() {
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.16, ease: "easeInOut" }}
-                          className="relative border-t border-white/10 px-6 py-4 z-10"
+                          className="relative border-t border-slate-200 px-6 py-4 z-10"
                         >
                           <motion.p
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.01, duration: 0.1 }}
-                            className="text-slate-200 leading-relaxed"
+                            className="text-slate-700 leading-relaxed"
                           >
                             {faq.answer}
                           </motion.p>
-                          <div className="mt-3 flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-blue-100/80">
+                          <div className="mt-3 flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-blue-600/80">
                             <Sparkles className="h-3.5 w-3.5" />
                             <span>In Development</span>
                           </div>
