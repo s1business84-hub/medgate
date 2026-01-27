@@ -2,35 +2,57 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Play, Zap } from "lucide-react"
+import { Play, Zap, Copy, Check } from "lucide-react"
 import Link from "next/link"
 
 export function DemoButton() {
   const [isOpen, setIsOpen] = useState(false)
+  const [selectedTab, setSelectedTab] = useState("student")
+  const [copiedEmail, setCopiedEmail] = useState<string | null>(null)
 
-  const demoOptions = [
-    {
+  const demoCredentials = {
+    student: {
       id: "student",
       label: "Student Demo",
-      description: "Explore student portal",
-      href: "/demo/student",
       icon: "👨‍🎓",
+      href: "/demo/student",
+      email: "student@example.com",
+      password: "password",
+      description: "Medical trainee exploring programs and tracking progress",
     },
-    {
+    staff: {
       id: "staff",
       label: "Staff Demo",
-      description: "Explore staff dashboard",
-      href: "/demo/hospital",
       icon: "🏥",
+      href: "/demo/hospital",
+      email: "hospital1@electivio.com",
+      password: "password",
+      description: "Hospital administrator managing applications and students",
     },
-    {
+    supervisor: {
       id: "supervisor",
       label: "Supervisor Demo",
-      description: "Track student progress",
-      href: "/demo/supervisor",
       icon: "📊",
+      href: "/demo/supervisor",
+      email: "admin@example.com",
+      password: "password",
+      description: "Supervisor tracking student progress and reviewing forms",
     },
+  }
+
+  const tabs = [
+    { id: "student", label: "Student", icon: "👨‍🎓" },
+    { id: "staff", label: "Staff", icon: "🏥" },
+    { id: "supervisor", label: "Supervisor", icon: "📊" },
   ]
+
+  const current = demoCredentials[selectedTab as keyof typeof demoCredentials]
+
+  const handleCopyEmail = (email: string) => {
+    navigator.clipboard.writeText(email)
+    setCopiedEmail(email)
+    setTimeout(() => setCopiedEmail(null), 2000)
+  }
 
   return (
     <div className="relative">
@@ -65,7 +87,7 @@ export function DemoButton() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="absolute top-full mt-3 left-0 w-72 bg-slate-900/98 backdrop-blur-xl border border-green-500/30 rounded-2xl shadow-2xl overflow-hidden z-50"
+              className="absolute top-full mt-3 left-0 w-96 bg-slate-900/98 backdrop-blur-xl border border-green-500/30 rounded-2xl shadow-2xl overflow-hidden z-50"
             >
               {/* Header */}
               <div className="p-4 border-b border-green-500/20 bg-linear-to-r from-green-500/10 to-emerald-500/10">
@@ -76,34 +98,80 @@ export function DemoButton() {
                 <p className="text-xs text-slate-400">Explore as different user roles</p>
               </div>
 
-              {/* Demo Options */}
-              <div className="p-2 space-y-1">
-                {demoOptions.map((option, idx) => (
-                  <motion.div
-                    key={option.id}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: idx * 0.05 }}
+              {/* Tabs */}
+              <div className="flex gap-1 p-3 border-b border-green-500/20 bg-slate-800/30">
+                {tabs.map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setSelectedTab(tab.id)}
+                    className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                      selectedTab === tab.id
+                        ? "bg-green-500/30 text-green-300 border border-green-500/50"
+                        : "bg-slate-700/30 text-slate-300 hover:bg-slate-700/50 border border-transparent"
+                    }`}
                   >
-                    <Link
-                      href={option.href}
-                      onClick={() => setIsOpen(false)}
-                      className="group/item flex items-start gap-3 p-3 rounded-lg hover:bg-green-500/20 transition-all duration-200"
-                    >
-                      <span className="text-2xl mt-0.5">{option.icon}</span>
-                      <div className="flex-1">
-                        <p className="font-semibold text-white text-sm group-hover/item:text-green-300 transition-colors">
-                          {option.label}
-                        </p>
-                        <p className="text-xs text-slate-400 group-hover/item:text-slate-300 transition-colors">
-                          {option.description}
-                        </p>
-                      </div>
-                      <Play className="w-4 h-4 text-green-400 opacity-0 group-hover/item:opacity-100 transition-opacity" />
-                    </Link>
-                  </motion.div>
+                    <span>{tab.icon}</span>
+                    <span>{tab.label}</span>
+                  </button>
                 ))}
               </div>
+
+              {/* Credentials Display */}
+              <motion.div
+                key={selectedTab}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.2 }}
+                className="p-4 space-y-4"
+              >
+                {/* Description */}
+                <div>
+                  <p className="text-sm font-semibold text-white mb-1">{current.label}</p>
+                  <p className="text-xs text-slate-400">{current.description}</p>
+                </div>
+
+                {/* Credentials Box */}
+                <div className="bg-slate-800/50 border border-slate-700/50 rounded-lg p-4 space-y-3">
+                  {/* Email */}
+                  <div>
+                    <label className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Email</label>
+                    <div className="flex items-center gap-2 mt-1">
+                      <code className="flex-1 px-3 py-2 bg-slate-900/50 border border-slate-600/50 rounded text-sm text-green-300 font-mono break-all">
+                        {current.email}
+                      </code>
+                      <button
+                        onClick={() => handleCopyEmail(current.email)}
+                        className="p-2 rounded hover:bg-slate-700/50 transition-colors text-slate-300 hover:text-green-300"
+                        title="Copy email"
+                      >
+                        {copiedEmail === current.email ? (
+                          <Check className="w-4 h-4 text-green-400" />
+                        ) : (
+                          <Copy className="w-4 h-4" />
+                        )}
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Password */}
+                  <div>
+                    <label className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Password</label>
+                    <code className="flex px-3 py-2 mt-1 bg-slate-900/50 border border-slate-600/50 rounded text-sm text-green-300 font-mono">
+                      {current.password}
+                    </code>
+                  </div>
+                </div>
+
+                {/* Action Button */}
+                <Link
+                  href={current.href}
+                  onClick={() => setIsOpen(false)}
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-500/20 hover:bg-green-500/30 border border-green-500/50 rounded-lg text-green-300 font-semibold transition-all duration-200 group/btn"
+                >
+                  <Play className="w-4 h-4 group-hover/btn:scale-110 transition-transform" />
+                  Launch {current.label}
+                </Link>
+              </motion.div>
 
               {/* Footer */}
               <div className="p-3 border-t border-green-500/20 bg-slate-950/50">
