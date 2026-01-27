@@ -146,184 +146,185 @@ export default function PurposePage() {
                       </p>
                     </motion.div>
                   </motion.div>
-                </div>
-              </motion.div>
-            </section>
+            </div>
+          </motion.div>
+        </section>
 
-            <section className="mb-24">
-              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }}>
-                <h2 className="purpose-heading text-3xl font-bold text-slate-900 mb-4">What We Are Building</h2>
-                <p className="text-lg text-slate-700 leading-relaxed mb-12">
-                  Electivio is being developed as a program management and discovery platform designed around real institutional workflows and student needs. We focus on three core areas:
-                </p>
-              </motion.div>
-              <div className="space-y-6">
-                <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }} className="purpose-card bg-white/60 border border-slate-200 rounded-2xl backdrop-blur-xl p-8 hover:bg-white/80 hover:shadow-xl transition-all duration-300">
-                  <h3 className="text-2xl font-bold text-cyan-600 mb-3">1. Program Standardization</h3>
-                  <p className="text-lg text-slate-700 leading-relaxed">
-                    We help hospitals and clinics publish observership and elective programs with clearly defined eligibility criteria, documentation requirements, duration, and intake limits—set entirely by the institution.
-                  </p>
-                </motion.div>
-                <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }} className="purpose-card bg-white/60 border border-slate-200 rounded-2xl backdrop-blur-xl p-8 hover:bg-white/80 hover:shadow-xl transition-all duration-300">
-                  <h3 className="text-2xl font-bold text-indigo-600 mb-3">2. Administrative Efficiency</h3>
-                  <p className="text-lg text-slate-700 leading-relaxed">
-                    By centralizing program information and application workflows, Electivio reduces repetitive back and forth communication and improves visibility for students and administrators alike.
-                  </p>
-                </motion.div>
-                <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.4 }} className="purpose-card bg-white/60 border border-slate-200 rounded-2xl backdrop-blur-xl p-8 hover:bg-white/80 hover:shadow-xl transition-all duration-300">
-                  <h3 className="text-2xl font-bold text-emerald-600 mb-3">3. Institutional Control & Governance</h3>
-                  <p className="text-lg text-slate-700 leading-relaxed">
-                    Electivio is built institution-first. Hospitals retain full control over program approvals, intake capacity, and internal policies while benefiting from a structured digital interface.
-                  </p>
-                </motion.div>
-              </div>
-            </section>
-
-            <section className="mb-24">
-              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="purpose-card bg-gradient-to-br from-cyan-50 to-blue-50 border border-cyan-200 rounded-3xl backdrop-blur-xl p-8 md:p-12 shadow-xl">
-                <h2 className="purpose-heading text-3xl font-bold text-slate-900 mb-6">Our Focus Today</h2>
-                <p className="text-lg text-slate-700 leading-relaxed mb-8">
-                  Electivio is currently in early development and preparing for pilot collaborations with healthcare institutions across the UAE.
-                </p>
-                <p className="text-lg text-slate-700 leading-relaxed mb-6">Our immediate focus is to:</p>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex items-start">
-                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-cyan-500/20 mr-3 mt-1 shrink-0">
-                      <Zap className="w-4 h-4 text-cyan-600" />
-                    </span>
-                    <span className="text-lg text-slate-700">Launch pilot programs with select institutions</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-indigo-500/20 mr-3 mt-1 shrink-0">
-                      <Zap className="w-4 h-4 text-indigo-600" />
-                    </span>
-                    <span className="text-lg text-slate-700">Validate workflows with real users</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-500/20 mr-3 mt-1 shrink-0">
-                      <Zap className="w-4 h-4 text-emerald-600" />
-                    </span>
-                    <span className="text-lg text-slate-700">Refine eligibility logic and application processes</span>
-                  </li>
-                </ul>
-                <p className="text-lg text-slate-700 leading-relaxed">
-                  This phased approach ensures the platform is aligned with institutional standards and regulatory expectations from the start.
-                </p>
-              </motion.div>
-            </section>
-
-            <section className="mb-24">
-              <motion.div
-                ref={lookingAheadRef}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.3 }}
-                transition={{ duration: 0.6 }}
-                className="purpose-card purpose-plane-panel relative overflow-hidden rounded-3xl backdrop-blur-xl p-8 md:p-12"
-                style={{
-                  background: "rgba(255,255,255,0.6)",
-                  border: "1px solid rgb(203 213 225)",
-                }}
-              >
-                {/* Subtle overlay that changes with scroll */}
-                <motion.div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 bg-gradient-to-br from-blue-100/40 via-purple-50/30 to-pink-100/40"
-                  style={{ opacity: redBgOpacity }}
-                />
-
-                <motion.h2
-                  className="purpose-heading text-3xl font-bold mb-6 text-slate-900"
-                >
-                  Looking Ahead
-                </motion.h2>
-
-                <div className="relative">
-                  <p className="text-lg text-slate-700 leading-relaxed pr-16">
-                    As the platform evolves, Electivio aims to expand coverage across all UAE emirates and continue improving how clinical training opportunities are accessed and managed—without compromising institutional autonomy or academic standards.
-                  </p>
-                  {/* Plane flying from the paragraph as you scroll */}
-                  <motion.div
-                    aria-hidden
-                    className="purpose-plane absolute top-1/2 left-0 -translate-y-1/2"
-                    style={{ x: planeX, y: planeY, rotate: planeRotate }}
-                  >
-                    <div className="w-10 h-10 rounded-full bg-white/60 border border-slate-300 backdrop-blur-md flex items-center justify-center shadow-lg">
-                      <Plane className="w-5 h-5 text-blue-600" />
-                    </div>
-                  </motion.div>
-                </div>
-              </motion.div>
-            </section>
-
-            <section className="mb-24">
-              <div className="text-center mb-12">
-                <h2 className="purpose-heading text-3xl font-bold text-slate-900 mb-6">
-                  Join Electivio
-                </h2>
-                <p className="text-lg text-slate-700 mb-8">
-                  Whether you are a medical student seeking structured clinical exposure or a healthcare institution looking to streamline program management, Electivio is being built with you in mind.
-                </p>
-                <div className="flex justify-center gap-3 mb-8">
-                  <button
-                    onClick={() => setActiveCard("students")}
-                    className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${
-                      activeCard === "students"
-                        ? "bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-lg"
-                        : "bg-white/60 text-slate-700 hover:bg-white/80 border border-slate-200"
-                    }`}
-                  >
-                    For Students
-                  </button>
-                  <button
-                    onClick={() => setActiveCard("hospitals")}
-                    className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${
-                      activeCard === "hospitals"
-                        ? "bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg"
-                        : "bg-white/60 text-slate-700 hover:bg-white/80 border border-slate-200"
-                    }`}
-                  >
-                    For Hospitals
-                  </button>
-                </div>
-              </div>
-              <div className="relative h-80 md:h-72">
-                <AnimatePresence mode="wait">
-                  {activeCard === "students" ? (
-                    <motion.div key="students" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="purpose-card absolute inset-0 bg-gradient-to-br from-cyan-50 to-blue-100 border border-cyan-300 rounded-3xl backdrop-blur-xl p-8 md:p-12 shadow-2xl overflow-hidden group">
-                      <div className="absolute -top-40 -right-40 w-80 h-80 bg-cyan-200/30 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-500" />
-                      <div className="relative z-10">
-                        <h3 className="text-3xl font-bold text-cyan-900 mb-6">Browse Programs</h3>
-                        <p className="text-lg text-cyan-800 leading-relaxed mb-8">
-                          Discover structured observership and elective opportunities across the UAE. Explore programs that match your interests and eligibility, with clear requirements and transparent timelines.
-                        </p>
-                        <Link href="/programs">
-                          <Button size="lg" className="bg-cyan-600 text-white hover:bg-cyan-700 font-semibold shadow-lg hover:shadow-xl">
-                            Explore Programs
-                          </Button>
-                        </Link>
-                      </div>
-                    </motion.div>
-                  ) : (
-                    <motion.div key="hospitals" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="purpose-card absolute inset-0 bg-gradient-to-br from-emerald-50 to-teal-100 border border-emerald-300 rounded-3xl backdrop-blur-xl p-8 md:p-12 shadow-2xl overflow-hidden group">
-                      <div className="absolute -top-40 -right-40 w-80 h-80 bg-emerald-200/30 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-500" />
-                      <div className="relative z-10">
-                        <h3 className="text-3xl font-bold text-emerald-900 mb-6">For Hospitals</h3>
-                        <p className="text-lg text-emerald-800 leading-relaxed mb-8">
-                          Streamline your observership and elective program management. Publish clear eligibility criteria, manage applications efficiently, and connect with qualified students—all while maintaining institutional control.
-                        </p>
-                        <Link href="/for-hospitals">
-                          <Button size="lg" className="bg-emerald-600 text-white hover:bg-emerald-700 font-semibold shadow-lg hover:shadow-xl">
-                            Learn More
-                          </Button>
-                        </Link>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            </section>
+        <section className="mb-24">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }}>
+            <h2 className="purpose-heading text-3xl font-bold text-slate-900 mb-4">What We Are Building</h2>
+            <p className="text-lg text-slate-700 leading-relaxed mb-12">
+              Electivio is being developed as a program management and discovery platform designed around real institutional workflows and student needs. We focus on three core areas:
+            </p>
+          </motion.div>
+          <div className="space-y-6">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }} className="purpose-card bg-white/60 border border-slate-200 rounded-2xl backdrop-blur-xl p-8 hover:bg-white/80 hover:shadow-xl transition-all duration-300">
+              <h3 className="text-2xl font-bold text-cyan-600 mb-3">1. Program Standardization</h3>
+              <p className="text-lg text-slate-700 leading-relaxed">
+                We help hospitals and clinics publish observership and elective programs with clearly defined eligibility criteria, documentation requirements, duration, and intake limits—set entirely by the institution.
+              </p>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }} className="purpose-card bg-white/60 border border-slate-200 rounded-2xl backdrop-blur-xl p-8 hover:bg-white/80 hover:shadow-xl transition-all duration-300">
+              <h3 className="text-2xl font-bold text-indigo-600 mb-3">2. Administrative Efficiency</h3>
+              <p className="text-lg text-slate-700 leading-relaxed">
+                By centralizing program information and application workflows, Electivio reduces repetitive back and forth communication and improves visibility for students and administrators alike.
+              </p>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.4 }} className="purpose-card bg-white/60 border border-slate-200 rounded-2xl backdrop-blur-xl p-8 hover:bg-white/80 hover:shadow-xl transition-all duration-300">
+              <h3 className="text-2xl font-bold text-emerald-600 mb-3">3. Institutional Control & Governance</h3>
+              <p className="text-lg text-slate-700 leading-relaxed">
+                Electivio is built institution-first. Hospitals retain full control over program approvals, intake capacity, and internal policies while benefiting from a structured digital interface.
+              </p>
+            </motion.div>
           </div>
+        </section>
+
+        <section className="mb-24">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="purpose-card bg-gradient-to-br from-cyan-50 to-blue-50 border border-cyan-200 rounded-3xl backdrop-blur-xl p-8 md:p-12 shadow-xl">
+            <h2 className="purpose-heading text-3xl font-bold text-slate-900 mb-6">Our Focus Today</h2>
+            <p className="text-lg text-slate-700 leading-relaxed mb-8">
+              Electivio is currently in early development and preparing for pilot collaborations with healthcare institutions across the UAE.
+            </p>
+            <p className="text-lg text-slate-700 leading-relaxed mb-6">Our immediate focus is to:</p>
+            <ul className="space-y-3 mb-8">
+              <li className="flex items-start">
+                <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-cyan-500/20 mr-3 mt-1 shrink-0">
+                  <Zap className="w-4 h-4 text-cyan-600" />
+                </span>
+                <span className="text-lg text-slate-700">Launch pilot programs with select institutions</span>
+              </li>
+              <li className="flex items-start">
+                <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-indigo-500/20 mr-3 mt-1 shrink-0">
+                  <Zap className="w-4 h-4 text-indigo-600" />
+                </span>
+                <span className="text-lg text-slate-700">Validate workflows with real users</span>
+              </li>
+              <li className="flex items-start">
+                <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-500/20 mr-3 mt-1 shrink-0">
+                  <Zap className="w-4 h-4 text-emerald-600" />
+                </span>
+                <span className="text-lg text-slate-700">Refine eligibility logic and application processes</span>
+              </li>
+            </ul>
+            <p className="text-lg text-slate-700 leading-relaxed">
+              This phased approach ensures the platform is aligned with institutional standards and regulatory expectations from the start.
+            </p>
+          </motion.div>
+        </section>
+
+        <section className="mb-24">
+          <motion.div
+            ref={lookingAheadRef}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.6 }}
+            className="purpose-card purpose-plane-panel relative overflow-hidden rounded-3xl backdrop-blur-xl p-8 md:p-12"
+            style={{
+              background: "rgba(255,255,255,0.6)",
+              border: "1px solid rgb(203 213 225)",
+            }}
+          >
+            {/* Subtle overlay that changes with scroll */}
+            <motion.div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 bg-gradient-to-br from-blue-100/40 via-purple-50/30 to-pink-100/40"
+              style={{ opacity: redBgOpacity }}
+            />
+
+            <motion.h2
+              className="purpose-heading text-3xl font-bold mb-6 text-slate-900"
+            >
+              Looking Ahead
+            </motion.h2>
+
+            <div className="relative">
+              <p className="text-lg text-slate-700 leading-relaxed pr-16">
+                As the platform evolves, Electivio aims to expand coverage across all UAE emirates and continue improving how clinical training opportunities are accessed and managed—without compromising institutional autonomy or academic standards.
+              </p>
+              {/* Plane flying from the paragraph as you scroll */}
+              <motion.div
+                aria-hidden
+                className="purpose-plane absolute top-1/2 left-0 -translate-y-1/2"
+                style={{ x: planeX, y: planeY, rotate: planeRotate }}
+              >
+                <div className="w-10 h-10 rounded-full bg-white/60 border border-slate-300 backdrop-blur-md flex items-center justify-center shadow-lg">
+                  <Plane className="w-5 h-5 text-blue-600" />
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        </section>
+
+        <section className="mb-24">
+          <div className="text-center mb-12">
+            <h2 className="purpose-heading text-3xl font-bold text-slate-900 mb-6">
+              Join Electivio
+            </h2>
+            <p className="text-lg text-slate-700 mb-8">
+              Whether you are a medical student seeking structured clinical exposure or a healthcare institution looking to streamline program management, Electivio is being built with you in mind.
+            </p>
+            <div className="flex justify-center gap-3 mb-8">
+              <button
+                onClick={() => setActiveCard("students")}
+                className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${
+                  activeCard === "students"
+                    ? "bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-lg"
+                    : "bg-white/60 text-slate-700 hover:bg-white/80 border border-slate-200"
+                }`}
+              >
+                For Students
+              </button>
+              <button
+                onClick={() => setActiveCard("hospitals")}
+                className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${
+                  activeCard === "hospitals"
+                    ? "bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg"
+                    : "bg-white/60 text-slate-700 hover:bg-white/80 border border-slate-200"
+                }`}
+              >
+                For Hospitals
+              </button>
+            </div>
+          </div>
+          <div className="relative h-80 md:h-72">
+            <AnimatePresence mode="wait">
+              {activeCard === "students" ? (
+                <motion.div key="students" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="purpose-card absolute inset-0 bg-gradient-to-br from-cyan-50 to-blue-100 border border-cyan-300 rounded-3xl backdrop-blur-xl p-8 md:p-12 shadow-2xl overflow-hidden group">
+                  <div className="absolute -top-40 -right-40 w-80 h-80 bg-cyan-200/30 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-500" />
+                  <div className="relative z-10">
+                    <h3 className="text-3xl font-bold text-cyan-900 mb-6">Browse Programs</h3>
+                    <p className="text-lg text-cyan-800 leading-relaxed mb-8">
+                      Discover structured observership and elective opportunities across the UAE. Explore programs that match your interests and eligibility, with clear requirements and transparent timelines.
+                    </p>
+                    <Link href="/programs">
+                      <Button size="lg" className="bg-cyan-600 text-white hover:bg-cyan-700 font-semibold shadow-lg hover:shadow-xl">
+                        Explore Programs
+                      </Button>
+                    </Link>
+                  </div>
+                </motion.div>
+              ) : (
+                <motion.div key="hospitals" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="purpose-card absolute inset-0 bg-gradient-to-br from-emerald-50 to-teal-100 border border-emerald-300 rounded-3xl backdrop-blur-xl p-8 md:p-12 shadow-2xl overflow-hidden group">
+                  <div className="absolute -top-40 -right-40 w-80 h-80 bg-emerald-200/30 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-500" />
+                  <div className="relative z-10">
+                    <h3 className="text-3xl font-bold text-emerald-900 mb-6">For Hospitals</h3>
+                    <p className="text-lg text-emerald-800 leading-relaxed mb-8">
+                      Streamline your observership and elective program management. Publish clear eligibility criteria, manage applications efficiently, and connect with qualified students—all while maintaining institutional control.
+                    </p>
+                    <Link href="/for-hospitals">
+                      <Button size="lg" className="bg-emerald-600 text-white hover:bg-emerald-700 font-semibold shadow-lg hover:shadow-xl">
+                        Learn More
+                      </Button>
+                    </Link>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </section>
         </div>
+      </div>
+    </div>
   );
 }
