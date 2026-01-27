@@ -1,7 +1,7 @@
 import type { 
   Student, Application, Document, Payment, AuditLog, User, Notification, ProgramReminder,
    FormTemplate, FormResponse, Session, ObservationForm, SessionFormSubmission, StudentPerformanceMetrics,
-   ChatMessage, Conversation, StudentProgress
+   ChatMessage, Conversation, StudentProgress, ApplicationDecision, StaffApplicationAlert
 } from "./types";
 
 const KEYS = {
@@ -25,6 +25,8 @@ const KEYS = {
   chatMessages: "electivio_chat_messages",
   conversations: "electivio_conversations",
   studentProgress: "electivio_student_progress",
+  applicationDecisions: "electivio_application_decisions",
+  staffAlerts: "electivio_staff_alerts",
 };
 
 function readJSON<T>(key: string, fallback: T): T {
@@ -82,6 +84,24 @@ export function createApplication(input: Omit<Application, "id" | "status" | "su
   const sessionCount = app.sessionCount || 1;
   for (let i = 1; i <= sessionCount; i++) {
     createSession(app.id, i);
+  }
+
+  // Create staff alert for the hospital
+  if (app.hospitalId) {
+    const students = readJSON<Student[]>(KEYS.students, []);
+    const student = students.find(s => s.id === input.studentId);
+    
+    if (student) {
+      createStaffAlert({
+        hospitalId: app.hospitalId,
+        applicationId: app.id,
+        studentId: app.studentId,
+        studentName: student.name,
+        studentEmail: student.email,
+        programId: input.programId,
+        submittedAt: app.submissionDate,
+      });
+    }
   }
   
   return app;
@@ -907,5 +927,82 @@ export function addXP(studentId: string, xpAmount: number): StudentProgress {
 export function getStudentProgress(studentId: string): StudentProgress | null {
   const allProgress = readJSON<StudentProgress[]>(KEYS.studentProgress, []);
   return allProgress.find(p => p.studentId === studentId) || null;
+}
+
+/* APPLICATION DECISIONS */
+export function createApplicationDecision(input: Omit<ApplicationDecision, "id">): ApplicationDecision {
+  const decisions = readJSON<ApplicationDecision[]>(KEYS.applicationDecisions, []);
+  const decision: ApplicationDecision = {
+    id: newId("decision"),
+    ...input,
+  };
+  decisions.push(decision);
+  writeJSON(KEYS.applicationDecisions, decisions);
+  return decision;
+}
+
+export function getApplicationDecisions(): ApplicationDecision[] {
+  return readJSON<ApplicationDecision[]>(KEYS.applicationDecisions, []);
+}
+
+export function getApplicationDecision(applicationId: string): ApplicationDecision | null {
+  const decisions = getApplicationDecisions();
+  return decisions.find(d => d.applicationId === applicationId) || null;
+}
+
+export function getApplicationDecisionsByHospital(hospitalId: string): ApplicationDecision[] {
+  const decisions = getApplicationDecisions();
+  return decisions.filter(d => d.hospitalId === hospitalId);
+}
+
+/* STAFF ALERTS FOR NEW APPLICATIONS */
+export function createStaffAlert(input: Omit<StaffApplicationAlert, "id" | "alertCreatedAt" | "readBy" | "status">): StaffApplicationAlert {
+  const alerts = readJSON<StaffApplicationAlert[]>(KEYS.staffAlerts, []);
+  const alert: StaffApplicationAlert = {
+    id: newId("alert"),
+    readBy: [],
+    status: "pending",
+    alertCreatedAt: new Date().toISOString(),
+    ...input,
+  };
+  alerts.push(alert);
+  writeJSON(KEYS.staffAlerts, alerts);
+  return alert;
+}
+
+export function getStaffAlerts(): StaffApplicationAlert[] {
+  return readJSON<StaffApplicationAlert[]>(KEYS.staffAlerts, []);
+}
+
+export function getStaffAlertsByHospital(hospitalId: string): StaffApplicationAlert[] {
+  const alerts = getStaffAlerts();
+  return alerts.filter(a => a.hospitalId === hospitalId);
+}
+
+export function getPendingApplicationAlerts(hospitalId: string): StaffApplicationAlert[] {
+  const alerts = getStaffAlertsByHospital(hospitalId);
+  return alerts.filter(a => a.status === "pending");
+}
+
+export function markStaffAlertAsRead(alertId: string, staffId: string): StaffApplicationAlert | null {
+  const alerts = getStaffAlerts();
+  const alert = alerts.find(a => a.id === alertId);
+  if (alert && !alert.readBy.includes(staffId)) {
+    alert.readBy.push(staffId);
+    writeJSON(KEYS.staffAlerts, alerts);
+    return alert;
+  }
+  return alert || null;
+}
+
+export function updateStaffAlertStatus(alertId: string, status: "pending" | "approved" | "declined" | "waitlisted"): StaffApplicationAlert | null {
+  const alerts = getStaffAlerts();
+  const alert = alerts.find(a => a.id === alertId);
+  if (alert) {
+    alert.status = status;
+    writeJSON(KEYS.staffAlerts, alerts);
+    return alert;
+  }
+  return null;
 }
 

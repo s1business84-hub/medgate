@@ -1,31 +1,50 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
-import { getApplicationsByHospital, getStudents, updateApplicationStatus, createNotification, createObservationForm, getObservationForms } from "@/lib/storage";
+import {
+  getApplicationsByHospital,
+  getStudents,
+  updateApplicationStatus,
+  createNotification,
+  createObservationForm,
+  getObservationForms,
+  getStaffAlertsByHospital,
+  createStaffAlert,
+  markStaffAlertAsRead,
+  getPendingApplicationAlerts,
+} from "@/lib/storage";
 import { getSupervisorConfirmations } from "@/lib/auditStore";
-import { Application } from "@/lib/types";
-import { CheckCircle, XCircle, FileText, Users, Clock, Plus } from "lucide-react";
+import { Application, StaffApplicationAlert, Student } from "@/lib/types";
+import { CheckCircle, XCircle, FileText, Users, Clock, Plus, Bell } from "lucide-react";
 import { showToast } from "@/lib/toast";
 import { AuditExcelButton } from "@/components/audit-excel-button";
 import { HospitalFormModal } from "@/components/hospital-form-modal";
+import { StaffApplicationAlerts } from "@/components/staff-application-alerts";
+import { ApplicationDecisionModal } from "@/components/application-decision-modal";
+import { processApplicationDecision } from "@/lib/application-decision-service";
 
 export default function HospitalPortal() {
   const { user, logout } = useAuth();
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
   const [applications, setApplications] = useState<Application[]>([]);
   const [selectedApp, setSelectedApp] = useState<Application | null>(null);
+  const [staffAlerts, setStaffAlerts] = useState<StaffApplicationAlert[]>([]);
+  const [selectedAlert, setSelectedAlert] = useState<StaffApplicationAlert | null>(null);
+  const [showDecisionModal, setShowDecisionModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [actionInProgress, setActionInProgress] = useState(false);
   const [rejectionReason, setRejectionReason] = useState("");
   const [showRejectModal, setShowRejectModal] = useState(false);
   const [showFormModal, setShowFormModal] = useState(false);
   const [showObsForm, setShowObsForm] = useState(false);
+  const [showAlerts, setShowAlerts] = useState(true);
   const [obsForm, setObsForm] = useState({
     name: "",
     description: "",
@@ -43,10 +62,13 @@ export default function HospitalPortal() {
       return;
     }
 
-    // Load applications for this hospital
+    // Load applications and alerts for this hospital
     const hospitalApps = getApplicationsByHospital(user.hospitalId || "");
+    const hospitalAlerts = getStaffAlertsByHospital(user.hospitalId || "");
+
     queueMicrotask(() => {
       setApplications(hospitalApps);
+      setStaffAlerts(hospitalAlerts);
       setLoading(false);
     });
   }, [user, router]);
@@ -61,6 +83,38 @@ export default function HospitalPortal() {
     const students = getStudents();
     const student = students.find(s => s.id === studentId);
     return student?.email || "Unknown";
+  };
+
+  const getStudentData = (studentId: string): Student | null => {
+    const students = getStudents();
+    return students.find(s => s.id === studentId) || null;
+  };
+
+  const handleDecisionModalOpen = (alert: StaffApplicationAlert) => {
+    setSelectedAlert(alert);
+    const app = applications.find(a => a.id === alert.applicationId);
+    if (app) {
+      setSelectedApp(app);
+    }
+    setShowDecisionModal(true);
+  };
+
+  const handleApplicationDecision = async (alertId: string, alert: StaffApplicationAlert) => {
+    startTransition(async () => {
+      try {
+        // Mark alert as read
+        markStaffAlertAsRead(alertId, user?.id || "");
+
+        // Reload alerts
+        const updatedAlerts = getStaffAlertsByHospital(user?.hospitalId || "");
+        setStaffAlerts(updatedAlerts);
+
+        showToast("Decision recorded. Student has been notified via email and app.");
+      } catch (error) {
+        console.error("Error processing decision:", error);
+        showToast("Error processing decision");
+      }
+    });
   };
 
   const handleApproval = (appId: string) => {
@@ -247,9 +301,29 @@ export default function HospitalPortal() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          {/* Left Sidebar - Audit Card */}
-          <div className="lg:col-span-1">
-            <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg p-4 sticky top-8">
+          {/* Left Sidebar - Audit Card & Alerts Toggle */}
+          <div className="lg:col-span-1 space-y-4">
+            {/* Alerts Toggle Card */}
+            {staffAlerts.length > 0 && (
+              <div className="rounded-xl border border-cyan-400/30 bg-cyan-500/10 backdrop-blur-xl shadow-lg p-4 sticky top-8">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <Bell className="w-5 h-5 text-cyan-400 animate-pulse" />
+                    <h3 className="font-semibold text-cyan-300">New Applications</h3>
+                  </div>
+                  <span className="text-cyan-400 font-bold">{getPendingApplicationAlerts(user?.hospitalId || "").length}</span>
+                </div>
+                <p className="text-xs text-cyan-200/70 mb-3">Click below to review and make decisions</p>
+                <button
+                  onClick={() => setShowAlerts(!showAlerts)}
+                  className="w-full px-3 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg font-medium transition-colors text-sm"
+                >
+                  {showAlerts ? "Hide Alerts" : "Show Alerts"}
+                </button>
+              </div>
+            )}
+
+            <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg p-4 sticky top-32">
               <div className="flex items-center gap-2 mb-4">
                 <div className="text-2xl">📊</div>
                 <h3 className="text-lg font-semibold text-white">Audit & Export</h3>
@@ -267,6 +341,40 @@ export default function HospitalPortal() {
 
           {/* Main Content */}
           <div className="lg:col-span-3 space-y-8">
+            {/* Application Alerts Section */}
+            {showAlerts && staffAlerts.length > 0 && (
+              <div className="bg-gradient-to-br from-cyan-950/20 to-blue-950/20 border border-cyan-400/20 rounded-xl p-6">
+                <StaffApplicationAlerts
+                  alerts={staffAlerts}
+                  staffId={user?.id || ""}
+                  onApprove={(alertId) => {
+                    const alert = staffAlerts.find(a => a.id === alertId);
+                    if (alert) {
+                      handleDecisionModalOpen(alert);
+                    }
+                  }}
+                  onDecline={(alertId) => {
+                    const alert = staffAlerts.find(a => a.id === alertId);
+                    if (alert) {
+                      handleDecisionModalOpen(alert);
+                    }
+                  }}
+                  onWaitlist={(alertId) => {
+                    const alert = staffAlerts.find(a => a.id === alertId);
+                    if (alert) {
+                      handleDecisionModalOpen(alert);
+                    }
+                  }}
+                  onMarkAsRead={(alertId, staffId) => {
+                    markStaffAlertAsRead(alertId, staffId);
+                    const updatedAlerts = getStaffAlertsByHospital(user?.hospitalId || "");
+                    setStaffAlerts(updatedAlerts);
+                  }}
+                  loading={loading}
+                />
+              </div>
+            )}
+
             {/* Stats Grid */}
             <div className="grid md:grid-cols-3 gap-6">
               {/* Stats */}
@@ -623,6 +731,29 @@ export default function HospitalPortal() {
           </div>
         </div>
       )}
+
+      {/* Application Decision Modal */}
+      <ApplicationDecisionModal
+        isOpen={showDecisionModal}
+        onClose={() => {
+          setShowDecisionModal(false);
+          setSelectedAlert(null);
+          setSelectedApp(null);
+        }}
+        alert={selectedAlert}
+        application={selectedApp}
+        student={selectedApp ? getStudentData(selectedApp.studentId) : null}
+        staffId={user?.id || ""}
+        onDecisionMade={() => {
+          // Reload alerts and applications
+          const updatedAlerts = getStaffAlertsByHospital(user?.hospitalId || "");
+          const updatedApps = getApplicationsByHospital(user?.hospitalId || "");
+          setStaffAlerts(updatedAlerts);
+          setApplications(updatedApps);
+          handleApplicationDecision(selectedAlert?.id || "", selectedAlert!);
+        }}
+        loading={isPending}
+      />
     </div>
   );
 }

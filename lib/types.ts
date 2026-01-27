@@ -114,12 +114,42 @@ export type Hospital = {
 export interface Notification {
   id: string;
   userId: string;
-  type: "approval" | "rejection" | "submission" | "update";
+  type: "approval" | "rejection" | "submission" | "update" | "application_review";
   title: string;
   message: string;
   isRead: boolean;
   createdAt: string;
   relatedApplicationId?: string;
+}
+
+/* APPLICATION DECISION TRACKING */
+export interface ApplicationDecision {
+  id: string;
+  applicationId: string;
+  studentId: string;
+  hospitalId: string;
+  decision: "approved" | "declined" | "waitlisted";
+  decisionMadeby: string; // Staff/Admin ID who made decision
+  decisionAt: string; // ISO timestamp
+  reason?: string; // Optional reason for decision
+  notes?: string; // Internal staff notes
+  emailSentAt?: string; // Timestamp when notification email was sent
+  appNotificationSentAt?: string; // Timestamp when in-app notification was created
+}
+
+/* STAFF ALERTS FOR NEW APPLICATIONS */
+export interface StaffApplicationAlert {
+  id: string;
+  hospitalId: string;
+  applicationId: string;
+  studentId: string;
+  studentName: string;
+  studentEmail: string;
+  programId: string;
+  submittedAt: string;
+  readBy: string[]; // Array of staff IDs who have read this alert
+  status: "pending" | "approved" | "declined" | "waitlisted";
+  alertCreatedAt: string;
 }
 
 
