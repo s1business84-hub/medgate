@@ -1,7 +1,8 @@
 "use client";
 
-import { motion, useMotionValueEvent, useScroll } from "framer-motion";
-import { useMemo, useRef, useState } from "react";
+import gsap from "gsap";
+import { motion, useMotionValueEvent, useScroll, useTransform } from "framer-motion";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 
 interface ParallaxImageProps {
@@ -228,5 +229,52 @@ export function SplitParallaxImage({
         </div>
       </motion.div>
     </div>
+  );
+}
+
+// Lightweight hero that blends framer-motion scroll transforms with GSAP entrance
+export function Hero() {
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 300], [0, -120]);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".hero-title",
+        { autoAlpha: 0, y: 40 },
+        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power2.out" }
+      );
+      gsap.fromTo(
+        ".hero-kicker",
+        { autoAlpha: 0, y: 20 },
+        { autoAlpha: 1, y: 0, duration: 0.5, delay: 0.1, ease: "power2.out" }
+      );
+    });
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <motion.section
+      style={{ y }}
+      className="relative flex h-screen items-center justify-center overflow-hidden bg-slate-950"
+    >
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-900/60 via-slate-950 to-black" />
+      <motion.div className="relative z-10 space-y-4 text-center">
+        <p className="hero-kicker text-sm uppercase tracking-[0.3em] text-cyan-200/80">
+          Intelligent clinical pathways
+        </p>
+        <motion.h1
+          className="hero-title text-5xl md:text-7xl font-bold text-white drop-shadow-2xl"
+          initial={false}
+          animate={false}
+        >
+          MedGate
+        </motion.h1>
+        <p className="text-lg md:text-xl text-slate-200/80 max-w-2xl mx-auto">
+          Streamlined training orchestration with compliance-ready automation.
+        </p>
+      </motion.div>
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(14,165,233,0.12),transparent_35%),radial-gradient(circle_at_80%_10%,rgba(139,92,246,0.12),transparent_30%)]" />
+    </motion.section>
   );
 }

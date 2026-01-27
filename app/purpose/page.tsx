@@ -5,8 +5,10 @@ import { ArrowLeft, Zap, Plane } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger, Observer, Draggable, SplitText } from "gsap/all";
 
 export default function PurposePage() {
   const [activeCard, setActiveCard] = useState<"students" | "hospitals">("students");
@@ -24,14 +26,68 @@ export default function PurposePage() {
   const planeY = useTransform(scrollYProgress, [0, 1], [0, -20]);
   const planeRotate = useTransform(scrollYProgress, [0, 1], [0, 8]);
 
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger, Observer, Draggable, SplitText);
+    const ctx = gsap.context(() => {
+      const headings = gsap.utils.toArray<HTMLElement>(".purpose-heading");
+      headings.forEach((heading) => {
+        const split = new SplitText(heading, { type: "words" });
+        gsap.from(split.words, {
+          opacity: 0,
+          y: 24,
+          stagger: 0.05,
+          ease: "power2.out",
+          scrollTrigger: { trigger: heading, start: "top 80%" },
+        });
+      });
+
+      gsap.utils.toArray<HTMLElement>(".purpose-card").forEach((card) => {
+        gsap.fromTo(
+          card,
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: { trigger: card, start: "top 85%", toggleActions: "play none none reverse" },
+          }
+        );
+      });
+
+      const panel = document.querySelector(".purpose-plane-panel");
+      if (panel) {
+        Observer.create({
+          target: panel,
+          type: "wheel,touch,pointer",
+          onUp: () => setActiveCard("hospitals"),
+          onDown: () => setActiveCard("students"),
+        });
+      }
+
+      const plane = document.querySelector(".purpose-plane");
+      if (plane) {
+        Draggable.create(plane as Element, {
+          type: "x,y",
+          bounds: panel || window,
+          onDrag: function () {
+            gsap.to(this.target, { rotate: this.x / 15, duration: 0.2, ease: "power2.out", overwrite: "auto" });
+          },
+        });
+      }
+    });
+
+    return () => ctx.revert();
+  }, [setActiveCard]);
+
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-slate-950 text-slate-100">
       <LiquidParallax />
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-linear-to-r from-cyan-600/0 via-indigo-600/10 to-emerald-600/0 animate-pulse" />
-        <div className="absolute inset-0 bg-linear-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-cyan-500/15 rounded-full blur-3xl animate-[float_8s_ease-in-out_infinite]" />
-        <div className="absolute bottom-1/3 left-1/3 w-80 h-80 bg-indigo-500/15 rounded-full blur-3xl animate-[float_10s_ease-in-out_infinite_2s]" />
+        <div className="absolute inset-0 bg-linear-to-r from-cyan-500/0 via-indigo-400/10 to-emerald-500/0 animate-pulse" />
+        <div className="absolute inset-0 bg-linear-to-b from-slate-900/50 via-slate-950/40 to-black/60" />
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-[float_8s_ease-in-out_infinite]" />
+        <div className="absolute bottom-1/3 left-1/3 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl animate-[float_10s_ease-in-out_infinite_2s]" />
       </div>
 
       <div className="relative max-w-4xl mx-auto px-6 py-16">
@@ -43,13 +99,13 @@ export default function PurposePage() {
         </motion.div>
 
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.2 }} className="text-center mb-20">
-          <h1 className="text-5xl md:text-7xl font-bold text-slate-100 mb-8">
+          <h1 className="purpose-heading text-5xl md:text-7xl font-bold text-slate-100 mb-8">
             Our <AnimatedGradientText className="text-5xl md:text-7xl font-bold">Purpose</AnimatedGradientText>
           </h1>
         </motion.div>
 
         <section className="mb-24">
-          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: "easeOut" }} viewport={{ once: true }} className="group relative bg-white/5 border border-white/10 rounded-3xl backdrop-blur-xl p-8 md:p-12 mb-12 overflow-hidden hover:border-cyan-400/30 transition-all duration-500">
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: "easeOut" }} viewport={{ once: true }} className="purpose-card group relative bg-white/5 border border-white/10 rounded-3xl backdrop-blur-xl p-8 md:p-12 mb-12 overflow-hidden hover:border-cyan-400/30 transition-all duration-500">
             <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 1, delay: 0.3 }} viewport={{ once: true }} className="absolute inset-0 bg-linear-to-br from-cyan-500/5 via-transparent to-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
               <motion.div animate={{ y: [0, -20, 0], x: [0, 10, 0], opacity: [0.3, 0.6, 0.3] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }} className="absolute top-10 right-20 w-32 h-32 bg-cyan-400/10 rounded-full blur-3xl" />
@@ -64,7 +120,7 @@ export default function PurposePage() {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                         </svg>
                       </motion.div>
-                      <h2 className="text-3xl md:text-4xl font-bold bg-linear-to-r from-cyan-300 via-sky-200 to-indigo-300 bg-clip-text text-transparent">
+                      <h2 className="purpose-heading text-3xl md:text-4xl font-bold bg-linear-to-r from-cyan-300 via-sky-200 to-indigo-300 bg-clip-text text-transparent">
                         Our Purpose
                       </h2>
                     </div>
@@ -96,25 +152,25 @@ export default function PurposePage() {
 
             <section className="mb-24">
               <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }}>
-                <h2 className="text-3xl font-bold text-slate-100 mb-4">What We Are Building</h2>
+                <h2 className="purpose-heading text-3xl font-bold text-slate-100 mb-4">What We Are Building</h2>
                 <p className="text-lg text-slate-300 leading-relaxed mb-12">
                   Electivio is being developed as a program management and discovery platform designed around real institutional workflows and student needs. We focus on three core areas:
                 </p>
               </motion.div>
               <div className="space-y-6">
-                <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }} className="bg-white/5 border border-white/10 rounded-2xl backdrop-blur-xl p-8 hover:bg-white/10 transition-all duration-300">
+                <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }} className="purpose-card bg-white/5 border border-white/10 rounded-2xl backdrop-blur-xl p-8 hover:bg-white/10 transition-all duration-300">
                   <h3 className="text-2xl font-bold text-cyan-300 mb-3">1. Program Standardization</h3>
                   <p className="text-lg text-slate-300 leading-relaxed">
                     We help hospitals and clinics publish observership and elective programs with clearly defined eligibility criteria, documentation requirements, duration, and intake limits—set entirely by the institution.
                   </p>
                 </motion.div>
-                <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }} className="bg-white/5 border border-white/10 rounded-2xl backdrop-blur-xl p-8 hover:bg-white/10 transition-all duration-300">
+                <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }} className="purpose-card bg-white/5 border border-white/10 rounded-2xl backdrop-blur-xl p-8 hover:bg-white/10 transition-all duration-300">
                   <h3 className="text-2xl font-bold text-indigo-300 mb-3">2. Administrative Efficiency</h3>
                   <p className="text-lg text-slate-300 leading-relaxed">
                     By centralizing program information and application workflows, Electivio reduces repetitive back and forth communication and improves visibility for students and administrators alike.
                   </p>
                 </motion.div>
-                <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.4 }} className="bg-white/5 border border-white/10 rounded-2xl backdrop-blur-xl p-8 hover:bg-white/10 transition-all duration-300">
+                <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.4 }} className="purpose-card bg-white/5 border border-white/10 rounded-2xl backdrop-blur-xl p-8 hover:bg-white/10 transition-all duration-300">
                   <h3 className="text-2xl font-bold text-emerald-300 mb-3">3. Institutional Control & Governance</h3>
                   <p className="text-lg text-slate-300 leading-relaxed">
                     Electivio is built institution-first. Hospitals retain full control over program approvals, intake capacity, and internal policies while benefiting from a structured digital interface.
@@ -124,8 +180,8 @@ export default function PurposePage() {
             </section>
 
             <section className="mb-24">
-              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="bg-linear-to-br from-cyan-600/20 to-indigo-600/20 border border-cyan-500/30 rounded-3xl backdrop-blur-xl p-8 md:p-12">
-                <h2 className="text-3xl font-bold text-slate-100 mb-6">Our Focus Today</h2>
+              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="purpose-card bg-linear-to-br from-cyan-600/20 to-indigo-600/20 border border-cyan-500/30 rounded-3xl backdrop-blur-xl p-8 md:p-12">
+                <h2 className="purpose-heading text-3xl font-bold text-slate-100 mb-6">Our Focus Today</h2>
                 <p className="text-lg text-slate-300 leading-relaxed mb-8">
                   Electivio is currently in early development and preparing for pilot collaborations with healthcare institutions across the UAE.
                 </p>
@@ -163,7 +219,7 @@ export default function PurposePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: false, amount: 0.3 }}
                 transition={{ duration: 0.6 }}
-                className="relative overflow-hidden rounded-3xl backdrop-blur-xl p-8 md:p-12"
+                className="purpose-card purpose-plane-panel relative overflow-hidden rounded-3xl backdrop-blur-xl p-8 md:p-12"
                 style={{
                   // Base background with subtle white tint; red overlay comes via absolute layer
                   background: "rgba(255,255,255,0.05)",
@@ -184,7 +240,7 @@ export default function PurposePage() {
                 />
 
                 <motion.h2
-                  className="text-3xl font-bold mb-6"
+                  className="purpose-heading text-3xl font-bold mb-6"
                   style={{ color: headingColor }}
                 >
                   Looking Ahead
@@ -197,7 +253,7 @@ export default function PurposePage() {
                   {/* Plane flying from the paragraph as you scroll */}
                   <motion.div
                     aria-hidden
-                    className="absolute top-1/2 left-0 -translate-y-1/2"
+                    className="purpose-plane absolute top-1/2 left-0 -translate-y-1/2"
                     style={{ x: planeX, y: planeY, rotate: planeRotate }}
                   >
                     <div className="w-10 h-10 rounded-full bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center shadow-lg">
@@ -210,7 +266,7 @@ export default function PurposePage() {
 
             <section className="mb-24">
               <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold text-slate-100 mb-6">
+                <h2 className="purpose-heading text-3xl font-bold text-slate-100 mb-6">
                   Join <AnimatedGradientText>Electivio</AnimatedGradientText>
                 </h2>
                 <p className="text-lg text-slate-300 mb-8">
@@ -242,7 +298,7 @@ export default function PurposePage() {
               <div className="relative h-80 md:h-72">
                 <AnimatePresence mode="wait">
                   {activeCard === "students" ? (
-                    <motion.div key="students" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="absolute inset-0 bg-linear-to-br from-cyan-600/30 to-blue-600/30 border border-cyan-500/50 rounded-3xl backdrop-blur-xl p-8 md:p-12 shadow-2xl overflow-hidden group">
+                    <motion.div key="students" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="purpose-card absolute inset-0 bg-linear-to-br from-cyan-600/30 to-blue-600/30 border border-cyan-500/50 rounded-3xl backdrop-blur-xl p-8 md:p-12 shadow-2xl overflow-hidden group">
                       <div className="absolute -top-40 -right-40 w-80 h-80 bg-cyan-400/20 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-500" />
                       <div className="relative z-10">
                         <h3 className="text-3xl font-bold text-white mb-6">Browse Programs</h3>
@@ -257,7 +313,7 @@ export default function PurposePage() {
                       </div>
                     </motion.div>
                   ) : (
-                    <motion.div key="hospitals" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="absolute inset-0 bg-linear-to-br from-emerald-600/30 to-teal-600/30 border border-emerald-500/50 rounded-3xl backdrop-blur-xl p-8 md:p-12 shadow-2xl overflow-hidden group">
+                    <motion.div key="hospitals" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="purpose-card absolute inset-0 bg-linear-to-br from-emerald-600/30 to-teal-600/30 border border-emerald-500/50 rounded-3xl backdrop-blur-xl p-8 md:p-12 shadow-2xl overflow-hidden group">
                       <div className="absolute -top-40 -right-40 w-80 h-80 bg-emerald-400/20 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-500" />
                       <div className="relative z-10">
                         <h3 className="text-3xl font-bold text-white mb-6">For Hospitals</h3>

@@ -165,19 +165,25 @@ export default function SupervisorDashboard() {
   // (removed unused mockStudentsLocal)
 
   useEffect(() => {
-    const saved = typeof window !== "undefined" ? window.localStorage.getItem("supervisor_students") : null;
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved) as StudentData[];
-        setStudents(parsed);
+    const loadData = () => {
+      const saved = typeof window !== "undefined" ? window.localStorage.getItem("supervisor_students") : null;
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved) as StudentData[];
+          setStudents(parsed);
+          setLoading(false);
+          return;
+        } catch {
+          // Fall through to default data
+        }
+      }
+      setTimeout(() => {
+        setStudents(mockStudents);
         setLoading(false);
-        return;
-      } catch {}
-    }
-    setTimeout(() => {
-      setStudents(mockStudents);
-      setLoading(false);
-    }, 800);
+      }, 800);
+    };
+    
+    loadData();
   }, []);
 
   useEffect(() => {
@@ -209,9 +215,15 @@ export default function SupervisorDashboard() {
   };
 
   const addObservership = (id: string, obs: Omit<Observership, "id">) => {
-    const newObs: Observership = { id: `OBS-${Math.random().toString(36).slice(2, 7)}`, ...obs };
     setStudents((prev) =>
-      prev.map((s) => (s.id === id ? { ...s, observerships: [...(s.observerships || []), newObs] } : s))
+      prev.map((s) => {
+        if (s.id === id) {
+          const randomId = `OBS-${Math.random().toString(36).slice(2, 7)}`;
+          const newObs: Observership = { id: randomId, ...obs };
+          return { ...s, observerships: [...(s.observerships || []), newObs] };
+        }
+        return s;
+      })
     );
   };
 

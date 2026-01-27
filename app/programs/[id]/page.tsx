@@ -12,6 +12,7 @@ import ExposureAcknowledgementLog from "@/app/audit/exposure-log";
 import { useAuth } from "@/lib/auth-context";
 import { use } from "react";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
+import { fadeInOnScroll, slideInOnScroll } from "@/lib/gsap-animations";
 
 
 function ProgramContent({ id }: { id: string }) {
@@ -105,6 +106,22 @@ function ProgramContent({ id }: { id: string }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id, program?.id]);
 
+  // Reveal-on-scroll animations for key sections
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const tweens = [
+      fadeInOnScroll('.program-hero'),
+      slideInOnScroll('.requirements-card', 'up'),
+      slideInOnScroll('.hospital-card', 'up'),
+      slideInOnScroll('.detail-card', 'up'),
+    ];
+    return () => {
+      tweens.forEach((t) => {
+        if (t && typeof t.kill === 'function') t.kill();
+      });
+    };
+  }, [program?.id]);
+
   if (!program) return (
     <main className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100 flex items-center justify-center">
       <LiquidParallax />
@@ -134,7 +151,7 @@ function ProgramContent({ id }: { id: string }) {
         </div>
 
         {/* Header */}
-        <div className="text-center mb-12 animate-fade-in" style={{ animationDelay: '0.1s' }}>
+        <div className="text-center mb-12 program-hero" style={{ animationDelay: '0.1s' }}>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4 text-center sm:text-left">
             <div className="w-16 h-16 bg-cyan-500/20 rounded-2xl flex items-center justify-center sm:mr-4 border border-cyan-300/30">
               <svg className="w-8 h-8 text-cyan-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -223,8 +240,7 @@ function ProgramContent({ id }: { id: string }) {
 
         {/* Requirements Section */}
         <div
-          className="animate-fade-in rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg drop-shadow-[0_0_10px_rgba(34,211,238,0.4)] p-6 md:p-8"
-          style={{ animationDelay: '0.2s' }}
+          className="requirements-card rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg drop-shadow-[0_0_10px_rgba(34,211,238,0.4)] p-6 md:p-8"
         >
           <div className="flex items-center mb-6">
             <div className="w-10 h-10 bg-cyan-500/20 rounded-lg flex items-center justify-center mr-3 border border-cyan-300/30">
@@ -248,8 +264,7 @@ function ProgramContent({ id }: { id: string }) {
 
         {/* Hospital Information */}
         <div
-          className="animate-fade-in rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.45)] p-6 md:p-8"
-          style={{ animationDelay: '0.25s' }}
+          className="hospital-card rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.45)] p-6 md:p-8"
         >
           <div className="flex items-center mb-6">
             <div className="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center mr-3 border border-purple-300/30">
@@ -310,8 +325,7 @@ function ProgramContent({ id }: { id: string }) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Eligibility */}
           <div
-            className="animate-fade-in rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.45)] p-6 md:p-8"
-            style={{ animationDelay: '0.3s' }}
+            className="detail-card rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.45)] p-6 md:p-8"
           >
             <div className="flex items-center mb-4">
               <div className="w-10 h-10 bg-emerald-500/20 rounded-lg flex items-center justify-center mr-3 border border-emerald-300/30">
@@ -339,8 +353,7 @@ function ProgramContent({ id }: { id: string }) {
 
           {/* Logistics */}
           <div
-            className="animate-fade-in rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.45)] p-6 md:p-8"
-            style={{ animationDelay: '0.4s' }}
+            className="detail-card rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.45)] p-6 md:p-8"
           >
             <div className="flex items-center mb-4">
               <div className="w-10 h-10 bg-sky-500/20 rounded-lg flex items-center justify-center mr-3 border border-sky-300/30">
@@ -401,8 +414,7 @@ function ProgramContent({ id }: { id: string }) {
 
         {/* Documents Required */}
         <div
-          className="animate-fade-in rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.45)] p-6 md:p-8"
-          style={{ animationDelay: '0.5s' }}
+          className="detail-card rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.45)] p-6 md:p-8"
         >
           <div className="flex items-center mb-6">
             <div className="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center mr-3 border border-amber-300/30">
@@ -447,7 +459,7 @@ function ProgramContent({ id }: { id: string }) {
         </div>
 
         {/* Apply Button (only enabled after acknowledgement) */}
-          <div className="text-center animate-fade-in" style={{ animationDelay: '0.7s' }}>
+          <div className="detail-card text-center">
           <div className="max-w-2xl mx-auto mb-4">
             <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-left flex items-start gap-3">
               <input

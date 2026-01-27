@@ -17,13 +17,14 @@ export const useGSAPAnimation = (
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (ref.current) {
-      animationFn(ref.current, options);
+    const element = ref.current;
+    if (element) {
+      animationFn(element, options);
     }
 
     return () => {
-      if (ref.current) {
-        gsap.killTweensOf(ref.current);
+      if (element) {
+        gsap.killTweensOf(element);
       }
     };
   }, [animationFn, options]);
@@ -40,13 +41,14 @@ export const useGSAPScrollAnimation = (
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (ref.current) {
-      animationFn(ref.current);
+    const element = ref.current;
+    if (element) {
+      animationFn(element);
     }
 
     return () => {
-      if (ref.current) {
-        gsap.killTweensOf(ref.current);
+      if (element) {
+        gsap.killTweensOf(element);
       }
     };
   }, [animationFn]);
@@ -94,10 +96,11 @@ export const useGSAPStagger = (
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (ref.current) {
+    const container = ref.current;
+    if (container) {
       const elements = selector
-        ? Array.from(ref.current.querySelectorAll(selector))
-        : Array.from(ref.current.children);
+        ? Array.from(container.querySelectorAll(selector))
+        : Array.from(container.children);
 
       if (elements.length > 0) {
         animationFn(elements);
@@ -105,8 +108,8 @@ export const useGSAPStagger = (
     }
 
     return () => {
-      if (ref.current) {
-        gsap.killTweensOf(ref.current.children);
+      if (container) {
+        gsap.killTweensOf(container.children);
       }
     };
   }, [animationFn, selector]);
@@ -119,7 +122,7 @@ export const useGSAPStagger = (
  */
 export const useGSAPTimeline = (
   setupFn: (timeline: gsap.core.Timeline) => void,
-  deps?: any[]
+  deps: any[] = []
 ) => {
   const ref = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
@@ -135,7 +138,8 @@ export const useGSAPTimeline = (
         timelineRef.current.kill();
       }
     };
-  }, deps || [setupFn]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
 
   return ref;
 };

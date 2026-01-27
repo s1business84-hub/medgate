@@ -11,7 +11,7 @@ import { AnimatedGradientText } from "@/components/ui/animated-gradient-text"
 import { RevealText } from "@/components/ui/reveal-text"
 import { MagneticHover } from "@/components/ui/magnetic-hover"
 import Reveal from "@/components/Reveal"
-import MagneticButton from "@/components/MagneticButton"
+
 const stats = [
   {
     label: "Infrastructure",
@@ -28,13 +28,6 @@ const stats = [
     value: "Development Phase",
     icon: CheckCircle,
   },
-]
-
-const features = [
-  "Streamlined application workflows (planned)",
-  "Application status dashboard (planned)",
-  "Institution onboarding workflows (in development)",
-  "Eligibility criteria logic (in development)",
 ]
 
 export function Hero() {
@@ -71,7 +64,7 @@ export function Hero() {
       {/* Refined background with subtle gradients */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(99,102,241,0.08),transparent_40%),radial-gradient(circle_at_70%_60%,rgba(59,130,246,0.06),transparent_35%)]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900/50 to-slate-950" />
+        <div className="absolute inset-0 bg-linear-to-b from-slate-950 via-slate-900/50 to-slate-950" />
       </div>
 
       <div className="mx-auto max-w-7xl px-6 lg:px-8 py-24 sm:py-32">
@@ -142,73 +135,30 @@ export function Hero() {
             </div>
           </Reveal>
 
-          {/* Features List */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
-            viewport={{ once: true }}
-            className="mt-8 sm:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 text-sm text-slate-600"
-          >
-            {features.map((feature) => (
-              <div key={feature} className="flex items-center justify-center sm:justify-start">
-                <CheckCircle className="mr-2 h-4 w-4 text-green-500 shrink-0" />
-                <span className="text-center sm:text-left">{feature}</span>
-              </div>
-            ))}
-          </motion.div>
-        </div>
-
-        {/* Stats with Flow Design Agency hover effects */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
-          className="mx-auto mt-16 sm:mt-20 max-w-7xl px-4"
-        >
-          <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-3">
-            {stats.map((stat, index) => (
+          {/* Stats section with refined design */}
+          <div className="hero-stats mt-20 grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            {stats.map((stat) => (
               <motion.div
                 key={stat.label}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                whileHover={{ 
-                  scale: 1.05,
-                  y: -5,
-                  transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] }
-                }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.6 + index * 0.1 }}
-                className="relative overflow-hidden rounded-2xl bg-white/10 backdrop-blur-md p-6 sm:p-8 shadow-lg ring-1 ring-white/20 hover:bg-white/15 hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-500 cursor-pointer group"
+                className="hero-stat group relative"
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.3 }}
               >
-                <div className="flex items-center">
-                  <motion.div 
-                    className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-gradient-to-r from-blue-400 to-indigo-400 shadow-lg"
-                    whileHover={{ rotate: 360 }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    <stat.icon className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
-                  </motion.div>
-                  <div className="ml-3 sm:ml-4">
-                    <div className="text-2xl sm:text-3xl font-bold text-white group-hover:text-blue-200 transition-colors">{stat.value}</div>
-                    <div className="text-xs sm:text-sm text-blue-200 group-hover:text-blue-100 transition-colors">{stat.label}</div>
+                <div className="relative rounded-2xl bg-slate-900/50 backdrop-blur-sm border border-slate-800 p-6 hover:border-slate-700 transition-all duration-300">
+                  <div className="flex items-center gap-4">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-cyan-500/20 to-blue-500/20 border border-cyan-500/30">
+                      <stat.icon className="h-6 w-6 text-cyan-400" />
+                    </div>
+                    <div>
+                      <div className="text-2xl font-bold text-white">{stat.value}</div>
+                      <div className="text-sm text-slate-400">{stat.label}</div>
+                    </div>
                   </div>
                 </div>
-                <motion.div 
-                  className="absolute -right-2 -top-2 sm:-right-4 sm:-top-4 h-16 w-16 sm:h-24 sm:w-24 rounded-full bg-gradient-to-br from-blue-400 to-indigo-400"
-                  animate={{
-                    scale: [1, 1.2, 1],
-                    opacity: [0.1, 0.2, 0.1]
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                />
               </motion.div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

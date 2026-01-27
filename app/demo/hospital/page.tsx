@@ -53,7 +53,7 @@ export default function HospitalDemoPage() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
       <LiquidParallax />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
+      <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
 
       <motion.div
         className="relative max-w-6xl mx-auto px-4 py-20"
@@ -73,7 +73,7 @@ export default function HospitalDemoPage() {
 
         {/* Header */}
         <motion.div variants={itemVariants} className="mb-12">
-          <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-red-400 via-orange-400 to-yellow-400 bg-clip-text text-transparent">
+          <h1 className="text-5xl font-bold mb-4 bg-linear-to-r from-red-400 via-orange-400 to-yellow-400 bg-clip-text text-transparent">
             Hospital Admin Dashboard
           </h1>
           <p className="text-xl text-slate-300">
@@ -92,7 +92,7 @@ export default function HospitalDemoPage() {
             <motion.div
               key={idx}
               variants={itemVariants}
-              className={`rounded-xl border border-white/10 bg-gradient-to-br ${stat.color}/10 p-6 backdrop-blur-sm hover:border-white/20 transition-colors`}
+              className={`rounded-xl border border-white/10 bg-linear-to-br ${stat.color}/10 p-6 backdrop-blur-sm hover:border-white/20 transition-colors`}
             >
               <stat.icon className="w-6 h-6 mb-3 text-white" />
               <p className="text-slate-400 text-sm mb-1">{stat.label}</p>
@@ -132,7 +132,7 @@ export default function HospitalDemoPage() {
                 {/* Progress Bar */}
                 <div className="bg-slate-700/50 rounded-full h-3 overflow-hidden">
                   <motion.div
-                    className="h-full bg-gradient-to-r from-orange-500 to-red-500"
+                    className="h-full bg-linear-to-r from-orange-500 to-red-500"
                     initial={{ width: 0 }}
                     animate={{ width: `${trainee.completion}%` }}
                     transition={{ duration: 1, delay: idx * 0.2 }}
@@ -148,7 +148,7 @@ export default function HospitalDemoPage() {
         <motion.div variants={itemVariants} className="mt-12 text-center">
           <p className="text-slate-400 mb-4">This is a demo of the hospital admin dashboard. Register your institution to get started.</p>
           <Link href="/login?role=hospital">
-            <button className="px-8 py-3 rounded-lg bg-gradient-to-r from-orange-500 to-red-500 font-semibold hover:shadow-lg hover:shadow-orange-500/50 transition-all">
+            <button className="px-8 py-3 rounded-lg bg-linear-to-r from-orange-500 to-red-500 font-semibold hover:shadow-lg hover:shadow-orange-500/50 transition-all">
               Register Hospital
             </button>
           </Link>

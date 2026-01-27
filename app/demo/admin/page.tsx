@@ -2,10 +2,10 @@
 
 import { motion, cubicBezier } from "framer-motion";
 import Link from "next/link";
-import { ArrowLeft, BarChart3, TrendingUp, Users, AlertCircle } from "lucide-react";
+import { ArrowLeft, BarChart3, Shield, Zap, Globe } from "lucide-react";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
 
-export default function SupervisorDemoPage() {
+export default function AdminDemoPage() {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -28,28 +28,28 @@ export default function SupervisorDemoPage() {
 
   const features = [
     {
-      icon: Users,
-      title: "Student Progress Tracking",
-      description: "Monitor clinical development for all assigned students with GMUID and year-level data.",
-      metrics: "5 Students",
+      icon: Globe,
+      title: "Global Network Management",
+      description: "Oversee all participating institutions and their training programs worldwide.",
+      metrics: "156 Institutions",
     },
     {
       icon: BarChart3,
-      title: "Form Progress Visualization",
-      description: "Track completion status across multiple clinical rotations and competency areas.",
-      metrics: "Avg 73% Complete",
+      title: "Analytics & Insights",
+      description: "Real-time dashboards tracking trainee completion rates and program effectiveness.",
+      metrics: "2,847 Active Trainees",
     },
     {
-      icon: TrendingUp,
-      title: "AI-Powered Insights",
-      description: "Get automated analysis of student performance trends and intervention recommendations.",
-      metrics: "Real-time Analytics",
+      icon: Shield,
+      title: "Compliance & Verification",
+      description: "Manage credential verification and ensure regulatory compliance across all institutions.",
+      metrics: "99.8% Verified",
     },
     {
-      icon: AlertCircle,
-      title: "Performance Alerts",
-      description: "Identify students needing support and track year-wise performance metrics.",
-      metrics: "1 Needs Support",
+      icon: Zap,
+      title: "System Performance",
+      description: "Monitor platform health, manage user accounts, and system-wide configurations.",
+      metrics: "99.99% Uptime",
     },
   ];
 
@@ -77,20 +77,20 @@ export default function SupervisorDemoPage() {
         {/* Header */}
         <motion.div variants={itemVariants} className="mb-12">
           <h1 className="text-5xl font-bold mb-4 bg-linear-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent">
-            Supervisor Dashboard
+            Admin Control Panel
           </h1>
           <p className="text-xl text-slate-300">
-            Track student progress, visualize clinical development, and gain AI-powered insights into your cohort's performance.
+            Advanced system management tools for overseeing the MedGate platform and all connected institutions.
           </p>
         </motion.div>
 
         {/* Key Metrics */}
         <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-12">
           {[
-            { label: "Total Students", value: "5", color: "from-purple-500 to-pink-500" },
-            { label: "Avg Form Progress", value: "73%", color: "from-blue-500 to-cyan-500" },
-            { label: "Avg Log Entries", value: "10", color: "from-green-500 to-emerald-500" },
-            { label: "Programs Completed", value: "10", color: "from-orange-500 to-yellow-500" },
+            { label: "Total Institutions", value: "156", color: "from-purple-500 to-pink-500" },
+            { label: "Active Users", value: "3,200+", color: "from-blue-500 to-cyan-500" },
+            { label: "Programs Listed", value: "2,100+", color: "from-green-500 to-emerald-500" },
+            { label: "Platform Health", value: "Optimal", color: "from-orange-500 to-yellow-500" },
           ].map((metric, idx) => (
             <motion.div
               key={idx}
@@ -105,7 +105,7 @@ export default function SupervisorDemoPage() {
 
         {/* Features Grid */}
         <motion.div variants={itemVariants}>
-          <h2 className="text-2xl font-bold mb-6">Supervisor Features</h2>
+          <h2 className="text-2xl font-bold mb-6">Admin Features</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {features.map((feature, idx) => (
               <motion.div
@@ -130,54 +130,28 @@ export default function SupervisorDemoPage() {
           </div>
         </motion.div>
 
-        {/* Student Data Sample */}
+        {/* Security Notice */}
         <motion.div
           variants={itemVariants}
           className="mt-12 rounded-xl border border-purple-500/30 bg-purple-500/10 backdrop-blur-sm p-6"
         >
-          <div className="mb-6">
-            <h3 className="text-lg font-semibold text-purple-300 mb-4">Sample Student Data</h3>
-            <div className="space-y-3">
-              <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10">
-                <div>
-                  <p className="font-semibold text-white">Ahmed Al Mansouri</p>
-                  <p className="text-xs text-purple-300">GMUID: GMU-2024-001 | Year 4</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-lg font-bold text-cyan-400">85%</p>
-                  <p className="text-xs text-slate-400">Form Progress</p>
-                </div>
-              </div>
-              <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10">
-                <div>
-                  <p className="font-semibold text-white">Fatima Al Kaabi</p>
-                  <p className="text-xs text-purple-300">GMUID: GMU-2024-002 | Year 3</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-lg font-bold text-cyan-400">72%</p>
-                  <p className="text-xs text-slate-400">Form Progress</p>
-                </div>
-              </div>
-              <div className="flex items-center justify-between p-3 bg-red-500/10 rounded-lg border border-red-500/30">
-                <div>
-                  <p className="font-semibold text-white">Hassan Al Noor</p>
-                  <p className="text-xs text-purple-300">GMUID: GMU-2024-005 | Year 1</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-lg font-bold text-red-400">45%</p>
-                  <p className="text-xs text-slate-400">Needs Support</p>
-                </div>
-              </div>
+          <div className="flex items-start gap-3">
+            <Shield className="w-6 h-6 text-purple-300 shrink-0 mt-1" />
+            <div>
+              <h3 className="text-lg font-semibold text-purple-300 mb-2">Enterprise Security</h3>
+              <p className="text-slate-300">
+                All admin activities are logged and monitored. Two-factor authentication is required for all accounts. Data is encrypted end-to-end.
+              </p>
             </div>
           </div>
         </motion.div>
 
         {/* Call to Action */}
         <motion.div variants={itemVariants} className="mt-12 text-center">
-          <p className="text-slate-400 mb-4">Ready to monitor your students' progress?</p>
-          <Link href="/supervisor">
+          <p className="text-slate-400 mb-4">This is a demo of the admin control panel. Contact us to request administrator access.</p>
+          <Link href="/login">
             <button className="px-8 py-3 rounded-lg bg-linear-to-r from-purple-500 to-pink-500 font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all">
-              Access Full Dashboard
+              Back to Login
             </button>
           </Link>
         </motion.div>
