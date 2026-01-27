@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, startTransition } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, User, Users, ArrowLeft, Search } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
@@ -34,9 +34,11 @@ export function StudentChat() {
   const loadConversations = useCallback(() => {
     if (!user) return;
     const convs = getConversations(user.id, "supervisor");
-    setConversations(convs.sort((a, b) => 
-      new Date(b.lastMessageAt).getTime() - new Date(a.lastMessageAt).getTime()
-    ));
+    startTransition(() => {
+      setConversations(convs.sort((a, b) => 
+        new Date(b.lastMessageAt).getTime() - new Date(a.lastMessageAt).getTime()
+      ));
+    });
   }, [user]);
 
   useEffect(() => {

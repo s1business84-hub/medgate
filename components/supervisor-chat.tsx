@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, startTransition } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, User, Sparkles } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
@@ -46,47 +46,49 @@ export function SupervisorChat() {
     
     const conversations = getConversations(user.id, "student");
     
-    if (conversations.length > 0) {
-      // Get the most recent conversation
-      const conv = conversations.sort((a, b) => 
-        new Date(b.lastMessageAt).getTime() - new Date(a.lastMessageAt).getTime()
-      )[0];
-      
-      setActiveConversation(conv);
-      
-      const msgs = getMessages(conv.id);
-      
-      if (msgs.length > 0) {
-        setHasRealMessages(true);
+    startTransition(() => {
+      if (conversations.length > 0) {
+        // Get the most recent conversation
+        const conv = conversations.sort((a, b) => 
+          new Date(b.lastMessageAt).getTime() - new Date(a.lastMessageAt).getTime()
+        )[0];
         
-        // Convert to Message format
-        const formattedMessages: Message[] = msgs.map(m => ({
-          id: m.id,
-          text: m.message,
-          sender: m.senderRole === "student" ? "student" : "supervisor",
-          timestamp: new Date(m.timestamp),
-        }));
+        setActiveConversation(conv);
         
-        setMessages(formattedMessages);
+        const msgs = getMessages(conv.id);
         
-        // Mark as read when opened
-        if (isOpen) {
-          markMessagesAsRead(conv.id, user.id);
+        if (msgs.length > 0) {
+          setHasRealMessages(true);
+          
+          // Convert to Message format
+          const formattedMessages: Message[] = msgs.map(m => ({
+            id: m.id,
+            text: m.message,
+            sender: m.senderRole === "student" ? "student" : "supervisor",
+            timestamp: new Date(m.timestamp),
+          }));
+          
+          setMessages(formattedMessages);
+          
+          // Mark as read when opened
+          if (isOpen) {
+            markMessagesAsRead(conv.id, user.id);
+          }
         }
+        
+        // Calculate unread
+        const totalUnread = conversations.reduce((sum, c) => sum + c.unreadCount.student, 0);
+        setUnreadCount(totalUnread);
+      } else {
+        // No real conversations, show welcome message
+        setMessages([{
+          id: "1",
+          text: "Hello! I'm here to help answer your questions about the program, requirements, and next steps.",
+          sender: "supervisor",
+          timestamp: new Date(),
+        }]);
       }
-      
-      // Calculate unread
-      const totalUnread = conversations.reduce((sum, c) => sum + c.unreadCount.student, 0);
-      setUnreadCount(totalUnread);
-    } else {
-      // No real conversations, show welcome message
-      setMessages([{
-        id: "1",
-        text: "Hello! I'm here to help answer your questions about the program, requirements, and next steps.",
-        sender: "supervisor",
-        timestamp: new Date(),
-      }]);
-    }
+    });
   }, [user, isOpen]);
 
   useEffect(() => {
