@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import { CheckCircle, Users, Award, ArrowRight } from "lucide-react"
 import Link from "next/link"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/all"
 
@@ -11,6 +11,7 @@ import { AnimatedGradientText } from "@/components/ui/animated-gradient-text"
 import { RevealText } from "@/components/ui/reveal-text"
 import { MagneticHover } from "@/components/ui/magnetic-hover"
 import Reveal from "@/components/Reveal"
+import { PageTransition } from "@/components/ui/page-transition"
 
 const stats = [
   {
@@ -32,6 +33,14 @@ const stats = [
 
 export function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false)
+  const [targetUrl, setTargetUrl] = useState<string>("")
+
+  const handleNavigate = (e: React.MouseEvent, url: string) => {
+    e.preventDefault()
+    setTargetUrl(url)
+    setIsTransitioning(true)
+  }
 
   useEffect(() => {
     if (typeof window === "undefined" || !heroRef.current) return;
@@ -61,6 +70,13 @@ export function Hero() {
 
   return (
     <section ref={heroRef} className="relative min-h-screen flex items-center overflow-hidden bg-slate-950">
+      {/* Page transition */}
+      <PageTransition 
+        isOpen={isTransitioning} 
+        onComplete={() => setIsTransitioning(false)}
+        targetUrl={targetUrl}
+      />
+
       {/* Refined background with subtle gradients */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(99,102,241,0.08),transparent_40%),radial-gradient(circle_at_70%_60%,rgba(59,130,246,0.06),transparent_35%)]" />
@@ -117,12 +133,13 @@ export function Hero() {
           <Reveal delay={0.7} y={30}>
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
               <MagneticHover>
-                <Link href="/programs">
-                  <button className="group relative inline-flex items-center gap-2 bg-white text-slate-900 px-8 py-4 rounded-full font-semibold text-base hover:bg-slate-100 transition-all duration-500 shadow-lg hover:shadow-2xl hover:scale-105">
-                    <span>Browse Programs</span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-                  </button>
-                </Link>
+                <button 
+                  onClick={(e) => handleNavigate(e, "/programs")}
+                  className="group relative inline-flex items-center gap-2 bg-white text-slate-900 px-8 py-4 rounded-full font-semibold text-base hover:bg-slate-100 transition-all duration-500 shadow-lg hover:shadow-2xl hover:scale-105"
+                >
+                  <span>Browse Programs</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                </button>
               </MagneticHover>
               
               <MagneticHover>

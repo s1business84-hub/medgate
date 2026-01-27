@@ -237,16 +237,6 @@ export default function LoginForm() {
               ← Back to Home
             </Link>
           </div>
-
-          <div className="mt-6 p-4 bg-white/5 border border-white/10 rounded-lg space-y-2">
-            <p className="text-sm text-slate-200 font-semibold">Demo Credentials</p>
-            <p className="text-sm text-slate-200">
-              Student: <span className="font-mono">student@example.com</span> / <span className="font-mono">password</span><br />
-              Hospital: <span className="font-mono">hospital1@electivio.com</span> / <span className="font-mono">password</span><br />
-              Admin: <span className="font-mono">admin@example.com</span> / <span className="font-mono">password</span>
-            </p>
-            <p className="text-xs text-slate-400">Admin is a platform-wide role; hospital users only see their hospital workspace. Demo credentials are provided for preview purposes only.</p>
-          </div>
         </div>
       </div>
     </div>

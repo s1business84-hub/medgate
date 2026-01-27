@@ -14,17 +14,13 @@ export default function PurposePage() {
   const [activeCard, setActiveCard] = useState<"students" | "hospitals">("students");
   const lookingAheadRef = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({ target: lookingAheadRef, offset: ["start end", "end start"] });
-  // Background red overlay opacity on scroll
+  // Background overlay opacity on scroll
   const redBgOpacity = useTransform(scrollYProgress, [0, 1], [0, 0.35]);
-  // Heading color transition from slate-100 to red-500
-  const headingColor = useTransform(scrollYProgress, [0, 1], ["#e2e8f0", "#ef4444"]);
-  // Border highlight to subtle red on scroll
-  const borderRedOpacity = useTransform(scrollYProgress, [0, 1], [0.1, 0.4]);
-  const borderShadow = useTransform(borderRedOpacity, (o) => `0 0 0 1px rgba(239,68,68,${o})`);
-  // Plane flight path
-  const planeX = useTransform(scrollYProgress, [0, 1], [0, 320]);
-  const planeY = useTransform(scrollYProgress, [0, 1], [0, -20]);
-  const planeRotate = useTransform(scrollYProgress, [0, 1], [0, 8]);
+  // Plane flight path - from bottom-left corner flying up to top-right (touching the sky)
+  const planeX = useTransform(scrollYProgress, [0, 1], [0, 500]);
+  const planeY = useTransform(scrollYProgress, [0, 1], [0, -400]);
+  const planeRotate = useTransform(scrollYProgress, [0, 1], [-45, -35]);
+  const planeOpacity = useTransform(scrollYProgress, [0, 0.2, 0.9, 1], [0, 1, 1, 0]);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger, Observer, Draggable, SplitText);
@@ -219,7 +215,7 @@ export default function PurposePage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.6 }}
-            className="purpose-card purpose-plane-panel relative overflow-hidden rounded-3xl backdrop-blur-xl p-8 md:p-12"
+            className="purpose-card purpose-plane-panel relative overflow-visible rounded-3xl backdrop-blur-xl p-8 md:p-12"
             style={{
               background: "rgba(255,255,255,0.6)",
               border: "1px solid rgb(203 213 225)",
@@ -228,7 +224,7 @@ export default function PurposePage() {
             {/* Subtle overlay that changes with scroll */}
             <motion.div
               aria-hidden
-              className="pointer-events-none absolute inset-0 bg-gradient-to-br from-blue-100/40 via-purple-50/30 to-pink-100/40"
+              className="pointer-events-none absolute inset-0 bg-gradient-to-br from-blue-100/40 via-purple-50/30 to-pink-100/40 rounded-3xl"
               style={{ opacity: redBgOpacity }}
             />
 
@@ -239,18 +235,71 @@ export default function PurposePage() {
             </motion.h2>
 
             <div className="relative">
-              <p className="text-lg text-slate-700 leading-relaxed pr-16">
+              <p className="text-lg text-slate-700 leading-relaxed mb-4">
                 As the platform evolves, Electivio aims to expand coverage across all UAE emirates and continue improving how clinical training opportunities are accessed and managed—without compromising institutional autonomy or academic standards.
               </p>
-              {/* Plane flying from the paragraph as you scroll */}
+              
+              {/* Plane animation with trail - positioned in top-left, flying toward sky */}
               <motion.div
                 aria-hidden
-                className="purpose-plane absolute top-1/2 left-0 -translate-y-1/2"
-                style={{ x: planeX, y: planeY, rotate: planeRotate }}
+                className="absolute top-0 left-0 pointer-events-none"
+                style={{ 
+                  x: planeX, 
+                  y: planeY,
+                  opacity: planeOpacity
+                }}
               >
-                <div className="w-10 h-10 rounded-full bg-white/60 border border-slate-300 backdrop-blur-md flex items-center justify-center shadow-lg">
-                  <Plane className="w-5 h-5 text-blue-600" />
-                </div>
+                {/* Dotted trail line */}
+                <svg 
+                  className="absolute top-0 left-0 w-[600px] h-[500px]" 
+                  style={{ 
+                    transform: 'translate(-50px, 50px)',
+                    overflow: 'visible'
+                  }}
+                >
+                  <motion.path
+                    d="M 0 400 Q 150 300, 300 150 T 600 0"
+                    stroke="url(#planeGradient)"
+                    strokeWidth="2"
+                    strokeDasharray="8 8"
+                    fill="none"
+                    initial={{ pathLength: 0, opacity: 0 }}
+                    style={{ 
+                      pathLength: scrollYProgress,
+                      opacity: useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 0.6, 0.6, 0])
+                    }}
+                  />
+                  <defs>
+                    <linearGradient id="planeGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="rgb(59, 130, 246)" stopOpacity="0.3" />
+                      <stop offset="50%" stopColor="rgb(99, 102, 241)" stopOpacity="0.6" />
+                      <stop offset="100%" stopColor="rgb(147, 51, 234)" stopOpacity="0.8" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+                
+                {/* Plane icon */}
+                <motion.div
+                  style={{ rotate: planeRotate }}
+                  className="relative"
+                >
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 border-2 border-white backdrop-blur-md flex items-center justify-center shadow-2xl">
+                    <Plane className="w-6 h-6 text-white" />
+                  </div>
+                  {/* Glowing effect */}
+                  <motion.div
+                    className="absolute inset-0 rounded-full bg-blue-400/40 blur-xl"
+                    animate={{
+                      scale: [1, 1.3, 1],
+                      opacity: [0.5, 0.8, 0.5]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
+                </motion.div>
               </motion.div>
             </div>
           </motion.div>

@@ -27,9 +27,6 @@ export default function Navbar() {
             <a className="opacity-80 hover:opacity-100 transition" href="#features">
               Features
             </a>
-            <a className="opacity-80 hover:opacity-100 transition" href="#faq">
-              FAQ
-            </a>
           </nav>
         </div>
       </div>
