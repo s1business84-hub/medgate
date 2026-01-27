@@ -22,7 +22,7 @@ export default function Navbar() {
         ].join(" ")}
       >
         <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
-          <div className="font-semibold tracking-tight">Electivio</div>
+          <div className="font-semibold tracking-tight"></div>
           <nav className="flex gap-5 text-sm">
             <a className="opacity-80 hover:opacity-100 transition" href="#features">
               Features
