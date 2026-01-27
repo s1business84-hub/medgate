@@ -33,7 +33,7 @@ test.describe('Scenario 3 - Regulatory (DHA/DoH) flow', () => {
       localStorage.setItem('electivio_applications', JSON.stringify(apps));
       // set current user to hospital admin for the correct hospitalId
       const users = JSON.parse(localStorage.getItem('electivio_users') || '[]');
-      const hosp = users.find((u) => u.role === 'hospital' && (u.hospitalId === hospitalId || !u.hospitalId)) || users.find((u) => u.role === 'hospital') || users[1];
+      const hosp = users.find((u) => u.role === 'staff' && (u.hospitalId === hospitalId || !u.hospitalId)) || users.find((u) => u.role === 'staff') || users[1];
       if (hosp) localStorage.setItem('electivio_current_user', JSON.stringify(hosp));
     }, { student, programId, hospitalId });
 
@@ -53,7 +53,7 @@ test.describe('Scenario 3 - Regulatory (DHA/DoH) flow', () => {
     // Now switch to admin and assign department and supervisor to allow progression
     await page.evaluate(() => {
       const users = JSON.parse(localStorage.getItem('electivio_users') || '[]');
-      const admin = users.find((u: any) => u.role === 'admin');
+      const admin = users.find((u: any) => u.role === 'supervisor');
       if (admin) localStorage.setItem('electivio_current_user', JSON.stringify(admin));
     });
     await page.reload();

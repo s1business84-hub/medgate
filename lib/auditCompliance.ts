@@ -313,7 +313,7 @@ export class AuditAccessControl {
    */
   static isHospitalAdmin(user: User | null, hospitalId: string): boolean {
     if (!user) return false;
-    if (user.role !== 'admin' && user.role !== 'hospital') return false;
+    if (user.role !== 'supervisor' && user.role !== 'staff') return false;
     
     // If user has hospitalId, it must match
     if (user.hospitalId && user.hospitalId !== hospitalId) {
@@ -346,8 +346,8 @@ export class AuditAccessControl {
       return user.id === studentId;
     }
     
-    // Hospital admin/supervisor can audit students at their hospital
-    if (user.role === 'admin' || user.role === 'hospital') {
+    // Staff/supervisor can audit students at their hospital
+    if (user.role === 'supervisor' || user.role === 'staff') {
       if (!user.hospitalId) return false;
       if (hospitalId && hospitalId !== user.hospitalId) return false;
       
@@ -531,8 +531,8 @@ export class AuditCompliance {
         .reduce((sum, l) => sum + l.recordCount, 0),
       byRole: {
         student: logs.filter(l => l.userRole === 'student').length,
-        hospital: logs.filter(l => l.userRole === 'hospital').length,
-        admin: logs.filter(l => l.userRole === 'admin').length,
+        hospital: logs.filter(l => l.userRole === 'staff').length,
+        admin: logs.filter(l => l.userRole === 'supervisor').length,
       },
       suspiciousActivity: logs.filter(l => l.status === 'denied'),
     };

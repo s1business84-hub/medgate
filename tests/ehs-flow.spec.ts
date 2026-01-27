@@ -28,7 +28,7 @@ test.describe('EHS allocation happy path', () => {
       if (payload.students) localStorage.setItem('electivio_students', JSON.stringify(payload.students));
       // set current user to admin by default for admin flows
       if (payload.users && payload.users.length) {
-        const admin = payload.users.find((u: any) => u.role === 'admin');
+        const admin = payload.users.find((u: any) => u.role === 'supervisor');
         if (admin) localStorage.setItem('electivio_current_user', JSON.stringify(admin));
       }
     }, seedJson);
@@ -85,7 +85,7 @@ test.describe('EHS allocation happy path', () => {
     // 3) Admin: switch to admin user and accept + confirm program (supervisor) via Admin UI
     await page.evaluate(() => {
       const users = JSON.parse(localStorage.getItem('electivio_users') || '[]');
-      const admin = users.find((u: any) => u.role === 'admin');
+      const admin = users.find((u: any) => u.role === 'supervisor');
       if (admin) localStorage.setItem('electivio_current_user', JSON.stringify(admin));
     });
     await page.goto(`${base}/admin`);

@@ -38,7 +38,7 @@ export default function HospitalPortal() {
   });
 
   useEffect(() => {
-    if (!user || user.role !== "hospital") {
+    if (!user || user.role !== "staff") {
       router.push("/hospital-login");
       return;
     }
@@ -187,7 +187,7 @@ export default function HospitalPortal() {
     setShowObsForm(false);
   };
 
-  if (!user || user.role !== "hospital") {
+  if (!user || user.role !== "staff") {
     return null;
   }
 

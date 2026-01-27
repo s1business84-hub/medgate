@@ -64,8 +64,8 @@ export function ComplianceAuditExportButton({
         // Student can only export their own data
         exportData = StudentDataPrivacy.getStudentAuditData(user.id);
         exportType = "student_self";
-      } else if (user?.role === "admin" || user?.role === "hospital") {
-        // Hospital user must have hospitalId
+      } else if (user?.role === "supervisor" || user?.role === "staff") {
+        // Staff user must have hospitalId
         const userHospitalId = AuditAccessControl.getUserHospitalId(user);
         if (!userHospitalId) {
           showToast("Error: No hospital assignment found");

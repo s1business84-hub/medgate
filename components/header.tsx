@@ -70,9 +70,9 @@ export function Header() {
                 </span>
                 <Link
                   href={
-                    user.role === "admin"
-                      ? "/admin"
-                      : user.role === "hospital"
+                    user.role === "supervisor"
+                      ? "/supervisor"
+                      : user.role === "staff"
                         ? "/hospital"
                         : "/student"
                   }
@@ -105,9 +105,9 @@ export function Header() {
             {user && (
               <Link
                 href={
-                  user.role === "admin"
-                    ? "/admin"
-                    : user.role === "hospital"
+                  user.role === "supervisor"
+                    ? "/supervisor"
+                    : user.role === "staff"
                       ? "/hospital"
                       : "/student"
                 }

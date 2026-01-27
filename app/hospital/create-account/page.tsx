@@ -58,7 +58,7 @@ export default function HospitalCreateAccount() {
     const hospitalId = `h_${Date.now().toString(16)}`;
     createUser({
       email: form.email,
-      role: "hospital",
+      role: "staff",
       name: form.contactName || form.institutionName,
       hospitalId,
       password: form.password,

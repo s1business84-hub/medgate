@@ -13,7 +13,7 @@ test.describe('Role-based gating', () => {
     const payload = await seedResp.json();
 
     // Admin user
-    const admin = payload.users.find((u: any) => u.role === 'admin');
+    const admin = payload.users.find((u: any) => u.role === 'supervisor');
     expect(admin).toBeTruthy();
     await page.evaluate((u) => localStorage.setItem('electivio_current_user', JSON.stringify(u)), admin);
     await page.goto(`${base}/admin`);

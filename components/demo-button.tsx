@@ -17,18 +17,11 @@ export function DemoButton() {
       icon: "👨‍🎓",
     },
     {
-      id: "hospital",
-      label: "Hospital Demo",
-      description: "Explore hospital dashboard",
+      id: "staff",
+      label: "Staff Demo",
+      description: "Explore staff dashboard",
       href: "/demo/hospital",
       icon: "🏥",
-    },
-    {
-      id: "admin",
-      label: "Admin Demo",
-      description: "Explore admin panel",
-      href: "/demo/admin",
-      icon: "⚙️",
     },
     {
       id: "supervisor",

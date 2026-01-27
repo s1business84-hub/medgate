@@ -55,7 +55,7 @@ export default function HospitalFormsPage() {
   const [selectedFormId, setSelectedFormId] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!user || user.role !== "hospital") {
+    if (!user || user.role !== "staff") {
       router.push("/hospital-login");
       return;
     }
@@ -145,7 +145,7 @@ export default function HospitalFormsPage() {
     );
   }
 
-  if (!user || user.role !== "hospital") return null;
+  if (!user || user.role !== "staff") return null;
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">

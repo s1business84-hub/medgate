@@ -18,7 +18,7 @@ export default function HospitalPerformancePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!user || user.role !== "hospital") {
+    if (!user || user.role !== "staff") {
       router.push("/hospital-login");
       return;
     }
@@ -46,7 +46,7 @@ export default function HospitalPerformancePage() {
     }
   }, [user, router]);
 
-  if (!user || user.role !== "hospital") return null;
+  if (!user || user.role !== "staff") return null;
 
   if (loading) {
     return (

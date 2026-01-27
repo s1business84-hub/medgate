@@ -17,15 +17,15 @@ export default function FormTrackingPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (!user || (user.role !== "admin" && user.role !== "hospital")) {
+    if (!user || (user.role !== "supervisor" && user.role !== "staff")) {
       router.push("/login")
       return
     }
 
     try {
-      // Get all applications (admin sees all, hospital sees their hospital only)
+      // Get all applications (supervisor sees all, staff sees their hospital only)
       let allApps = getApplications()
-      if (user.role === "hospital") {
+      if (user.role === "staff") {
         // Filter by hospital ID if available
         allApps = allApps.filter(a => a.hospitalId === user.hospitalId)
       }
@@ -33,7 +33,7 @@ export default function FormTrackingPage() {
 
       // Get form submissions
       const allSubmissions = getSessionFormSubmissions()
-      if (user.role === "hospital") {
+      if (user.role === "staff") {
         // Filter to only submissions from this hospital's applications
         const filteredSubmissions = allSubmissions.filter(sub => {
           const app = allApps.find(a => a.id === sub.applicationId)

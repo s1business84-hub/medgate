@@ -354,7 +354,7 @@ export const mockUsers = [
   {
     id: "u2",
     email: "admin@example.com",
-    role: "admin" as const,
+    role: "supervisor" as const,
     name: "Dr. Sarah Johnson",
     password: "password",
   },
@@ -368,7 +368,7 @@ export const mockUsers = [
   {
     id: "h1_admin",
     email: "hospital1@electivio.com",
-    role: "hospital" as const,
+    role: "staff" as const,
     name: "Hospital Administrator",
     hospitalId: "h1",
     password: "password",
@@ -376,7 +376,7 @@ export const mockUsers = [
   {
     id: "h2_admin",
     email: "hospital2@electivio.com",
-    role: "hospital" as const,
+    role: "staff" as const,
     name: "Clinic Manager",
     hospitalId: "h2",
     password: "password",
@@ -384,7 +384,7 @@ export const mockUsers = [
   {
     id: "h3_admin",
     email: "hospital3@electivio.com",
-    role: "hospital" as const,
+    role: "staff" as const,
     name: "Medical Director",
     hospitalId: "h3",
     password: "password",

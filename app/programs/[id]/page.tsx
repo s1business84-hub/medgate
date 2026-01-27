@@ -556,9 +556,9 @@ function ProgramContent({ id }: { id: string }) {
                       // ignore logging errors in demo
                     }
 
-                    // Notify hospital users (admins) about training start
+                    // Notify hospital users (staff) about training start
                     try {
-                      const hospitalUsers = getUsers().filter(u => u.role === 'hospital' && u.hospitalId === program.hospitalId);
+                      const hospitalUsers = getUsers().filter(u => u.role === 'staff' && u.hospitalId === program.hospitalId);
                       hospitalUsers.forEach(hu => {
                         createNotification({ userId: hu.id, type: 'update', title: 'Trainee Started', message: `${user.name} has started training for ${program.departmentName}`, relatedApplicationId: updated.id });
                       });

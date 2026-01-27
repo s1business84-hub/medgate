@@ -26,7 +26,7 @@ export default function HospitalAnalyticsPage() {
   const [filter, setFilter] = useState("all")
 
   useEffect(() => {
-    if (!user || (user.role !== "hospital" && user.role !== "admin")) {
+    if (!user || (user.role !== "staff" && user.role !== "supervisor")) {
       router.push("/login")
       return
     }
@@ -110,7 +110,7 @@ export default function HospitalAnalyticsPage() {
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center gap-4">
               <Link
-                href={user?.role === "hospital" ? "/hospital" : "/admin"}
+                href={user?.role === "staff" ? "/hospital" : "/supervisor"}
                 className="p-2 rounded-lg hover:bg-white/10 transition"
               >
                 <ArrowLeft className="w-6 h-6 text-slate-300" />

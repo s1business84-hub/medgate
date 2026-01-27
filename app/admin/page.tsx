@@ -20,7 +20,7 @@ export default function AdminPage() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!user || user.role !== "admin") {
+    if (!user || user.role !== "supervisor") {
       router.push("/login");
     }
   }, [user, router]);
@@ -279,7 +279,7 @@ export default function AdminPage() {
     setShowObsForm(false);
   };
 
-  if (!user || user.role !== "admin") {
+  if (!user || user.role !== "supervisor") {
     return null;
   }
 
@@ -485,7 +485,7 @@ export default function AdminPage() {
                         <label className="text-xs text-slate-300">Supervisor</label>
                         <select value={selectedSupervisorId} onChange={(e) => setSelectedSupervisorId(e.target.value)} className="w-full px-3 py-2 mt-1 border border-white/15 rounded-lg bg-white/5 text-slate-100">
                           <option value="">-- Select supervisor --</option>
-                          {getUsers().filter(u => u.role === 'hospital' && u.hospitalId === selectedApp?.hospitalId).map(u => (
+                          {getUsers().filter(u => u.role === 'staff' && u.hospitalId === selectedApp?.hospitalId).map(u => (
                             <option key={u.id} value={u.id}>{u.name} ({u.email})</option>
                           ))}
                         </select>
@@ -541,7 +541,7 @@ export default function AdminPage() {
                             try {
                               const { logAudit, createNotification, getUsers } = require('@/lib/storage');
                               logAudit({ userId: selectedApp.studentId, action: 'Program-level Confirmation', details: `Supervisor ${selectedSupervisorId} confirmed program ${selectedApp.programId}` });
-                              const hospUsers = getUsers().filter((u: any) => u.role === 'hospital' && u.hospitalId === selectedApp.hospitalId);
+                              const hospUsers = getUsers().filter((u: any) => u.role === 'staff' && u.hospitalId === selectedApp.hospitalId);
                               hospUsers.forEach((hu: any) => createNotification({ userId: hu.id, type: 'update', title: 'Program Confirmed', message: `Program ${selectedApp.programId} has a supervisor confirmation`, relatedApplicationId: selectedApp.id }));
                             } catch (err) {
                               // ignore

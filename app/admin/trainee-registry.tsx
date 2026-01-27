@@ -20,11 +20,11 @@ export default function TraineeRegistry() {
   const confirmations = getSupervisorConfirmations();
 
   // Check authorization
-  const canViewRegistry = user && (user.role === "admin" || user.role === "hospital" || user.role === "student");
+  const canViewRegistry = user && (user.role === "supervisor" || user.role === "staff" || user.role === "student");
   if (!canViewRegistry) {
     return (
       <div className="p-6 max-w-5xl mx-auto text-center">
-        <p className="text-slate-500">Access denied. Hospital admin view only.</p>
+        <p className="text-slate-500">Access denied. Staff view only.</p>
       </div>
     );
   }

@@ -90,7 +90,7 @@ export interface AuditLog {
 export interface User {
   id: string;
   email: string;
-  role: "student" | "admin" | "hospital";
+  role: "student" | "supervisor" | "staff";
   name: string;
   hospitalId?: string;
   password?: string; // Stored locally for demo auth
@@ -369,7 +369,7 @@ export interface StudentPerformanceMetrics {
     id: string;
     conversationId: string; // Unique ID for each student-supervisor conversation
     senderId: string; // User ID of sender
-    senderRole: "student" | "supervisor" | "admin";
+    senderRole: "student" | "supervisor" | "staff";
     recipientId: string; // User ID of recipient
     message: string;
     timestamp: string; // ISO date string
