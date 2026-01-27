@@ -97,15 +97,15 @@ export default function PurposePage() {
           </Link>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.2 }} className="text-center mb-20 max-w-7xl mx-auto">
-          <h1 className="purpose-heading text-5xl md:text-7xl font-bold text-slate-900 mb-8">
+        <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }} className="text-center mb-20 max-w-7xl mx-auto">
+          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }} className="purpose-heading text-5xl md:text-7xl font-bold text-slate-900 mb-8">
             Our Purpose
-          </h1>
+          </motion.h1>
         </motion.div>
 
         <div className="max-w-7xl mx-auto">
         <section className="mb-24">
-          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: "easeOut" }} viewport={{ once: true }} className="purpose-card group relative bg-white/60 border border-slate-200 rounded-3xl backdrop-blur-xl p-8 md:p-12 mb-12 overflow-hidden hover:border-blue-300 hover:shadow-2xl transition-all duration-500">
+          <motion.div initial={{ opacity: 0, y: 80 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }} viewport={{ once: true, amount: 0.2 }} className="purpose-card group relative bg-white/60 border border-slate-200 rounded-3xl backdrop-blur-xl p-8 md:p-12 mb-12 overflow-hidden hover:border-blue-300 hover:shadow-2xl transition-all duration-700">
             <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 1, delay: 0.3 }} viewport={{ once: true }} className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-purple-50/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
               <motion.div animate={{ y: [0, -20, 0], x: [0, 10, 0], opacity: [0.3, 0.6, 0.3] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }} className="absolute top-10 right-20 w-32 h-32 bg-blue-200/20 rounded-full blur-3xl" />
@@ -151,26 +151,26 @@ export default function PurposePage() {
         </section>
 
         <section className="mb-24">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }}>
+          <motion.div initial={{ opacity: 0, y: 60 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}>
             <h2 className="purpose-heading text-3xl font-bold text-slate-900 mb-4">What We Are Building</h2>
             <p className="text-lg text-slate-700 leading-relaxed mb-12">
               Electivio is being developed as a program management and discovery platform designed around real institutional workflows and student needs. We focus on three core areas:
             </p>
           </motion.div>
           <div className="space-y-6">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }} className="purpose-card bg-white/60 border border-slate-200 rounded-2xl backdrop-blur-xl p-8 hover:bg-white/80 hover:shadow-xl transition-all duration-300">
+            <motion.div initial={{ opacity: 0, y: 80 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.9, delay: 0.1, ease: [0.22, 1, 0.36, 1] }} className="purpose-card bg-white/60 border border-slate-200 rounded-2xl backdrop-blur-xl p-8 hover:bg-white/80 hover:shadow-xl transition-all duration-500">
               <h3 className="text-2xl font-bold text-cyan-600 mb-3">1. Program Standardization</h3>
               <p className="text-lg text-slate-700 leading-relaxed">
                 We help hospitals and clinics publish observership and elective programs with clearly defined eligibility criteria, documentation requirements, duration, and intake limits—set entirely by the institution.
               </p>
             </motion.div>
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }} className="purpose-card bg-white/60 border border-slate-200 rounded-2xl backdrop-blur-xl p-8 hover:bg-white/80 hover:shadow-xl transition-all duration-300">
+            <motion.div initial={{ opacity: 0, y: 80 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }} className="purpose-card bg-white/60 border border-slate-200 rounded-2xl backdrop-blur-xl p-8 hover:bg-white/80 hover:shadow-xl transition-all duration-500">
               <h3 className="text-2xl font-bold text-indigo-600 mb-3">2. Administrative Efficiency</h3>
               <p className="text-lg text-slate-700 leading-relaxed">
                 By centralizing program information and application workflows, Electivio reduces repetitive back and forth communication and improves visibility for students and administrators alike.
               </p>
             </motion.div>
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.4 }} className="purpose-card bg-white/60 border border-slate-200 rounded-2xl backdrop-blur-xl p-8 hover:bg-white/80 hover:shadow-xl transition-all duration-300">
+            <motion.div initial={{ opacity: 0, y: 80 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }} className="purpose-card bg-white/60 border border-slate-200 rounded-2xl backdrop-blur-xl p-8 hover:bg-white/80 hover:shadow-xl transition-all duration-500">
               <h3 className="text-2xl font-bold text-emerald-600 mb-3">3. Institutional Control & Governance</h3>
               <p className="text-lg text-slate-700 leading-relaxed">
                 Electivio is built institution-first. Hospitals retain full control over program approvals, intake capacity, and internal policies while benefiting from a structured digital interface.
@@ -180,7 +180,7 @@ export default function PurposePage() {
         </section>
 
         <section className="mb-24">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="purpose-card bg-gradient-to-br from-cyan-50 to-blue-50 border border-cyan-200 rounded-3xl backdrop-blur-xl p-8 md:p-12 shadow-xl">
+          <motion.div initial={{ opacity: 0, y: 80 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }} className="purpose-card bg-gradient-to-br from-cyan-50 to-blue-50 border border-cyan-200 rounded-3xl backdrop-blur-xl p-8 md:p-12 shadow-xl">
             <h2 className="purpose-heading text-3xl font-bold text-slate-900 mb-6">Our Focus Today</h2>
             <p className="text-lg text-slate-700 leading-relaxed mb-8">
               Electivio is currently in early development and preparing for pilot collaborations with healthcare institutions across the UAE.

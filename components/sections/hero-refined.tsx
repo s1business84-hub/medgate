@@ -71,9 +71,9 @@ export function Hero() {
         <div className="mx-auto max-w-4xl text-center">
           {/* Minimal badge */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="mb-8"
           >
             <span className="inline-flex items-center gap-2 text-xs font-medium text-slate-400 bg-slate-900/50 border border-slate-800 rounded-full px-4 py-2">
@@ -94,9 +94,9 @@ export function Hero() {
               Medical Training
             </RevealText>
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
             >
               <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight leading-[1.1]">
                 <AnimatedGradientText>Simplified</AnimatedGradientText>
@@ -114,20 +114,20 @@ export function Hero() {
           </Reveal>
 
           {/* CTA Buttons */}
-          <Reveal delay={0.5} y={20}>
+          <Reveal delay={0.7} y={30}>
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
               <MagneticHover>
                 <Link href="/programs">
-                  <button className="group relative inline-flex items-center gap-2 bg-white text-slate-900 px-8 py-4 rounded-full font-semibold text-base hover:bg-slate-100 transition-all duration-300 shadow-lg hover:shadow-xl">
+                  <button className="group relative inline-flex items-center gap-2 bg-white text-slate-900 px-8 py-4 rounded-full font-semibold text-base hover:bg-slate-100 transition-all duration-500 shadow-lg hover:shadow-2xl hover:scale-105">
                     <span>Browse Programs</span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
                   </button>
                 </Link>
               </MagneticHover>
               
               <MagneticHover>
                 <Link href="/purpose">
-                  <button className="inline-flex items-center gap-2 bg-slate-900 text-white px-8 py-4 rounded-full font-semibold text-base border border-slate-800 hover:border-slate-700 hover:bg-slate-800 transition-all duration-300">
+                  <button className="inline-flex items-center gap-2 bg-slate-900 text-white px-8 py-4 rounded-full font-semibold text-base border border-slate-800 hover:border-slate-700 hover:bg-slate-800 transition-all duration-500 hover:scale-105">
                     Our Purpose
                   </button>
                 </Link>
@@ -141,10 +141,9 @@ export function Hero() {
               <motion.div
                 key={stat.label}
                 className="hero-stat group relative"
-                whileHover={{ y: -4 }}
-                transition={{ duration: 0.3 }}
+                whileHover={{ y: -8, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } }}
               >
-                <div className="relative rounded-2xl bg-slate-900/50 backdrop-blur-sm border border-slate-800 p-6 hover:border-slate-700 transition-all duration-300">
+                <div className="relative rounded-2xl bg-slate-900/50 backdrop-blur-sm border border-slate-800 p-6 hover:border-slate-700 transition-all duration-500 hover:shadow-xl">
                   <div className="flex items-center gap-4">
                     <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-cyan-500/20 to-blue-500/20 border border-cyan-500/30">
                       <stat.icon className="h-6 w-6 text-cyan-400" />

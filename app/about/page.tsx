@@ -39,14 +39,13 @@ export default function AboutPage() {
         <div className="relative max-w-4xl mx-auto px-6 py-16">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          viewport={{ once: true }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-12 gap-4"
         >
-          <Link href="/" className="flex items-center text-slate-700 hover:text-slate-900 transition-colors group">
-            <ArrowLeft className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" />
+          <Link href="/" className="flex items-center text-slate-700 hover:text-slate-900 transition-all duration-300 group">
+            <ArrowLeft className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform duration-300" />
             Back to Home
           </Link>
           <Link href="/login">
@@ -58,31 +57,46 @@ export default function AboutPage() {
 
         {/* Hero Section */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          viewport={{ once: true }}
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-16"
         >
-          <h1 className="text-5xl md:text-7xl font-bold text-slate-900 mb-6">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            className="text-5xl md:text-7xl font-bold text-slate-900 mb-6"
+          >
             About Electivio
-          </h1>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed"
+          >
             Electivio is being developed to connect medical students with structured clinical observership and elective opportunities across the UAE. The platform focuses on improving transparency, standardization, and communication between students and healthcare institutions.
-          </p>
+          </motion.p>
         </motion.div>
 
         {/* Our Story */}
         <motion.section
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 60 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          viewport={{ once: true }}
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          viewport={{ once: true, amount: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-4xl font-bold text-slate-900 mb-8 text-center">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            viewport={{ once: true }}
+            className="text-4xl font-bold text-slate-900 mb-8 text-center"
+          >
             Our Story
-          </h2>
+          </motion.h2>
           <div className="relative rounded-3xl shadow-xl overflow-hidden group backdrop-blur-xl bg-white/70 border border-slate-200 hover:shadow-2xl transition-all duration-300 p-8 md:p-12">
             {/* Liquid glass shine effect */}
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
@@ -106,19 +120,31 @@ export default function AboutPage() {
 
         {/* What We Do */}
         <motion.section
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 60 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.85, ease: "easeOut", delay: 0.05 }}
-          viewport={{ once: true }}
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          viewport={{ once: true, amount: 0.2 }}
           className="mb-16"
         >
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-slate-900 mb-4">
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              viewport={{ once: true }}
+              className="text-4xl font-bold text-slate-900 mb-4"
+            >
               What We Do
-            </h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              viewport={{ once: true }}
+              className="text-lg text-slate-600 max-w-2xl mx-auto"
+            >
               Three core areas that guide our development
-            </p>
+            </motion.p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
@@ -147,12 +173,12 @@ export default function AboutPage() {
             ].map((item, index) => (
               <motion.div 
                 key={item.title} 
-                className="group relative rounded-3xl overflow-hidden backdrop-blur-xl bg-white/60 border border-slate-200 hover:border-slate-300 shadow-lg hover:shadow-2xl transition-all duration-300 p-8"
-                initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: index * 0.15 }}
-                viewport={{ once: true, margin: "-50px" }}
-                whileHover={{ scale: 1.02, y: -4 }}
+                className="group relative rounded-3xl overflow-hidden backdrop-blur-xl bg-white/60 border border-slate-200 hover:border-slate-300 shadow-lg hover:shadow-2xl transition-all duration-500 p-8"
+                initial={{ opacity: 0, y: 80 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: index * 0.15 }}
+                viewport={{ once: true, amount: 0.2 }}
+                whileHover={{ scale: 1.02, y: -8, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } }}
               >
                 {/* Liquid glass shine effect */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
