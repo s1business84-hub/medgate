@@ -24,8 +24,16 @@ async function sendWelcomeEmail(email: string, name: string, type: WelcomeVarian
 
 function getInitialRole(searchParams: ReturnType<typeof useSearchParams>) {
   const roleParam = searchParams?.get("role");
-  return roleParam === "staff" ? "staff" : "student";
+  if (roleParam === "staff") return "staff";
+  if (roleParam === "supervisor" || roleParam === "admin") return "supervisor";
+  return "student";
 }
+
+const roleLabel = {
+  student: "Student",
+  staff: "Staff",
+  supervisor: "Admin",
+} as const;
 
 export default function LoginForm() {
   const searchParams = useSearchParams();
@@ -33,7 +41,7 @@ export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [role, setRole] = useState<"student" | "staff">(() => getInitialRole(searchParams));
+  const [role, setRole] = useState<"student" | "staff" | "supervisor">(() => getInitialRole(searchParams));
   const [error, setError] = useState("");
   const { login } = useAuth();
   const router = useRouter();
@@ -101,7 +109,9 @@ export default function LoginForm() {
               {isLogin ? "Welcome Back" : "Create Account"}
             </h1>
             <p className="text-slate-300">
-              {isLogin ? `Sign in as a ${role === "staff" ? "Staff" : "Student"}` : `Create a ${role === "staff" ? "Staff" : "Student"} account`}
+              {isLogin
+                ? `Sign in as a ${roleLabel[role]}`
+                : `Create a ${roleLabel[role]} account`}
             </p>
           </div>
 
@@ -123,8 +133,16 @@ export default function LoginForm() {
               >
                 Staff
               </button>
+              <button
+                type="button"
+                onClick={() => setRole("supervisor")}
+                className={`flex-1 px-4 py-2 rounded-full transition-colors ${role === "supervisor" ? "bg-white text-slate-900 shadow" : "text-slate-200 hover:text-white"}`}
+                aria-pressed={role === "supervisor"}
+              >
+                Admin
+              </button>
             </div>
-            <p className="text-xs text-slate-400 mt-2">Toggle to choose whether you&apos;re signing in as a student or staff.</p>
+            <p className="text-xs text-slate-400 mt-2">Toggle to choose whether you&apos;re signing in as a student, staff, or admin.</p>
           </div>
 
           <div className="mb-8 flex justify-center">
