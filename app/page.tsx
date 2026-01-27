@@ -7,11 +7,12 @@ import Navbar from "@/components/Navbar"
 // Force Vercel rebuild
 export default function Home() {
   return (
-    <main className="relative min-h-screen text-slate-50">
+    <main className="relative min-h-screen text-slate-900">
       {/* Premium sticky navbar with blur */}
       <Navbar />
-      {/* Refined background */}
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-slate-950" />
+      {/* Light gradient background with liquid glass */}
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-slate-50 via-white to-slate-100" />
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_30%_20%,rgba(147,197,253,0.15),transparent_50%),radial-gradient(circle_at_80%_80%,rgba(196,181,253,0.12),transparent_50%)]" />
 
       <ScrollableViewport
         showProgress={true}
