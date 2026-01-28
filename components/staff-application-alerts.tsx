@@ -95,7 +95,7 @@ export function StaffApplicationAlerts({
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-to-r from-slate-950 to-slate-900 border border-white/10 rounded-lg p-6"
+        className="bg-linear-to-r from-slate-950 to-slate-900 border border-white/10 rounded-lg p-6"
       >
         <div className="flex items-center justify-between mb-4">
           <div>
@@ -196,7 +196,7 @@ export function StaffApplicationAlerts({
                 >
                   {/* Unread indicator */}
                   {isUnread && (
-                    <motion.div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-400 to-blue-500" />
+                    <motion.div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-cyan-400 to-blue-500" />
                   )}
 
                   {/* Alert header - always visible */}
@@ -212,7 +212,7 @@ export function StaffApplicationAlerts({
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3 flex-1">
                         {/* Status icon */}
-                        <div className="flex-shrink-0">{getStatusIcon(alert.status)}</div>
+                        <div className="shrink-0">{getStatusIcon(alert.status)}</div>
 
                         {/* Student info */}
                         <div className="min-w-0 flex-1">
@@ -243,7 +243,7 @@ export function StaffApplicationAlerts({
                         {/* Expand indicator */}
                         <motion.div
                           animate={{ rotate: isExpanded ? 180 : 0 }}
-                          className="flex-shrink-0 text-slate-400"
+                          className="shrink-0 text-slate-400"
                         >
                           <ChevronDown className="w-5 h-5" />
                         </motion.div>

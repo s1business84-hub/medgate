@@ -102,14 +102,14 @@ export default function PurposePage() {
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ duration: 0.8, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="h-1 w-24 mx-auto bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 rounded-full"
+            className="h-1 w-24 mx-auto bg-linear-to-r from-cyan-400 via-blue-500 to-indigo-500 rounded-full"
           />
         </motion.div>
 
         <div className="max-w-7xl mx-auto">
         <section className="mb-24">
           <motion.div initial={{ opacity: 0, y: 80 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }} viewport={{ once: true, amount: 0.2 }} className="purpose-card group relative bg-white/5 border border-white/10 rounded-3xl backdrop-blur-xl p-8 md:p-12 mb-12 overflow-hidden hover:border-cyan-400/30 hover:shadow-2xl transition-all duration-700">
-            <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 1, delay: 0.3 }} viewport={{ once: true }} className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 1, delay: 0.3 }} viewport={{ once: true }} className="absolute inset-0 bg-linear-to-br from-emerald-500/5 via-transparent to-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
               <motion.div animate={{ y: [0, -20, 0], x: [0, 10, 0], opacity: [0.1, 0.3, 0.1] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }} className="absolute top-10 right-20 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl" />
               <motion.div animate={{ y: [0, 30, 0], x: [0, -15, 0], opacity: [0.05, 0.2, 0.05] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }} className="absolute bottom-20 left-20 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl" />
@@ -118,7 +118,7 @@ export default function PurposePage() {
             <div className="relative z-10">
                   <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.2 }} viewport={{ once: true }} className="mb-6">
                     <div className="inline-flex items-center gap-3 mb-4">
-                      <motion.div animate={{ rotate: 360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} className="w-12 h-12 bg-gradient-to-br from-cyan-400 to-indigo-500 rounded-xl flex items-center justify-center shadow-lg">
+                      <motion.div animate={{ rotate: 360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} className="w-12 h-12 bg-linear-to-br from-cyan-400 to-indigo-500 rounded-xl flex items-center justify-center shadow-lg">
                         <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                         </svg>
@@ -143,7 +143,7 @@ export default function PurposePage() {
                         Electivio bridges this gap by providing a <span className="text-slate-200 font-medium">centralized platform</span> where institutions define requirements clearly and students understand opportunities upfront—reducing administrative friction for both sides.
                       </p>
                     </motion.div>
-                    <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay: 0.8 }} viewport={{ once: true }} className="mt-8 p-6 rounded-2xl bg-gradient-to-r from-cyan-500/10 to-indigo-500/10 border border-cyan-500/20">
+                    <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay: 0.8 }} viewport={{ once: true }} className="mt-8 p-6 rounded-2xl bg-linear-to-r from-cyan-500/10 to-indigo-500/10 border border-cyan-500/20">
                       <p className="text-lg text-cyan-300 leading-relaxed font-medium text-center">
                         💡 Our purpose is not to replace institutional processes, but to <span className="text-cyan-200 font-bold">support them</span> through clarity, structure, and transparency.
                       </p>
@@ -183,7 +183,7 @@ export default function PurposePage() {
         </section>
 
         <section className="mb-24">
-          <motion.div initial={{ opacity: 0, y: 80 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }} className="purpose-card bg-gradient-to-br from-emerald-500/10 to-indigo-500/10 border border-white/10 rounded-3xl backdrop-blur-xl p-8 md:p-12 shadow-xl">
+          <motion.div initial={{ opacity: 0, y: 80 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }} className="purpose-card bg-linear-to-br from-emerald-500/10 to-indigo-500/10 border border-white/10 rounded-3xl backdrop-blur-xl p-8 md:p-12 shadow-xl">
             <h2 className="purpose-heading text-3xl font-bold text-white mb-6">Our Focus Today</h2>
             <p className="text-lg text-slate-400 leading-relaxed mb-8">
               Electivio is currently in early development and preparing for pilot collaborations with healthcare institutions across the UAE.
@@ -231,7 +231,7 @@ export default function PurposePage() {
             {/* Subtle overlay that changes with scroll */}
             <motion.div
               aria-hidden
-              className="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-indigo-500/5 rounded-3xl"
+              className="pointer-events-none absolute inset-0 bg-linear-to-br from-emerald-500/5 via-transparent to-indigo-500/5 rounded-3xl"
               style={{ opacity: redBgOpacity }}
             />
 
@@ -290,7 +290,7 @@ export default function PurposePage() {
                   style={{ rotate: planeRotate }}
                   className="relative"
                 >
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 border-2 border-white backdrop-blur-md flex items-center justify-center shadow-2xl">
+                  <div className="w-12 h-12 rounded-full bg-linear-to-br from-blue-500 to-purple-600 border-2 border-white backdrop-blur-md flex items-center justify-center shadow-2xl">
                     <Plane className="w-6 h-6 text-white" />
                   </div>
                   {/* Glowing effect */}
@@ -325,7 +325,7 @@ export default function PurposePage() {
                 onClick={() => setActiveCard("students")}
                 className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${
                   activeCard === "students"
-                    ? "bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-lg"
+                    ? "bg-linear-to-r from-cyan-600 to-blue-600 text-white shadow-lg"
                     : "bg-white/5 text-slate-300 hover:bg-white/10 border border-white/10"
                 }`}
               >
@@ -335,7 +335,7 @@ export default function PurposePage() {
                 onClick={() => setActiveCard("hospitals")}
                 className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${
                   activeCard === "hospitals"
-                    ? "bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg"
+                    ? "bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg"
                     : "bg-white/5 text-slate-300 hover:bg-white/10 border border-white/10"
                 }`}
               >
@@ -346,7 +346,7 @@ export default function PurposePage() {
           <div className="relative h-80 md:h-72">
             <AnimatePresence mode="wait">
               {activeCard === "students" ? (
-                <motion.div key="students" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="purpose-card absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-white/10 rounded-3xl backdrop-blur-xl p-8 md:p-12 shadow-2xl overflow-hidden group">
+                <motion.div key="students" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="purpose-card absolute inset-0 bg-linear-to-br from-cyan-500/10 to-blue-500/10 border border-white/10 rounded-3xl backdrop-blur-xl p-8 md:p-12 shadow-2xl overflow-hidden group">
                   <div className="absolute -top-40 -right-40 w-80 h-80 bg-cyan-500/20 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-500" />
                   <div className="relative z-10">
                     <h3 className="text-3xl font-bold text-cyan-300 mb-6">Browse Programs</h3>
@@ -361,7 +361,7 @@ export default function PurposePage() {
                   </div>
                 </motion.div>
               ) : (
-                <motion.div key="hospitals" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="purpose-card absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 border border-white/10 rounded-3xl backdrop-blur-xl p-8 md:p-12 shadow-2xl overflow-hidden group">
+                <motion.div key="hospitals" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="purpose-card absolute inset-0 bg-linear-to-br from-emerald-500/10 to-teal-500/10 border border-white/10 rounded-3xl backdrop-blur-xl p-8 md:p-12 shadow-2xl overflow-hidden group">
                   <div className="absolute -top-40 -right-40 w-80 h-80 bg-emerald-500/20 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-500" />
                   <div className="relative z-10">
                     <h3 className="text-3xl font-bold text-emerald-300 mb-6">For Hospitals</h3>

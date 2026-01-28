@@ -96,7 +96,7 @@ export default function StudentPortal() {
               <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center gap-4 max-w-lg">
                 {/* Level Badge */}
                 <div className="flex items-center gap-2">
-                  <div className="px-3 py-1 rounded-full text-sm font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600">
+                  <div className="px-3 py-1 rounded-full text-sm font-bold text-white bg-linear-to-r from-purple-600 to-pink-600">
                     Level {Math.ceil(xpData.xpPoints / 100)}
                   </div>
                 </div>
@@ -111,7 +111,7 @@ export default function StudentPortal() {
                   </div>
                   <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden border border-yellow-500/20">
                     <motion.div
-                      className="h-full bg-gradient-to-r from-yellow-400 to-orange-400"
+                      className="h-full bg-linear-to-r from-yellow-400 to-orange-400"
                       initial={{ width: 0 }}
                       animate={{ width: `${Math.min((xpData.xpPoints % 100) * 1, 100)}%` }}
                       transition={{ type: "spring", stiffness: 100, damping: 20 }}
@@ -331,7 +331,7 @@ export default function StudentPortal() {
                           </div>
 
                           {/* Program Progress Section */}
-                          <div className="mt-6 p-4 rounded-lg bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20">
+                          <div className="mt-6 p-4 rounded-lg bg-linear-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20">
                             <h3 className="text-sm font-bold text-white mb-4">Program Progress</h3>
                             
                             {/* Overall Progress */}
@@ -343,7 +343,7 @@ export default function StudentPortal() {
                                 </div>
                                 <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
                                   <motion.div
-                                    className="h-full bg-gradient-to-r from-purple-500 to-pink-500"
+                                    className="h-full bg-linear-to-r from-purple-500 to-pink-500"
                                     initial={{ width: 0 }}
                                     animate={{ width: '65%' }}
                                     transition={{ duration: 0.8 }}
@@ -359,7 +359,7 @@ export default function StudentPortal() {
                                 </div>
                                 <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
                                   <motion.div
-                                    className="h-full bg-gradient-to-r from-blue-500 to-cyan-500"
+                                    className="h-full bg-linear-to-r from-blue-500 to-cyan-500"
                                     initial={{ width: 0 }}
                                     animate={{ width: '52%' }}
                                     transition={{ duration: 0.8, delay: 0.2 }}
@@ -375,7 +375,7 @@ export default function StudentPortal() {
                                 </div>
                                 <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
                                   <motion.div
-                                    className="h-full bg-gradient-to-r from-emerald-500 to-teal-500"
+                                    className="h-full bg-linear-to-r from-emerald-500 to-teal-500"
                                     initial={{ width: 0 }}
                                     animate={{ width: '78%' }}
                                     transition={{ duration: 0.8, delay: 0.4 }}

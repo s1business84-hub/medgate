@@ -343,7 +343,7 @@ export default function HospitalPortal() {
           <div className="lg:col-span-3 space-y-8">
             {/* Application Alerts Section */}
             {showAlerts && staffAlerts.length > 0 && (
-              <div className="bg-gradient-to-br from-cyan-950/20 to-blue-950/20 border border-cyan-400/20 rounded-xl p-6">
+              <div className="bg-linear-to-br from-cyan-950/20 to-blue-950/20 border border-cyan-400/20 rounded-xl p-6">
                 <StaffApplicationAlerts
                   alerts={staffAlerts}
                   staffId={user?.id || ""}

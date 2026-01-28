@@ -193,7 +193,7 @@ export default function StudentDemoPage() {
               </p>
             </div>
             {/* Level & XP Display */}
-            <div className="flex items-center gap-3 bg-gradient-to-r from-purple-600 to-pink-600 px-4 py-2 rounded-lg">
+            <div className="flex items-center gap-3 bg-linear-to-r from-purple-600 to-pink-600 px-4 py-2 rounded-lg">
               <div>
                 <p className="text-xs text-purple-100">Level {Math.ceil(xpPoints / 100) + 1}</p>
                 <p className="font-bold text-white">{xpPoints} XP</p>
@@ -307,7 +307,7 @@ export default function StudentDemoPage() {
                 </div>
                 <div className="h-3 w-full bg-white/10 rounded-full overflow-hidden">
                   <motion.div
-                    className="h-full bg-gradient-to-r from-purple-500 to-pink-500"
+                    className="h-full bg-linear-to-r from-purple-500 to-pink-500"
                     initial={{ width: 0 }}
                     animate={{ width: `${selectedProgramData.progress}%` }}
                     transition={{ duration: 0.8 }}
@@ -323,7 +323,7 @@ export default function StudentDemoPage() {
                 </div>
                 <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
                   <motion.div
-                    className="h-full bg-gradient-to-r from-blue-500 to-cyan-500"
+                    className="h-full bg-linear-to-r from-blue-500 to-cyan-500"
                     initial={{ width: 0 }}
                     animate={{ width: `${Math.round(selectedProgramData.progress * 0.8)}%` }}
                     transition={{ duration: 0.8, delay: 0.2 }}
@@ -339,7 +339,7 @@ export default function StudentDemoPage() {
                 </div>
                 <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
                   <motion.div
-                    className="h-full bg-gradient-to-r from-emerald-500 to-teal-500"
+                    className="h-full bg-linear-to-r from-emerald-500 to-teal-500"
                     initial={{ width: 0 }}
                     animate={{ width: `${Math.round(Math.min(selectedProgramData.progress * 1.1, 100))}%` }}
                     transition={{ duration: 0.8, delay: 0.4 }}

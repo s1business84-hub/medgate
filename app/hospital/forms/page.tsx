@@ -24,6 +24,7 @@ import {
   ArrowLeft,
   TrendingUp,
   Search,
+  Sparkles,
 } from "lucide-react";
 import { FormBuilderModern } from "@/components/form-builder-modern";
 
@@ -175,8 +176,16 @@ export default function HospitalFormsPage() {
             </motion.button>
             <motion.button
               whileHover={{ scale: 1.05 }}
+              onClick={() => router.push("/hospital/forms/ai-create")}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-medium transition-all"
+            >
+              <Sparkles className="w-4 h-4" />
+              AI Form Generator
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
               onClick={() => setShowFormBuilder(true)}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-medium transition-all"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-linear-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-medium transition-all"
             >
               <Plus className="w-4 h-4" />
               Create Form
@@ -208,7 +217,7 @@ export default function HospitalFormsPage() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 onClick={() => setShowFormBuilder(true)}
-                className="px-6 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-medium hover:from-cyan-600 hover:to-blue-600 transition-all"
+                className="px-6 py-2 rounded-lg bg-linear-to-r from-cyan-500 to-blue-500 text-white font-medium hover:from-cyan-600 hover:to-blue-600 transition-all"
               >
                 Create Your First Form
               </motion.button>
@@ -225,7 +234,7 @@ export default function HospitalFormsPage() {
                 className="border border-white/10 rounded-xl bg-linear-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm overflow-hidden hover:border-cyan-500/30 transition-colors"
               >
                 {/* Form Header */}
-                <div className="p-6 border-b border-white/5 bg-gradient-to-r from-cyan-500/5 to-blue-500/5">
+                <div className="p-6 border-b border-white/5 bg-linear-to-r from-cyan-500/5 to-blue-500/5">
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex-1">
                       <h3 className="text-xl font-bold text-white mb-1">{item.form.name}</h3>

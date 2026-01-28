@@ -123,9 +123,9 @@ function ProgramContent({ id }: { id: string }) {
   }, [program?.id]);
 
   if (!program) return (
-    <main className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-50 via-white to-slate-100 text-slate-900 flex items-center justify-center">
+    <main className="relative min-h-screen overflow-hidden bg-linear-to-br from-slate-50 via-white to-slate-100 text-slate-900 flex items-center justify-center">
       <LiquidParallax className="opacity-20" />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-blue-50/30 via-transparent to-purple-50/20" />
+      <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-blue-50/30 via-transparent to-purple-50/20" />
       <div className="relative text-center animate-fade-in">
         <h1 className="text-2xl font-bold text-slate-900 mb-2">Program not found</h1>
         <Link href="/programs" className="inline-flex items-center justify-center px-5 py-3 rounded-xl border border-slate-300 bg-white/60 backdrop-blur-xl text-slate-700 font-semibold hover:bg-white/80 transition-all hover-scale shadow-lg">← Back to Programs</Link>
@@ -136,7 +136,7 @@ function ProgramContent({ id }: { id: string }) {
   const hospital = hospitals.find((h) => h.id === program.hospitalId);
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-50 via-white to-slate-100 text-slate-900">
+    <main className="relative min-h-screen overflow-hidden bg-linear-to-br from-slate-50 via-white to-slate-100 text-slate-900">
       <LiquidParallax className="opacity-20" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(147,197,253,0.15),transparent_50%),radial-gradient(circle_at_80%_80%,rgba(196,181,253,0.12),transparent_50%)]" />
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 py-12 space-y-12">
@@ -153,7 +153,7 @@ function ProgramContent({ id }: { id: string }) {
         {/* Header */}
         <div className="text-center mb-12 program-hero" style={{ animationDelay: '0.1s' }}>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4 text-center sm:text-left">
-            <div className="w-16 h-16 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-2xl flex items-center justify-center sm:mr-4 shadow-lg">
+            <div className="w-16 h-16 bg-linear-to-br from-cyan-400 to-blue-500 rounded-2xl flex items-center justify-center sm:mr-4 shadow-lg">
               <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
               </svg>
@@ -243,7 +243,7 @@ function ProgramContent({ id }: { id: string }) {
           className="requirements-card rounded-3xl border border-slate-200 bg-white/60 backdrop-blur-xl shadow-xl p-6 md:p-8"
         >
           <div className="flex items-center mb-6">
-            <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-xl flex items-center justify-center mr-3 shadow-lg">
+            <div className="w-10 h-10 bg-linear-to-br from-cyan-400 to-blue-500 rounded-xl flex items-center justify-center mr-3 shadow-lg">
               <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -267,7 +267,7 @@ function ProgramContent({ id }: { id: string }) {
           className="hospital-card rounded-3xl border border-slate-200 bg-white/60 backdrop-blur-xl shadow-xl p-6 md:p-8"
         >
           <div className="flex items-center mb-6">
-            <div className="w-10 h-10 bg-gradient-to-br from-purple-400 to-pink-500 rounded-xl flex items-center justify-center mr-3 shadow-lg">
+            <div className="w-10 h-10 bg-linear-to-br from-purple-400 to-pink-500 rounded-xl flex items-center justify-center mr-3 shadow-lg">
               <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
               </svg>
@@ -328,7 +328,7 @@ function ProgramContent({ id }: { id: string }) {
             className="detail-card rounded-3xl border border-slate-200 bg-white/60 backdrop-blur-xl shadow-xl p-6 md:p-8"
           >
             <div className="flex items-center mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-emerald-400 to-green-500 rounded-xl flex items-center justify-center mr-3 shadow-lg">
+              <div className="w-10 h-10 bg-linear-to-br from-emerald-400 to-green-500 rounded-xl flex items-center justify-center mr-3 shadow-lg">
                 <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -356,7 +356,7 @@ function ProgramContent({ id }: { id: string }) {
             className="detail-card rounded-3xl border border-slate-200 bg-white/60 backdrop-blur-xl shadow-xl p-6 md:p-8"
           >
             <div className="flex items-center mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-sky-400 to-blue-500 rounded-xl flex items-center justify-center mr-3 shadow-lg">
+              <div className="w-10 h-10 bg-linear-to-br from-sky-400 to-blue-500 rounded-xl flex items-center justify-center mr-3 shadow-lg">
                 <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
@@ -417,7 +417,7 @@ function ProgramContent({ id }: { id: string }) {
           className="detail-card rounded-3xl border border-slate-200 bg-white/60 backdrop-blur-xl shadow-xl p-6 md:p-8"
         >
           <div className="flex items-center mb-6">
-            <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center mr-3 shadow-lg">
+            <div className="w-10 h-10 bg-linear-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center mr-3 shadow-lg">
               <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
               </svg>

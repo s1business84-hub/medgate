@@ -71,7 +71,7 @@ export function Hero() {
       {/* Refined background with subtle gradients */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(99,102,241,0.08),transparent_40%),radial-gradient(circle_at_70%_60%,rgba(59,130,246,0.06),transparent_35%)]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900/50 to-slate-950" />
+        <div className="absolute inset-0 bg-linear-to-b from-slate-950 via-slate-900/50 to-slate-950" />
       </div>
 
       <div className="mx-auto max-w-7xl px-6 lg:px-8 py-24 sm:py-32">
@@ -182,7 +182,7 @@ export function Hero() {
               >
                 <div className="flex items-center">
                   <motion.div 
-                    className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-gradient-to-r from-blue-400 to-indigo-400 shadow-lg"
+                    className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-linear-to-r from-blue-400 to-indigo-400 shadow-lg"
                     whileHover={{ rotate: 360 }}
                     transition={{ duration: 0.6 }}
                   >
@@ -194,7 +194,7 @@ export function Hero() {
                   </div>
                 </div>
                 <motion.div 
-                  className="absolute -right-2 -top-2 sm:-right-4 sm:-top-4 h-16 w-16 sm:h-24 sm:w-24 rounded-full bg-gradient-to-br from-blue-400 to-indigo-400"
+                  className="absolute -right-2 -top-2 sm:-right-4 sm:-top-4 h-16 w-16 sm:h-24 sm:w-24 rounded-full bg-linear-to-br from-blue-400 to-indigo-400"
                   animate={{
                     scale: [1, 1.2, 1],
                     opacity: [0.1, 0.2, 0.1]

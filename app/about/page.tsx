@@ -24,7 +24,7 @@ export default function AboutPage() {
           transition={{ duration: 0.6, ease: "easeInOut" }}
           className="relative min-h-screen overflow-hidden">
         {/* Light gradient background with liquid glass effect */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-slate-100" />
+        <div className="absolute inset-0 bg-linear-to-br from-slate-50 via-white to-slate-100" />
         <LiquidParallax className="opacity-30" />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(147,197,253,0.2),transparent_50%),radial-gradient(circle_at_80%_80%,rgba(196,181,253,0.15),transparent_50%)]" />
         <motion.div
@@ -100,8 +100,8 @@ export default function AboutPage() {
           <div className="relative rounded-3xl shadow-xl overflow-hidden group backdrop-blur-xl bg-white/70 border border-slate-200 hover:shadow-2xl transition-all duration-300 p-8 md:p-12">
             {/* Liquid glass shine effect */}
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-              <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-blue-100/50 to-transparent rounded-full blur-2xl" />
-              <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-to-tr from-purple-100/40 to-transparent rounded-full blur-2xl" />
+              <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-linear-to-bl from-blue-100/50 to-transparent rounded-full blur-2xl" />
+              <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-linear-to-tr from-purple-100/40 to-transparent rounded-full blur-2xl" />
             </div>
             
             <div className="relative z-10 space-y-6">
@@ -182,7 +182,7 @@ export default function AboutPage() {
               >
                 {/* Liquid glass shine effect */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-bl from-blue-50/80 via-transparent to-purple-50/60 blur-xl" />
+                  <div className="absolute top-0 right-0 w-full h-full bg-linear-to-bl from-blue-50/80 via-transparent to-purple-50/60 blur-xl" />
                 </div>
 
                 {/* Number badge */}
@@ -194,7 +194,7 @@ export default function AboutPage() {
                 <div className="relative z-10">
                   {/* Icon Container */}
                   <div className="mb-6 inline-block">
-                    <div className={`p-4 rounded-2xl bg-gradient-to-br ${item.gradient} shadow-lg group-hover:shadow-xl transform group-hover:scale-110 transition-all duration-300`}>
+                    <div className={`p-4 rounded-2xl bg-linear-to-br ${item.gradient} shadow-lg group-hover:shadow-xl transform group-hover:scale-110 transition-all duration-300`}>
                       <item.icon className="w-8 h-8 text-white" />
                     </div>
                   </div>
@@ -210,7 +210,7 @@ export default function AboutPage() {
                   </p>
 
                   {/* Accent line */}
-                  <div className={`mt-6 h-1 bg-gradient-to-r ${item.gradient} rounded-full transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500`} />
+                  <div className={`mt-6 h-1 bg-linear-to-r ${item.gradient} rounded-full transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500`} />
                 </div>
               </motion.div>
             ))}
@@ -230,7 +230,7 @@ export default function AboutPage() {
           </h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
             <motion.div className="rounded-3xl bg-white/60 backdrop-blur-xl border border-slate-200 p-8 hover:shadow-xl transition-all duration-300" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} viewport={{ once: true }}>
-              <div className="w-16 h-16 rounded-full bg-gradient-to-r from-cyan-400 to-indigo-500 mx-auto mb-4 flex items-center justify-center shadow-lg">
+              <div className="w-16 h-16 rounded-full bg-linear-to-r from-cyan-400 to-indigo-500 mx-auto mb-4 flex items-center justify-center shadow-lg">
                 <span className="text-white font-bold text-xl">KD</span>
               </div>
               <h3 className="text-xl font-semibold text-slate-900 mb-2">Kashish Devnani</h3>
@@ -239,7 +239,7 @@ export default function AboutPage() {
             </motion.div>
             
             <motion.div className="rounded-3xl bg-white/60 backdrop-blur-xl border border-slate-200 p-8 hover:shadow-xl transition-all duration-300" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.18 }} viewport={{ once: true }}>
-              <div className="w-16 h-16 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto mb-4 flex items-center justify-center shadow-lg">
+              <div className="w-16 h-16 rounded-full bg-linear-to-r from-indigo-500 to-purple-500 mx-auto mb-4 flex items-center justify-center shadow-lg">
                 <span className="text-white font-bold text-xl">SN</span>
               </div>
               <h3 className="text-xl font-semibold text-slate-900 mb-2">Sanskaar Nair</h3>
@@ -265,7 +265,7 @@ export default function AboutPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/programs">
-              <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-600 hover:to-indigo-700 shadow-lg hover:shadow-xl transition-transform duration-300 hover:-translate-y-1 text-white">
+              <Button size="lg" className="bg-linear-to-r from-cyan-500 to-indigo-600 hover:from-cyan-600 hover:to-indigo-700 shadow-lg hover:shadow-xl transition-transform duration-300 hover:-translate-y-1 text-white">
                 Browse Programs
               </Button>
             </Link>

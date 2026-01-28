@@ -87,7 +87,7 @@ export function ParallaxImage({
                   />
                   {/* Gradient overlay for depth */}
                   <div
-                    className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-900/20"
+                    className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-slate-900/20"
                     style={{
                       opacity: 0.3 + (index * 0.2) / segmentCount,
                     }}
@@ -199,7 +199,7 @@ export function SplitParallaxImage({
             fill
             className="object-cover object-left"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent to-slate-900/50" />
+          <div className="absolute inset-0 bg-linear-to-r from-transparent to-slate-900/50" />
         </motion.div>
 
         {/* Right half */}
@@ -258,7 +258,7 @@ export function Hero() {
       style={{ y }}
       className="relative flex h-screen items-center justify-center overflow-hidden bg-slate-950"
     >
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-900/60 via-slate-950 to-black" />
+      <div className="absolute inset-0 bg-linear-to-b from-slate-900/60 via-slate-950 to-black" />
       <motion.div className="relative z-10 space-y-4 text-center">
         <p className="hero-kicker text-sm uppercase tracking-[0.3em] text-cyan-200/80">
           Intelligent clinical pathways

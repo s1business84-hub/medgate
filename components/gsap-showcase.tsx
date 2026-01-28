@@ -91,7 +91,7 @@ export function GSAPAnimationShowcase() {
         <div className="flex justify-center">
           <div
             ref={boxRef}
-            className="w-24 h-24 bg-gradient-to-br from-cyan-500 to-indigo-600 rounded-lg shadow-lg"
+            className="w-24 h-24 bg-linear-to-br from-cyan-500 to-indigo-600 rounded-lg shadow-lg"
           />
         </div>
         <p className="text-center text-sm text-slate-400">
@@ -118,7 +118,7 @@ export function GSAPAnimationShowcase() {
         <div className="flex justify-center">
           <div
             ref={pulseRef}
-            className="w-32 h-32 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full shadow-lg flex items-center justify-center"
+            className="w-32 h-32 bg-linear-to-br from-emerald-500 to-teal-600 rounded-full shadow-lg flex items-center justify-center"
           >
             <Play className="w-12 h-12 text-white" />
           </div>
@@ -133,7 +133,7 @@ export function GSAPAnimationShowcase() {
         <h3 className="text-lg font-semibold text-white">Scroll Trigger Animation</h3>
         <div
           ref={scrollBoxRef}
-          className="p-6 bg-gradient-to-br from-purple-900/20 to-pink-900/20 border border-purple-500/30 rounded-lg backdrop-blur-sm"
+          className="p-6 bg-linear-to-br from-purple-900/20 to-pink-900/20 border border-purple-500/30 rounded-lg backdrop-blur-sm"
         >
           <p className="text-slate-300">
             This box animates as it enters the viewport. Scroll down to see it in action!

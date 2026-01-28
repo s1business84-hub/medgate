@@ -107,7 +107,7 @@ export function ApplicationDecisionModal({
             className="bg-slate-900 border border-white/10 rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
           >
             {/* Header */}
-            <div className="sticky top-0 bg-gradient-to-r from-slate-900 to-slate-950 border-b border-white/10 p-6">
+            <div className="sticky top-0 bg-linear-to-r from-slate-900 to-slate-950 border-b border-white/10 p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <h2 className="text-2xl font-bold text-white">Review Application</h2>
@@ -126,7 +126,7 @@ export function ApplicationDecisionModal({
               {/* Student info */}
               <div className="bg-white/5 border border-white/10 rounded-lg p-4">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-linear-to-br from-cyan-400 to-blue-500 flex items-center justify-center">
                     <User className="w-6 h-6 text-white" />
                   </div>
                   <div>
@@ -257,7 +257,7 @@ export function ApplicationDecisionModal({
 
               {/* Info box */}
               <div className="bg-blue-500/10 border border-blue-400/20 rounded-lg p-4 flex gap-3">
-                <AlertCircle className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+                <AlertCircle className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
                 <div className="text-sm">
                   <p className="text-blue-300 font-medium mb-1">What happens next?</p>
                   <ul className="text-blue-200/80 space-y-1 text-xs">
@@ -281,7 +281,7 @@ export function ApplicationDecisionModal({
                 <Button
                   onClick={handleSubmitDecision}
                   disabled={!decision || isPending || loading}
-                  className="flex-1 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-semibold"
+                  className="flex-1 bg-linear-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-semibold"
                 >
                   {isPending || loading ? (
                     <>

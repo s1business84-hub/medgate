@@ -479,7 +479,7 @@ export default function SupervisorDashboard() {
           exit={{ opacity: 0, y: -20 }}
           className="fixed top-4 right-4 z-50 max-w-sm"
         >
-          <div className="p-4 rounded-lg border-2 border-yellow-500/50 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 backdrop-blur-xl">
+          <div className="p-4 rounded-lg border-2 border-yellow-500/50 bg-linear-to-r from-yellow-500/20 to-orange-500/20 backdrop-blur-xl">
             <div className="flex items-center gap-3">
               <div className="text-3xl">🎉</div>
               <div>
@@ -503,7 +503,7 @@ export default function SupervisorDashboard() {
                 <ArrowLeft className="w-6 h-6 text-slate-300" />
               </Link>
               <div>
-                <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent flex items-center gap-2">
+                <h1 className="text-5xl font-bold bg-linear-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent flex items-center gap-2">
                   Supervisor Dashboard
                 </h1>
                 <p className="text-xl text-slate-300">Track student progress, visualize clinical development, and gain AI-powered insights</p>
@@ -523,7 +523,7 @@ export default function SupervisorDashboard() {
             <Reveal key={stat.label} delay={0.1 * idx} y={20}>
               <motion.div
                 whileHover={{ y: -4 }}
-                className={`p-6 rounded-xl border border-white/10 bg-gradient-to-br ${stat.color}/10 backdrop-blur-sm hover:border-white/20 transition-all`}
+                className={`p-6 rounded-xl border border-white/10 bg-linear-to-br ${stat.color}/10 backdrop-blur-sm hover:border-white/20 transition-all`}
               >
                 <p className="text-slate-400 text-sm mb-2">{stat.label}</p>
                 <p className="text-3xl font-bold text-white">{stat.value}</p>
@@ -624,10 +624,10 @@ export default function SupervisorDashboard() {
           <button onClick={resetDemo} className="px-4 py-2 rounded-md bg-white/10 hover:bg-white/20 text-slate-200 text-sm">
             Reset Demo Data
           </button>
-          <button onClick={exportToCSV} className="px-4 py-2 rounded-md bg-gradient-to-r from-green-600 to-emerald-600 hover:opacity-90 text-white text-sm">
+          <button onClick={exportToCSV} className="px-4 py-2 rounded-md bg-linear-to-r from-green-600 to-emerald-600 hover:opacity-90 text-white text-sm">
             Export to CSV
           </button>
-          <label className="px-4 py-2 rounded-md bg-gradient-to-r from-blue-600 to-cyan-600 hover:opacity-90 text-white text-sm cursor-pointer">
+          <label className="px-4 py-2 rounded-md bg-linear-to-r from-blue-600 to-cyan-600 hover:opacity-90 text-white text-sm cursor-pointer">
             Import from CSV
             <input type="file" accept=".csv" onChange={importFromCSV} className="hidden" />
           </label>
@@ -693,7 +693,7 @@ export default function SupervisorDashboard() {
                     {student.level > 1 && (
                       <button
                         onClick={() => demoteStudent(student.id)}
-                        className="text-xs px-3 py-1 rounded-md bg-gradient-to-r from-red-600 to-pink-600 text-white hover:opacity-90"
+                        className="text-xs px-3 py-1 rounded-md bg-linear-to-r from-red-600 to-pink-600 text-white hover:opacity-90"
                       >
                         Demote Level
                       </button>
@@ -701,7 +701,7 @@ export default function SupervisorDashboard() {
                     {student.level < 7 && (
                       <button
                         onClick={() => promoteStudent(student.id)}
-                        className="text-xs px-3 py-1 rounded-md bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:opacity-90"
+                        className="text-xs px-3 py-1 rounded-md bg-linear-to-r from-purple-600 to-pink-600 text-white hover:opacity-90"
                       >
                         Promote Level
                       </button>
@@ -772,7 +772,7 @@ export default function SupervisorDashboard() {
                             <p className="text-sm font-bold text-cyan-400">{pct}%</p>
                           </div>
                           <div className="w-full bg-white/10 rounded-full h-2">
-                            <motion.div initial={{ width: 0 }} whileInView={{ width: `${pct}%` }} transition={{ duration: 0.8, ease: "easeOut" }} className="bg-gradient-to-r from-cyan-500 to-indigo-500 h-2 rounded-full" />
+                            <motion.div initial={{ width: 0 }} whileInView={{ width: `${pct}%` }} transition={{ duration: 0.8, ease: "easeOut" }} className="bg-linear-to-r from-cyan-500 to-indigo-500 h-2 rounded-full" />
                           </div>
                           <div className="flex items-center justify-between mt-2">
                             <p className="text-xs text-slate-400">Sessions: {obs.sessionsCompleted}/{obs.totalSessions}</p>
@@ -839,7 +839,7 @@ export default function SupervisorDashboard() {
                             initial={{ width: 0 }}
                             whileInView={{ width: `${pct}%` }}
                             transition={{ duration: 0.8, ease: "easeOut" }}
-                            className="bg-gradient-to-r from-cyan-500 to-indigo-500 h-2 rounded-full"
+                            className="bg-linear-to-r from-cyan-500 to-indigo-500 h-2 rounded-full"
                           />
                         </div>
                         <div className="flex items-center justify-between mt-2">
@@ -879,7 +879,7 @@ export default function SupervisorDashboard() {
                   </div>
                   <div className="mt-2 flex justify-end">
                     <button
-                      className="text-xs px-3 py-1 rounded-md bg-gradient-to-r from-cyan-600 to-indigo-600 text-white"
+                      className="text-xs px-3 py-1 rounded-md bg-linear-to-r from-cyan-600 to-indigo-600 text-white"
                       onClick={() => {
                         const title = (document.getElementById(`title-${student.id}`) as HTMLInputElement)?.value || "Untitled";
                         const type = ((document.getElementById(`type-${student.id}`) as HTMLSelectElement)?.value as any) || "observership";

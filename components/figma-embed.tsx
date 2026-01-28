@@ -66,11 +66,11 @@ export function FigmaEmbed({
           }}
         />
         {/* Gradient overlay for visual enhancement */}
-        <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-slate-900 to-transparent pointer-events-none z-10" />
+        <div className="absolute top-0 left-0 right-0 h-12 bg-linear-to-b from-slate-900 to-transparent pointer-events-none z-10" />
       </div>
 
       {/* Loading skeleton */}
-      <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-slate-800 to-slate-900 -z-10" />
+      <div className="absolute inset-0 animate-pulse bg-linear-to-br from-slate-800 to-slate-900 -z-10" />
     </motion.div>
   );
 }

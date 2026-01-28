@@ -67,12 +67,12 @@ export function FAQ() {
       <motion.div
         animate={{ y: [0, -10, 0], rotate: [0, 4, -2, 0] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-0 right-10 w-80 h-80 bg-gradient-to-br from-cyan-500/20 via-blue-500/15 to-indigo-500/10 rounded-full blur-3xl opacity-70 -z-10"
+        className="absolute top-0 right-10 w-80 h-80 bg-linear-to-br from-cyan-500/20 via-blue-500/15 to-indigo-500/10 rounded-full blur-3xl opacity-70 -z-10"
       />
       <motion.div
         animate={{ y: [0, 12, 0], rotate: [0, -3, 2, 0] }}
         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-0 left-6 w-96 h-96 bg-gradient-to-tr from-purple-500/15 via-fuchsia-500/15 to-blue-500/10 rounded-full blur-3xl opacity-70 -z-10"
+        className="absolute bottom-0 left-6 w-96 h-96 bg-linear-to-tr from-purple-500/15 via-fuchsia-500/15 to-blue-500/10 rounded-full blur-3xl opacity-70 -z-10"
       />
       <motion.div
         animate={{ scale: [1, 1.05, 1] }}
@@ -131,12 +131,12 @@ export function FAQ() {
                     whileHover={{ y: -6, scale: 1.01 }}
                   >
                     {/* Subtle gradient background on hover */}
-                    <div className={`absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-blue-500/10 to-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-400`} />
+                    <div className={`absolute inset-0 bg-linear-to-br from-cyan-500/10 via-blue-500/10 to-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-400`} />
 
                     {/* Liquid glass shine effect */}
                     <div className={`absolute inset-0 transition-opacity duration-300 ${openIndex === index ? "opacity-100" : "opacity-0 group-hover:opacity-80"}`}>
-                      <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-cyan-500/20 via-blue-500/15 to-transparent rounded-full blur-2xl" />
-                      <div className="absolute bottom-0 left-0 w-2/5 h-2/5 bg-gradient-to-tr from-indigo-500/15 to-transparent rounded-full blur-xl" />
+                      <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-linear-to-bl from-cyan-500/20 via-blue-500/15 to-transparent rounded-full blur-2xl" />
+                      <div className="absolute bottom-0 left-0 w-2/5 h-2/5 bg-linear-to-tr from-indigo-500/15 to-transparent rounded-full blur-xl" />
                     </div>
 
                     {/* Active state subtle overlay */}
@@ -145,14 +145,14 @@ export function FAQ() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-blue-500/10 to-transparent"
+                        className="absolute inset-0 bg-linear-to-br from-cyan-500/10 via-blue-500/10 to-transparent"
                       />
                     )}
 
                     {/* Soft glow ring */}
                     <motion.div
                       animate={{ opacity: openIndex === index ? 0.3 : 0 }}
-                      className="absolute -inset-px rounded-3xl bg-gradient-to-r from-blue-300/20 via-purple-300/20 to-pink-300/20 blur-sm"
+                      className="absolute -inset-px rounded-3xl bg-linear-to-r from-blue-300/20 via-purple-300/20 to-pink-300/20 blur-sm"
                     />
 
                     <button

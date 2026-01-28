@@ -339,7 +339,7 @@ export function FormBuilderModern({ onSave, onCancel, initialTemplate }: FormBui
                     >
                       <GripVertical className="w-4 h-4 text-slate-500" />
                       <div
-                        className={`flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br ${
+                        className={`shrink-0 w-8 h-8 rounded-lg bg-linear-to-br ${
                           questionTypeConfig[q.type]?.color
                         } flex items-center justify-center text-white`}
                       >
@@ -466,7 +466,7 @@ export function FormBuilderModern({ onSave, onCancel, initialTemplate }: FormBui
                 initial={{ width: 0 }}
                 animate={{ width: `${completionPercent}%` }}
                 transition={{ duration: 0.3 }}
-                className="h-full bg-gradient-to-r from-cyan-500 to-blue-500"
+                className="h-full bg-linear-to-r from-cyan-500 to-blue-500"
               />
             </div>
             <p className="text-xs text-slate-400 mt-2">{completionPercent}% Complete</p>
@@ -515,7 +515,7 @@ export function FormBuilderModern({ onSave, onCancel, initialTemplate }: FormBui
               whileHover={{ scale: 1.05 }}
               onClick={handleSave}
               disabled={completionPercent < 100}
-              className="flex-1 p-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-sm font-medium hover:from-cyan-600 hover:to-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="flex-1 p-3 rounded-lg bg-linear-to-r from-cyan-500 to-blue-500 text-white text-sm font-medium hover:from-cyan-600 hover:to-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               <Save className="w-4 h-4" />
               Save Form

@@ -137,7 +137,7 @@ export function StudentFormSubmission({
         </div>
         <div className="h-2 w-full rounded bg-white/10 overflow-hidden">
           <motion.div
-            className="h-full bg-gradient-to-r from-purple-500 to-pink-500"
+            className="h-full bg-linear-to-r from-purple-500 to-pink-500"
             initial={{ width: 0 }}
             animate={{ width: `${progressPct}%` }}
             transition={{ type: "spring", stiffness: 200, damping: 24 }}
