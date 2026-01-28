@@ -185,15 +185,38 @@ export default function StudentPortal() {
 
             {/* Main Content */}
             <div className="lg:col-span-3 space-y-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-              {/* XP System Disclaimer */}
-              <div className="p-4 rounded-lg border border-yellow-500/30 bg-yellow-500/10 backdrop-blur-sm">
-                <p className="text-sm text-yellow-200 flex items-start gap-2">
-                  <span className="text-lg">💡</span>
-                  <span>
-                    <strong>How XP increases:</strong> Earn +10 XP per form completion, +5 XP per application submission, +15 XP per program completion, +20 XP per certification earned, and +3 XP per reflection logged. Reach 100 XP to advance to the next level!
-                  </span>
-                </p>
-              </div>
+              {/* XP System Reminder */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="p-5 rounded-lg border border-yellow-500/40 bg-linear-to-r from-yellow-500/15 to-orange-500/15 backdrop-blur-sm"
+              >
+                <div className="flex items-start gap-3">
+                  <div className="text-2xl">⚡</div>
+                  <div className="flex-1">
+                    <h3 className="font-bold text-yellow-300 mb-2">XP Earning Guide</h3>
+                    <div className="grid md:grid-cols-2 gap-3">
+                      <div className="text-sm text-yellow-100">
+                        <p className="font-semibold text-yellow-200 mb-1">Complete Activities:</p>
+                        <ul className="space-y-1 text-xs">
+                          <li>✓ <strong>+10 XP</strong> per form completion</li>
+                          <li>✓ <strong>+5 XP</strong> per application submission</li>
+                          <li>✓ <strong>+3 XP</strong> per reflection logged</li>
+                        </ul>
+                      </div>
+                      <div className="text-sm text-yellow-100">
+                        <p className="font-semibold text-yellow-200 mb-1">Achievements:</p>
+                        <ul className="space-y-1 text-xs">
+                          <li>✓ <strong>+15 XP</strong> per program completion</li>
+                          <li>✓ <strong>+20 XP</strong> per certification earned</li>
+                          <li>✓ <strong>100 XP = Level Up!</strong></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <p className="text-xs text-yellow-100/80 mt-2">Keep engaging to level up and unlock new opportunities!</p>
+                  </div>
+                </div>
+              </motion.div>
 
               {loadingApps ? (
                 <div className="space-y-4">
