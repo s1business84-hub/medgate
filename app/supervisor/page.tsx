@@ -14,6 +14,8 @@ interface Observership {
   type: "observership" | "elective";
   totalSessions: number;
   sessionsCompleted: number;
+  startDate?: string;
+  endDate?: string;
 }
 
 interface ApplicationRecord {
@@ -58,8 +60,8 @@ const mockStudents: StudentData[] = [
     role: "Observer",
     formsAssigned: ["Consent", "Checklist"],
     observerships: [
-      { id: "OBS-1", title: "Internal Medicine", type: "observership", totalSessions: 10, sessionsCompleted: 8 },
-      { id: "ELC-1", title: "Cardiology Elective", type: "elective", totalSessions: 12, sessionsCompleted: 9 },
+      { id: "OBS-1", title: "Internal Medicine", type: "observership", totalSessions: 10, sessionsCompleted: 8, startDate: "2025-01-15", endDate: "2025-02-15" },
+      { id: "ELC-1", title: "Cardiology Elective", type: "elective", totalSessions: 12, sessionsCompleted: 9, startDate: "2025-02-01", endDate: "2025-03-01" },
     ],
     applications: [
       { id: "APP-101", program: "Surgery Observership", status: "approved", appliedOn: "2025-01-05" },
@@ -81,8 +83,8 @@ const mockStudents: StudentData[] = [
     role: "Observer",
     formsAssigned: ["Consent"],
     observerships: [
-      { id: "OBS-2", title: "Pediatrics", type: "observership", totalSessions: 8, sessionsCompleted: 5 },
-      { id: "ELC-2", title: "Dermatology Elective", type: "elective", totalSessions: 6, sessionsCompleted: 3 },
+      { id: "OBS-2", title: "Pediatrics", type: "observership", totalSessions: 8, sessionsCompleted: 5, startDate: "2025-01-20", endDate: "2025-02-20" },
+      { id: "ELC-2", title: "Dermatology Elective", type: "elective", totalSessions: 6, sessionsCompleted: 3, startDate: "2025-02-10", endDate: "2025-03-10" },
     ],
     applications: [
       { id: "APP-103", program: "Neurology Observership", status: "waitlisted", appliedOn: "2025-01-10" },
@@ -103,7 +105,7 @@ const mockStudents: StudentData[] = [
     role: "Observer",
     formsAssigned: [],
     observerships: [
-      { id: "OBS-3", title: "Emergency Medicine", type: "observership", totalSessions: 10, sessionsCompleted: 4 },
+      { id: "OBS-3", title: "Emergency Medicine", type: "observership", totalSessions: 10, sessionsCompleted: 4, startDate: "2025-01-10", endDate: "2025-02-10" },
     ],
     applications: [
       { id: "APP-104", program: "Orthopedics Elective", status: "declined", appliedOn: "2025-01-12" },
@@ -124,8 +126,8 @@ const mockStudents: StudentData[] = [
     role: "Team Lead",
     formsAssigned: ["Consent", "Checklist", "Feedback"],
     observerships: [
-      { id: "OBS-4", title: "Surgery", type: "observership", totalSessions: 12, sessionsCompleted: 12 },
-      { id: "ELC-3", title: "ICU Elective", type: "elective", totalSessions: 8, sessionsCompleted: 7 },
+      { id: "OBS-4", title: "Surgery", type: "observership", totalSessions: 12, sessionsCompleted: 12, startDate: "2025-01-05", endDate: "2025-02-05" },
+      { id: "ELC-3", title: "ICU Elective", type: "elective", totalSessions: 8, sessionsCompleted: 7, startDate: "2025-02-05", endDate: "2025-03-05" },
     ],
     applications: [
       { id: "APP-105", program: "Pathology Observership", status: "approved", appliedOn: "2025-01-08" },
@@ -146,7 +148,7 @@ const mockStudents: StudentData[] = [
     role: "Observer",
     formsAssigned: [],
     observerships: [
-      { id: "OBS-5", title: "Family Medicine", type: "observership", totalSessions: 6, sessionsCompleted: 2 },
+      { id: "OBS-5", title: "Family Medicine", type: "observership", totalSessions: 6, sessionsCompleted: 2, startDate: "2025-02-01", endDate: "2025-03-01" },
     ],
     applications: [
       { id: "APP-106", program: "Anesthesiology Elective", status: "pending", appliedOn: "2025-01-21" },
