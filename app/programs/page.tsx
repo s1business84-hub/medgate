@@ -18,6 +18,7 @@ import { motionTokens } from "@/lib/motion";
 import { ProgramsSkeleton } from "@/components/ui/Skeleton";
 import { fetchEligibilitySummary, type EligibilitySummary } from "@/lib/eligibility/storage";
 import { useAuth } from "@/lib/auth-context";
+import { VoiceProgramAssistant } from "@/components/voice-program-assistant";
 
 export default function ProgramsPage() {
   const { user } = useAuth();
@@ -32,6 +33,9 @@ export default function ProgramsPage() {
   const [openMapProgram, setOpenMapProgram] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [eligibilitySummary, setEligibilitySummary] = useState<EligibilitySummary | null>(null);
+  const [voiceFilterIds, setVoiceFilterIds] = useState<string[]>([]);
+  const [voiceFilterActive, setVoiceFilterActive] = useState(false);
+  const [voiceQuery, setVoiceQuery] = useState("");
   const reduce = useReducedMotion();
 
   // Simulate loading
@@ -110,6 +114,10 @@ export default function ProgramsPage() {
       programName: program.departmentName,
     });
   };
+
+  const visiblePrograms = voiceFilterActive
+    ? programs.filter((program) => voiceFilterIds.includes(program.id))
+    : programs;
 
   const renderEligibilityBadge = () => {
     if (!user || user.role !== "student") {
@@ -193,8 +201,34 @@ export default function ProgramsPage() {
 
         {/* Eligibility Checker */}
         <Reveal delay={0.2}>
-        <div className="mb-12">
+        <div className="mb-12 space-y-6">
           <EligibilityChecker />
+          <VoiceProgramAssistant
+            programs={programs}
+            hospitals={hospitals}
+            eligibilitySummary={eligibilitySummary}
+            onFilter={(ids, active, query) => {
+              setVoiceFilterIds(ids);
+              setVoiceFilterActive(active);
+              setVoiceQuery(query);
+            }}
+          />
+          {voiceFilterActive && (
+            <div className="flex flex-wrap items-center gap-3 rounded-xl border border-white/10 bg-white/5 p-4">
+              <span className="text-xs text-slate-300">Voice filter active</span>
+              {voiceQuery && <span className="text-xs text-slate-400">“{voiceQuery}”</span>}
+              <button
+                onClick={() => {
+                  setVoiceFilterActive(false);
+                  setVoiceFilterIds([]);
+                  setVoiceQuery("");
+                }}
+                className="text-xs text-cyan-200 hover:text-cyan-100"
+              >
+                Clear filter
+              </button>
+            </div>
+          )}
         </div>
         </Reveal>
 
@@ -212,7 +246,7 @@ export default function ProgramsPage() {
         {/* Programs Grid */}
         <div className="space-y-4">
           <AnimatePresence>
-            {programs.map((p, index) => {
+            {visiblePrograms.map((p, index) => {
               const h = hospitals.find((x) => x.id === p.hospitalId);
               const isExpanded = expandedProgram === p.id;
               return (
