@@ -1,17 +1,8 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback, startTransition } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, User, Sparkles } from "lucide-react";
-import { useAuth } from "@/lib/auth-context";
-import { 
-  getConversations, 
-  getMessages, 
-  sendMessage, 
-  markMessagesAsRead,
-  getUsers
-} from "@/lib/storage";
-import type { Conversation, ChatMessage as ChatMsg } from "@/lib/types";
 
 interface Message {
   id: string;
@@ -21,16 +12,17 @@ interface Message {
 }
 
 export function SupervisorChat() {
-  "use no memo";
-  const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: "1",
+      text: "Hello! I'm here to help answer your questions about the program, requirements, and next steps.",
+      sender: "supervisor",
+      timestamp: new Date(),
+    },
+  ]);
   const [inputText, setInputText] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const [activeConversation, setActiveConversation] = useState<Conversation | null>(null);
-  const [hasRealMessages, setHasRealMessages] = useState(false);
-  const [unreadCount, setUnreadCount] = useState(0);
-  const messageIdCounterRef = useRef(0);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -40,68 +32,6 @@ export function SupervisorChat() {
     scrollToBottom();
   }, [messages]);
 
-  // Load conversations and messages
-  const loadMessages = useCallback(() => {
-    if (!user) return;
-    
-    const conversations = getConversations(user.id, "student");
-    
-    startTransition(() => {
-      if (conversations.length > 0) {
-        // Get the most recent conversation
-        const conv = conversations.sort((a, b) => 
-          new Date(b.lastMessageAt).getTime() - new Date(a.lastMessageAt).getTime()
-        )[0];
-        
-        setActiveConversation(conv);
-        
-        const msgs = getMessages(conv.id);
-        
-        if (msgs.length > 0) {
-          setHasRealMessages(true);
-          
-          // Convert to Message format
-          const formattedMessages: Message[] = msgs.map(m => ({
-            id: m.id,
-            text: m.message,
-            sender: m.senderRole === "student" ? "student" : "supervisor",
-            timestamp: new Date(m.timestamp),
-          }));
-          
-          setMessages(formattedMessages);
-          
-          // Mark as read when opened
-          if (isOpen) {
-            markMessagesAsRead(conv.id, user.id);
-          }
-        }
-        
-        // Calculate unread
-        const totalUnread = conversations.reduce((sum, c) => sum + c.unreadCount.student, 0);
-        setUnreadCount(totalUnread);
-      } else {
-        // No real conversations, show welcome message
-        setMessages([{
-          id: "1",
-          text: "Hello! I'm here to help answer your questions about the program, requirements, and next steps.",
-          sender: "supervisor",
-          timestamp: new Date(),
-        }]);
-      }
-    });
-  }, [user, isOpen]);
-
-  useEffect(() => {
-    // Synchronizing with external system (localStorage) - necessary for loading messages
-    loadMessages();
-    
-    // Poll for new messages every 5 seconds when open
-    if (isOpen) {
-      const interval = setInterval(loadMessages, 5000);
-      return () => clearInterval(interval);
-    }
-  }, [isOpen, loadMessages]);
-
   const quickQuestions = [
     "What are the program requirements?",
     "How do I submit my application?",
@@ -110,53 +40,29 @@ export function SupervisorChat() {
   ];
 
   const handleSendMessage = () => {
-    if (!inputText.trim() || !user) return;
+    if (!inputText.trim()) return;
 
     const userMessage = inputText;
+    const newMessage: Message = {
+      id: `msg-${crypto.getRandomValues(new Uint8Array(8)).join('')}`,
+      text: userMessage,
+      sender: "student",
+      timestamp: new Date(),
+    };
+
+    setMessages((prev) => [...prev, newMessage]);
     setInputText("");
-    
-    // If we have a real conversation, send real message
-    if (activeConversation && hasRealMessages) {
-      const supervisorId = activeConversation.supervisorId;
-      
-      const chatMsg = sendMessage({
-        conversationId: activeConversation.id,
-        senderId: user.id,
-        senderRole: "student",
-        recipientId: supervisorId,
-        message: userMessage,
-      });
-      
-      const newMessage: Message = {
-        id: chatMsg.id,
-        text: chatMsg.message,
-        sender: "student",
-        timestamp: new Date(chatMsg.timestamp),
-      };
-      
-      setMessages((prev) => [...prev, newMessage]);
-    } else {
-      // Fallback to automated responses
-      const newMessage: Message = {
-        id: `auto-${messageIdCounterRef.current++}`,
-        text: userMessage,
-        sender: "student",
+
+    // Simulate supervisor response
+    setTimeout(() => {
+      const response: Message = {
+        id: (Date.now() + 1).toString(),
+        text: getAutomatedResponse(userMessage),
+        sender: "supervisor",
         timestamp: new Date(),
       };
-      
-      setMessages((prev) => [...prev, newMessage]);
-
-      // Simulate supervisor response
-      setTimeout(() => {
-        const response: Message = {
-          id: `auto-${messageIdCounterRef.current++}`,
-          text: getAutomatedResponse(userMessage),
-          sender: "supervisor",
-          timestamp: new Date(),
-        };
-        setMessages((prev) => [...prev, response]);
-      }, 1000);
-    }
+      setMessages((prev) => [...prev, response]);
+    }, 1000);
   };
 
   const getAutomatedResponse = (question: string): string => {
@@ -191,7 +97,7 @@ export function SupervisorChat() {
       {/* Chat Button with Flow Design smooth animation */}
       <motion.button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-40 p-4 bg-linear-to-r from-blue-600 to-indigo-600 text-white rounded-full shadow-2xl hover:shadow-blue-500/50 transition-all duration-300"
+        className="fixed bottom-6 right-6 z-40 p-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full shadow-2xl hover:shadow-blue-500/50 transition-all duration-300"
         whileHover={{ scale: 1.15, rotate: 5 }}
         whileTap={{ scale: 0.95 }}
         initial={{ opacity: 0, y: 100 }}
@@ -199,21 +105,11 @@ export function SupervisorChat() {
         transition={{ delay: 1, type: "spring", stiffness: 200 }}
       >
         <MessageCircle className="w-6 h-6" />
-        {unreadCount > 0 ? (
-          <motion.div 
-            className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-xs font-bold"
-            animate={{ scale: [1, 1.2, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            {unreadCount}
-          </motion.div>
-        ) : (
-          <motion.div 
-            className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full"
-            animate={{ scale: [1, 1.2, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          />
-        )}
+        <motion.div 
+          className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full"
+          animate={{ scale: [1, 1.2, 1] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        />
       </motion.button>
 
       {/* Chat Window */}
@@ -223,13 +119,13 @@ export function SupervisorChat() {
             initial={{ opacity: 0, y: 100, scale: 0.8 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 100, scale: 0.8 }}
-            className="fixed bottom-24 right-6 z-50 w-96 max-w-[calc(100vw-3rem)] h-128 bg-linear-to-br from-slate-900 to-slate-950 border border-white/20 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+            className="fixed bottom-24 right-6 z-50 w-96 max-w-[calc(100vw-3rem)] h-[32rem] bg-gradient-to-br from-slate-900 to-slate-950 border border-white/20 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
           >
             {/* Header with enhanced gradient */}
-            <div className="flex items-center justify-between p-4 border-b border-white/10 bg-linear-to-r from-blue-600/30 to-indigo-600/30 backdrop-blur-sm">
+            <div className="flex items-center justify-between p-4 border-b border-white/10 bg-gradient-to-r from-blue-600/30 to-indigo-600/30 backdrop-blur-sm">
               <div className="flex items-center gap-3">
                 <motion.div 
-                  className="p-2 bg-linear-to-r from-blue-500/30 to-indigo-500/30 rounded-full"
+                  className="p-2 bg-gradient-to-r from-blue-500/30 to-indigo-500/30 rounded-full"
                   animate={{ rotate: [0, 10, -10, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                 >
@@ -237,16 +133,10 @@ export function SupervisorChat() {
                 </motion.div>
                 <div>
                   <h3 className="text-white font-semibold flex items-center gap-2">
-                    {hasRealMessages ? "Supervisor" : "Supervisor Assistant"}
-                    {hasRealMessages ? (
-                      <span className="text-xs bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full">Real-time</span>
-                    ) : (
-                      <span className="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full">AI Assistant</span>
-                    )}
+                    Supervisor Assistant
+                    <span className="text-xs bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full">Online</span>
                   </h3>
-                  <p className="text-xs text-slate-400">
-                    {hasRealMessages ? "Connected to your supervisor" : "AI-powered help"}
-                  </p>
+                  <p className="text-xs text-slate-400">Typically replies instantly</p>
                 </div>
               </div>
               <button
@@ -270,7 +160,7 @@ export function SupervisorChat() {
                   <div
                     className={`max-w-[80%] p-3 rounded-2xl shadow-lg ${
                       message.sender === "student"
-                        ? "bg-linear-to-r from-blue-600 to-indigo-600 text-white"
+                        ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white"
                         : "bg-white/10 backdrop-blur-sm text-slate-200 border border-white/10"
                     }`}
                   >
@@ -285,11 +175,11 @@ export function SupervisorChat() {
             </div>
 
             {/* Quick Questions with hover effects */}
-            {!hasRealMessages && messages.length <= 1 && (
+            {messages.length <= 1 && (
               <motion.div 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="p-4 border-t border-white/10 space-y-2 bg-linear-to-b from-transparent to-blue-500/5"
+                className="p-4 border-t border-white/10 space-y-2 bg-gradient-to-b from-transparent to-blue-500/5"
               >
                 <p className="text-xs text-slate-400 mb-2 font-semibold">Quick questions:</p>
                 <div className="space-y-2">
@@ -304,7 +194,7 @@ export function SupervisorChat() {
                         setInputText(q);
                         setTimeout(() => handleSendMessage(), 100);
                       }}
-                      className="w-full text-left text-xs p-3 rounded-lg bg-white/5 hover:bg-linear-to-r hover:from-blue-500/20 hover:to-indigo-500/20 text-slate-300 hover:text-white transition-all duration-300 border border-white/5 hover:border-blue-500/30"
+                      className="w-full text-left text-xs p-3 rounded-lg bg-white/5 hover:bg-gradient-to-r hover:from-blue-500/20 hover:to-indigo-500/20 text-slate-300 hover:text-white transition-all duration-300 border border-white/5 hover:border-blue-500/30"
                     >
                       {q}
                     </motion.button>
@@ -314,7 +204,7 @@ export function SupervisorChat() {
             )}
 
             {/* Input with enhanced styling */}
-            <div className="p-4 border-t border-white/10 bg-linear-to-t from-slate-950 to-transparent">
+            <div className="p-4 border-t border-white/10 bg-gradient-to-t from-slate-950 to-transparent">
               <div className="flex gap-2">
                 <input
                   type="text"
@@ -328,7 +218,7 @@ export function SupervisorChat() {
                   onClick={handleSendMessage}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="p-3 bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 rounded-xl transition-all shadow-lg hover:shadow-blue-500/30"
+                  className="p-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 rounded-xl transition-all shadow-lg hover:shadow-blue-500/30"
                 >
                   <Send className="w-5 h-5 text-white" />
                 </motion.button>

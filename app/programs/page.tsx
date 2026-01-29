@@ -7,13 +7,15 @@ import { getProgramMetadata } from '@/lib/storage';
 import { ProgramFilters } from "@/components/program-filters";
 import { ReminderModal } from "@/components/reminder-modal";
 import { HospitalsMap, hospitalCoords } from "@/components/hospitals-map";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronDown, ChevronUp, Bell, MapPin } from "lucide-react";
 import { ApplicationModal } from "@/components/application-modal";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
-import { motion, cubicBezier } from "framer-motion";
+import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "framer-motion";
 import Reveal from "@/components/Reveal";
 import { ScrollableViewport, ScrollSection } from "@/components/scrollable-viewport";
+import { motionTokens } from "@/lib/motion";
+import { ProgramsSkeleton } from "@/components/ui/Skeleton";
 
 export default function ProgramsPage() {
   const [expandedProgram, setExpandedProgram] = useState<string | null>(null);
@@ -25,6 +27,46 @@ export default function ProgramsPage() {
     programName: "",
   });
   const [openMapProgram, setOpenMapProgram] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const reduce = useReducedMotion();
+
+  // Simulate loading
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 600);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return (
+      <ScrollableViewport
+        showProgress={true}
+        showNavigationDots={true}
+        showArrows={true}
+        snapToSections={false}
+      >
+        <ScrollSection id="programs">
+          <main className="relative min-h-screen overflow-hidden text-slate-100">
+            <LiquidParallax />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(34,211,238,0.15),transparent_40%),radial-gradient(circle_at_80%_20%,rgba(99,102,241,0.12),transparent_35%),radial-gradient(circle_at_40%_80%,rgba(139,92,246,0.13),transparent_38%),linear-gradient(180deg,#0a0e1a_0%,#0f172a_50%,#0a0e1a_100%)]" />
+            <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+              <div className="mb-8 h-8 w-64 bg-white/10 rounded-xl skeleton" />
+              <div className="mb-12 h-6 w-full max-w-xl bg-white/10 rounded-xl skeleton" />
+              <div className="mb-8">
+                <div className="h-32 w-full bg-white/10 rounded-2xl skeleton" />
+              </div>
+              <div className="mb-12">
+                <div className="h-32 w-full bg-white/10 rounded-2xl skeleton" />
+              </div>
+              <div className="mb-12">
+                <div className="h-64 w-full bg-white/10 rounded-2xl skeleton" />
+              </div>
+              <ProgramsSkeleton />
+            </div>
+          </main>
+        </ScrollSection>
+      </ScrollableViewport>
+    );
+  };
 
   const toggleProgramExpansion = (programId: string) => {
     setExpandedProgram(expandedProgram === programId ? null : programId);
@@ -108,22 +150,24 @@ export default function ProgramsPage() {
 
         {/* Programs Grid */}
         <div className="space-y-4">
-          {programs.map((p, index) => {
-            const h = hospitals.find((x) => x.id === p.hospitalId);
-            const isExpanded = expandedProgram === p.id;
-            return (
-              <motion.div
-                key={p.id}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ 
-                  duration: 0.5, 
-                  delay: index * 0.1,
-                  ease: cubicBezier(0.16, 1, 0.3, 1)
-                }}
-                className="group relative rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.5)] transition-all duration-500 overflow-hidden p-5 sm:p-7 lg:p-8 hover:-translate-y-1 hover:shadow-[0_25px_110px_rgba(0,0,0,0.55)] break-words"
-              >
+          <AnimatePresence>
+            {programs.map((p, index) => {
+              const h = hospitals.find((x) => x.id === p.hospitalId);
+              const isExpanded = expandedProgram === p.id;
+              return (
+                <LayoutGroup key={p.id}>
+                  <motion.div
+                    layout
+                    initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: motionTokens.distance.y }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: -motionTokens.distance.y }}
+                    transition={{
+                      duration: motionTokens.duration.page,
+                      delay: index * 0.04,
+                      ease: motionTokens.ease.standard,
+                    }}
+                    className="group relative rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.5)] transition duration-300 ease-out overflow-hidden p-5 sm:p-7 lg:p-8 hover:-translate-y-1 hover:shadow-[0_25px_110px_rgba(0,0,0,0.55)] break-words"
+                  >
                 <div className="absolute inset-0 bg-linear-to-r from-cyan-400/10 via-transparent to-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-25 transition-opacity duration-500">
                   <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-linear-to-br from-white/70 to-transparent rounded-full blur-3xl" />
@@ -219,7 +263,7 @@ export default function ProgramsPage() {
                     
                     <button
                       onClick={() => toggleProgramExpansion(p.id)}
-                      className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-linear-to-r from-cyan-500 to-indigo-600 text-white rounded-lg hover:from-cyan-400 hover:to-indigo-500 transition-colors text-sm shadow-lg w-full sm:w-auto"
+                      className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-linear-to-r from-cyan-500 to-indigo-600 text-white rounded-lg hover:from-cyan-400 hover:to-indigo-500 transition duration-150 ease-out text-sm shadow-lg w-full sm:w-auto active:scale-[0.98]"
                     >
                       {isExpanded ? (
                         <>
@@ -269,8 +313,18 @@ export default function ProgramsPage() {
                 </div>
 
                 {/* Expanded Details */}
-                {isExpanded && (
-                  <div className="mt-6 pt-6 border-t border-white/10 animate-fade-in">
+                <AnimatePresence initial={false}>
+                  {isExpanded && (
+                    <motion.div
+                      key="details"
+                      layout
+                      initial={reduce ? { opacity: 1 } : { opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={reduce ? { opacity: 1 } : { opacity: 0, height: 0 }}
+                      transition={{ duration: motionTokens.duration.ui, ease: motionTokens.ease.standard }}
+                      className="overflow-hidden"
+                    >
+                      <div className="mt-6 pt-6 border-t border-white/10">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                       {/* Program Description */}
                       <div>
@@ -336,10 +390,14 @@ export default function ProgramsPage() {
                       </Link>
                     </div>
                   </div>
-                )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
-            );
-          })}
+                </LayoutGroup>
+              );
+            })}
+          </AnimatePresence>
         </div>
 
         {/* Back to Home */}

@@ -249,6 +249,30 @@ html {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
+.skeleton {
+  background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 37%, #e2e8f0 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-slide-in,
+  .animate-scale-in,
+  .animate-slide-up,
+  .animate-float,
+  .animate-pulse,
+  .skeleton {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  * {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 /* Stagger animation delays */
 .animate-delay-100 {
   animation-delay: 0.1s;
@@ -272,16 +296,51 @@ html {
 
 /* Input Styles */
 .input-field {
-  @apply w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300;
+  @apply w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200;
 }
 
 .form-input,
 .form-select {
-  @apply w-full px-4 py-3 border border-gray-300 rounded-xl bg-white text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300;
+  @apply w-full px-4 py-3 border border-gray-300 rounded-xl bg-white text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200;
 }
 
 .form-select {
   @apply appearance-none text-gray-900;
+}
+
+/* Production-grade motion: Use CSS transform for maximum performance */
+.transition-transform {
+  transition: transform 0.15s ease-out;
+}
+
+.transition-opacity {
+  transition: opacity 0.15s ease-out;
+}
+
+.transition {
+  transition: all 0.15s ease-out;
+}
+
+.duration-150 {
+  transition-duration: 0.15s;
+}
+
+.duration-200 {
+  transition-duration: 0.2s;
+}
+
+.ease-out {
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Remove slow transitions on interactive elements */
+button {
+  @apply transition duration-150 ease-out;
+}
+
+/* Active state feedback */
+button:active {
+  @apply scale-[0.98];
 }
 
 .status-badge {

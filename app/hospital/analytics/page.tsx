@@ -133,7 +133,7 @@ export default function HospitalAnalyticsPage() {
             { label: "Avg Progress", value: `${overallStats.avgProgress}%`, icon: TrendingUp },
             { label: "Total Entries", value: overallStats.totalEntries, icon: Target },
           ].map((stat, idx) => (
-            <Reveal key={stat.label} delay={0.1 * idx} y={20}>
+            <Reveal key={stat.label} delay={0.1 * idx}>
               <motion.div
                 whileHover={{ y: -4 }}
                 className="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl hover:bg-white/10 transition-all"
@@ -151,7 +151,7 @@ export default function HospitalAnalyticsPage() {
         </div>
 
         {/* Category Filter */}
-        <Reveal delay={0.2} y={20}>
+        <Reveal delay={0.2}>
           <div className="mb-6 flex flex-wrap gap-2">
             {[
               { id: "all", label: "All Categories" },
@@ -179,7 +179,7 @@ export default function HospitalAnalyticsPage() {
             {filteredData.map((data, idx) => {
               const cat = categories.find((c) => c.id === data.category)
               return (
-                <Reveal key={`${data.studentId}-${data.category}`} delay={0.05 * idx} y={20}>
+                <Reveal key={`${data.studentId}-${data.category}`} delay={0.05 * idx}>
                   <motion.div
                     whileHover={{ y: -4 }}
                     className={`p-6 rounded-2xl border border-white/10 bg-linear-to-br from-white/5 to-white/0 backdrop-blur-xl hover:border-white/20 transition-all`}

@@ -7,6 +7,8 @@ import Link from "next/link"
 
 import { LiquidParallax } from "@/components/ui/liquid-parallax"
 import { ScrollableViewport, ScrollSection } from "@/components/scrollable-viewport"
+import { AccordionItem } from "@/components/ui/Accordion"
+import { motionTokens } from "@/lib/motion"
 
 const faqs = [
   {
@@ -185,114 +187,11 @@ export default function FAQPage() {
         >
           <AnimatePresence>
             {filteredFaqs.map((faq, index) => (
-              <motion.div
+              <AccordionItem
                 key={`${selectedCategory}-${index}`}
-                variants={itemVariants}
-                layout
-                className="group"
-              >
-                {/* Card with dynamic color gradient */}
-                <motion.div
-                  className={`relative rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-400 overflow-hidden backdrop-blur-sm ${
-                    openIndex === index
-                      ? "bg-white/12 border border-white/20"
-                      : "bg-white/6 border border-white/10"
-                  }`}
-                  whileHover={{ y: -4 }}
-                >
-                  {/* Dynamic gradient background */}
-                  <div
-                    className={`absolute inset-0 bg-linear-to-r ${faq.color} opacity-0 group-hover:opacity-100 transition-opacity duration-400`}
-                  />
-
-                  {/* Glass shine effect */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-300">
-                    <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-linear-to-br from-white to-transparent rounded-full blur-2xl" />
-                  </div>
-
-                  {/* Active state glow */}
-                  {openIndex === index && (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      className="absolute inset-0 bg-linear-to-br from-white/10 via-white/5 to-transparent"
-                    />
-                  )}
-
-                  {/* Animated glow ring for active state */}
-                  {openIndex === index && (
-                    <motion.div
-                      animate={{ opacity: [0.4, 0.7, 0.4] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                      className="absolute -inset-px rounded-2xl bg-linear-to-r from-blue-500/50 via-purple-500/50 to-pink-500/50 blur-md -z-10"
-                    />
-                  )}
-
-                  <button
-                    onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                    className="relative flex w-full items-center justify-between px-6 py-5 text-left cursor-pointer z-10"
-                  >
-                    <div className="flex items-center gap-4 flex-1">
-                      <motion.div
-                        animate={{
-                          rotate: openIndex === index ? 360 : 0,
-                          scale: openIndex === index ? 1.2 : 1
-                        }}
-                        transition={{ duration: 0.3 }}
-                        className="shrink-0"
-                      >
-                        <MessageCircle className="w-5 h-5 text-blue-300 drop-shadow-[0_0_12px_rgba(147,197,253,0.5)]" />
-                      </motion.div>
-                      <div className="flex-1">
-                        <h3 className="text-lg font-semibold text-white group-hover:text-blue-200 transition-colors">
-                          {faq.question}
-                        </h3>
-                        <p className="text-sm text-slate-400 mt-1">{faq.category}</p>
-                      </div>
-                    </div>
-                    <motion.div
-                      animate={{ rotate: openIndex === index ? 180 : 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="shrink-0"
-                    >
-                      <ChevronDown className="w-5 h-5 text-slate-300" />
-                    </motion.div>
-                  </button>
-
-                  {/* Expanded Answer */}
-                  <AnimatePresence>
-                    {openIndex === index && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
-                        className="relative border-t border-white/10 px-6 py-5 z-10"
-                      >
-                        <motion.div
-                          initial={{ opacity: 0, y: -8 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.05, duration: 0.2 }}
-                        >
-                          <p className="text-slate-200 leading-relaxed text-base">
-                            {faq.answer}
-                          </p>
-                          <motion.div
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 0.1, duration: 0.3 }}
-                            className="mt-4 flex items-center gap-2 text-xs uppercase tracking-widest text-blue-300/90"
-                          >
-                            <Zap className="w-3.5 h-3.5" />
-                            <span>Learn more in our docs</span>
-                          </motion.div>
-                        </motion.div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
-              </motion.div>
+                q={faq.question}
+                a={faq.answer}
+              />
             ))}
           </AnimatePresence>
         </motion.div>
