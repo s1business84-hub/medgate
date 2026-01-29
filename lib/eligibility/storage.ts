@@ -1,6 +1,6 @@
 "use client";
 
-import type { DocumentType } from "@/lib/ai/document-ai-server";
+import type { DocumentType, AiExtraction } from "@/lib/ai/document-ai-server";
 
 export type EligibilitySummary = {
   eligibilityStatus: "ELIGIBLE" | "INCOMPLETE" | "REVIEW";
