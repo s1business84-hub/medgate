@@ -13,6 +13,7 @@ import { motion } from "framer-motion";
 import Reveal from "@/components/Reveal";
 import { AIListingSuggestions } from "@/components/ai-listing-suggestions";
 import { SupervisorChat } from "@/components/supervisor-chat";
+import { StudentVerificationCenter } from "@/components/student-verification-center";
 
 export default function StudentPortal() {
   const { user, logout } = useAuth();
@@ -217,6 +218,8 @@ export default function StudentPortal() {
                   </div>
                 </div>
               </motion.div>
+
+              <StudentVerificationCenter studentName={user.name} studentEmail={user.email} studentId={user.id} />
 
               {loadingApps ? (
                 <div className="space-y-4">

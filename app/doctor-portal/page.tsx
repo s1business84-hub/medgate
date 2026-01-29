@@ -234,48 +234,11 @@ export default function DoctorPortal() {
 
             {/* Analytics Dashboard */}
             <DoctorAnalyticsDashboard
-              doctorName="Dr. Sample"
-              departmentId="INT-001"
               metrics={{
-                totalStudentsSupervised: 12,
-                averageStudentProgress: 82,
-                completedEvaluations: 42,
-                pendingEvaluations: 6,
-                studentPerformanceData: [
-                  {
-                    studentId: "STU001",
-                    studentName: "Ahmed Hassan",
-                    overallScore: 85,
-                    evaluationsCount: 12,
-                    categories: {
-                      clinicalSkills: 85,
-                      medicalKnowledge: 88,
-                      communication: 82,
-                      professionalism: 90,
-                      teamwork: 83,
-                    },
-                    lastEvaluation: "2025-01-24",
-                    status: "on-track",
-                  },
-                ],
-                categoryBreakdown: [
-                  {
-                    category: "Clinical Skills",
-                    averageScore: 83,
-                    totalStudents: 12,
-                    trend: "up",
-                    percentageChange: 5,
-                  },
-                ],
-                evaluationTrends: [
-                  {
-                    date: "2025-01-24",
-                    completedCount: 42,
-                    averageScore: 85,
-                    students: 12,
-                  },
-                ],
-                performanceAlerts: [],
+                totalObservations: 48,
+                completedObservations: 42,
+                averageRating: 4.6,
+                studentsUnderSupervision: 12,
               }}
             />
             </motion.div>

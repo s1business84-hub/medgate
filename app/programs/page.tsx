@@ -16,8 +16,11 @@ import Reveal from "@/components/Reveal";
 import { ScrollableViewport, ScrollSection } from "@/components/scrollable-viewport";
 import { motionTokens } from "@/lib/motion";
 import { ProgramsSkeleton } from "@/components/ui/Skeleton";
+import { fetchEligibilitySummary, type EligibilitySummary } from "@/lib/eligibility/storage";
+import { useAuth } from "@/lib/auth-context";
 
 export default function ProgramsPage() {
+  const { user } = useAuth();
   const [expandedProgram, setExpandedProgram] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProgram, setSelectedProgram] = useState<{ name: string; hospital: string; programId?: string; hospitalId?: string } | null>(null);
@@ -28,6 +31,7 @@ export default function ProgramsPage() {
   });
   const [openMapProgram, setOpenMapProgram] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [eligibilitySummary, setEligibilitySummary] = useState<EligibilitySummary | null>(null);
   const reduce = useReducedMotion();
 
   // Simulate loading
@@ -35,6 +39,23 @@ export default function ProgramsPage() {
     const timer = setTimeout(() => setIsLoading(false), 600);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (!user || user.role !== "student") {
+      setEligibilitySummary(null);
+      return;
+    }
+    fetchEligibilitySummary(user.id).then(setEligibilitySummary);
+  }, [user]);
+
+  useEffect(() => {
+    if (!user || user.role !== "student") return;
+    const handleUpdate = () => fetchEligibilitySummary(user.id).then(setEligibilitySummary);
+    window.addEventListener("eligibility-updated", handleUpdate);
+    return () => {
+      window.removeEventListener("eligibility-updated", handleUpdate);
+    };
+  }, [user]);
 
   if (isLoading) {
     return (
@@ -88,6 +109,46 @@ export default function ProgramsPage() {
       programId: program.id,
       programName: program.departmentName,
     });
+  };
+
+  const renderEligibilityBadge = () => {
+    if (!user || user.role !== "student") {
+      return (
+        <span className="px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap border border-slate-400/40 text-slate-200 bg-slate-400/10">
+          Log in to check eligibility
+        </span>
+      );
+    }
+
+    if (!eligibilitySummary) {
+      return (
+        <span className="px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap border border-slate-400/40 text-slate-200 bg-slate-400/10">
+          Eligibility not checked
+        </span>
+      );
+    }
+
+    if (eligibilitySummary.eligibilityStatus === "ELIGIBLE") {
+      return (
+        <span className="px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap border border-emerald-400/30 text-emerald-200 bg-emerald-500/15">
+          Minimum criteria met
+        </span>
+      );
+    }
+
+    if (eligibilitySummary.eligibilityStatus === "REVIEW") {
+      return (
+        <span className="px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap border border-amber-400/30 text-amber-200 bg-amber-500/15">
+          Eligibility in review
+        </span>
+      );
+    }
+
+    return (
+      <span className="px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap border border-red-400/30 text-red-200 bg-red-500/15">
+        Missing requirements
+      </span>
+    );
   };
   return (
     <ScrollableViewport
@@ -214,6 +275,7 @@ export default function ProgramsPage() {
                     <span className="px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap border border-slate-400/40 text-slate-200 bg-slate-400/10">
                       Capacity: Institution-defined
                     </span>
+                    {renderEligibilityBadge()}
                     
                     {/* Reminder Button */}
                     <button
