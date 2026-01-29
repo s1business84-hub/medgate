@@ -27,7 +27,7 @@ async function sendWelcomeEmail(email: string, name: string, type: WelcomeVarian
 
 function getInitialRole(searchParams: ReturnType<typeof useSearchParams>) {
   const roleParam = searchParams?.get("role");
-  return roleParam === "hospital" ? "hospital" : "student";
+  return roleParam === "hospital" ? "staff" : "student";
 }
 
 export default function LoginForm() {
@@ -36,7 +36,7 @@ export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [role, setRole] = useState<"student" | "hospital">(() => getInitialRole(searchParams));
+  const [role, setRole] = useState<"student" | "staff">(() => getInitialRole(searchParams));
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
@@ -62,10 +62,10 @@ export default function LoginForm() {
           const u = getCurrentUser();
           showToast(`Welcome back, ${u?.name || "User"}!`);
           setTimeout(() => {
-            if (u?.role === "admin") {
-              router.push("/admin");
-            } else if (u?.role === "hospital") {
+            if (u?.role === "staff") {
               router.push("/hospital");
+            } else if (u?.role === "supervisor") {
+              router.push("/supervisor");
             } else {
               router.push("/student");
             }
@@ -88,7 +88,7 @@ export default function LoginForm() {
         createUser({ email, role, name, password });
 
         // Send welcome email for the selected role
-        const variant: WelcomeVariant = role === "hospital" ? "welcome-hospital" : "welcome-student"
+        const variant: WelcomeVariant = role === "staff" ? "welcome-hospital" : "welcome-student"
         sendWelcomeEmail(email, name || "", variant).catch((err) => console.error("Welcome email failed", err))
 
         const success = login(email, password);
@@ -96,10 +96,10 @@ export default function LoginForm() {
           const u = getCurrentUser();
           showToast(`Account created! Welcome, ${u?.name || "User"}!`);
           setTimeout(() => {
-            if (u?.role === "admin") {
-              router.push("/admin");
-            } else if (u?.role === "hospital") {
+            if (u?.role === "staff") {
               router.push("/hospital");
+            } else if (u?.role === "supervisor") {
+              router.push("/supervisor");
             } else {
               router.push("/student");
             }
@@ -129,7 +129,7 @@ export default function LoginForm() {
               {isLogin ? "Welcome Back" : "Create Account"}
             </h1>
             <p className="text-slate-300">
-              {isLogin ? `Sign in as a ${role === "hospital" ? "Hospital" : "Student"}` : `Create a ${role === "hospital" ? "Hospital" : "Student"} account`}
+              {isLogin ? `Sign in as a ${role === "staff" ? "Hospital" : "Student"}` : `Create a ${role === "staff" ? "Hospital" : "Student"} account`}
             </p>
           </div>
 
@@ -150,9 +150,9 @@ export default function LoginForm() {
             </button>
             <button
               type="button"
-              onClick={() => setRole("hospital")}
-              className={`flex-1 px-4 py-2 rounded-full transition duration-150 ease-out ${role === "hospital" ? "bg-white text-slate-900 shadow" : "text-slate-200 hover:text-white"}`}
-              aria-pressed={role === "hospital"}
+              onClick={() => setRole("staff")}
+              className={`flex-1 px-4 py-2 rounded-full transition duration-150 ease-out ${role === "staff" ? "bg-white text-slate-900 shadow" : "text-slate-200 hover:text-white"}`}
+              aria-pressed={role === "staff"}
             >
               Hospital
             </button>
