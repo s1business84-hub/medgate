@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { PerspectiveCamera, RoundedBox, Text, Center } from "@react-three/drei";
 import * as THREE from "three";
@@ -18,25 +18,30 @@ function Phone() {
 
   return (
     <group ref={groupRef} position={[0, 0, 0]}>
-      {/* Phone body */}
+      {/* Phone body with enhanced materials */}
       <RoundedBox args={[1.8, 3.6, 0.2]} radius={0.15} smoothness={4} position={[0, 0, 0]}>
-        <meshStandardMaterial
-          color="#1e293b"
-          metalness={0.9}
-          roughness={0.1}
-          emissive="#0f172a"
-          emissiveIntensity={0.3}
+        <meshPhysicalMaterial
+          color="#0f172a"
+          metalness={0.95}
+          roughness={0.05}
+          emissive="#06b6d4"
+          emissiveIntensity={0.1}
+          reflectivity={0.9}
+          clearcoat={1}
+          clearcoatRoughness={0.1}
         />
       </RoundedBox>
 
-      {/* Screen */}
+      {/* Screen with glow */}
       <RoundedBox args={[1.6, 3.3, 0.05]} radius={0.1} smoothness={4} position={[0, 0, 0.13]}>
-        <meshStandardMaterial
-          color="#1e3a8a"
-          metalness={0.3}
-          roughness={0.4}
-          emissive="#1e3a8a"
-          emissiveIntensity={0.6}
+        <meshPhysicalMaterial
+          color="#0a3f5a"
+          metalness={0.2}
+          roughness={0.3}
+          emissive="#06b6d4"
+          emissiveIntensity={0.8}
+          clearcoat={0.8}
+          clearcoatRoughness={0.2}
         />
       </RoundedBox>
 
@@ -49,6 +54,7 @@ function Phone() {
           anchorY="middle"
           maxWidth={1.4}
           textAlign="center"
+          font="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
         >
           Welcome to
         </Text>
@@ -61,6 +67,8 @@ function Phone() {
           anchorY="middle"
           maxWidth={1.4}
           textAlign="center"
+          font="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+          fontWeight="bold"
         >
           Electivio
         </Text>
@@ -73,6 +81,7 @@ function Phone() {
           anchorY="middle"
           maxWidth={1.3}
           textAlign="center"
+          font="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
         >
           Structured workflows
         </Text>
@@ -85,6 +94,7 @@ function Phone() {
           anchorY="middle"
           maxWidth={1.3}
           textAlign="center"
+          font="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
         >
           Transparent requirements
         </Text>
@@ -93,30 +103,38 @@ function Phone() {
       {/* Camera notch */}
       <mesh position={[0, 1.6, 0.15]} rotation={[0, 0, Math.PI / 2]}>
         <capsuleGeometry args={[0.03, 0.15, 4, 8]} />
-        <meshStandardMaterial color="#0a0a0a" metalness={0.8} roughness={0.2} />
+        <meshPhysicalMaterial color="#000000" metalness={0.9} roughness={0.1} />
       </mesh>
 
       {/* Side buttons */}
       <RoundedBox args={[0.05, 0.3, 0.15]} radius={0.02} position={[0.93, 0.8, 0]}>
-        <meshStandardMaterial color="#1e293b" metalness={0.9} roughness={0.1} />
+        <meshPhysicalMaterial color="#1e293b" metalness={0.9} roughness={0.1} />
       </RoundedBox>
     </group>
   );
 }
 
-function Scene() {
+function SceneContent() {
   return (
     <>
-      <PerspectiveCamera makeDefault position={[0, 0, 6]} fov={45} />
+      <PerspectiveCamera makeDefault position={[0, 0, 6]} fov={50} />
 
-      {/* Advanced lighting */}
-      <ambientLight intensity={0.8} />
-      <pointLight position={[5, 8, 5]} intensity={1.5} color="#06b6d4" distance={25} decay={2} />
-      <pointLight position={[-5, 5, -5]} intensity={1.2} color="#6366f1" distance={20} decay={2} />
-      <pointLight position={[0, -3, 8]} intensity={0.8} color="#06b6d4" distance={20} decay={2} />
-      <directionalLight position={[3, 8, 5]} intensity={0.5} color="#ffffff" />
+      {/* Dramatic lighting setup */}
+      <ambientLight intensity={0.5} />
+      
+      {/* Key light - cyan from top right */}
+      <pointLight position={[6, 8, 8]} intensity={2} color="#06b6d4" distance={30} decay={2} />
+      
+      {/* Fill light - indigo from back left */}
+      <pointLight position={[-8, 4, -8]} intensity={1.5} color="#6366f1" distance={25} decay={2} />
+      
+      {/* Rim light - subtle cyan from bottom */}
+      <pointLight position={[0, -6, 8]} intensity={1} color="#06b6d4" distance={20} decay={2} />
+      
+      {/* Directional light for depth */}
+      <directionalLight position={[4, 10, 6]} intensity={0.8} color="#ffffff" />
 
-      <color attach="background" args={["#0a0e1a"]} />
+      <color attach="background" args={["transparent"]} />
 
       <Phone />
     </>
@@ -126,18 +144,17 @@ function Scene() {
 export function Phone3D() {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 1, ease: "easeOut" }}
-      className="relative w-full h-96 rounded-3xl overflow-hidden border border-cyan-500/30 bg-slate-950/70 backdrop-blur-xl shadow-2xl shadow-cyan-500/20"
+      initial={{ opacity: 0, scale: 0.8, rotateX: 20 }}
+      animate={{ opacity: 1, scale: 1, rotateX: 0 }}
+      transition={{ duration: 1.2, ease: "easeOut" }}
+      className="relative w-full max-w-md h-full flex items-center justify-center"
+      style={{ perspective: "1200px" }}
     >
-      <Canvas>
-        <Scene />
+      <Canvas className="!absolute inset-0">
+        <Suspense fallback={null}>
+          <SceneContent />
+        </Suspense>
       </Canvas>
-
-      {/* Corner accents */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-linear-to-br from-cyan-500/20 via-transparent to-transparent pointer-events-none rounded-bl-3xl" />
-      <div className="absolute bottom-0 left-0 w-24 h-24 bg-linear-to-tr from-cyan-500/10 via-transparent to-transparent pointer-events-none rounded-tr-full" />
     </motion.div>
   );
 }

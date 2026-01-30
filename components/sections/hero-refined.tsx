@@ -164,7 +164,7 @@ export function Hero() {
 
           {/* Right Column - 3D Phone */}
           <Reveal delay={0.3} y={40}>
-            <div className="flex justify-center lg:justify-end">
+            <div className="flex justify-center lg:justify-end items-center h-96">
               <Phone3D />
             </div>
           </Reveal>
