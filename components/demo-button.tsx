@@ -97,7 +97,7 @@ export function DemoButton() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="absolute top-full mt-3 left-0 w-96 max-h-[85vh] overflow-y-auto bg-slate-900/98 backdrop-blur-xl border border-green-500/30 rounded-2xl shadow-2xl z-50"
+              className="absolute top-full mt-3 left-1/2 -translate-x-1/2 w-[min(24rem,calc(100vw-2rem))] max-h-[85vh] overflow-y-auto bg-slate-900/98 backdrop-blur-xl border border-green-500/30 rounded-2xl shadow-2xl z-50"
             >
               {/* Header */}
               <div className="p-4 border-b border-green-500/20 bg-linear-to-r from-green-500/10 to-emerald-500/10">

@@ -54,12 +54,12 @@ export default function SupervisorDemoPage() {
   ];
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
+    <div className="relative min-h-screen overflow-x-hidden bg-slate-950 text-slate-100">
       <LiquidParallax />
       <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
 
       <motion.div
-        className="relative max-w-6xl mx-auto px-4 py-20"
+        className="relative max-w-6xl mx-auto px-4 py-16 md:py-20"
         initial="hidden"
         animate="visible"
         variants={containerVariants}

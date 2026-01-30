@@ -8,7 +8,7 @@ import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import gsap from "gsap";
-import { ScrollTrigger, Observer, Draggable, SplitText } from "gsap/all";
+import { ScrollTrigger, Observer, Draggable } from "gsap/all";
 import { usePrefersReducedMotion } from "@/components/animation/usePrefersReducedMotion";
 import { ScrollReveal } from "@/components/animation/ScrollReveal";
 import { StaggerGroup, StaggerItem } from "@/components/animation/StaggerGroup";
@@ -27,17 +27,16 @@ export default function PurposePage() {
   const planeOpacity = useTransform(scrollYProgress, [0, 0.2, 0.9, 1], [0, 1, 1, 0]);
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger, Observer, Draggable, SplitText);
+    gsap.registerPlugin(ScrollTrigger, Observer, Draggable);
     const ctx = gsap.context(() => {
       // Only animate if user doesn't prefer reduced motion
       if (!prefersReducedMotion) {
         const headings = gsap.utils.toArray<HTMLElement>(".purpose-heading");
         headings.forEach((heading) => {
-          const split = new SplitText(heading, { type: "words" });
-          gsap.from(split.words, {
+          gsap.from(heading, {
             opacity: 0,
             y: 24,
-            stagger: 0.05,
+            duration: 0.8,
             ease: "power2.out",
             scrollTrigger: { trigger: heading, start: "top 80%" },
           });

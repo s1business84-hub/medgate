@@ -240,34 +240,36 @@ export default function ForHospitalsPage() {
             <div className="relative z-10">
               <h2 className="text-4xl font-bold mb-8 text-center">Platform Capabilities (Planned)</h2>
               
-              <div className="grid md:grid-cols-2 gap-6">
-                {[
+              <div className="relative">
+                <div className="flex gap-6 overflow-x-auto pb-4 -mx-6 px-6 snap-x snap-mandatory">
+                  {[
                   { icon: CheckCircle2, title: 'Eligibility Criteria & Program Requirements', desc: 'Define and publish program-specific eligibility and documentation standards' },
                   { icon: FileCheck, title: 'Institution-Defined Intake Parameters', desc: 'Set custom requirements aligned with your institutional policies' },
                   { icon: Users, title: 'Application Submission Interface (Planned)', desc: 'Central platform for receiving and organizing applications' },
                   { icon: BarChart3, title: 'Status Visibility Tools (In Development)', desc: 'Dashboard to track application progress and program workflows' },
                   { icon: Shield, title: 'Role-Based Access for Administrators', desc: 'Secure access controls for program coordinators and reviewers' },
                   { icon: Shield, title: 'Secure Data Handling', desc: 'Privacy-focused architecture with encrypted data management' }
-                ].map((feature, idx) => (
-                  <motion.div 
-                    key={feature.title}
-                    className="backdrop-blur-sm bg-white/10 rounded-xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300"
-                    initial={{ opacity: 0, x: -30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                  >
-                    <div className="flex items-start">
-                      <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center mr-4 shrink-0">
-                        <feature.icon className="w-6 h-6 text-white" />
+                  ].map((feature, idx) => (
+                    <motion.div 
+                      key={feature.title}
+                      className="min-w-[280px] sm:min-w-[340px] md:min-w-[360px] snap-start backdrop-blur-sm bg-white/10 rounded-xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300"
+                      initial={{ opacity: 0, x: -30 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                    >
+                      <div className="flex items-start">
+                        <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center mr-4 shrink-0">
+                          <feature.icon className="w-6 h-6 text-white" />
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
+                          <p className="text-slate-100">{feature.desc}</p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
-                        <p className="text-slate-100">{feature.desc}</p>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
+                    </motion.div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

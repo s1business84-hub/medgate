@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, useScroll, useTransform } from "framer-motion"
 import { CheckCircle, Users, Award, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
@@ -38,6 +38,12 @@ export function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [targetUrl, setTargetUrl] = useState<string>("")
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  })
+  const gradientOpacity = useTransform(scrollYProgress, [0, 0.4, 1], [0.15, 0.5, 0.8])
+  const glowOpacity = useTransform(scrollYProgress, [0, 0.6, 1], [0.2, 0.55, 0.9])
 
   const handleNavigate = (e: React.MouseEvent, url: string) => {
     e.preventDefault()
@@ -83,7 +89,14 @@ export function Hero() {
       {/* Liquid glass gradient background */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-linear-to-b from-slate-900/60 via-slate-950 to-black" />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(14,165,233,0.12),transparent_35%),radial-gradient(circle_at_80%_10%,rgba(139,92,246,0.12),transparent_30%)]" />
+        <motion.div
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(14,165,233,0.12),transparent_35%),radial-gradient(circle_at_80%_10%,rgba(139,92,246,0.12),transparent_30%)]"
+          style={{ opacity: glowOpacity }}
+        />
+        <motion.div
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(34,211,238,0.18),transparent_40%),radial-gradient(circle_at_75%_65%,rgba(99,102,241,0.18),transparent_45%),radial-gradient(circle_at_50%_10%,rgba(16,185,129,0.16),transparent_50%)]"
+          style={{ opacity: gradientOpacity }}
+        />
       </div>
 
       <div className="mx-auto max-w-7xl px-6 lg:px-8 py-20 sm:py-28">
@@ -178,6 +191,46 @@ export function Hero() {
               </div>
             </motion.div>
           ))}
+        </div>
+
+        {/* Policy acknowledgements */}
+        <div className="mt-12 max-w-4xl">
+          <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 sm:p-8">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+              <div>
+                <p className="text-sm uppercase tracking-[0.2em] text-slate-400">Policy acknowledgements</p>
+                <h3 className="text-xl sm:text-2xl font-semibold text-white mt-2">Required before eligibility can be auto-matched.</h3>
+              </div>
+              <Link
+                href="/policy-acknowledgements"
+                className="inline-flex items-center justify-center px-4 py-2 rounded-full border border-cyan-500/40 text-cyan-200 hover:bg-cyan-500/10 transition"
+              >
+                Read more
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-300">
+              <div className="flex items-start gap-2">
+                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400" />
+                <span>Observership scope (no hands-on care)</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400" />
+                <span>Confidentiality / NDA</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400" />
+                <span>Hospital policies acknowledgement</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400" />
+                <span>Patient data handling acknowledgement</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400" />
+                <span>Code of conduct</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

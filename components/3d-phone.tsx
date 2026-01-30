@@ -49,7 +49,6 @@ function Phone() {
           anchorY="middle"
           maxWidth={1.4}
           textAlign="center"
-          font="/fonts/inter-bold.woff"
         >
           Welcome to
         </Text>
@@ -62,7 +61,6 @@ function Phone() {
           anchorY="middle"
           maxWidth={1.4}
           textAlign="center"
-          font="/fonts/inter-bold.woff"
         >
           Electivio
         </Text>
@@ -75,7 +73,6 @@ function Phone() {
           anchorY="middle"
           maxWidth={1.3}
           textAlign="center"
-          font="/fonts/inter.woff"
         >
           Structured workflows
         </Text>
@@ -88,7 +85,6 @@ function Phone() {
           anchorY="middle"
           maxWidth={1.3}
           textAlign="center"
-          font="/fonts/inter.woff"
         >
           Transparent requirements
         </Text>
