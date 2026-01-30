@@ -1006,3 +1006,58 @@ export function updateStaffAlertStatus(alertId: string, status: "pending" | "app
   return null;
 }
 
+/* WAITLIST NOTIFICATIONS */
+export function handleWaitlistStatusChange(applicationId: string, studentId: string, hospitalId: string, programName: string): void {
+  // Create notification for student
+  createNotification({
+    userId: studentId,
+    type: "update",
+    title: "Application Waitlisted",
+    message: `Your application for ${programName} has been placed on the waitlist. We will notify you as soon as a position becomes available.`,
+    relatedApplicationId: applicationId,
+  });
+
+  // Update or create staff alert with waitlisted status
+  const alerts = readJSON<StaffApplicationAlert[]>(KEYS.staffAlerts, []);
+  const alert = alerts.find(a => a.applicationId === applicationId);
+  
+  if (alert) {
+    alert.status = "waitlisted";
+    writeJSON(KEYS.staffAlerts, alerts);
+  }
+
+  // Create notification for admin
+  createNotification({
+    userId: "admin", // System notification for admin dashboard
+    type: "update",
+    title: "Student Waitlisted",
+    message: `Student ${studentId} has been waitlisted for ${programName} at hospital ${hospitalId}`,
+    relatedApplicationId: applicationId,
+  });
+
+  // Create notification for supervisor/staff at hospital
+  createNotification({
+    userId: hospitalId, // This goes to hospital staff
+    type: "update",
+    title: "Application Waitlisted",
+    message: `An application has been placed on the waitlist for ${programName}`,
+    relatedApplicationId: applicationId,
+  });
+}
+
+export function getWaitlistedApplications(): Application[] {
+  const applications = getApplications();
+  return applications.filter(a => a.status === "Waitlisted");
+}
+
+export function getWaitlistedApplicationsByHospital(hospitalId: string): Application[] {
+  const applications = getWaitlistedApplications();
+  return applications.filter(a => a.hospitalId === hospitalId);
+}
+
+export function getWaitlistedApplicationsByStudent(studentId: string): Application[] {
+  const applications = getWaitlistedApplications();
+  return applications.filter(a => a.studentId === studentId);
+}
+
+

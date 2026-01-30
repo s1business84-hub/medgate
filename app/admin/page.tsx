@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { getApplications, updateApplicationStatus, getStudents, createNotification, deleteApplication, addDocument, setApplicationAssignment, getUsers, createObservationForm, getObservationForms } from "@/lib/storage";
+import { getApplications, updateApplicationStatus, getStudents, createNotification, deleteApplication, addDocument, setApplicationAssignment, getUsers, createObservationForm, getObservationForms, getWaitlistedApplications } from "@/lib/storage";
 import { getSupervisorConfirmations, addSupervisorConfirmation } from "@/lib/auditStore";
 import { showToast } from "@/lib/toast";
 import { ALLOW_EXPORT } from "@/lib/featureFlags";
@@ -402,6 +402,74 @@ export default function AdminPage() {
             </Link>
           </div>
         </div>
+
+        {/* Waitlist Stats */}
+        <div className="mb-8 grid md:grid-cols-3 gap-6">
+          <div className={`${panelClass} p-6`}>
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-slate-400 mb-1">Waitlisted Students</p>
+                <p className="text-3xl font-bold text-yellow-400">{getWaitlistedApplications().length}</p>
+              </div>
+              <Clock className="w-10 h-10 text-yellow-400 opacity-50" />
+            </div>
+            <p className="text-xs text-slate-400 mt-3">Students awaiting available positions</p>
+          </div>
+          <div className={`${panelClass} p-6`}>
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-slate-400 mb-1">Total Applications</p>
+                <p className="text-3xl font-bold text-cyan-400">{applications.length}</p>
+              </div>
+              <CheckCircle className="w-10 h-10 text-cyan-400 opacity-50" />
+            </div>
+            <p className="text-xs text-slate-400 mt-3">All submitted applications</p>
+          </div>
+          <div className={`${panelClass} p-6`}>
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-slate-400 mb-1">Conversion Rate</p>
+                <p className="text-3xl font-bold text-green-400">
+                  {applications.length > 0 
+                    ? Math.round(((applications.length - getWaitlistedApplications().length) / applications.length) * 100) 
+                    : 0}%
+                </p>
+              </div>
+              <CheckCircle className="w-10 h-10 text-green-400 opacity-50" />
+            </div>
+            <p className="text-xs text-slate-400 mt-3">Approved vs total ratio</p>
+          </div>
+        </div>
+
+        {/* Waitlisted Applications List */}
+        {getWaitlistedApplications().length > 0 && (
+          <div className="mb-8">
+            <div className={`${panelClass}`}>
+              <div className="p-6 border-b border-white/10">
+                <h2 className="text-xl font-bold text-slate-100">⏳ Waitlisted Applications</h2>
+              </div>
+              <div className="divide-y divide-white/10">
+                {getWaitlistedApplications().map((app) => (
+                  <div key={app.id} className="p-4 hover:bg-white/5 transition-colors">
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <p className="font-semibold text-slate-100">{getStudentName(app.studentId)}</p>
+                        <p className="text-sm text-slate-400">{getStudentEmail(app.studentId)}</p>
+                        <p className="text-xs text-slate-500 mt-1">Submitted: {new Date(app.submissionDate).toLocaleDateString()}</p>
+                      </div>
+                      <button
+                        onClick={() => setSelectedApp(app)}
+                        className="px-4 py-2 bg-yellow-500/20 hover:bg-yellow-500/30 border border-yellow-500/30 text-yellow-300 rounded-lg text-sm transition-colors"
+                      >
+                        Review
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="grid md:grid-cols-3 gap-6">
           <div className="md:col-span-2">

@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Bell, X, CheckCircle, AlertCircle, Clock } from "lucide-react";
+import { Bell, X, CheckCircle, AlertCircle, Clock, Mail, Smartphone } from "lucide-react";
+import { useAuth } from "@/lib/auth-context";
 
 interface Notification {
   id: string;
@@ -14,38 +15,103 @@ interface Notification {
 }
 
 export function StudentInbox() {
-  const [notifications, setNotifications] = useState<Notification[]>([
-    {
-      id: "1",
-      type: "accepted",
-      program: "Cardiology Elective",
-      message: "Your application has been accepted! You can now proceed to the next stage.",
-      timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
-      read: false,
-    },
-    {
-      id: "2",
-      type: "waitlisted",
-      program: "Surgery Observership",
-      message: "You have been placed on the waitlist. We'll notify you if a spot becomes available.",
-      timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
-      read: false,
-    },
-    {
-      id: "3",
-      type: "updated",
-      program: "Internal Medicine",
-      message: "Your application status has been updated. Please check for details.",
-      timestamp: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-      read: true,
-    },
-  ]);
-
+  const { user } = useAuth();
+  const [notifications, setNotifications] = useState<Notification[]>([]);
   const [showInbox, setShowInbox] = useState(false);
   const [filter, setFilter] = useState<"all" | "unread">("all");
+  const [showNotificationPrefs, setShowNotificationPrefs] = useState(false);
+  const [notificationPrefs, setNotificationPrefs] = useState<{
+    email: string;
+    phone: string;
+    channels: ("email" | "sms")[];
+  }>({
+    email: user?.email || "",
+    phone: "",
+    channels: [],
+  });
+
+  // Load notifications and preferences on mount and when user changes
+  useEffect(() => {
+    if (!user) return;
+
+    try {
+      // Load notifications from localStorage
+      const { getApplications } = require("@/lib/storage");
+      const applications = getApplications();
+
+      // Filter to current student's applications
+      const studentApps = applications.filter(
+        (a: any) => a.studentId === user.id || a.studentId === user.email
+      );
+
+      // Convert applications to notifications
+      const notifs: Notification[] = studentApps.map((app: any, idx: number) => {
+        let type: "accepted" | "rejected" | "waitlisted" | "updated" =
+          (app.status.toLowerCase() as any) || "updated";
+        if (
+          !["accepted", "rejected", "waitlisted"].includes(
+            app.status.toLowerCase()
+          )
+        ) {
+          type = "updated";
+        }
+
+        const statusMessages: Record<string, string> = {
+          approved: "Your application has been approved! Next steps available.",
+          accepted: "Your application has been accepted! You can now proceed.",
+          rejected:
+            "Unfortunately, your application was not selected at this time.",
+          waitlisted:
+            "You have been placed on the waitlist. We will notify you if a position becomes available.",
+          "stage 2 accepted":
+            "Congratulations! You have advanced to Stage 2.",
+          declined: "Your application was declined.",
+          "in training":
+            "You are now in training. Welcome aboard!",
+          completed: "Your application period has been completed.",
+          "under review": "Your application is under review.",
+          submitted: "Your application has been submitted successfully.",
+          draft: "Your application is still in draft status.",
+          deferred: "Your application has been deferred for future consideration.",
+        };
+
+        return {
+          id: app.id,
+          type,
+          program: app.programName || "Unknown Program",
+          message:
+            statusMessages[app.status.toLowerCase()] ||
+            `Your application status: ${app.status}`,
+          timestamp: app.submissionDate || new Date().toISOString(),
+          read: false,
+        };
+      });
+
+      setNotifications(notifs);
+
+      // Load notification preferences from localStorage
+      const savedPrefs = localStorage.getItem(
+        `notification_prefs_${user.id || user.email}`
+      );
+      if (savedPrefs) {
+        setNotificationPrefs(JSON.parse(savedPrefs));
+      } else {
+        setNotificationPrefs({
+          email: user.email || "",
+          phone: "",
+          channels: [],
+        });
+      }
+    } catch (error) {
+      console.error("Error loading notifications:", error);
+    }
+  }, [user]);
 
   const unreadCount = notifications.filter((n) => !n.read).length;
-  const filteredNotifications = filter === "unread" ? notifications.filter((n) => !n.read) : notifications;
+  const filteredNotifications =
+    filter === "unread"
+      ? notifications.filter((n) => !n.read)
+      : notifications;
 
   const markAsRead = (id: string) => {
     setNotifications((prev) =>
@@ -55,6 +121,24 @@ export function StudentInbox() {
 
   const deleteNotification = (id: string) => {
     setNotifications((prev) => prev.filter((n) => n.id !== id));
+  };
+
+  const saveNotificationPrefs = () => {
+    if (!user) return;
+    localStorage.setItem(
+      `notification_prefs_${user.id || user.email}`,
+      JSON.stringify(notificationPrefs)
+    );
+    setShowNotificationPrefs(false);
+  };
+
+  const toggleChannel = (channel: "email" | "sms") => {
+    setNotificationPrefs((prev) => ({
+      ...prev,
+      channels: prev.channels.includes(channel)
+        ? prev.channels.filter((c) => c !== channel)
+        : [...prev.channels, channel],
+    }));
   };
 
   const getIcon = (type: string) => {
@@ -124,12 +208,21 @@ export function StudentInbox() {
             {/* Header */}
             <div className="sticky top-0 bg-slate-950/80 backdrop-blur-sm border-b border-white/10 p-4 flex items-center justify-between">
               <h3 className="text-lg font-bold text-white">Notifications</h3>
-              <button
-                onClick={() => setShowInbox(false)}
-                className="p-1 hover:bg-white/10 rounded transition-all"
-              >
-                <X className="w-5 h-5 text-slate-400" />
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setShowNotificationPrefs(true)}
+                  className="p-1 hover:bg-white/10 rounded transition-all"
+                  title="Notification Preferences"
+                >
+                  <Smartphone className="w-4 h-4 text-slate-400" />
+                </button>
+                <button
+                  onClick={() => setShowInbox(false)}
+                  className="p-1 hover:bg-white/10 rounded transition-all"
+                >
+                  <X className="w-5 h-5 text-slate-400" />
+                </button>
+              </div>
             </div>
 
             {/* Filter Tabs */}
@@ -161,7 +254,9 @@ export function StudentInbox() {
               {filteredNotifications.length === 0 ? (
                 <div className="p-8 text-center">
                   <Bell className="w-12 h-12 text-slate-600 mx-auto mb-3" />
-                  <p className="text-slate-400">No {filter === "unread" ? "unread" : ""} notifications</p>
+                  <p className="text-slate-400">
+                    No {filter === "unread" ? "unread" : ""} notifications
+                  </p>
                 </div>
               ) : (
                 <div className="space-y-2 p-4">
@@ -179,9 +274,15 @@ export function StudentInbox() {
                       <div className="flex items-start gap-3">
                         {getIcon(notification.type)}
                         <div className="flex-1 min-w-0">
-                          <p className="font-semibold text-white text-sm">{notification.program}</p>
-                          <p className="text-xs text-slate-400 mt-1">{notification.message}</p>
-                          <p className="text-xs text-slate-500 mt-2">{formatTime(notification.timestamp)}</p>
+                          <p className="font-semibold text-white text-sm">
+                            {notification.program}
+                          </p>
+                          <p className="text-xs text-slate-400 mt-1">
+                            {notification.message}
+                          </p>
+                          <p className="text-xs text-slate-500 mt-2">
+                            {formatTime(notification.timestamp)}
+                          </p>
                         </div>
                         <button
                           onClick={(e) => {
@@ -198,6 +299,114 @@ export function StudentInbox() {
                 </div>
               )}
             </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Notification Preferences Modal */}
+      <AnimatePresence>
+        {showNotificationPrefs && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setShowNotificationPrefs(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-slate-900 border border-white/10 rounded-xl p-6 max-w-md w-full"
+            >
+              <h2 className="text-2xl font-bold text-white mb-6">
+                Notification Preferences
+              </h2>
+
+              {/* Email Input */}
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-slate-300 mb-2">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  value={notificationPrefs.email}
+                  onChange={(e) =>
+                    setNotificationPrefs({
+                      ...notificationPrefs,
+                      email: e.target.value,
+                    })
+                  }
+                  className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500"
+                  placeholder="your@email.com"
+                />
+              </div>
+
+              {/* Phone Input for SMS */}
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-slate-300 mb-2">
+                  Phone Number (for SMS)
+                </label>
+                <input
+                  type="tel"
+                  value={notificationPrefs.phone}
+                  onChange={(e) =>
+                    setNotificationPrefs({
+                      ...notificationPrefs,
+                      phone: e.target.value,
+                    })
+                  }
+                  className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500"
+                  placeholder="+971 50 123 4567"
+                />
+              </div>
+
+              {/* Notification Channels */}
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-slate-300 mb-4">
+                  Receive notifications via:
+                </label>
+                <div className="space-y-3">
+                  <label className="flex items-center gap-3 p-3 rounded-lg border border-white/10 hover:border-white/20 cursor-pointer transition-all">
+                    <input
+                      type="checkbox"
+                      checked={notificationPrefs.channels.includes("email")}
+                      onChange={() => toggleChannel("email")}
+                      className="w-4 h-4"
+                    />
+                    <Mail className="w-5 h-5 text-blue-400" />
+                    <span className="text-white">Email</span>
+                  </label>
+                  <label className="flex items-center gap-3 p-3 rounded-lg border border-white/10 hover:border-white/20 cursor-pointer transition-all">
+                    <input
+                      type="checkbox"
+                      checked={notificationPrefs.channels.includes("sms")}
+                      onChange={() => toggleChannel("sms")}
+                      className="w-4 h-4"
+                    />
+                    <Smartphone className="w-5 h-5 text-green-400" />
+                    <span className="text-white">SMS</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex gap-3">
+                <button
+                  onClick={saveNotificationPrefs}
+                  className="flex-1 px-4 py-2 bg-cyan-500 hover:bg-cyan-600 text-white font-medium rounded-lg transition-colors"
+                >
+                  Save Preferences
+                </button>
+                <button
+                  onClick={() => setShowNotificationPrefs(false)}
+                  className="flex-1 px-4 py-2 bg-white/10 hover:bg-white/20 text-white font-medium rounded-lg transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
