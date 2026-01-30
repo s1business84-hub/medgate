@@ -97,21 +97,65 @@ export function Phone3D() {
         <Scene />
       </Canvas>
 
-      {/* Animated greeting */}
+      {/* Animated text overlay inside phone */}
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.3, duration: 0.8, ease: "easeOut" }}
-        className="absolute bottom-8 left-0 right-0 text-center pointer-events-none z-10"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5, duration: 1 }}
+        className="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
       >
-        <motion.div
-          animate={{ scale: [1, 1.05, 1] }}
-          transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-        >
-          <p className="text-xl font-bold bg-linear-to-r from-cyan-300 via-cyan-200 to-blue-300 bg-clip-text text-transparent drop-shadow-lg">
-            📱 Welcome to Electivio
-          </p>
-        </motion.div>
+        <div className="text-center px-6 space-y-3">
+          <motion.div
+            animate={{ 
+              scale: [1, 1.05, 1],
+              rotate: [0, 2, -2, 0]
+            }}
+            transition={{ 
+              duration: 3, 
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            <p className="text-base font-bold bg-linear-to-r from-pink-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-lg">
+              📱 Welcome to Electivio
+            </p>
+          </motion.div>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 2, duration: 0.8 }}
+            className="space-y-2"
+          >
+            <motion.p 
+              animate={{ 
+                opacity: [0.7, 1, 0.7],
+              }}
+              transition={{ 
+                duration: 2.5, 
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="text-sm font-semibold bg-linear-to-r from-cyan-300 via-blue-300 to-indigo-300 bg-clip-text text-transparent"
+            >
+              Structured workflows
+            </motion.p>
+            <motion.p 
+              animate={{ 
+                opacity: [0.7, 1, 0.7],
+              }}
+              transition={{ 
+                duration: 2.5, 
+                repeat: Infinity,
+                delay: 0.5,
+                ease: "easeInOut"
+              }}
+              className="text-sm font-semibold bg-linear-to-r from-emerald-300 via-teal-300 to-cyan-300 bg-clip-text text-transparent"
+            >
+              Transparent requirements
+            </motion.p>
+          </motion.div>
+        </div>
       </motion.div>
 
       {/* Corner accents */}

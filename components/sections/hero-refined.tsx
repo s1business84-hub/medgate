@@ -80,9 +80,8 @@ export function Hero() {
 
       {/* Liquid glass gradient background */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-linear-to-b from-slate-950 via-slate-900/60 to-slate-950" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(14,165,233,0.18),transparent_45%),radial-gradient(circle_at_80%_25%,rgba(99,102,241,0.18),transparent_40%),radial-gradient(circle_at_55%_80%,rgba(236,72,153,0.08),transparent_50%)]" />
-        <div className="absolute inset-0 bg-white/5 backdrop-blur-3xl" />
+        <div className="absolute inset-0 bg-linear-to-b from-slate-900/60 via-slate-950 to-black" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(14,165,233,0.12),transparent_35%),radial-gradient(circle_at_80%_10%,rgba(139,92,246,0.12),transparent_30%)]" />
       </div>
 
       <div className="mx-auto max-w-7xl px-6 lg:px-8 py-20 sm:py-28">
@@ -123,15 +122,6 @@ export function Hero() {
                 </h1>
               </motion.div>
             </div>
-
-            {/* Subtitle */}
-            <Reveal delay={0.4} y={20}>
-              <p className="mt-6 text-lg sm:text-xl leading-8 text-slate-400 max-w-xl">
-                Centralized platform for medical observerships and electives.
-                <br className="hidden sm:block" />
-                Structured workflows. Transparent requirements.
-              </p>
-            </Reveal>
 
             {/* CTA Buttons */}
             <Reveal delay={0.7} y={30}>
