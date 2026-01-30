@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Bell, X, CheckCircle, AlertCircle, Clock, Mail, Smartphone } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
@@ -16,26 +16,17 @@ interface Notification {
 
 export function StudentInbox() {
   const { user } = useAuth();
-  const [notifications, setNotifications] = useState<Notification[]>([]);
   const [showInbox, setShowInbox] = useState(false);
   const [filter, setFilter] = useState<"all" | "unread">("all");
   const [showNotificationPrefs, setShowNotificationPrefs] = useState(false);
-  const [notificationPrefs, setNotificationPrefs] = useState<{
-    email: string;
-    phone: string;
-    channels: ("email" | "sms")[];
-  }>({
-    email: user?.email || "",
-    phone: "",
-    channels: [],
-  });
-
-  // Load notifications and preferences on mount and when user changes
-  useEffect(() => {
-    if (!user) return;
+  const [readNotifications, setReadNotifications] = useState<Set<string>>(new Set());
+  const [deletedNotifications, setDeletedNotifications] = useState<Set<string>>(new Set());
+  
+  // Load notifications from localStorage - memoized based on user
+  const baseNotifications = useMemo<Notification[]>(() => {
+    if (!user) return [];
 
     try {
-      // Load notifications from localStorage
       const { getApplications } = require("@/lib/storage");
       const applications = getApplications();
 
@@ -45,7 +36,7 @@ export function StudentInbox() {
       );
 
       // Convert applications to notifications
-      const notifs: Notification[] = studentApps.map((app: any, idx: number) => {
+      return studentApps.map((app: any) => {
         let type: "accepted" | "rejected" | "waitlisted" | "updated" =
           (app.status.toLowerCase() as any) || "updated";
         if (
@@ -86,26 +77,47 @@ export function StudentInbox() {
           read: false,
         };
       });
+    } catch (error) {
+      console.error("Error loading notifications:", error);
+      return [];
+    }
+  }, [user]);
 
-      setNotifications(notifs);
+  // Load preferences from localStorage - memoized based on user
+  const [notificationPrefs, setNotificationPrefs] = useState<{
+    email: string;
+    phone: string;
+    channels: ("email" | "sms")[];
+  }>(() => {
+    if (!user) return { email: "", phone: "", channels: [] };
 
-      // Load notification preferences from localStorage
+    try {
       const savedPrefs = localStorage.getItem(
         `notification_prefs_${user.id || user.email}`
       );
       if (savedPrefs) {
-        setNotificationPrefs(JSON.parse(savedPrefs));
-      } else {
-        setNotificationPrefs({
-          email: user.email || "",
-          phone: "",
-          channels: [],
-        });
+        return JSON.parse(savedPrefs);
       }
     } catch (error) {
-      console.error("Error loading notifications:", error);
+      console.error("Error loading preferences:", error);
     }
-  }, [user]);
+
+    return {
+      email: user?.email || "",
+      phone: "",
+      channels: [],
+    };
+  });
+
+  // Apply read/deleted state to notifications
+  const notifications = useMemo(() => {
+    return baseNotifications
+      .filter(n => !deletedNotifications.has(n.id))
+      .map(n => ({
+        ...n,
+        read: readNotifications.has(n.id)
+      }));
+  }, [baseNotifications, readNotifications, deletedNotifications]);
 
   const unreadCount = notifications.filter((n) => !n.read).length;
   const filteredNotifications =
@@ -114,13 +126,11 @@ export function StudentInbox() {
       : notifications;
 
   const markAsRead = (id: string) => {
-    setNotifications((prev) =>
-      prev.map((n) => (n.id === id ? { ...n, read: true } : n))
-    );
+    setReadNotifications(prev => new Set(prev).add(id));
   };
 
   const deleteNotification = (id: string) => {
-    setNotifications((prev) => prev.filter((n) => n.id !== id));
+    setDeletedNotifications(prev => new Set(prev).add(id));
   };
 
   const saveNotificationPrefs = () => {
