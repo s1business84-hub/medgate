@@ -12,7 +12,7 @@ import { RevealText } from "@/components/ui/reveal-text"
 import { MagneticHover } from "@/components/ui/magnetic-hover"
 import Reveal from "@/components/Reveal"
 import { PageTransition } from "@/components/ui/page-transition"
-import { Robot3D } from "@/components/3d-robot"
+import { Robot3D } from "../3d-robot"
 
 const stats = [
   {

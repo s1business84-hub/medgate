@@ -209,14 +209,10 @@ function Scene({ isWaving }: { isWaving: boolean }) {
 }
 
 export function Robot3D() {
-  const [isClient, setIsClient] = useState(false);
   const [isWaving, setIsWaving] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setIsClient(true);
-    
     // Initial wave on mount
     const timer = setTimeout(() => {
       setIsWaving(true);
@@ -239,11 +235,8 @@ export function Robot3D() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [hasScrolled]);
 
-  if (!isClient) return null;
-
   return (
     <motion.div
-      ref={containerRef}
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 1, ease: "easeOut" }}

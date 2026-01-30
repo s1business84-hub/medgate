@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Mic, MicOff, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { Hospital } from "@/lib/types";
@@ -33,8 +33,13 @@ type VoiceAssistantProps = {
   onFilter: (programIds: string[], active: boolean, spokenQuery: string) => void;
 };
 
+const getSpeechRecognition = () => {
+  if (typeof window === "undefined") return null;
+  return (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+};
+
 export function VoiceProgramAssistant({ programs, hospitals, eligibilitySummary, onFilter }: VoiceAssistantProps) {
-  const [supported, setSupported] = useState(false);
+  const supported = useMemo(() => Boolean(getSpeechRecognition()), []);
   const [listening, setListening] = useState(false);
   const [lastTranscript, setLastTranscript] = useState("");
   const [statusMessage, setStatusMessage] = useState("Say: \"Find eligible surgery observerships in Dubai\".");
@@ -45,47 +50,16 @@ export function VoiceProgramAssistant({ programs, hospitals, eligibilitySummary,
     return map;
   }, [hospitals]);
 
-  useEffect(() => {
-    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-    setSupported(Boolean(SpeechRecognition));
-
-    if (!SpeechRecognition) return;
-
-    const recognition = new SpeechRecognition();
-    recognition.lang = "en-US";
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-
-    recognition.onresult = (event: any) => {
-      const transcript = event?.results?.[0]?.[0]?.transcript || "";
-      handleTranscript(transcript);
-    };
-
-    recognition.onend = () => {
-      setListening(false);
-    };
-
-    recognition.onerror = (event: any) => {
-      setListening(false);
-      setStatusMessage("Voice recognition failed. Try again.");
-    };
-
-    recognitionRef.current = recognition;
-    return () => {
-      recognition.stop?.();
-    };
-  }, []);
-
-  const speak = (message: string) => {
+  const speak = useCallback((message: string) => {
     if (typeof window === "undefined" || !window.speechSynthesis) return;
     const utterance = new SpeechSynthesisUtterance(message);
     utterance.rate = 1;
     utterance.pitch = 1;
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(utterance);
-  };
+  }, []);
 
-  const handleTranscript = (transcript: string) => {
+  const handleTranscript = useCallback((transcript: string) => {
     const text = normalize(transcript);
     if (!text) return;
     setLastTranscript(transcript);
@@ -139,7 +113,36 @@ export function VoiceProgramAssistant({ programs, hospitals, eligibilitySummary,
     setStatusMessage(message);
     speak(message);
     onFilter(ids, true, transcript);
-  };
+  }, [eligibilitySummary, hospitalLookup, onFilter, programs, speak]);
+
+  useEffect(() => {
+    const SpeechRecognition = getSpeechRecognition();
+    if (!SpeechRecognition) return;
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onresult = (event: any) => {
+      const transcript = event?.results?.[0]?.[0]?.transcript || "";
+      handleTranscript(transcript);
+    };
+
+    recognition.onend = () => {
+      setListening(false);
+    };
+
+    recognition.onerror = () => {
+      setListening(false);
+      setStatusMessage("Voice recognition failed. Try again.");
+    };
+
+    recognitionRef.current = recognition;
+    return () => {
+      recognition.stop?.();
+    };
+  }, [handleTranscript]);
 
   const handleListen = () => {
     if (!recognitionRef.current) return;
