@@ -12,7 +12,7 @@ import { RevealText } from "@/components/ui/reveal-text"
 import { MagneticHover } from "@/components/ui/magnetic-hover"
 import Reveal from "@/components/Reveal"
 import { PageTransition } from "@/components/ui/page-transition"
-import { Robot3D } from "../3d-robot"
+import { Phone3D } from "../3d-phone"
 
 const stats = [
   {
@@ -157,10 +157,10 @@ export function Hero() {
             </Reveal>
           </div>
 
-          {/* Right Column - 3D Robot */}
+          {/* Right Column - 3D Phone */}
           <Reveal delay={0.3} y={40}>
             <div className="flex justify-center lg:justify-end">
-              <Robot3D />
+              <Phone3D />
             </div>
           </Reveal>
         </div>
