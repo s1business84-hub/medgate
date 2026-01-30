@@ -75,13 +75,13 @@ export function VoiceRecorder({ fieldId, fieldLabel, onSubmit, isSubmitting, pla
       if (timerRef.current) {
         clearInterval(timerRef.current);
       }
-      setRecordingTime(0);
     }
 
     return () => {
       if (timerRef.current) {
         clearInterval(timerRef.current);
       }
+      setRecordingTime(0);
     };
   }, [isRecording]);
 
@@ -196,7 +196,7 @@ export function VoiceRecorder({ fieldId, fieldLabel, onSubmit, isSubmitting, pla
           animate={{ opacity: 1, y: 0 }}
           className="p-3 rounded-lg bg-red-500/10 border border-red-500/20 flex items-start gap-2"
         >
-          <AlertCircle className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
+          <AlertCircle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
           <div className="text-sm text-red-300">
             Microphone permission denied. Please enable it in your browser settings to use voice recording.
           </div>
@@ -210,8 +210,8 @@ export function VoiceRecorder({ fieldId, fieldLabel, onSubmit, isSubmitting, pla
           whileTap={{ scale: 0.98 }}
           className={`w-full py-4 rounded-lg font-semibold flex items-center justify-center gap-3 transition relative overflow-hidden ${
             isRecording
-              ? "bg-gradient-to-r from-red-500/30 to-red-600/30 border-2 border-red-500 text-red-300 hover:bg-gradient-to-r hover:from-red-500/40 hover:to-red-600/40 shadow-lg shadow-red-500/20"
-              : "bg-gradient-to-r from-purple-500/20 to-indigo-500/20 border-2 border-purple-500 text-purple-300 hover:bg-gradient-to-r hover:from-purple-500/30 hover:to-indigo-500/30 shadow-lg shadow-purple-500/10"
+              ? "bg-linear-to-r from-red-500/30 to-red-600/30 border-2 border-red-500 text-red-300 hover:bg-linear-to-r hover:from-red-500/40 hover:to-red-600/40 shadow-lg shadow-red-500/20"
+              : "bg-linear-to-r from-purple-500/20 to-indigo-500/20 border-2 border-purple-500 text-purple-300 hover:bg-linear-to-r hover:from-purple-500/30 hover:to-indigo-500/30 shadow-lg shadow-purple-500/10"
           }`}
         >
           {isRecording && (
@@ -241,7 +241,7 @@ export function VoiceRecorder({ fieldId, fieldLabel, onSubmit, isSubmitting, pla
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="space-y-3 p-4 rounded-lg bg-gradient-to-br from-white/8 to-white/4 border border-white/15 backdrop-blur-sm"
+          className="space-y-3 p-4 rounded-lg bg-linear-to-br from-white/8 to-white/4 border border-white/15 backdrop-blur-sm"
         >
           {/* Recording Info Bar */}
           <div className="flex items-center justify-between p-2 rounded-lg bg-white/5 border border-white/10">
@@ -280,7 +280,7 @@ export function VoiceRecorder({ fieldId, fieldLabel, onSubmit, isSubmitting, pla
               </div>
             ) : (
               <div className="p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-start gap-2">
-                <AlertCircle className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <AlertCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
                 <p className="text-sm text-yellow-300">No transcript available yet. Check back once transcription completes.</p>
               </div>
             )}
@@ -302,7 +302,7 @@ export function VoiceRecorder({ fieldId, fieldLabel, onSubmit, isSubmitting, pla
               whileTap={{ scale: 0.95 }}
               onClick={submitRecording}
               disabled={isSubmitting || isTranscribing || !transcript}
-              className="flex-1 px-3 py-2 rounded-lg bg-gradient-to-r from-emerald-500/20 to-green-500/20 hover:from-emerald-500/30 hover:to-green-500/30 disabled:opacity-40 disabled:cursor-not-allowed border border-emerald-500/30 text-emerald-300 font-semibold flex items-center justify-center gap-2 transition shadow-lg shadow-emerald-500/10"
+              className="flex-1 px-3 py-2 rounded-lg bg-linear-to-r from-emerald-500/20 to-green-500/20 hover:from-emerald-500/30 hover:to-green-500/30 disabled:opacity-40 disabled:cursor-not-allowed border border-emerald-500/30 text-emerald-300 font-semibold flex items-center justify-center gap-2 transition shadow-lg shadow-emerald-500/10"
             >
               {submitted ? (
                 <>

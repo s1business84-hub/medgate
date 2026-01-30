@@ -1,12 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { TrendingUp, Users, Target, BarChart3, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
 import Reveal from "@/components/Reveal";
-import { StudentChat } from "@/components/student-chat";
 
 interface Observership {
   id: string;
@@ -14,8 +13,6 @@ interface Observership {
   type: "observership" | "elective";
   totalSessions: number;
   sessionsCompleted: number;
-  startDate?: string;
-  endDate?: string;
 }
 
 interface ApplicationRecord {
@@ -36,7 +33,7 @@ interface StudentData {
   entries: number;
   lastUpdate: string;
   completedPrograms: number;
-  level: number; // 1-7
+  level: number; // 1-5
   role?: string;
   formsAssigned?: string[];
   observerships?: Observership[];
@@ -60,8 +57,8 @@ const mockStudents: StudentData[] = [
     role: "Observer",
     formsAssigned: ["Consent", "Checklist"],
     observerships: [
-      { id: "OBS-1", title: "Internal Medicine", type: "observership", totalSessions: 10, sessionsCompleted: 8, startDate: "2025-01-15", endDate: "2025-02-15" },
-      { id: "ELC-1", title: "Cardiology Elective", type: "elective", totalSessions: 12, sessionsCompleted: 9, startDate: "2025-02-01", endDate: "2025-03-01" },
+      { id: "OBS-1", title: "Internal Medicine", type: "observership", totalSessions: 10, sessionsCompleted: 8 },
+      { id: "ELC-1", title: "Cardiology Elective", type: "elective", totalSessions: 12, sessionsCompleted: 9 },
     ],
     applications: [
       { id: "APP-101", program: "Surgery Observership", status: "approved", appliedOn: "2025-01-05" },
@@ -83,8 +80,8 @@ const mockStudents: StudentData[] = [
     role: "Observer",
     formsAssigned: ["Consent"],
     observerships: [
-      { id: "OBS-2", title: "Pediatrics", type: "observership", totalSessions: 8, sessionsCompleted: 5, startDate: "2025-01-20", endDate: "2025-02-20" },
-      { id: "ELC-2", title: "Dermatology Elective", type: "elective", totalSessions: 6, sessionsCompleted: 3, startDate: "2025-02-10", endDate: "2025-03-10" },
+      { id: "OBS-2", title: "Pediatrics", type: "observership", totalSessions: 8, sessionsCompleted: 5 },
+      { id: "ELC-2", title: "Dermatology Elective", type: "elective", totalSessions: 6, sessionsCompleted: 3 },
     ],
     applications: [
       { id: "APP-103", program: "Neurology Observership", status: "waitlisted", appliedOn: "2025-01-10" },
@@ -105,7 +102,7 @@ const mockStudents: StudentData[] = [
     role: "Observer",
     formsAssigned: [],
     observerships: [
-      { id: "OBS-3", title: "Emergency Medicine", type: "observership", totalSessions: 10, sessionsCompleted: 4, startDate: "2025-01-10", endDate: "2025-02-10" },
+      { id: "OBS-3", title: "Emergency Medicine", type: "observership", totalSessions: 10, sessionsCompleted: 4 },
     ],
     applications: [
       { id: "APP-104", program: "Orthopedics Elective", status: "declined", appliedOn: "2025-01-12" },
@@ -126,8 +123,8 @@ const mockStudents: StudentData[] = [
     role: "Team Lead",
     formsAssigned: ["Consent", "Checklist", "Feedback"],
     observerships: [
-      { id: "OBS-4", title: "Surgery", type: "observership", totalSessions: 12, sessionsCompleted: 12, startDate: "2025-01-05", endDate: "2025-02-05" },
-      { id: "ELC-3", title: "ICU Elective", type: "elective", totalSessions: 8, sessionsCompleted: 7, startDate: "2025-02-05", endDate: "2025-03-05" },
+      { id: "OBS-4", title: "Surgery", type: "observership", totalSessions: 12, sessionsCompleted: 12 },
+      { id: "ELC-3", title: "ICU Elective", type: "elective", totalSessions: 8, sessionsCompleted: 7 },
     ],
     applications: [
       { id: "APP-105", program: "Pathology Observership", status: "approved", appliedOn: "2025-01-08" },
@@ -148,7 +145,7 @@ const mockStudents: StudentData[] = [
     role: "Observer",
     formsAssigned: [],
     observerships: [
-      { id: "OBS-5", title: "Family Medicine", type: "observership", totalSessions: 6, sessionsCompleted: 2, startDate: "2025-02-01", endDate: "2025-03-01" },
+      { id: "OBS-5", title: "Family Medicine", type: "observership", totalSessions: 6, sessionsCompleted: 2 },
     ],
     applications: [
       { id: "APP-106", program: "Anesthesiology Elective", status: "pending", appliedOn: "2025-01-21" },
@@ -157,107 +154,61 @@ const mockStudents: StudentData[] = [
 ];
 
 export default function SupervisorDashboard() {
-  const [students, setStudents] = useState<StudentData[]>([]);
-  const [loading, setLoading] = useState(true);
+  const getInitialStudents = () => {
+    if (typeof window !== "undefined") {
+      const saved = window.localStorage.getItem("supervisor_students");
+      if (saved) {
+        try {
+          return JSON.parse(saved) as StudentData[];
+        } catch {}
+      }
+    }
+    return mockStudents;
+  };
+
+  const [students, setStudents] = useState<StudentData[]>(getInitialStudents);
+  const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState("all");
   const [activeTab, setActiveTab] = useState<
     "overview" | "observerships" | "students" | "forms" | "roles" | "applications"
   >("overview");
-  const [promotionAlert, setPromotionAlert] = useState<{ studentName: string; newLevel: number } | null>(null);
-
-  // (removed unused mockStudentsLocal)
 
   useEffect(() => {
-    const loadData = () => {
-      const saved = typeof window !== "undefined" ? window.localStorage.getItem("supervisor_students") : null;
-      if (saved) {
-        try {
-          const parsed = JSON.parse(saved) as StudentData[];
-          setStudents(parsed);
-          setLoading(false);
-          return;
-        } catch {
-          // Fall through to default data
-        }
-      }
-      setTimeout(() => {
-        setStudents(mockStudents);
-        setLoading(false);
-      }, 800);
-    };
-    
-    loadData();
-  }, []);
-
-  useEffect(() => {
-    if (!loading) {
-      try {
-        window.localStorage.setItem("supervisor_students", JSON.stringify(students));
-      } catch {}
-    }
-  }, [students, loading]);
+    try {
+      window.localStorage.setItem("supervisor_students", JSON.stringify(students));
+    } catch {}
+  }, [students]);
 
   const promoteStudent = (id: string) => {
-    const student = students.find(s => s.id === id);
-    setStudents((prev) =>
-      prev.map((s) => {
-        if (s.id === id) {
-          const newLevel = Math.min(s.level + 1, 7);
-          if (newLevel > s.level) {
-            // Show promotion alert
-            setPromotionAlert({ studentName: s.name, newLevel });
-            // Auto-hide after 4 seconds
-            setTimeout(() => setPromotionAlert(null), 4000);
-          }
-          return { ...s, level: newLevel };
-        }
-        return s;
-      })
-    );
-  };
-
-  const demoteStudent = (id: string) => {
     setStudents((prev) =>
       prev.map((s) =>
-        s.id === id ? { ...s, level: Math.max(s.level - 1, 1) } : s
+        s.id === id ? { ...s, level: Math.min(s.level + 1, 5) } : s
       )
     );
   };
 
   const levelBadge = (level: number) => {
-    const labels = [
-      "Novice",
-      "Junior",
-      "Intermediate",
-      "Advanced",
-      "Leader",
-      "Master",
-      "Expert",
-    ];
+    const labels = ["Novice", "Junior", "Intermediate", "Advanced", "Leader"];
     const colors = [
       "bg-slate-600",
       "bg-blue-600",
       "bg-indigo-600",
       "bg-purple-600",
       "bg-pink-600",
-      "bg-rose-600",
-      "bg-amber-600",
     ];
     return { label: labels[level - 1], color: colors[level - 1] };
   };
 
-  const addObservership = (id: string, obs: Omit<Observership, "id">) => {
+  const generateObserverId = useCallback(() => {
+    return `OBS-${Math.random().toString(36).slice(2, 7)}`;
+  }, []);
+
+  const addObservership = useCallback((id: string, obs: Omit<Observership, "id">) => {
+    const newObs: Observership = { id: generateObserverId(), ...obs };
     setStudents((prev) =>
-      prev.map((s) => {
-        if (s.id === id) {
-          const randomId = `OBS-${Math.random().toString(36).slice(2, 7)}`;
-          const newObs: Observership = { id: randomId, ...obs };
-          return { ...s, observerships: [...(s.observerships || []), newObs] };
-        }
-        return s;
-      })
+      prev.map((s) => (s.id === id ? { ...s, observerships: [...(s.observerships || []), newObs] } : s))
     );
-  };
+  }, [generateObserverId]);
 
   const resetDemo = () => {
     setStudents(mockStudents);
@@ -473,26 +424,6 @@ export default function SupervisorDashboard() {
     <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950">
       <LiquidParallax depth={14} className="opacity-70" />
 
-      {/* Promotion Alert */}
-      {promotionAlert && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          className="fixed top-4 right-4 z-50 max-w-sm"
-        >
-          <div className="p-4 rounded-lg border-2 border-yellow-500/50 bg-linear-to-r from-yellow-500/20 to-orange-500/20 backdrop-blur-xl">
-            <div className="flex items-center gap-3">
-              <div className="text-3xl">🎉</div>
-              <div>
-                <p className="font-bold text-white">{promotionAlert.studentName} Promoted!</p>
-                <p className="text-sm text-yellow-200">Advanced to {levelBadge(promotionAlert.newLevel).label} (Level {promotionAlert.newLevel})</p>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      )}
-
       <div className="max-w-7xl mx-auto px-4 py-12 relative z-10">
         {/* Header */}
         <Reveal>
@@ -505,7 +436,7 @@ export default function SupervisorDashboard() {
                 <ArrowLeft className="w-6 h-6 text-slate-300" />
               </Link>
               <div>
-                <h1 className="text-5xl font-bold bg-linear-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent flex items-center gap-2">
+                <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent flex items-center gap-2">
                   Supervisor Dashboard
                 </h1>
                 <p className="text-xl text-slate-300">Track student progress, visualize clinical development, and gain AI-powered insights</p>
@@ -525,7 +456,7 @@ export default function SupervisorDashboard() {
             <Reveal key={stat.label} delay={0.1 * idx} y={20}>
               <motion.div
                 whileHover={{ y: -4 }}
-                className={`p-6 rounded-xl border border-white/10 bg-linear-to-br ${stat.color}/10 backdrop-blur-sm hover:border-white/20 transition-all`}
+                className={`p-6 rounded-xl border border-white/10 bg-gradient-to-br ${stat.color}/10 backdrop-blur-sm hover:border-white/20 transition-all`}
               >
                 <p className="text-slate-400 text-sm mb-2">{stat.label}</p>
                 <p className="text-3xl font-bold text-white">{stat.value}</p>
@@ -626,10 +557,10 @@ export default function SupervisorDashboard() {
           <button onClick={resetDemo} className="px-4 py-2 rounded-md bg-white/10 hover:bg-white/20 text-slate-200 text-sm">
             Reset Demo Data
           </button>
-          <button onClick={exportToCSV} className="px-4 py-2 rounded-md bg-linear-to-r from-green-600 to-emerald-600 hover:opacity-90 text-white text-sm">
+          <button onClick={exportToCSV} className="px-4 py-2 rounded-md bg-gradient-to-r from-green-600 to-emerald-600 hover:opacity-90 text-white text-sm">
             Export to CSV
           </button>
-          <label className="px-4 py-2 rounded-md bg-linear-to-r from-blue-600 to-cyan-600 hover:opacity-90 text-white text-sm cursor-pointer">
+          <label className="px-4 py-2 rounded-md bg-gradient-to-r from-blue-600 to-cyan-600 hover:opacity-90 text-white text-sm cursor-pointer">
             Import from CSV
             <input type="file" accept=".csv" onChange={importFromCSV} className="hidden" />
           </label>
@@ -690,24 +621,14 @@ export default function SupervisorDashboard() {
                     Last update: {new Date(student.lastUpdate).toLocaleDateString()}
                   </p>
 
-                  {/* Promote/Demote Actions */}
-                  <div className="mt-4 flex justify-end gap-2">
-                    {student.level > 1 && (
-                      <button
-                        onClick={() => demoteStudent(student.id)}
-                        className="text-xs px-3 py-1 rounded-md bg-linear-to-r from-red-600 to-pink-600 text-white hover:opacity-90"
-                      >
-                        Demote Level
-                      </button>
-                    )}
-                    {student.level < 7 && (
-                      <button
-                        onClick={() => promoteStudent(student.id)}
-                        className="text-xs px-3 py-1 rounded-md bg-linear-to-r from-purple-600 to-pink-600 text-white hover:opacity-90"
-                      >
-                        Promote Level
-                      </button>
-                    )}
+                  {/* Promote Action */}
+                  <div className="mt-4 flex justify-end">
+                    <button
+                      onClick={() => promoteStudent(student.id)}
+                      className="text-xs px-3 py-1 rounded-md bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:opacity-90"
+                    >
+                      Promote Level
+                    </button>
                   </div>
                 </motion.div>
               </Reveal>
@@ -774,7 +695,7 @@ export default function SupervisorDashboard() {
                             <p className="text-sm font-bold text-cyan-400">{pct}%</p>
                           </div>
                           <div className="w-full bg-white/10 rounded-full h-2">
-                            <motion.div initial={{ width: 0 }} whileInView={{ width: `${pct}%` }} transition={{ duration: 0.8, ease: "easeOut" }} className="bg-linear-to-r from-cyan-500 to-indigo-500 h-2 rounded-full" />
+                            <motion.div initial={{ width: 0 }} whileInView={{ width: `${pct}%` }} transition={{ duration: 0.8, ease: "easeOut" }} className="bg-gradient-to-r from-cyan-500 to-indigo-500 h-2 rounded-full" />
                           </div>
                           <div className="flex items-center justify-between mt-2">
                             <p className="text-xs text-slate-400">Sessions: {obs.sessionsCompleted}/{obs.totalSessions}</p>
@@ -841,7 +762,7 @@ export default function SupervisorDashboard() {
                             initial={{ width: 0 }}
                             whileInView={{ width: `${pct}%` }}
                             transition={{ duration: 0.8, ease: "easeOut" }}
-                            className="bg-linear-to-r from-cyan-500 to-indigo-500 h-2 rounded-full"
+                            className="bg-gradient-to-r from-cyan-500 to-indigo-500 h-2 rounded-full"
                           />
                         </div>
                         <div className="flex items-center justify-between mt-2">
@@ -881,7 +802,7 @@ export default function SupervisorDashboard() {
                   </div>
                   <div className="mt-2 flex justify-end">
                     <button
-                      className="text-xs px-3 py-1 rounded-md bg-linear-to-r from-cyan-600 to-indigo-600 text-white"
+                      className="text-xs px-3 py-1 rounded-md bg-gradient-to-r from-cyan-600 to-indigo-600 text-white"
                       onClick={() => {
                         const title = (document.getElementById(`title-${student.id}`) as HTMLInputElement)?.value || "Untitled";
                         const type = ((document.getElementById(`type-${student.id}`) as HTMLSelectElement)?.value as any) || "observership";
@@ -1020,9 +941,6 @@ export default function SupervisorDashboard() {
           </div>
         )}
       </div>
-     
-       {/* Student Chat */}
-       <StudentChat />
     </div>
   );
 }

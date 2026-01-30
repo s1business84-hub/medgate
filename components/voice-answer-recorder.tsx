@@ -13,6 +13,8 @@ import {
   AlertCircle,
   Clock,
   CheckCircle,
+  Copy,
+  FileAudio,
 } from "lucide-react";
 
 interface VoiceAnswerRecorderProps {
@@ -47,6 +49,7 @@ export function VoiceAnswerRecorder({
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [permissionError, setPermissionError] = useState<string | null>(null);
   const recognitionRef = useRef<any>(null);
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
   useEffect(() => {
     return () => {
@@ -151,6 +154,21 @@ export function VoiceAnswerRecorder({
     return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
+  const getFileSize = (url: string): string => {
+    try {
+      const sizeInKb = url.length / 1024;
+      return sizeInKb > 1024 ? `${(sizeInKb / 1024).toFixed(1)} MB` : `${Math.round(sizeInKb)} KB`;
+    } catch {
+      return "Unknown";
+    }
+  };
+
+  const copyToClipboard = (text: string, index: number) => {
+    navigator.clipboard.writeText(text);
+    setCopiedIndex(index);
+    setTimeout(() => setCopiedIndex(null), 2000);
+  };
+
   const playRecording = (url: string) => {
     const audio = new Audio(url);
     audio.play();
@@ -233,30 +251,35 @@ export function VoiceAnswerRecorder({
       {/* Recording Controls */}
       <div className="flex gap-2">
         {!isRecording ? (
-          <button
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             onClick={startRecording}
-            className="flex-1 px-4 py-2 rounded-lg bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-semibold flex items-center justify-center gap-2 transition"
+            disabled={hasPermission === false}
+            className="flex-1 px-4 py-3 rounded-lg bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold flex items-center justify-center gap-2 transition shadow-lg"
           >
-            <Mic className="w-4 h-4" />
+            <Mic className="w-5 h-5" />
             Start Recording
-          </button>
+          </motion.button>
         ) : (
           <>
-            <div className="flex-1 px-4 py-2 rounded-lg bg-red-500/20 border border-red-500/30 text-red-300 font-semibold flex items-center justify-center gap-2">
+            <div className="flex-1 px-4 py-3 rounded-lg bg-red-500/20 border-2 border-red-500/50 text-red-300 font-semibold flex items-center justify-center gap-3">
               <motion.div
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 1, repeat: Infinity }}
+                animate={{ scale: [1, 1.3, 1] }}
+                transition={{ duration: 0.8, repeat: Infinity }}
                 className="w-3 h-3 rounded-full bg-red-500"
               />
-              {formatTime(recordingTime)}
+              <span className="text-lg font-mono">{formatTime(recordingTime)}</span>
             </div>
-            <button
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={stopRecording}
-              className="px-4 py-2 rounded-lg bg-slate-600 hover:bg-slate-500 text-white font-semibold flex items-center gap-2 transition"
+              className="px-6 py-3 rounded-lg bg-slate-600 hover:bg-slate-500 text-white font-semibold flex items-center gap-2 transition shadow-lg"
             >
-              <Square className="w-4 h-4" />
+              <Square className="w-5 h-5" />
               Stop
-            </button>
+            </motion.button>
           </>
         )}
       </div>
@@ -269,79 +292,118 @@ export function VoiceAnswerRecorder({
               key={index}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="p-3 rounded-lg bg-white/5 border border-white/10 space-y-2"
+              className="p-4 rounded-lg bg-gradient-to-br from-white/5 to-white/2 border border-white/15 hover:border-white/25 transition space-y-3"
             >
+              {/* Header with Recording Info */}
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-slate-300">
-                    Recording {index + 1}
-                  </span>
-                  <span className="flex items-center gap-1 text-xs text-slate-500">
-                    <Clock className="w-3 h-3" />
-                    {formatTime(recording.duration)}
-                  </span>
-                  {recording.transcript && (
-                    <CheckCircle className="w-4 h-4 text-emerald-400" />
-                  )}
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-purple-500/20 border border-purple-500/30">
+                    <FileAudio className="w-4 h-4 text-purple-400" />
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <span className="text-sm font-semibold text-slate-200">
+                      Recording {index + 1}
+                    </span>
+                    <div className="flex items-center gap-2 text-xs text-slate-500">
+                      <Clock className="w-3 h-3" />
+                      {formatTime(recording.duration)}
+                      <span className="text-slate-600">•</span>
+                      <span>{getFileSize(recording.url)}</span>
+                      {recording.transcript && (
+                        <>
+                          <span className="text-slate-600">•</span>
+                          <CheckCircle className="w-3 h-3 text-emerald-400" />
+                          <span className="text-emerald-400">Transcribed</span>
+                        </>
+                      )}
+                    </div>
+                  </div>
                 </div>
-                <div className="flex gap-2">
-                  <button
+                <div className="flex gap-1">
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={() => playRecording(recording.url)}
-                    className="p-2 rounded hover:bg-white/10 text-slate-400 hover:text-slate-300 transition"
-                    title="Play"
+                    className="p-2 rounded-lg hover:bg-white/10 text-slate-400 hover:text-slate-300 transition"
+                    title="Play recording"
                   >
                     <Play className="w-4 h-4" />
-                  </button>
-                  <button
+                  </motion.button>
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={() => deleteRecording(index)}
-                    className="p-1 rounded hover:bg-red-500/20 text-slate-400 hover:text-red-300 transition"
-                    title="Delete"
+                    className="p-2 rounded-lg hover:bg-red-500/20 text-slate-400 hover:text-red-300 transition"
+                    title="Delete recording"
                   >
                     <Trash2 className="w-4 h-4" />
-                  </button>
+                  </motion.button>
                 </div>
               </div>
 
               {/* Transcription Section */}
               {!recording.transcript ? (
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={() => transcribeAudio(index)}
                   disabled={isTranscribing}
-                  className="w-full px-3 py-1 rounded text-xs bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 transition flex items-center justify-center gap-2"
+                  className="w-full px-3 py-2 rounded-lg text-sm bg-blue-500/20 hover:bg-blue-500/30 disabled:opacity-50 disabled:cursor-not-allowed text-blue-300 transition flex items-center justify-center gap-2 font-medium"
                 >
                   {isTranscribing ? (
                     <>
-                      <Loader className="w-3 h-3 animate-spin" />
+                      <Loader className="w-4 h-4 animate-spin" />
                       Transcribing...
                     </>
                   ) : (
-                    "Transcribe"
+                    <>
+                      <Volume2 className="w-4 h-4" />
+                      Transcribe Audio
+                    </>
                   )}
-                </button>
+                </motion.button>
               ) : (
                 <div className="space-y-2">
-                  <button
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
                     onClick={() => setShowTranscription(!showTranscription)}
-                    className="text-xs text-blue-300 hover:text-blue-200 transition"
+                    className="text-sm text-blue-300 hover:text-blue-200 transition flex items-center gap-1 font-medium"
                   >
+                    <Volume2 className="w-3 h-3" />
                     {showTranscription ? "Hide" : "Show"} Transcription
-                  </button>
+                  </motion.button>
                   {showTranscription && (
-                    <p className="text-xs text-slate-300 p-2 rounded bg-white/5 border border-white/10">
-                      {recording.transcript}
-                    </p>
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="text-sm text-slate-300 p-3 rounded-lg bg-white/5 border border-white/10 space-y-2"
+                    >
+                      <p className="leading-relaxed">{recording.transcript}</p>
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => copyToClipboard(recording.transcript || "", index)}
+                        className="text-xs text-slate-500 hover:text-slate-300 transition flex items-center gap-1"
+                      >
+                        <Copy className="w-3 h-3" />
+                        {copiedIndex === index ? "Copied!" : "Copy text"}
+                      </motion.button>
+                    </motion.div>
                   )}
                 </div>
               )}
 
               {/* Save Button */}
-              <button
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={() => saveAnswer(index)}
-                className="w-full px-3 py-1 rounded text-xs bg-green-500/20 hover:bg-green-500/30 text-green-300 transition flex items-center justify-center gap-2"
+                className="w-full px-4 py-2 rounded-lg text-sm bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 transition flex items-center justify-center gap-2 font-semibold border border-emerald-500/30 hover:border-emerald-500/50"
               >
-                <Upload className="w-3 h-3" />
+                <CheckCircle className="w-4 h-4" />
                 Use This Answer
-              </button>
+              </motion.button>
             </motion.div>
           ))}
         </div>

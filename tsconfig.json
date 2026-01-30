@@ -31,5 +31,5 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "capacitor.config.ts", "components/sections/spline-scene.tsx", "components/hero-orb.tsx"]
 }
