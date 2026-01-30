@@ -90,7 +90,7 @@ export interface AuditLog {
 export interface User {
   id: string;
   email: string;
-  role: "student" | "supervisor" | "staff";
+  role: "student" | "supervisor" | "staff" | "admin";
   name: string;
   hospitalId?: string;
   password?: string; // Stored locally for demo auth
