@@ -22,6 +22,11 @@ export default function StudentPortal() {
   const [selectedApplicationId, setSelectedApplicationId] = useState<string | null>(null);
   const [loadingApps, setLoadingApps] = useState(true);
   const [xpData, setXpData] = useState({ xpPoints: 0, reflectionsCompleted: 0 });
+  const [studentStats, setStudentStats] = useState({
+    learningHours: 0,
+    avgProgress: 0,
+    certifications: 0,
+  });
 
   useEffect(() => {
     if (user && user.role === "student") {
@@ -43,6 +48,19 @@ export default function StudentPortal() {
             if (progress) {
               setXpData(progress);
             }
+            
+            // Calculate learning hours, average progress, and certifications
+            const completedApps = myApps.filter((a: any) => a.status === 'Completed');
+            const totalHours = completedApps.reduce((sum: number, app: any) => sum + (app.totalHours || 0), 0);
+            const progressValues = myApps.map((a: any) => a.progressPercentage || 0).filter((p: number) => p > 0);
+            const avgProgress = progressValues.length > 0 ? Math.round(progressValues.reduce((a: number, b: number) => a + b, 0) / progressValues.length) : 0;
+            const certCount = myApps.filter((a: any) => a.certificateEarned).length;
+            
+            setStudentStats({
+              learningHours: totalHours,
+              avgProgress: avgProgress,
+              certifications: certCount,
+            });
           }
           
           // Load program details for enrichment
@@ -161,6 +179,62 @@ export default function StudentPortal() {
                 ← Back to Home
               </Link>
             </div>
+          </div>
+          </Reveal>
+
+          {/* Student Stats */}
+          <Reveal delay={0.1}>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+            {/* Learning Hours */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="rounded-xl border border-cyan-500/30 bg-linear-to-br from-cyan-500/10 to-blue-500/10 backdrop-blur-xl p-4"
+            >
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-semibold text-cyan-300 uppercase tracking-wider">Learning Hours</span>
+                <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div className="text-3xl font-bold text-cyan-300 mb-1">{studentStats.learningHours}</div>
+              <p className="text-xs text-cyan-200/70">hours completed</p>
+            </motion.div>
+
+            {/* Average Progress */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15 }}
+              className="rounded-xl border border-purple-500/30 bg-linear-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-xl p-4"
+            >
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-semibold text-purple-300 uppercase tracking-wider">Avg Progress</span>
+                <svg className="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <div className="text-3xl font-bold text-purple-300 mb-1">{studentStats.avgProgress}%</div>
+              <p className="text-xs text-purple-200/70">per course</p>
+            </motion.div>
+
+            {/* Certifications */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="rounded-xl border border-emerald-500/30 bg-linear-to-br from-emerald-500/10 to-green-500/10 backdrop-blur-xl p-4"
+            >
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-semibold text-emerald-300 uppercase tracking-wider">Certifications</span>
+                <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                </svg>
+              </div>
+              <div className="text-3xl font-bold text-emerald-300 mb-1">{studentStats.certifications}</div>
+              <p className="text-xs text-emerald-200/70">{studentStats.certifications === 0 ? 'none yet' : studentStats.certifications === 1 ? 'earned' : 'earned'}</p>
+            </motion.div>
           </div>
           </Reveal>
 

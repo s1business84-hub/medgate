@@ -10,6 +10,9 @@ import {
   Upload,
   Loader,
   Volume2,
+  AlertCircle,
+  Clock,
+  CheckCircle,
 } from "lucide-react";
 
 interface VoiceAnswerRecorderProps {
@@ -41,6 +44,9 @@ export function VoiceAnswerRecorder({
   const [recordingTime, setRecordingTime] = useState(0);
   const timerIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const [showTranscription, setShowTranscription] = useState(false);
+  const [hasPermission, setHasPermission] = useState<boolean | null>(null);
+  const [permissionError, setPermissionError] = useState<string | null>(null);
+  const recognitionRef = useRef<any>(null);
 
   useEffect(() => {
     return () => {
@@ -53,10 +59,35 @@ export function VoiceAnswerRecorder({
     };
   }, []);
 
+  // Initialize speech recognition
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+      if (SpeechRecognition) {
+        recognitionRef.current = new SpeechRecognition();
+        recognitionRef.current.continuous = false;
+        recognitionRef.current.interimResults = true;
+        recognitionRef.current.lang = "en-US";
+      }
+    }
+  }, []);
+
+  // Check microphone permission
+  useEffect(() => {
+    navigator.permissions
+      .query({ name: "microphone" as PermissionName })
+      .then((result) => {
+        setHasPermission(result.state === "granted");
+      })
+      .catch(() => setHasPermission(null));
+  }, []);
+
   const startRecording = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       streamRef.current = stream;
+      setHasPermission(true);
+      setPermissionError(null);
 
       // Create audio context for visualization
       audioContextRef.current = new (window.AudioContext ||
@@ -95,6 +126,8 @@ export function VoiceAnswerRecorder({
       }, 1000);
     } catch (error) {
       console.error("Error starting recording:", error);
+      setHasPermission(false);
+      setPermissionError("Unable to access microphone. Please check your browser permissions.");
       alert("Unable to access microphone");
     }
   };
@@ -110,6 +143,17 @@ export function VoiceAnswerRecorder({
         streamRef.current.getTracks().forEach((track) => track.stop());
       }
     }
+  };
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
+  };
+
+  const playRecording = (url: string) => {
+    const audio = new Audio(url);
+    audio.play();
   };
 
   const transcribeAudio = async (index: number) => {
@@ -160,14 +204,6 @@ export function VoiceAnswerRecorder({
     });
   };
 
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins.toString().padStart(2, "0")}:${secs
-      .toString()
-      .padStart(2, "0")}`;
-  };
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -181,6 +217,18 @@ export function VoiceAnswerRecorder({
         </p>
         <p className="text-sm text-slate-300">{question}</p>
       </div>
+
+      {/* Permission Error */}
+      {hasPermission === false && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="p-3 rounded-lg bg-red-500/10 border border-red-500/30 flex items-start gap-2"
+        >
+          <AlertCircle className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
+          <p className="text-sm text-red-300">{permissionError}</p>
+        </motion.div>
+      )}
 
       {/* Recording Controls */}
       <div className="flex gap-2">
@@ -224,16 +272,22 @@ export function VoiceAnswerRecorder({
               className="p-3 rounded-lg bg-white/5 border border-white/10 space-y-2"
             >
               <div className="flex items-center justify-between">
-                <span className="text-sm text-slate-300">
-                  Recording {index + 1} ({formatTime(recording.duration)})
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium text-slate-300">
+                    Recording {index + 1}
+                  </span>
+                  <span className="flex items-center gap-1 text-xs text-slate-500">
+                    <Clock className="w-3 h-3" />
+                    {formatTime(recording.duration)}
+                  </span>
+                  {recording.transcript && (
+                    <CheckCircle className="w-4 h-4 text-emerald-400" />
+                  )}
+                </div>
                 <div className="flex gap-2">
                   <button
-                    onClick={() => {
-                      const audio = new Audio(recording.url);
-                      audio.play();
-                    }}
-                    className="p-1 rounded hover:bg-white/10 text-slate-400 hover:text-slate-300 transition"
+                    onClick={() => playRecording(recording.url)}
+                    className="p-2 rounded hover:bg-white/10 text-slate-400 hover:text-slate-300 transition"
                     title="Play"
                   >
                     <Play className="w-4 h-4" />
