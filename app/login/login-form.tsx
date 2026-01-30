@@ -11,6 +11,8 @@ import { Toast } from "@/components/ui/Toast";
 import { motion } from "framer-motion";
 import { motionTokens } from "@/lib/motion";
 import { StaggerGroup, StaggerItem } from "@/components/animation/StaggerGroup";
+import { ScrollReveal } from "@/components/animation/ScrollReveal";
+import { usePrefersReducedMotion } from "@/components/animation/usePrefersReducedMotion";
 
 type WelcomeVariant = "welcome-student" | "welcome-hospital"
 
@@ -194,80 +196,101 @@ export default function LoginForm() {
         </motion.div>
 
         <form onSubmit={handleSubmit} className="space-y-7">
-          {!isLogin && (
-            <div className="space-y-5">
+          <StaggerGroup staggerDelay={0.08} initialDelay={0.2}>
+            {!isLogin && (
+              <StaggerItem>
+                <div className="space-y-5">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-2">
+                      Full Name
+                    </label>
+                    <motion.input
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4 }}
+                      id="name"
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      disabled={isSubmitting}
+                      className="w-full px-4 py-3 border border-white/15 bg-white/5 text-slate-100 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                      placeholder="Enter your full name"
+                    />
+                  </div>
+                </div>
+              </StaggerItem>
+            )}
+
+            <StaggerItem>
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-2">
-                  Full Name
+                <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-2">
+                  Email Address
                 </label>
-                <input
-                  id="name"
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                <motion.input
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4 }}
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   disabled={isSubmitting}
-                  className="w-full px-4 py-3 border border-white/15 bg-white/5 text-slate-100 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
-                  placeholder="Enter your full name"
+                  className="w-full px-4 py-3 border border-white/15 bg-white/5 text-slate-100 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                  placeholder="Enter your email"
                 />
               </div>
-            </div>
-          )}
+            </StaggerItem>
 
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-2">
-              Email Address
-            </label>
-            <input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              disabled={isSubmitting}
-              className="w-full px-4 py-3 border border-white/15 bg-white/5 text-slate-100 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
-              placeholder="Enter your email"
-            />
-          </div>
+            <StaggerItem>
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium text-slate-300 mb-2">
+                  Password
+                </label>
+                <motion.input
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4 }}
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  disabled={isSubmitting}
+                  className="w-full px-4 py-3 border border-white/15 bg-white/5 text-slate-100 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                  placeholder="Enter your password"
+                />
+              </div>
+            </StaggerItem>
 
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-slate-300 mb-2">
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              disabled={isSubmitting}
-              className="w-full px-4 py-3 border border-white/15 bg-white/5 text-slate-100 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
-              placeholder="Enter your password"
-            />
-          </div>
+            {error && (
+              <StaggerItem>
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="bg-rose-500/10 border border-rose-300/30 text-rose-100 px-4 py-3 rounded-lg text-sm"
+                >
+                  {error}
+                </motion.div>
+              </StaggerItem>
+            )}
 
-          {error && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="bg-rose-500/10 border border-rose-300/30 text-rose-100 px-4 py-3 rounded-lg text-sm"
-            >
-              {error}
-            </motion.div>
-          )}
-
-          <motion.button
-            type="submit"
-            disabled={isSubmitting}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            whileHover={isSubmitting ? {} : { scale: 1.02 }}
-            whileTap={isSubmitting ? {} : { scale: 0.98 }}
-            transition={{ duration: motionTokens.duration.ui, delay: 0.2 }}
-            className="w-full bg-linear-to-r from-cyan-500 to-indigo-600 text-white py-3 px-4 rounded-lg hover:from-cyan-400 hover:to-indigo-500 focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 transition duration-150 ease-out font-semibold shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isSubmitting ? "Processing..." : isLogin ? "Sign In" : "Create Account"}
-          </motion.button>
+            <StaggerItem>
+              <motion.button
+                type="submit"
+                disabled={isSubmitting}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                whileHover={isSubmitting ? {} : { scale: 1.02 }}
+                whileTap={isSubmitting ? {} : { scale: 0.98 }}
+                transition={{ duration: motionTokens.duration.ui }}
+                className="w-full bg-linear-to-r from-cyan-500 to-indigo-600 text-white py-3 px-4 rounded-lg hover:from-cyan-400 hover:to-indigo-500 focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 transition duration-150 ease-out font-semibold shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isSubmitting ? "Processing..." : isLogin ? "Sign In" : "Create Account"}
+              </motion.button>
+            </StaggerItem>
+          </StaggerGroup>
         </form>
 
-        <StaggerGroup className="mt-6 text-center space-y-3" staggerDelay={0.06} initialDelay={0.1}>
+        <StaggerGroup className="mt-6 text-center space-y-3" staggerDelay={0.06} initialDelay={0.5}>
           {isLogin && (
             <StaggerItem>
               <button
