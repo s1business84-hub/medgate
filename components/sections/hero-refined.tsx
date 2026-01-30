@@ -13,6 +13,8 @@ import { MagneticHover } from "@/components/ui/magnetic-hover"
 import Reveal from "@/components/Reveal"
 import { PageTransition } from "@/components/ui/page-transition"
 import { Phone3D } from "../3d-phone"
+import { ScrollCue } from "../animation/ScrollCue"
+import { usePrefersReducedMotion } from "../animation/usePrefersReducedMotion"
 
 const stats = [
   {
@@ -178,6 +180,9 @@ export function Hero() {
           ))}
         </div>
       </div>
+
+      {/* Scroll indicator */}
+      <ScrollCue />
     </section>
   )
 }

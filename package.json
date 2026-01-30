@@ -19,6 +19,7 @@
     "@capacitor/ios": "^8.0.1",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-slot": "^1.2.4",
+    "@react-spring/web": "^10.0.3",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.5.0",
     "@splinetool/react-spline": "^4.1.0",

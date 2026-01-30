@@ -9,10 +9,14 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger, Observer, Draggable, SplitText } from "gsap/all";
+import { usePrefersReducedMotion } from "@/components/animation/usePrefersReducedMotion";
+import { ScrollReveal } from "@/components/animation/ScrollReveal";
+import { StaggerGroup, StaggerItem } from "@/components/animation/StaggerGroup";
 
 export default function PurposePage() {
   const [activeCard, setActiveCard] = useState<"students" | "hospitals">("students");
   const lookingAheadRef = useRef<HTMLDivElement | null>(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
   const { scrollYProgress } = useScroll({ target: lookingAheadRef, offset: ["start end", "end start"] });
   // Background overlay opacity on scroll
   const redBgOpacity = useTransform(scrollYProgress, [0, 1], [0, 0.35]);
@@ -25,31 +29,34 @@ export default function PurposePage() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger, Observer, Draggable, SplitText);
     const ctx = gsap.context(() => {
-      const headings = gsap.utils.toArray<HTMLElement>(".purpose-heading");
-      headings.forEach((heading) => {
-        const split = new SplitText(heading, { type: "words" });
-        gsap.from(split.words, {
-          opacity: 0,
-          y: 24,
-          stagger: 0.05,
-          ease: "power2.out",
-          scrollTrigger: { trigger: heading, start: "top 80%" },
+      // Only animate if user doesn't prefer reduced motion
+      if (!prefersReducedMotion) {
+        const headings = gsap.utils.toArray<HTMLElement>(".purpose-heading");
+        headings.forEach((heading) => {
+          const split = new SplitText(heading, { type: "words" });
+          gsap.from(split.words, {
+            opacity: 0,
+            y: 24,
+            stagger: 0.05,
+            ease: "power2.out",
+            scrollTrigger: { trigger: heading, start: "top 80%" },
+          });
         });
-      });
 
-      gsap.utils.toArray<HTMLElement>(".purpose-card").forEach((card) => {
-        gsap.fromTo(
-          card,
-          { y: 30, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            ease: "power3.out",
-            scrollTrigger: { trigger: card, start: "top 85%", toggleActions: "play none none reverse" },
-          }
-        );
-      });
+        gsap.utils.toArray<HTMLElement>(".purpose-card").forEach((card) => {
+          gsap.fromTo(
+            card,
+            { y: 30, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.8,
+              ease: "power3.out",
+              scrollTrigger: { trigger: card, start: "top 85%", toggleActions: "play none none reverse" },
+            }
+          );
+        });
+      }
 
       const panel = document.querySelector(".purpose-plane-panel");
       if (panel) {
@@ -74,7 +81,7 @@ export default function PurposePage() {
     });
 
     return () => ctx.revert();
-  }, [setActiveCard]);
+  }, [setActiveCard, prefersReducedMotion]);
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-slate-950 text-white">
@@ -154,32 +161,44 @@ export default function PurposePage() {
         </section>
 
         <section className="mb-24">
-          <motion.div initial={{ opacity: 0, y: 60 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}>
+          <ScrollReveal direction="up">
             <h2 className="purpose-heading text-3xl font-bold text-white mb-4">What We Are Building</h2>
             <p className="text-lg text-slate-400 leading-relaxed mb-12">
               Electivio is being developed as a program management and discovery platform designed around real institutional workflows and student needs. We focus on three core areas:
             </p>
-          </motion.div>
-          <div className="space-y-6">
-            <motion.div initial={{ opacity: 0, y: 80 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.9, delay: 0.1, ease: [0.22, 1, 0.36, 1] }} className="purpose-card bg-white/5 border border-white/10 rounded-2xl backdrop-blur-xl p-8 hover:bg-white/10 hover:shadow-xl transition-all duration-500">
-              <h3 className="text-2xl font-bold text-cyan-400 mb-3">1. Program Standardization</h3>
-              <p className="text-lg text-slate-400 leading-relaxed">
-                We help hospitals and clinics publish observership and elective programs with clearly defined eligibility criteria, documentation requirements, duration, and intake limits—set entirely by the institution.
-              </p>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, y: 80 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }} className="purpose-card bg-white/5 border border-white/10 rounded-2xl backdrop-blur-xl p-8 hover:bg-white/10 hover:shadow-xl transition-all duration-500">
-              <h3 className="text-2xl font-bold text-indigo-400 mb-3">2. Administrative Efficiency</h3>
-              <p className="text-lg text-slate-400 leading-relaxed">
-                By centralizing program information and application workflows, Electivio reduces repetitive back and forth communication and improves visibility for students and administrators alike.
-              </p>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, y: 80 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }} className="purpose-card bg-white/5 border border-white/10 rounded-2xl backdrop-blur-xl p-8 hover:bg-white/10 hover:shadow-xl transition-all duration-500">
-              <h3 className="text-2xl font-bold text-emerald-400 mb-3">3. Institutional Control & Governance</h3>
-              <p className="text-lg text-slate-400 leading-relaxed">
-                Electivio is built institution-first. Hospitals retain full control over program approvals, intake capacity, and internal policies while benefiting from a structured digital interface.
-              </p>
-            </motion.div>
-          </div>
+          </ScrollReveal>
+          <StaggerGroup staggerDelay={0.15} initialDelay={0.1}>
+            <StaggerItem>
+              <ScrollReveal direction="left" delay={0}>
+                <div className="purpose-card bg-white/5 border border-white/10 rounded-2xl backdrop-blur-xl p-8 hover:bg-white/10 hover:shadow-xl transition-all duration-500">
+                  <h3 className="text-2xl font-bold text-cyan-400 mb-3">1. Program Standardization</h3>
+                  <p className="text-lg text-slate-400 leading-relaxed">
+                    We help hospitals and clinics publish observership and elective programs with clearly defined eligibility criteria, documentation requirements, duration, and intake limits—set entirely by the institution.
+                  </p>
+                </div>
+              </ScrollReveal>
+            </StaggerItem>
+            <StaggerItem>
+              <ScrollReveal direction="right" delay={0}>
+                <div className="purpose-card bg-white/5 border border-white/10 rounded-2xl backdrop-blur-xl p-8 hover:bg-white/10 hover:shadow-xl transition-all duration-500">
+                  <h3 className="text-2xl font-bold text-indigo-400 mb-3">2. Administrative Efficiency</h3>
+                  <p className="text-lg text-slate-400 leading-relaxed">
+                    By centralizing program information and application workflows, Electivio reduces repetitive back and forth communication and improves visibility for students and administrators alike.
+                  </p>
+                </div>
+              </ScrollReveal>
+            </StaggerItem>
+            <StaggerItem>
+              <ScrollReveal direction="left" delay={0}>
+                <div className="purpose-card bg-white/5 border border-white/10 rounded-2xl backdrop-blur-xl p-8 hover:bg-white/10 hover:shadow-xl transition-all duration-500">
+                  <h3 className="text-2xl font-bold text-emerald-400 mb-3">3. Institutional Control & Governance</h3>
+                  <p className="text-lg text-slate-400 leading-relaxed">
+                    Electivio is built institution-first. Hospitals retain full control over program approvals, intake capacity, and internal policies while benefiting from a structured digital interface.
+                  </p>
+                </div>
+              </ScrollReveal>
+            </StaggerItem>
+          </StaggerGroup>
         </section>
 
         <section className="mb-24">

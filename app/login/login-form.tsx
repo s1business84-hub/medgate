@@ -10,6 +10,7 @@ import { DemoButton } from "@/components/demo-button";
 import { Toast } from "@/components/ui/Toast";
 import { motion } from "framer-motion";
 import { motionTokens } from "@/lib/motion";
+import { StaggerGroup, StaggerItem } from "@/components/animation/StaggerGroup";
 
 type WelcomeVariant = "welcome-student" | "welcome-hospital"
 
@@ -255,42 +256,46 @@ export default function LoginForm() {
           <motion.button
             type="submit"
             disabled={isSubmitting}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
             whileHover={isSubmitting ? {} : { scale: 1.02 }}
             whileTap={isSubmitting ? {} : { scale: 0.98 }}
-            transition={{ duration: motionTokens.duration.fast }}
+            transition={{ duration: motionTokens.duration.ui, delay: 0.2 }}
             className="w-full bg-linear-to-r from-cyan-500 to-indigo-600 text-white py-3 px-4 rounded-lg hover:from-cyan-400 hover:to-indigo-500 focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 transition duration-150 ease-out font-semibold shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSubmitting ? "Processing..." : isLogin ? "Sign In" : "Create Account"}
           </motion.button>
         </form>
 
-        {isLogin && (
-          <div className="mt-6 text-center">
-            <button
-              onClick={() => setIsLogin(false)}
-              className="text-cyan-200 hover:text-cyan-100 text-sm"
-            >
-              Don&apos;t have an account? Sign up
-            </button>
-          </div>
-        )}
+        <StaggerGroup className="mt-6 text-center space-y-3" staggerDelay={0.06} initialDelay={0.1}>
+          {isLogin && (
+            <StaggerItem>
+              <button
+                onClick={() => setIsLogin(false)}
+                className="text-cyan-200 hover:text-cyan-100 text-sm"
+              >
+                Don&apos;t have an account? Sign up
+              </button>
+            </StaggerItem>
+          )}
 
-        {!isLogin && (
-          <div className="mt-6 text-center">
-            <button
-              onClick={() => setIsLogin(true)}
-              className="text-cyan-200 hover:text-cyan-100 text-sm"
-            >
-              Already have an account? Sign in
-            </button>
-          </div>
-        )}
+          {!isLogin && (
+            <StaggerItem>
+              <button
+                onClick={() => setIsLogin(true)}
+                className="text-cyan-200 hover:text-cyan-100 text-sm"
+              >
+                Already have an account? Sign in
+              </button>
+            </StaggerItem>
+          )}
 
-        <div className="mt-4 text-center">
-          <Link href="/" className="text-slate-300 hover:text-slate-100 text-sm">
-            ← Back to Home
-          </Link>
-        </div>
+          <StaggerItem>
+            <Link href="/" className="text-slate-300 hover:text-slate-100 text-sm">
+              ← Back to Home
+            </Link>
+          </StaggerItem>
+        </StaggerGroup>
       </div>
       </motion.div>
 
