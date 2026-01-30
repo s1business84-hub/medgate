@@ -8,7 +8,6 @@ import { motion } from "framer-motion";
 
 // Enhanced 3D Robot with Three.js
 function Robot({ isWaving }: { isWaving: boolean }) {
-  const groupRef = useRef<THREE.Group>(null);
   const rightArmRef = useRef<THREE.Group>(null);
   const waveProgressRef = useRef(0);
 
@@ -22,13 +21,10 @@ function Robot({ isWaving }: { isWaving: boolean }) {
       rightArmRef.current.rotation.z *= 0.92;
     }
 
-    if (groupRef.current && !isWaving) {
-      groupRef.current.rotation.y += 0.004;
-    }
   });
 
   return (
-    <group ref={groupRef} position={[0, -0.2, 0]} scale={1.3}>
+    <group position={[0, -0.8, 0]} scale={1.6}>
       {/* Main Body - Torso */}
       <mesh position={[0, 0.6, 0]}>
         <cylinderGeometry args={[0.35, 0.4, 1, 8]} />
@@ -100,7 +96,7 @@ function Robot({ isWaving }: { isWaving: boolean }) {
       </mesh>
 
       {/* Left Arm */}
-      <group position={[-0.55, 0.85, 0]}>
+      <group position={[-0.55, 1.05, 0]}>
         <mesh position={[0, -0.2, 0]}>
           <boxGeometry args={[0.2, 0.7, 0.2]} />
           <meshStandardMaterial 
@@ -120,7 +116,7 @@ function Robot({ isWaving }: { isWaving: boolean }) {
       </group>
 
       {/* Right Arm (Waving arm) */}
-      <group ref={rightArmRef} position={[0.55, 0.85, 0]}>
+      <group ref={rightArmRef} position={[0.55, 1.05, 0]}>
         <mesh position={[0, -0.2, 0]}>
           <boxGeometry args={[0.2, 0.7, 0.2]} />
           <meshStandardMaterial 
@@ -139,45 +135,6 @@ function Robot({ isWaving }: { isWaving: boolean }) {
         </mesh>
       </group>
 
-      {/* Left Leg */}
-      <mesh position={[-0.22, -0.1, 0]}>
-        <boxGeometry args={[0.18, 0.9, 0.18]} />
-        <meshStandardMaterial 
-          color="#0066cc" 
-          metalness={0.9} 
-          roughness={0.1}
-        />
-      </mesh>
-
-      {/* Right Leg */}
-      <mesh position={[0.22, -0.1, 0]}>
-        <boxGeometry args={[0.18, 0.9, 0.18]} />
-        <meshStandardMaterial 
-          color="#0066cc" 
-          metalness={0.9} 
-          roughness={0.1}
-        />
-      </mesh>
-
-      {/* Left Foot */}
-      <mesh position={[-0.22, -0.65, 0.1]}>
-        <boxGeometry args={[0.2, 0.15, 0.25]} />
-        <meshStandardMaterial 
-          color="#004499" 
-          metalness={0.9} 
-          roughness={0.1}
-        />
-      </mesh>
-
-      {/* Right Foot */}
-      <mesh position={[0.22, -0.65, 0.1]}>
-        <boxGeometry args={[0.2, 0.15, 0.25]} />
-        <meshStandardMaterial 
-          color="#004499" 
-          metalness={0.9} 
-          roughness={0.1}
-        />
-      </mesh>
     </group>
   );
 }
@@ -185,12 +142,12 @@ function Robot({ isWaving }: { isWaving: boolean }) {
 function Scene({ isWaving }: { isWaving: boolean }) {
   return (
     <>
-      <PerspectiveCamera makeDefault position={[0, 0.2, 2.8]} fov={45} />
+      <PerspectiveCamera makeDefault position={[0, 0.9, 2.1]} fov={34} />
       <OrbitControls 
         enableZoom={false}
         enablePan={false}
-        autoRotate={!isWaving}
-        autoRotateSpeed={1.5}
+        enableRotate={false}
+        autoRotate={false}
         dampingFactor={0.05}
       />
       

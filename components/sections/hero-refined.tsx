@@ -78,10 +78,11 @@ export function Hero() {
         targetUrl={targetUrl}
       />
 
-      {/* Refined background with subtle gradients */}
+      {/* Liquid glass gradient background */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(99,102,241,0.08),transparent_40%),radial-gradient(circle_at_70%_60%,rgba(59,130,246,0.06),transparent_35%)]" />
-        <div className="absolute inset-0 bg-linear-to-b from-slate-950 via-slate-900/50 to-slate-950" />
+        <div className="absolute inset-0 bg-linear-to-b from-slate-950 via-slate-900/60 to-slate-950" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(14,165,233,0.18),transparent_45%),radial-gradient(circle_at_80%_25%,rgba(99,102,241,0.18),transparent_40%),radial-gradient(circle_at_55%_80%,rgba(236,72,153,0.08),transparent_50%)]" />
+        <div className="absolute inset-0 bg-white/5 backdrop-blur-3xl" />
       </div>
 
       <div className="mx-auto max-w-7xl px-6 lg:px-8 py-20 sm:py-28">
