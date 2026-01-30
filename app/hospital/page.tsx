@@ -45,6 +45,7 @@ export default function HospitalPortal() {
   const [showFormModal, setShowFormModal] = useState(false);
   const [showObsForm, setShowObsForm] = useState(false);
   const [showAlerts, setShowAlerts] = useState(true);
+  const [appFilter, setAppFilter] = useState<"all" | "approved" | "rejected" | "pending">("all");
   const [obsForm, setObsForm] = useState({
     name: "",
     description: "",
@@ -419,7 +420,30 @@ export default function HospitalPortal() {
               <div className="md:col-span-2">
                 <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-lg shadow">
                   <div className="p-6 border-b border-white/10">
-                    <h2 className="text-xl font-bold text-slate-100">Applications</h2>
+                    <div className="flex items-center justify-between mb-4">
+                      <h2 className="text-xl font-bold text-slate-100">Applications</h2>
+                    </div>
+                    {/* Filter Tabs */}
+                    <div className="flex gap-2 flex-wrap">
+                      {[
+                        { id: "all", label: "All", count: applications.length },
+                        { id: "approved", label: "Approved", count: applications.filter(a => a.status === "Approved").length },
+                        { id: "pending", label: "Pending", count: applications.filter(a => a.status === "Submitted").length },
+                        { id: "rejected", label: "Rejected", count: applications.filter(a => a.status === "Rejected").length },
+                      ].map((tab) => (
+                        <button
+                          key={tab.id}
+                          onClick={() => setAppFilter(tab.id as any)}
+                          className={`px-3 py-1 rounded-lg text-sm font-medium transition-all ${
+                            appFilter === tab.id
+                              ? "bg-cyan-500/30 text-cyan-300 border border-cyan-500/50"
+                              : "bg-white/5 text-slate-400 border border-white/10 hover:border-white/20"
+                          }`}
+                        >
+                          {tab.label} ({tab.count})
+                        </button>
+                      ))}
+                    </div>
                   </div>
 
                   {applications.length === 0 ? (
@@ -429,7 +453,15 @@ export default function HospitalPortal() {
                     </div>
                   ) : (
                     <div className="divide-y">
-                      {applications.map((app) => (
+                      {applications
+                        .filter((app) => {
+                          if (appFilter === "all") return true;
+                          if (appFilter === "approved") return app.status === "Approved";
+                          if (appFilter === "pending") return app.status === "Submitted";
+                          if (appFilter === "rejected") return app.status === "Rejected";
+                          return true;
+                        })
+                        .map((app) => (
                         <div
                           key={app.id}
                           onClick={() => setSelectedApp(app)}
