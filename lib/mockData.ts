@@ -352,8 +352,15 @@ export const mockUsers = [
     password: "password",
   },
   {
-    id: "u2",
+    id: "u_admin",
     email: "admin@example.com",
+    role: "admin" as const,
+    name: "Dr. Admin User",
+    password: "password",
+  },
+  {
+    id: "u_supervisor",
+    email: "supervisor@example.com",
     role: "supervisor" as const,
     name: "Dr. Sarah Johnson",
     password: "password",
