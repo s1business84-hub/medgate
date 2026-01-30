@@ -15,6 +15,7 @@ import { AIListingSuggestions } from "@/components/ai-listing-suggestions";
 import { SupervisorChat } from "@/components/supervisor-chat";
 import { StudentVerificationCenter } from "@/components/student-verification-center";
 import { StudentGuidelines } from "@/components/student-guidelines";
+import { StudentInbox } from "@/components/student-inbox";
 import { StaggerGroup, StaggerItem } from "@/components/animation/StaggerGroup";
 
 export default function StudentPortal() {
@@ -174,6 +175,9 @@ export default function StudentPortal() {
                   </svg>
                   Forms
                 </Link>
+              </StaggerItem>
+              <StaggerItem>
+                <StudentInbox />
               </StaggerItem>
               <StaggerItem>
                 <button
