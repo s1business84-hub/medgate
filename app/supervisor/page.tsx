@@ -13,6 +13,7 @@ interface Observership {
   type: "observership" | "elective";
   totalSessions: number;
   sessionsCompleted: number;
+  assignedSupervisor?: string;
 }
 
 interface ApplicationRecord {
@@ -57,8 +58,8 @@ const mockStudents: StudentData[] = [
     role: "Observer",
     formsAssigned: ["Consent", "Checklist"],
     observerships: [
-      { id: "OBS-1", title: "Internal Medicine", type: "observership", totalSessions: 10, sessionsCompleted: 8 },
-      { id: "ELC-1", title: "Cardiology Elective", type: "elective", totalSessions: 12, sessionsCompleted: 9 },
+      { id: "OBS-1", title: "Internal Medicine", type: "observership", totalSessions: 10, sessionsCompleted: 8, assignedSupervisor: "Dr. Aisha Al Shehhi" },
+      { id: "ELC-1", title: "Cardiology Elective", type: "elective", totalSessions: 12, sessionsCompleted: 9, assignedSupervisor: "Prof. Mohammed Al Kaabi" },
     ],
     applications: [
       { id: "APP-101", program: "Surgery Observership", status: "approved", appliedOn: "2025-01-05" },
@@ -80,8 +81,8 @@ const mockStudents: StudentData[] = [
     role: "Observer",
     formsAssigned: ["Consent"],
     observerships: [
-      { id: "OBS-2", title: "Pediatrics", type: "observership", totalSessions: 8, sessionsCompleted: 5 },
-      { id: "ELC-2", title: "Dermatology Elective", type: "elective", totalSessions: 6, sessionsCompleted: 3 },
+      { id: "OBS-2", title: "Pediatrics", type: "observership", totalSessions: 8, sessionsCompleted: 5, assignedSupervisor: "Dr. Latifa Al Mansoori" },
+      { id: "ELC-2", title: "Dermatology Elective", type: "elective", totalSessions: 6, sessionsCompleted: 3, assignedSupervisor: "Dr. Hana Al Hashmi" },
     ],
     applications: [
       { id: "APP-103", program: "Neurology Observership", status: "waitlisted", appliedOn: "2025-01-10" },
@@ -102,7 +103,7 @@ const mockStudents: StudentData[] = [
     role: "Observer",
     formsAssigned: [],
     observerships: [
-      { id: "OBS-3", title: "Emergency Medicine", type: "observership", totalSessions: 10, sessionsCompleted: 4 },
+      { id: "OBS-3", title: "Emergency Medicine", type: "observership", totalSessions: 10, sessionsCompleted: 4, assignedSupervisor: "Dr. Omar Al Janabi" },
     ],
     applications: [
       { id: "APP-104", program: "Orthopedics Elective", status: "declined", appliedOn: "2025-01-12" },
@@ -123,8 +124,8 @@ const mockStudents: StudentData[] = [
     role: "Team Lead",
     formsAssigned: ["Consent", "Checklist", "Feedback"],
     observerships: [
-      { id: "OBS-4", title: "Surgery", type: "observership", totalSessions: 12, sessionsCompleted: 12 },
-      { id: "ELC-3", title: "ICU Elective", type: "elective", totalSessions: 8, sessionsCompleted: 7 },
+      { id: "OBS-4", title: "Surgery", type: "observership", totalSessions: 12, sessionsCompleted: 12, assignedSupervisor: "Prof. Ahmed Al Zaabi" },
+      { id: "ELC-3", title: "ICU Elective", type: "elective", totalSessions: 8, sessionsCompleted: 7, assignedSupervisor: "Dr. Salma Al Mazrouei" },
     ],
     applications: [
       { id: "APP-105", program: "Pathology Observership", status: "approved", appliedOn: "2025-01-08" },
@@ -641,6 +642,26 @@ export default function SupervisorDashboard() {
                   <p className="text-xs text-slate-500 mt-3">
                     Last update: {new Date(student.lastUpdate).toLocaleDateString()}
                   </p>
+
+                  {/* Supervisor Assignments */}
+                  {student.observerships && student.observerships.length > 0 && (
+                    <div className="mt-4 pt-4 border-t border-white/10">
+                      <p className="text-xs font-semibold text-cyan-300 mb-2">Assigned Supervisors</p>
+                      <div className="space-y-1">
+                        {student.observerships.map((obs) => (
+                          <div key={obs.id} className="text-xs text-slate-400 flex items-start gap-2">
+                            <span className="text-cyan-400 mt-1">→</span>
+                            <div>
+                              <p className="text-slate-300">{obs.title}</p>
+                              {obs.assignedSupervisor && (
+                                <p className="text-cyan-300 text-xs">{obs.assignedSupervisor}</p>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
 
                   {/* Promote Action */}
                   <div className="mt-4 flex justify-end">
