@@ -349,6 +349,9 @@ export default function SupervisorDashboard() {
   };
   const categories = [
     { id: "all", label: "All Students", emoji: "👥" },
+    { id: "year-7", label: "Year 7", emoji: "🌟" },
+    { id: "year-6", label: "Year 6", emoji: "⭐" },
+    { id: "year-5", label: "Year 5", emoji: "🏆" },
     { id: "year-4", label: "Year 4", emoji: "🎓" },
     { id: "year-3", label: "Year 3", emoji: "📚" },
     { id: "year-2", label: "Year 2", emoji: "📖" },
@@ -384,6 +387,24 @@ export default function SupervisorDashboard() {
         : null,
     needsSupport: students.filter((s) => s.formProgress < 60),
     yearAverages: {
+      "Year 7": Math.round(
+        students
+          .filter((s) => s.year === 7)
+          .reduce((sum, s) => sum + s.formProgress, 0) /
+          (students.filter((s) => s.year === 7).length || 1)
+      ),
+      "Year 6": Math.round(
+        students
+          .filter((s) => s.year === 6)
+          .reduce((sum, s) => sum + s.formProgress, 0) /
+          (students.filter((s) => s.year === 6).length || 1)
+      ),
+      "Year 5": Math.round(
+        students
+          .filter((s) => s.year === 5)
+          .reduce((sum, s) => sum + s.formProgress, 0) /
+          (students.filter((s) => s.year === 5).length || 1)
+      ),
       "Year 4": Math.round(
         students
           .filter((s) => s.year === 4)
@@ -502,7 +523,7 @@ export default function SupervisorDashboard() {
                 className="p-3 rounded-lg bg-white/5 border border-white/10"
               >
                 <p className="text-slate-300">
-                  <span className="text-green-300 font-semibold">Year Averages:</span> Year 4: {insights.yearAverages["Year 4"]}% | Year 3: {insights.yearAverages["Year 3"]}% | Year 2: {insights.yearAverages["Year 2"]}% | Year 1: {insights.yearAverages["Year 1"]}%
+                  <span className="text-green-300 font-semibold">Year Averages:</span> Year 7: {insights.yearAverages["Year 7"]}% | Year 6: {insights.yearAverages["Year 6"]}% | Year 5: {insights.yearAverages["Year 5"]}% | Year 4: {insights.yearAverages["Year 4"]}% | Year 3: {insights.yearAverages["Year 3"]}% | Year 2: {insights.yearAverages["Year 2"]}% | Year 1: {insights.yearAverages["Year 1"]}%
                 </p>
               </motion.div>
             </div>
