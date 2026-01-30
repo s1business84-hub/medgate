@@ -1,36 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import dynamic from "next/dynamic";
 
-// Dynamically import Three.js components only if needed
-const Canvas = dynamic(async () => {
-  const module = await import("@react-three/fiber");
-  return module.Canvas;
-}, { ssr: false });
-
-const PerspectiveCamera = dynamic(async () => {
-  const module = await import("@react-three/drei");
-  return module.PerspectiveCamera;
-}, { ssr: false });
-
-const OrbitControls = dynamic(async () => {
-  const module = await import("@react-three/drei");
-  return module.OrbitControls;
-}, { ssr: false });
-
-import * as THREE from "three";
-import { useFrame } from "@react-three/fiber";
-
-// Enhanced 3D Robot with smooth animations
-function Robot() {
-  const groupRef = useRef<THREE.Group>(null);
-  const rightArmRef = useRef<THREE.Group>(null);
+export function Robot3D() {
   const [isWaving, setIsWaving] = useState(false);
-  const waveProgressRef = useRef(0);
 
-  // Trigger wave animation on mount
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsWaving(true);
@@ -39,221 +14,99 @@ function Robot() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Animate waving
-  useFrame(() => {
-    if (isWaving && rightArmRef.current) {
-      waveProgressRef.current += 0.04;
-      const waveAngle = Math.sin(waveProgressRef.current) * 1.2;
-      rightArmRef.current.rotation.z = waveAngle;
-    } else if (rightArmRef.current) {
-      rightArmRef.current.rotation.z *= 0.95;
-    }
-
-    if (groupRef.current && !isWaving) {
-      groupRef.current.rotation.y += 0.003;
-    }
-  });
-
-  return (
-    <group ref={groupRef} position={[0, -0.3, 0]} scale={1.2}>
-      {/* Main Body - Torso */}
-      <mesh position={[0, 0.6, 0]}>
-        <cylinderGeometry args={[0.35, 0.4, 1, 8]} />
-        <meshStandardMaterial 
-          color="#00d9ff" 
-          metalness={0.85} 
-          roughness={0.15}
-          emissive="#0099cc"
-          emissiveIntensity={0.3}
-        />
-      </mesh>
-
-      {/* Chest Panel */}
-      <mesh position={[0, 0.65, 0.4]}>
-        <boxGeometry args={[0.25, 0.4, 0.1]} />
-        <meshStandardMaterial 
-          color="#0099cc" 
-          metalness={0.9} 
-          roughness={0.1}
-          emissive="#00d9ff"
-          emissiveIntensity={0.4}
-        />
-      </mesh>
-
-      {/* Head */}
-      <mesh position={[0, 1.55, 0]}>
-        <sphereGeometry args={[0.45, 32, 32]} />
-        <meshStandardMaterial 
-          color="#00d9ff" 
-          metalness={0.85} 
-          roughness={0.15}
-          emissive="#0099cc"
-          emissiveIntensity={0.2}
-        />
-      </mesh>
-
-      {/* Left Eye */}
-      <mesh position={[-0.18, 1.65, 0.42]}>
-        <sphereGeometry args={[0.1, 16, 16]} />
-        <meshStandardMaterial 
-          color="#ffffff" 
-          emissive="#0099ff" 
-          emissiveIntensity={1.2}
-          metalness={0.7}
-          roughness={0.3}
-        />
-      </mesh>
-
-      {/* Right Eye */}
-      <mesh position={[0.18, 1.65, 0.42]}>
-        <sphereGeometry args={[0.1, 16, 16]} />
-        <meshStandardMaterial 
-          color="#ffffff" 
-          emissive="#0099ff" 
-          emissiveIntensity={1.2}
-          metalness={0.7}
-          roughness={0.3}
-        />
-      </mesh>
-
-      {/* Mouth indicator */}
-      <mesh position={[0, 1.4, 0.44]}>
-        <boxGeometry args={[0.15, 0.05, 0.02]} />
-        <meshStandardMaterial 
-          color="#00d9ff" 
-          emissive="#0099cc"
-          emissiveIntensity={0.6}
-        />
-      </mesh>
-
-      {/* Left Arm */}
-      <group position={[-0.55, 0.85, 0]}>
-        <mesh position={[0, -0.2, 0]}>
-          <boxGeometry args={[0.2, 0.7, 0.2]} />
-          <meshStandardMaterial 
-            color="#00d9ff" 
-            metalness={0.85} 
-            roughness={0.15}
-          />
-        </mesh>
-        <mesh position={[0, -0.65, 0]}>
-          <sphereGeometry args={[0.15, 16, 16]} />
-          <meshStandardMaterial 
-            color="#0099cc" 
-            metalness={0.85} 
-            roughness={0.15}
-          />
-        </mesh>
-      </group>
-
-      {/* Right Arm (Waving arm) */}
-      <group ref={rightArmRef} position={[0.55, 0.85, 0]}>
-        <mesh position={[0, -0.2, 0]}>
-          <boxGeometry args={[0.2, 0.7, 0.2]} />
-          <meshStandardMaterial 
-            color="#00d9ff" 
-            metalness={0.85} 
-            roughness={0.15}
-          />
-        </mesh>
-        <mesh position={[0, -0.65, 0]}>
-          <sphereGeometry args={[0.15, 16, 16]} />
-          <meshStandardMaterial 
-            color="#0099cc" 
-            metalness={0.85} 
-            roughness={0.15}
-          />
-        </mesh>
-      </group>
-
-      {/* Left Leg */}
-      <mesh position={[-0.22, -0.1, 0]}>
-        <boxGeometry args={[0.18, 0.9, 0.18]} />
-        <meshStandardMaterial 
-          color="#0066cc" 
-          metalness={0.85} 
-          roughness={0.15}
-        />
-      </mesh>
-
-      {/* Right Leg */}
-      <mesh position={[0.22, -0.1, 0]}>
-        <boxGeometry args={[0.18, 0.9, 0.18]} />
-        <meshStandardMaterial 
-          color="#0066cc" 
-          metalness={0.85} 
-          roughness={0.15}
-        />
-      </mesh>
-
-      {/* Left Foot */}
-      <mesh position={[-0.22, -0.65, 0.1]}>
-        <boxGeometry args={[0.2, 0.15, 0.25]} />
-        <meshStandardMaterial 
-          color="#004499" 
-          metalness={0.85} 
-          roughness={0.15}
-        />
-      </mesh>
-
-      {/* Right Foot */}
-      <mesh position={[0.22, -0.65, 0.1]}>
-        <boxGeometry args={[0.2, 0.15, 0.25]} />
-        <meshStandardMaterial 
-          color="#004499" 
-          metalness={0.85} 
-          roughness={0.15}
-        />
-      </mesh>
-    </group>
-  );
-}
-
-function Scene() {
-  return (
-    <>
-      <PerspectiveCamera makeDefault position={[0, 0.3, 2.8]} fov={45} />
-      <OrbitControls 
-        enableZoom={false}
-        enablePan={false}
-        autoRotate={true}
-        autoRotateSpeed={1.5}
-        dampingFactor={0.05}
-      />
-      
-      <ambientLight intensity={0.8} />
-      <pointLight position={[8, 12, 8]} intensity={1.8} color="#00d9ff" distance={30} decay={2} />
-      <pointLight position={[-8, 8, -8]} intensity={1.2} color="#6366f1" distance={25} decay={2} />
-      <pointLight position={[0, -5, 10]} intensity={0.6} color="#00d9ff" distance={20} decay={2} />
-      <directionalLight position={[5, 10, 5]} intensity={0.5} color="#ffffff" />
-      
-      <color attach="background" args={["#0a0e1a"]} />
-      
-      <Robot />
-    </>
-  );
-}
-
-export function Robot3D() {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  if (!isClient) return null;
-
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 1, ease: "easeOut" }}
       className="relative w-full h-96 rounded-3xl overflow-hidden border border-cyan-500/30 bg-slate-950/70 backdrop-blur-xl shadow-2xl shadow-cyan-500/20"
+      style={{ perspective: "1200px" }}
     >
-      <Canvas>
-        <Scene />
-      </Canvas>
+      {/* Background with animated gradient */}
+      <div className="absolute inset-0 bg-linear-to-br from-slate-900/20 via-slate-950/50 to-slate-950" />
       
+      {/* Animated lighting effects */}
+      <div className="absolute inset-0">
+        <motion.div
+          animate={{
+            x: [0, 100, 0],
+            y: [0, -50, 0],
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -top-20 -left-20 w-64 h-64 bg-cyan-500/20 rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{
+            x: [0, -80, 0],
+            y: [0, 60, 0],
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          className="absolute -bottom-20 -right-20 w-80 h-80 bg-indigo-500/15 rounded-full blur-3xl"
+        />
+      </div>
+
+      {/* Robot Container */}
+      <div className="relative w-full h-full flex items-center justify-center">
+        <motion.div
+          animate={{ rotateY: isWaving ? 0 : [0, 360] }}
+          transition={{ duration: isWaving ? 0.5 : 20, repeat: !isWaving ? Infinity : 0 }}
+          style={{ transformStyle: "preserve-3d" }}
+          className="w-32 h-40"
+        >
+          {/* Robot Head */}
+          <motion.div
+            className="absolute top-0 left-1/2 w-16 h-16 bg-linear-to-b from-cyan-400 to-cyan-600 rounded-full shadow-xl"
+            style={{
+              transform: "translateX(-50%)",
+              boxShadow: "0 0 20px rgba(0, 217, 255, 0.5)",
+            }}
+          >
+            {/* Left Eye */}
+            <div className="absolute top-5 left-3 w-3 h-3 bg-white rounded-full shadow-lg animate-pulse" />
+            {/* Right Eye */}
+            <div className="absolute top-5 right-3 w-3 h-3 bg-white rounded-full shadow-lg animate-pulse" />
+          </motion.div>
+
+          {/* Robot Body */}
+          <div className="absolute top-14 left-1/2 w-12 h-16 bg-linear-to-b from-cyan-500 to-cyan-700 rounded-lg shadow-xl" style={{ transform: "translateX(-50%)" }} />
+
+          {/* Left Arm */}
+          <motion.div
+            className="absolute top-16 -left-8 w-8 h-12 bg-linear-to-b from-cyan-400 to-cyan-600 rounded shadow-lg"
+            animate={{ rotateZ: [0, 0, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          />
+
+          {/* Right Arm (Waving) */}
+          <motion.div
+            className="absolute top-16 -right-8 w-8 h-12 bg-linear-to-b from-cyan-400 to-cyan-600 rounded shadow-lg origin-top"
+            animate={{
+              rotateZ: isWaving ? [0, -120, 0] : [0],
+            }}
+            transition={{
+              duration: isWaving ? 0.6 : 0,
+              repeat: isWaving ? 5 : 0,
+              repeatType: "reverse",
+            }}
+          />
+
+          {/* Left Leg */}
+          <div className="absolute bottom-0 -left-3 w-4 h-8 bg-linear-to-b from-cyan-600 to-cyan-800 rounded shadow-lg" />
+
+          {/* Right Leg */}
+          <div className="absolute bottom-0 -right-3 w-4 h-8 bg-linear-to-b from-cyan-600 to-cyan-800 rounded shadow-lg" />
+
+          {/* Chest Light */}
+          <motion.div
+            className="absolute top-20 left-1/2 w-3 h-3 bg-cyan-300 rounded-full"
+            style={{ transform: "translateX(-50%)" }}
+            animate={{ opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+          />
+        </motion.div>
+      </div>
+
+      {/* Animated greeting */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -270,6 +123,7 @@ export function Robot3D() {
         </motion.div>
       </motion.div>
 
+      {/* Corner accents */}
       <div className="absolute top-0 right-0 w-32 h-32 bg-linear-to-br from-cyan-500/20 via-transparent to-transparent pointer-events-none rounded-bl-3xl" />
       <div className="absolute bottom-0 left-0 w-24 h-24 bg-linear-to-tr from-cyan-500/10 via-transparent to-transparent pointer-events-none rounded-tr-full" />
     </motion.div>
