@@ -5,6 +5,7 @@ import { useAuth } from "@/lib/auth-context"
 import { useRouter } from "next/navigation"
 import { getApplications, getObservationForms, createSessionFormSubmission } from "@/lib/storage"
 import { StudentFormSubmission } from "@/components/student-form-submission"
+import { ImportGuidelines } from "@/components/import-guidelines"
 import { showToast } from "@/lib/toast"
 import { ObservationForm } from "@/lib/types"
 import { LiquidParallax } from "@/components/ui/liquid-parallax"
@@ -97,17 +98,20 @@ export default function FormSubmissionPage() {
             loading={loading}
           />
         ) : forms.length === 0 ? (
-          <div className="text-center py-12">
-            <h2 className="text-2xl font-bold text-white mb-2">No Forms Available</h2>
-            <p className="text-slate-300 mb-4">
-              Forms will appear here once your supervisor assigns them to your application.
-            </p>
-            <button
-              onClick={() => router.push("/student")}
-              className="px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium transition-colors"
-            >
-              Back to Dashboard
-            </button>
+          <div className="space-y-12">
+            <div className="text-center py-12">
+              <h2 className="text-2xl font-bold text-white mb-2">No Forms Available</h2>
+              <p className="text-slate-300 mb-4">
+                Forms will appear here once your supervisor assigns them to your application.
+              </p>
+              <button
+                onClick={() => router.push("/student")}
+                className="px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium transition-colors"
+              >
+                Back to Dashboard
+              </button>
+            </div>
+            <ImportGuidelines />
           </div>
         ) : (
           <div className="space-y-4">
@@ -127,6 +131,7 @@ export default function FormSubmissionPage() {
                 </button>
               ))}
             </div>
+            <ImportGuidelines />
           </div>
         )}
       </div>

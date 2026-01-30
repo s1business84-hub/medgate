@@ -9,6 +9,7 @@ import { ArrowLeft, Plus, TrendingUp, Target, Zap, Brain } from "lucide-react"
 import { LiquidParallax } from "@/components/ui/liquid-parallax"
 import Reveal from "@/components/Reveal"
 import { AIAnalyticsPanel } from "@/components/ai-analytics-panel"
+import { ImportGuidelines } from "@/components/import-guidelines"
 
 interface ProgressEntry {
   id: string
@@ -323,6 +324,9 @@ export default function StudentProgressPage() {
             </div>
           </Reveal>
         )}
+
+        {/* Import Guidelines */}
+        <ImportGuidelines />
       </div>
     </div>
   )
