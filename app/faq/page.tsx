@@ -9,6 +9,8 @@ import { LiquidParallax } from "@/components/ui/liquid-parallax"
 import { ScrollableViewport, ScrollSection } from "@/components/scrollable-viewport"
 import { AccordionItem } from "@/components/ui/Accordion"
 import { motionTokens } from "@/lib/motion"
+import { ScrollReveal } from "@/components/animation/ScrollReveal"
+import { StaggerGroup, StaggerItem } from "@/components/animation/StaggerGroup"
 
 const faqs = [
   {
@@ -185,15 +187,20 @@ export default function FAQPage() {
           animate="visible"
           className="space-y-4"
         >
-          <AnimatePresence>
-            {filteredFaqs.map((faq, index) => (
-              <AccordionItem
-                key={`${selectedCategory}-${index}`}
-                q={faq.question}
-                a={faq.answer}
-              />
-            ))}
-          </AnimatePresence>
+          <StaggerGroup staggerDelay={0.08} initialDelay={0.15}>
+            <AnimatePresence>
+              {filteredFaqs.map((faq, index) => (
+                <StaggerItem key={`${selectedCategory}-${index}`}>
+                  <ScrollReveal direction="up" delay={0}>
+                    <AccordionItem
+                      q={faq.question}
+                      a={faq.answer}
+                    />
+                  </ScrollReveal>
+                </StaggerItem>
+              ))}
+            </AnimatePresence>
+          </StaggerGroup>
         </motion.div>
 
         {/* CTA Section */}

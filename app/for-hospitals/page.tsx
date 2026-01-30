@@ -8,6 +8,8 @@ import { LiquidParallax } from "@/components/ui/liquid-parallax";
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
 import { motion, AnimatePresence } from "framer-motion";
 import { ScrollableViewport, ScrollSection } from "@/components/scrollable-viewport";
+import { ScrollReveal } from "@/components/animation/ScrollReveal";
+import { StaggerGroup, StaggerItem } from "@/components/animation/StaggerGroup";
 
 async function sendOnboardingEmail(email: string) {
   const res = await fetch("/api/send-onboarding-email", {
@@ -140,86 +142,85 @@ export default function ForHospitalsPage() {
         </div>
 
         {/* Benefits Section */}
-        <section className="mb-20 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-slate-100 mb-4">
-              <AnimatedGradientText>Why Choose Electivio?</AnimatedGradientText>
-            </h2>
-            <p className="text-lg text-slate-300 max-w-2xl mx-auto">
-              Designed to support observership and elective program management for healthcare institutions
-            </p>
-          </div>
+        <section className="mb-20">
+          <ScrollReveal direction="up">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl sm:text-4xl font-bold text-slate-100 mb-4">
+                <AnimatedGradientText>Why Choose Electivio?</AnimatedGradientText>
+              </h2>
+              <p className="text-lg text-slate-300 max-w-2xl mx-auto">
+                Designed to support observership and elective program management for healthcare institutions
+              </p>
+            </div>
+          </ScrollReveal>
 
           <div className="grid md:grid-cols-2 gap-8">
-            {[
-              {
-                icon: Shield,
-                title: 'Designed for Institutional Control',
-                description: 'Hospitals define eligibility criteria, documentation requirements, intake capacity, and review workflows. Electivio supports, not overrides, institutional processes.',
-                gradient: 'from-blue-600 to-cyan-600',
-                bgGradient: 'from-blue-50 to-cyan-50',
-                index: 0
-              },
-              {
-                icon: FileCheck,
-                title: 'Standardized Intake',
-                description: 'Built to centralize program information and applications, reducing unstructured emails, calls, and ad-hoc requests.',
-                gradient: 'from-indigo-600 to-purple-600',
-                bgGradient: 'from-indigo-50 to-purple-50',
-                index: 1
-              },
-              {
-                icon: CheckCircle2,
-                title: 'Clear Applicant Alignment',
-                description: 'Students apply based on published criteria, helping institutions receive applications aligned with their requirements.',
-                gradient: 'from-purple-600 to-pink-600',
-                bgGradient: 'from-purple-50 to-pink-50',
-                index: 2
-              },
-              {
-                icon: Shield,
-                title: 'Privacy-First Architecture',
-                description: 'Designed with role-based access and data protection principles to support responsible handling of applicant information.',
-                gradient: 'from-green-600 to-emerald-600',
-                bgGradient: 'from-green-50 to-emerald-50',
-                index: 3
-              }
-            ].map((benefit) => (
-              <motion.div 
-                key={benefit.title}
-                className="group relative rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg hover:shadow-2xl overflow-hidden transition-all duration-300"
-                initial={{ opacity: 0, y: 50, rotateX: 10 }}
-                whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ 
-                  duration: 0.6, 
-                  delay: benefit.index * 0.12,
-                  ease: [0.16, 1, 0.3, 1]
-                }}
-                whileHover={{ y: -8, transition: { duration: 0.2 } }}
-              >
-                {/* Animated gradient overlay */}
-                <div className={`absolute inset-0 bg-linear-to-br from-cyan-600/10 via-transparent to-indigo-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-                
-                {/* Liquid glass shine effect */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-300">
-                  <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-linear-to-br from-white to-transparent rounded-full blur-xl" />
-                </div>
-                
-                <div className="relative z-10 p-8">
-                  <div className={`w-16 h-16 bg-linear-to-br ${benefit.gradient} rounded-xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
-                    <benefit.icon className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold text-slate-100 mb-3">
-                    {benefit.title}
-                  </h3>
-                  <p className="text-slate-300 group-hover:text-slate-200 transition-colors leading-relaxed">
-                    {benefit.description}
-                  </p>
-                  <div className={`mt-6 h-1 bg-linear-to-r ${benefit.gradient} rounded-full transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500`} />
-                </div>
-              </motion.div>
-            ))}
+            <StaggerGroup staggerDelay={0.12} initialDelay={0.2}>
+              {[
+                {
+                  icon: Shield,
+                  title: 'Designed for Institutional Control',
+                  description: 'Hospitals define eligibility criteria, documentation requirements, intake capacity, and review workflows. Electivio supports, not overrides, institutional processes.',
+                  gradient: 'from-blue-600 to-cyan-600',
+                  bgGradient: 'from-blue-50 to-cyan-50',
+                  index: 0
+                },
+                {
+                  icon: FileCheck,
+                  title: 'Standardized Intake',
+                  description: 'Built to centralize program information and applications, reducing unstructured emails, calls, and ad-hoc requests.',
+                  gradient: 'from-indigo-600 to-purple-600',
+                  bgGradient: 'from-indigo-50 to-purple-50',
+                  index: 1
+                },
+                {
+                  icon: CheckCircle2,
+                  title: 'Clear Applicant Alignment',
+                  description: 'Students apply based on published criteria, helping institutions receive applications aligned with their requirements.',
+                  gradient: 'from-purple-600 to-pink-600',
+                  bgGradient: 'from-purple-50 to-pink-50',
+                  index: 2
+                },
+                {
+                  icon: Shield,
+                  title: 'Privacy-First Architecture',
+                  description: 'Designed with role-based access and data protection principles to support responsible handling of applicant information.',
+                  gradient: 'from-green-600 to-emerald-600',
+                  bgGradient: 'from-green-50 to-emerald-50',
+                  index: 3
+                }
+              ].map((benefit) => (
+                <StaggerItem key={benefit.title}>
+                  <ScrollReveal direction={benefit.index % 2 === 0 ? "left" : "right"} delay={0}>
+                    <motion.div 
+                      className="group relative rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg hover:shadow-2xl overflow-hidden transition-all duration-300"
+                      whileHover={{ y: -8, transition: { duration: 0.2 } }}
+                    >
+                      {/* Animated gradient overlay */}
+                      <div className={`absolute inset-0 bg-linear-to-br from-cyan-600/10 via-transparent to-indigo-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+                      
+                      {/* Liquid glass shine effect */}
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-300">
+                        <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-linear-to-br from-white to-transparent rounded-full blur-xl" />
+                      </div>
+                      
+                      <div className="relative z-10 p-8">
+                        <div className={`w-16 h-16 bg-linear-to-br ${benefit.gradient} rounded-xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
+                          <benefit.icon className="w-8 h-8 text-white" />
+                        </div>
+                        <h3 className="text-xl font-bold text-slate-100 mb-3">
+                          {benefit.title}
+                        </h3>
+                        <p className="text-slate-300 group-hover:text-slate-200 transition-colors leading-relaxed">
+                          {benefit.description}
+                        </p>
+                        <div className={`mt-6 h-1 bg-linear-to-r ${benefit.gradient} rounded-full transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500`} />
+                      </div>
+                    </motion.div>
+                  </ScrollReveal>
+                </StaggerItem>
+              ))}
+            </StaggerGroup>
           </div>
         </section>
 
