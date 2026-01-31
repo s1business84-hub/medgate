@@ -147,10 +147,10 @@ export function Phone3D() {
       initial={{ opacity: 0, scale: 0.8, rotateX: 20 }}
       animate={{ opacity: 1, scale: 1, rotateX: 0 }}
       transition={{ duration: 1.2, ease: "easeOut" }}
-      className="relative w-full max-w-md h-full flex items-center justify-center"
+      className="relative w-full h-full"
       style={{ perspective: "1200px" }}
     >
-      <Canvas className="!absolute inset-0">
+      <Canvas className="!w-full !h-full">
         <Suspense fallback={null}>
           <SceneContent />
         </Suspense>

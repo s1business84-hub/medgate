@@ -99,6 +99,11 @@ export default function ProgramsPage() {
   };
 
   const handleApplyClick = (program: typeof programs[0], hospital: typeof hospitals[0]) => {
+    if (!user) {
+      alert("Please log in to apply for programs");
+      return;
+    }
+    
     setSelectedProgram({
       name: program.departmentName,
       hospital: hospital?.name || '',
@@ -468,8 +473,12 @@ export default function ProgramsPage() {
                     {/* Action Buttons */}
                     <div className="flex flex-col sm:flex-row gap-3 mt-6 pt-6 border-t border-white/10">
                       <button
-                        onClick={() => handleApplyClick(p, h!)}
-                        className="flex-1 text-center hover-scale rounded-xl bg-linear-to-r from-cyan-500 to-indigo-600 text-white py-3 font-semibold shadow-lg hover:from-cyan-400 hover:to-indigo-500 transition-all duration-300"
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleApplyClick(p, h!);
+                        }}
+                        className="flex-1 text-center hover-scale rounded-xl bg-linear-to-r from-cyan-500 to-indigo-600 text-white py-3 font-semibold shadow-lg hover:from-cyan-400 hover:to-indigo-500 transition-all duration-300 cursor-pointer"
                       >
                         Apply for this Program →
                       </button>
