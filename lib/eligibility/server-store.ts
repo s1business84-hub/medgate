@@ -8,7 +8,6 @@ type EligibilityRecord = {
 };
 
 declare global {
-  // eslint-disable-next-line no-var
   var __eligibilityStore: Map<string, EligibilityRecord> | undefined;
 }
 
