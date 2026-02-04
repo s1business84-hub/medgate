@@ -50,11 +50,7 @@ export function VoiceProgramAssistant({ programs, hospitals, eligibilitySummary,
     return map;
   }, [hospitals]);
 
-<<<<<<< HEAD
   const speak = useCallback((message: string) => {
-=======
-  const speak = (message: string) => {
->>>>>>> 85b3187 (fix: resolve all ESLint errors - remove setState in effects, fix handleTranscript hoisting, cleanup unused directives)
     if (typeof window === "undefined" || !window.speechSynthesis) return;
     const utterance = new SpeechSynthesisUtterance(message);
     utterance.rate = 1;
@@ -117,22 +113,11 @@ export function VoiceProgramAssistant({ programs, hospitals, eligibilitySummary,
     setStatusMessage(message);
     speak(message);
     onFilter(ids, true, transcript);
-<<<<<<< HEAD
   }, [eligibilitySummary, hospitalLookup, onFilter, programs, speak]);
 
   useEffect(() => {
     const SpeechRecognition = getSpeechRecognition();
     if (!SpeechRecognition) return;
-=======
-  }, [programs, hospitalLookup, eligibilitySummary, onFilter]);
-
-  useEffect(() => {
-    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-    
-    if (!SpeechRecognition) {
-      return;
-    }
->>>>>>> 85b3187 (fix: resolve all ESLint errors - remove setState in effects, fix handleTranscript hoisting, cleanup unused directives)
 
     const recognition = new SpeechRecognition();
     recognition.lang = "en-US";
@@ -148,11 +133,7 @@ export function VoiceProgramAssistant({ programs, hospitals, eligibilitySummary,
       setListening(false);
     };
 
-<<<<<<< HEAD
     recognition.onerror = () => {
-=======
-    recognition.onerror = (event: any) => {
->>>>>>> 85b3187 (fix: resolve all ESLint errors - remove setState in effects, fix handleTranscript hoisting, cleanup unused directives)
       setListening(false);
       setStatusMessage("Voice recognition failed. Try again.");
     };
