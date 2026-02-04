@@ -112,6 +112,7 @@ export function StudentVerificationCenter({ studentName, studentEmail, studentId
     enrollment_letter: false,
   });
   const [acknowledgements, setAcknowledgements] = useState<Record<string, boolean>>({});
+  const [activeTab, setActiveTab] = useState<"before-start" | "verification">("before-start");
 
   useEffect(() => {
     setUploads({ student_id: null, passport: null, enrollment_letter: null });
@@ -277,7 +278,54 @@ export function StudentVerificationCenter({ studentName, studentEmail, studentId
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-4 mb-6">
+        <div className="flex flex-wrap gap-2 mb-6">
+          <button
+            onClick={() => setActiveTab("before-start")}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+              activeTab === "before-start"
+                ? "bg-linear-to-r from-cyan-500 to-indigo-600 text-white shadow-lg"
+                : "bg-white/10 text-slate-300 hover:bg-white/20"
+            }`}
+          >
+            Before you get started
+          </button>
+          <button
+            onClick={() => setActiveTab("verification")}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+              activeTab === "verification"
+                ? "bg-linear-to-r from-cyan-500 to-indigo-600 text-white shadow-lg"
+                : "bg-white/10 text-slate-300 hover:bg-white/20"
+            }`}
+          >
+            Verification
+          </button>
+        </div>
+
+        {activeTab === "before-start" && (
+          <div className="space-y-4">
+            <div className="rounded-lg border border-white/10 bg-white/5 p-4">
+              <p className="text-sm font-semibold text-slate-100">Required policies</p>
+              <p className="text-xs text-slate-400 mt-1">Please acknowledge each policy before moving forward.</p>
+              <div className="mt-3 space-y-2">
+                {POLICY_ACKS.map((policy) => (
+                  <label key={policy} className="flex items-start gap-3 text-xs text-slate-300 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      className="mt-0.5 h-4 w-4 rounded border-white/30 bg-white/10 text-cyan-400"
+                      checked={!!acknowledgements[policy]}
+                      onChange={() => toggleAcknowledgement(policy)}
+                    />
+                    <span>{policy}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === "verification" && (
+          <>
+            <div className="grid lg:grid-cols-3 gap-4 mb-6">
         <div className="rounded-lg border border-white/10 bg-white/5 p-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-sm text-slate-200">
@@ -452,26 +500,10 @@ export function StudentVerificationCenter({ studentName, studentEmail, studentId
               </li>
             </ul>
           </div>
-
-          <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-            <p className="text-sm font-semibold text-slate-100">Policy acknowledgements</p>
-            <p className="text-xs text-slate-400 mt-1">Required before eligibility can be auto-matched.</p>
-            <div className="mt-3 space-y-2">
-              {POLICY_ACKS.map((policy) => (
-                <label key={policy} className="flex items-start gap-3 text-xs text-slate-300 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    className="mt-0.5 h-4 w-4 rounded border-white/30 bg-white/10 text-cyan-400"
-                    checked={!!acknowledgements[policy]}
-                    onChange={() => toggleAcknowledgement(policy)}
-                  />
-                  <span>{policy}</span>
-                </label>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
+        </>
+      )}
     </div>
   );
 }
