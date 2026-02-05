@@ -250,7 +250,7 @@ export default function HospitalPortal() {
     return (
       <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100 flex items-center justify-center">
         <LiquidParallax />
-        <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
         <div className="relative text-center">
           <div className="w-12 h-12 border-4 border-indigo-400/40 border-t-indigo-400 rounded-full animate-spin mx-auto mb-4" />
           <p className="text-slate-300">Loading applications...</p>
@@ -262,10 +262,10 @@ export default function HospitalPortal() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
       <LiquidParallax />
-      <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
-      <div className="relative max-w-7xl mx-auto px-6 py-8">
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
+      <div className="relative max-w-7xl mx-auto px-6 py-12">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8 animate-fade-in">
+        <div className="flex items-center justify-between mb-12 animate-fade-in">
           <div>
             <h1 className="text-3xl font-bold mb-2">
               <AnimatedGradientText className="text-3xl font-bold">Hospital Portal</AnimatedGradientText>
@@ -301,20 +301,20 @@ export default function HospitalPortal() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Left Sidebar - Audit Card & Alerts Toggle */}
-          <div className="lg:col-span-1 space-y-4">
+          <div className="lg:col-span-1 space-y-6">
             {/* Alerts Toggle Card */}
             {staffAlerts.length > 0 && (
-              <div className="rounded-xl border border-cyan-400/30 bg-cyan-500/10 backdrop-blur-xl shadow-lg p-4 sticky top-8">
-                <div className="flex items-center justify-between mb-3">
+              <div className="rounded-xl border border-cyan-400/30 bg-cyan-500/10 backdrop-blur-xl shadow-lg p-6 sticky top-8">
+                <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2">
                     <Bell className="w-5 h-5 text-cyan-400 animate-pulse" />
                     <h3 className="font-semibold text-cyan-300">New Applications</h3>
                   </div>
                   <span className="text-cyan-400 font-bold">{getPendingApplicationAlerts(user?.hospitalId || "").length}</span>
                 </div>
-                <p className="text-xs text-cyan-200/70 mb-3">Click below to review and make decisions</p>
+                <p className="text-xs text-cyan-200/70 mb-4">Click below to review and make decisions</p>
                 <button
                   onClick={() => setShowAlerts(!showAlerts)}
                   className="w-full px-3 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg font-medium transition-colors text-sm"
@@ -324,12 +324,12 @@ export default function HospitalPortal() {
               </div>
             )}
 
-            <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg p-4 sticky top-32">
-              <div className="flex items-center gap-2 mb-4">
+            <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg p-6 sticky top-32">
+              <div className="flex items-center gap-2 mb-6">
                 <div className="text-2xl">📊</div>
                 <h3 className="text-lg font-semibold text-white">Audit & Export</h3>
               </div>
-              <p className="text-xs text-slate-300 mb-4">Download all training records, applications, and confirmations for compliance reporting and accreditation.</p>
+              <p className="text-xs text-slate-300 mb-6">Download all training records, applications, and confirmations for compliance reporting and accreditation.</p>
               <div className="space-y-2">
                 <AuditExcelButton
                   dataTypes={["all"]}
@@ -341,10 +341,10 @@ export default function HospitalPortal() {
           </div>
 
           {/* Main Content */}
-          <div className="lg:col-span-3 space-y-8">
+          <div className="lg:col-span-3 space-y-10">
             {/* Application Alerts Section */}
             {showAlerts && staffAlerts.length > 0 && (
-              <div className="bg-linear-to-br from-cyan-950/20 to-blue-950/20 border border-cyan-400/20 rounded-xl p-6">
+              <div className="bg-gradient-to-br from-cyan-950/20 to-blue-950/20 border border-cyan-400/20 rounded-xl p-8">
                 <StaffApplicationAlerts
                   alerts={staffAlerts}
                   staffId={user?.id || ""}
@@ -377,9 +377,9 @@ export default function HospitalPortal() {
             )}
 
             {/* Stats Grid */}
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-3 gap-8">
               {/* Stats */}
-              <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-lg shadow p-6">
+              <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-lg shadow p-8">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-slate-300 text-sm mb-2">Total Applications</p>
@@ -389,7 +389,7 @@ export default function HospitalPortal() {
                 </div>
               </div>
 
-              <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-lg shadow p-6">
+              <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-lg shadow p-8">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-slate-300 text-sm mb-2">Pending Review</p>
@@ -401,7 +401,7 @@ export default function HospitalPortal() {
                 </div>
               </div>
 
-              <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-lg shadow p-6">
+              <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-lg shadow p-8">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-slate-300 text-sm mb-2">Approved</p>
@@ -415,16 +415,16 @@ export default function HospitalPortal() {
             </div>
 
             {/* Applications and Details Grid */}
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-3 gap-8">
               {/* Applications List */}
               <div className="md:col-span-2">
                 <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-lg shadow">
-                  <div className="p-6 border-b border-white/10">
-                    <div className="flex items-center justify-between mb-4">
+                  <div className="p-8 border-b border-white/10">
+                    <div className="flex items-center justify-between mb-6">
                       <h2 className="text-xl font-bold text-slate-100">Applications</h2>
                     </div>
                     {/* Filter Tabs */}
-                    <div className="flex gap-2 flex-wrap">
+                    <div className="flex gap-3 flex-wrap">
                       {[
                         { id: "all", label: "All", count: applications.length },
                         { id: "approved", label: "Approved", count: applications.filter(a => a.status === "Approved").length },
@@ -434,7 +434,7 @@ export default function HospitalPortal() {
                         <button
                           key={tab.id}
                           onClick={() => setAppFilter(tab.id as any)}
-                          className={`px-3 py-1 rounded-lg text-sm font-medium transition-all ${
+                          className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                             appFilter === tab.id
                               ? "bg-cyan-500/30 text-cyan-300 border border-cyan-500/50"
                               : "bg-white/5 text-slate-400 border border-white/10 hover:border-white/20"
