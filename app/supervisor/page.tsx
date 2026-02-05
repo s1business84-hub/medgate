@@ -171,8 +171,14 @@ export default function SupervisorDashboard() {
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState("all");
   const [activeTab, setActiveTab] = useState<
-    "overview" | "observerships" | "students" | "forms" | "roles" | "applications"
+    "overview" | "observerships" | "students" | "forms" | "roles" | "applications" | "progress"
   >("overview");
+  const [selectedStudent, setSelectedStudent] = useState<string | null>(null);
+  const [progressForm, setProgressForm] = useState({
+    category: "skills",
+    value: 0,
+    notes: "",
+  });
 
   useEffect(() => {
     try {
@@ -240,6 +246,44 @@ export default function SupervisorDashboard() {
       )
     );
   };
+
+  const handleLogProgress = () => {
+    if (!selectedStudent || progressForm.value < 0 || progressForm.value > 100) return;
+
+    const newEntry = {
+      id: Date.now().toString(),
+      date: new Date().toISOString(),
+      category: progressForm.category,
+      value: progressForm.value,
+      notes: progressForm.notes,
+    };
+
+    // Update student's progress entries in localStorage
+    const storageKey = `progress_${selectedStudent}`;
+    const existing = localStorage.getItem(storageKey);
+    const entries = existing ? JSON.parse(existing) : [];
+    entries.push(newEntry);
+    localStorage.setItem(storageKey, JSON.stringify(entries));
+
+    // Update student stats
+    setStudents((prev) =>
+      prev.map((s) =>
+        s.id === selectedStudent
+          ? { ...s, entries: s.entries + 1, lastUpdate: new Date().toISOString().slice(0, 10) }
+          : s
+      )
+    );
+
+    // Reset form
+    setProgressForm({ category: "skills", value: 0, notes: "" });
+  };
+
+  const progressCategories = [
+    { id: "skills", label: "Clinical Skills", emoji: "🏥" },
+    { id: "knowledge", label: "Medical Knowledge", emoji: "📚" },
+    { id: "communication", label: "Communication", emoji: "💬" },
+    { id: "professionalism", label: "Professionalism", emoji: "⭐" },
+  ];
 
   const exportToCSV = () => {
     const headers = [
@@ -443,7 +487,7 @@ export default function SupervisorDashboard() {
   }
 
   return (
-    <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950">
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-slate-900 via-slate-950 to-black">
       <LiquidParallax depth={14} className="opacity-70" />
 
       <div className="max-w-7xl mx-auto px-4 py-12 relative z-10">
@@ -555,6 +599,7 @@ export default function SupervisorDashboard() {
         <div className="mb-6 flex flex-wrap gap-2">
           {[
             { id: "overview", label: "Overview" },
+            { id: "progress", label: "Log Progress" },
             { id: "observerships", label: "Observerships" },
             { id: "students", label: "Students" },
             { id: "forms", label: "Forms" },
@@ -980,6 +1025,134 @@ export default function SupervisorDashboard() {
                 </div>
               </div>
             ))}
+          </div>
+        )}
+
+        {/* Progress Logging Tab */}
+        {activeTab === "progress" && (
+          <div className="grid lg:grid-cols-3 gap-6">
+            {/* Student Selection Panel */}
+            <div className="lg:col-span-1">
+              <div className="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl">
+                <h3 className="text-lg font-bold text-white mb-4">Select Student</h3>
+                <div className="space-y-2 max-h-[600px] overflow-y-auto">
+                  {filteredStudents.map((student) => (
+                    <button
+                      key={student.id}
+                      onClick={() => setSelectedStudent(student.id)}
+                      className={`w-full text-left p-4 rounded-lg transition-all ${
+                        selectedStudent === student.id
+                          ? "bg-gradient-to-r from-purple-500/20 to-pink-500/20 border-2 border-purple-400"
+                          : "bg-white/5 border border-white/10 hover:bg-white/10"
+                      }`}
+                    >
+                      <p className="text-sm font-semibold text-white">{student.name}</p>
+                      <p className="text-xs text-slate-400">{student.gmuid}</p>
+                      <div className="mt-2 flex items-center gap-2">
+                        <span className="text-xs px-2 py-1 rounded-full bg-cyan-500/20 text-cyan-300">
+                          {student.entries} entries
+                        </span>
+                        <span className={`text-xs px-2 py-1 rounded-full ${levelBadge(student.level).color} text-white`}>
+                          {levelBadge(student.level).label}
+                        </span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Progress Entry Form */}
+            <div className="lg:col-span-2">
+              {selectedStudent ? (
+                <div className="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl">
+                  <div className="mb-6">
+                    <h3 className="text-2xl font-bold text-white mb-2">Log Progress Entry</h3>
+                    <p className="text-slate-300">
+                      Recording progress for: <span className="font-semibold text-cyan-400">
+                        {students.find(s => s.id === selectedStudent)?.name}
+                      </span>
+                    </p>
+                  </div>
+
+                  <div className="space-y-6">
+                    {/* Category Selection */}
+                    <div>
+                      <label className="block text-sm font-medium text-slate-300 mb-3">Category</label>
+                      <div className="grid grid-cols-2 gap-3">
+                        {progressCategories.map((cat) => (
+                          <motion.button
+                            key={cat.id}
+                            onClick={() => setProgressForm({ ...progressForm, category: cat.id })}
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            className={`p-4 rounded-lg border-2 transition-all ${
+                              progressForm.category === cat.id
+                                ? "border-cyan-400 bg-cyan-500/20"
+                                : "border-white/10 bg-white/5 hover:border-white/20"
+                            }`}
+                          >
+                            <div className="text-3xl mb-2">{cat.emoji}</div>
+                            <div className="text-sm font-medium text-slate-200">{cat.label}</div>
+                          </motion.button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Progress Value Slider */}
+                    <div>
+                      <label className="block text-sm font-medium text-slate-300 mb-3">
+                        Progress Assessment: {progressForm.value}%
+                      </label>
+                      <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        value={progressForm.value}
+                        onChange={(e) => setProgressForm({ ...progressForm, value: parseInt(e.target.value) })}
+                        className="w-full h-3 bg-white/10 rounded-lg appearance-none cursor-pointer accent-cyan-500"
+                      />
+                      <div className="flex justify-between text-xs text-slate-400 mt-2">
+                        <span>Beginning</span>
+                        <span>Developing</span>
+                        <span>Proficient</span>
+                        <span>Expert</span>
+                      </div>
+                    </div>
+
+                    {/* Notes */}
+                    <div>
+                      <label className="block text-sm font-medium text-slate-300 mb-2">Observation Notes</label>
+                      <textarea
+                        value={progressForm.notes}
+                        onChange={(e) => setProgressForm({ ...progressForm, notes: e.target.value })}
+                        placeholder="e.g., Demonstrated improved suturing technique, actively participated in 3 procedures, showed excellent patient communication..."
+                        className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-cyan-400 min-h-[120px]"
+                        rows={5}
+                      />
+                    </div>
+
+                    {/* Submit Button */}
+                    <motion.button
+                      onClick={handleLogProgress}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="w-full px-6 py-4 bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-semibold rounded-lg hover:shadow-xl shadow-lg transition-all"
+                    >
+                      Save Progress Entry
+                    </motion.button>
+                  </div>
+                </div>
+              ) : (
+                <div className="p-12 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl text-center">
+                  <div className="text-6xl mb-4">📝</div>
+                  <h3 className="text-2xl font-bold text-white mb-2">No Student Selected</h3>
+                  <p className="text-slate-400">
+                    Select a student from the list to log their clinical progress
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>
