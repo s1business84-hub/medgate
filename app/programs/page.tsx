@@ -263,8 +263,8 @@ export default function ProgramsPage() {
                         layout
                         className="group relative rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl overflow-hidden p-5 sm:p-7 lg:p-8 wrap-break-word"
                       >
-                    <div className="absolute inset-0 bg-linear-to-r from-cyan-400/10 via-transparent to-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-25 transition-opacity duration-500">
+                    <div className="absolute inset-0 bg-linear-to-r from-cyan-400/10 via-transparent to-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-25 transition-opacity duration-500 pointer-events-none">
                       <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-linear-to-br from-white/70 to-transparent rounded-full blur-3xl" />
                     </div>
 
@@ -471,7 +471,7 @@ export default function ProgramsPage() {
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="flex flex-col sm:flex-row gap-3 mt-6 pt-6 border-t border-white/10">
+                    <div className="flex flex-col sm:flex-row gap-3 mt-6 pt-6 border-t border-white/10 relative z-20">
                       <button
                         type="button"
                         onClick={(e) => {
