@@ -18,10 +18,13 @@ import { AdminFormAssignment } from "@/components/admin-form-assignment";
 export default function AdminPage() {
   const { user, logout } = useAuth();
   const router = useRouter();
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
   useEffect(() => {
     if (!user || user.role !== "admin") {
       router.push("/login");
+    } else {
+      setIsCheckingAuth(false);
     }
   }, [user, router]);
 
@@ -279,8 +282,28 @@ export default function AdminPage() {
     setShowObsForm(false);
   };
 
-  if (!user || user.role !== "supervisor") {
-    return null;
+  if (!user || user.role !== "admin") {
+    return (
+      <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100 flex items-center justify-center">
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
+        <div className="relative text-center">
+          <div className="w-12 h-12 border-4 border-indigo-400/40 border-t-indigo-400 rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-slate-300">Redirecting to login...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (isCheckingAuth) {
+    return (
+      <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100 flex items-center justify-center">
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
+        <div className="relative text-center">
+          <div className="w-12 h-12 border-4 border-indigo-400/40 border-t-indigo-400 rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-slate-300">Loading admin dashboard...</p>
+        </div>
+      </div>
+    );
   }
 
   const panelClass = "rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.5)]";

@@ -33,6 +33,7 @@ export default function HospitalPortal() {
   const { user, logout } = useAuth();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [applications, setApplications] = useState<Application[]>([]);
   const [selectedApp, setSelectedApp] = useState<Application | null>(null);
   const [staffAlerts, setStaffAlerts] = useState<StaffApplicationAlert[]>([]);
@@ -62,6 +63,7 @@ export default function HospitalPortal() {
       router.push("/hospital-login");
       return;
     }
+    setIsCheckingAuth(false);
 
     // Load applications and alerts for this hospital
     const hospitalApps = getApplicationsByHospital(user.hospitalId || "");
@@ -243,10 +245,19 @@ export default function HospitalPortal() {
   };
 
   if (!user || user.role !== "staff") {
-    return null;
+    return (
+      <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100 flex items-center justify-center">
+        <LiquidParallax />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
+        <div className="relative text-center">
+          <div className="w-12 h-12 border-4 border-indigo-400/40 border-t-indigo-400 rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-slate-300">Redirecting to login...</p>
+        </div>
+      </div>
+    );
   }
 
-  if (loading) {
+  if (isCheckingAuth || loading) {
     return (
       <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100 flex items-center justify-center">
         <LiquidParallax />
