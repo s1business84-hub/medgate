@@ -153,9 +153,9 @@ export default function HospitalFormsPage() {
       <LiquidParallax />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
 
-      <div className="relative max-w-7xl mx-auto px-6 py-8 space-y-6">
+      <div className="relative max-w-7xl mx-auto px-6 py-12 space-y-8">
         {/* Header */}
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-12">
           <div>
             <div className="flex items-center gap-3 mb-3">
               <div className="p-2 rounded-lg bg-gradient-to-br from-cyan-500/20 to-indigo-500/20 border border-cyan-500/30">
@@ -194,14 +194,14 @@ export default function HospitalFormsPage() {
         </div>
 
         {/* Search */}
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+        <div className="relative mb-8">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search forms by name or department..."
-            className="w-full pl-10 pr-4 py-3 rounded-lg bg-slate-800/50 border border-white/10 text-white placeholder-slate-500 focus:border-cyan-500 focus:outline-none"
+            className="w-full pl-12 pr-4 py-3 rounded-lg bg-slate-800/50 border border-white/10 text-white placeholder-slate-500 focus:border-cyan-500 focus:outline-none"
           />
         </div>
 
@@ -224,7 +224,7 @@ export default function HospitalFormsPage() {
             )}
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-6">
+          <div className="grid grid-cols-1 gap-8">
             {filteredForms.map((item, idx) => (
               <motion.div
                 key={item.form.id}
@@ -234,8 +234,8 @@ export default function HospitalFormsPage() {
                 className="border border-white/10 rounded-xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm overflow-hidden hover:border-cyan-500/30 transition-colors"
               >
                 {/* Form Header */}
-                <div className="p-6 border-b border-white/5 bg-gradient-to-r from-cyan-500/5 to-blue-500/5">
-                  <div className="flex items-start justify-between mb-4">
+                <div className="p-8 border-b border-white/5 bg-gradient-to-r from-cyan-500/5 to-blue-500/5">
+                  <div className="flex items-start justify-between mb-6">
                     <div className="flex-1">
                       <h3 className="text-xl font-bold text-white mb-1">{item.form.name}</h3>
                       <p className="text-slate-400">{item.form.department}</p>
@@ -250,7 +250,7 @@ export default function HospitalFormsPage() {
                   </div>
 
                   {/* Stats */}
-                  <div className="grid grid-cols-4 gap-2">
+                  <div className="grid grid-cols-4 gap-3">
                     <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                       <div className="text-lg font-bold text-emerald-400">{item.stats.completed}</div>
                       <div className="text-xs text-slate-400">Completed</div>
@@ -276,7 +276,7 @@ export default function HospitalFormsPage() {
                 </div>
 
                 {/* Students List */}
-                <div className="p-6 space-y-3 max-h-96 overflow-y-auto">
+                <div className="p-8 space-y-4 max-h-96 overflow-y-auto">
                   {item.submissions.length === 0 ? (
                     <div className="text-center py-8 text-slate-400">
                       <Users className="w-8 h-8 mx-auto mb-2 opacity-50" />
