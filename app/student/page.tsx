@@ -40,10 +40,13 @@ export default function StudentPortal() {
           const allApps = getApplications();
           const students = getStudents();
           
-          // Find student record by email to get the correct studentId
+          // Try to find applications by user.id (from User table) or by student record
+          // First, try to find a student record by email
           const studentRecord = students.find((s: any) => s.email === user.email);
+          
+          // Filter applications by either user.id (for newly created accounts) or studentRecord.id (for existing students)
           const myApps = allApps.filter((a: any) => 
-            studentRecord ? a.studentId === studentRecord.id : a.studentId === user.id
+            a.studentId === user.id || (studentRecord && a.studentId === studentRecord.id)
           );
           
           // Load XP data
