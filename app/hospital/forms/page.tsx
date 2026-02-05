@@ -151,14 +151,14 @@ export default function HospitalFormsPage() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-slate-900 via-slate-950 to-black text-slate-100">
       <LiquidParallax />
-      <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
 
       <div className="relative max-w-7xl mx-auto px-6 py-8 space-y-6">
         {/* Header */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
           <div>
             <div className="flex items-center gap-3 mb-3">
-              <div className="p-2 rounded-lg bg-linear-to-br from-cyan-500/20 to-indigo-500/20 border border-cyan-500/30">
+              <div className="p-2 rounded-lg bg-gradient-to-br from-cyan-500/20 to-indigo-500/20 border border-cyan-500/30">
                 <FileText className="w-6 h-6 text-cyan-400" />
               </div>
               <h1 className="text-4xl font-bold text-white">Form Tracking</h1>
@@ -177,7 +177,7 @@ export default function HospitalFormsPage() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               onClick={() => router.push("/hospital/forms/ai-create")}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-medium transition-all"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-medium transition-all"
             >
               <Sparkles className="w-4 h-4" />
               AI Form Generator
@@ -185,7 +185,7 @@ export default function HospitalFormsPage() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               onClick={() => setShowFormBuilder(true)}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-linear-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-medium transition-all"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-medium transition-all"
             >
               <Plus className="w-4 h-4" />
               Create Form
@@ -217,7 +217,7 @@ export default function HospitalFormsPage() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 onClick={() => setShowFormBuilder(true)}
-                className="px-6 py-2 rounded-lg bg-linear-to-r from-cyan-500 to-blue-500 text-white font-medium hover:from-cyan-600 hover:to-blue-600 transition-all"
+                className="px-6 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-medium hover:from-cyan-600 hover:to-blue-600 transition-all"
               >
                 Create Your First Form
               </motion.button>
@@ -231,10 +231,10 @@ export default function HospitalFormsPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1 }}
-                className="border border-white/10 rounded-xl bg-linear-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm overflow-hidden hover:border-cyan-500/30 transition-colors"
+                className="border border-white/10 rounded-xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm overflow-hidden hover:border-cyan-500/30 transition-colors"
               >
                 {/* Form Header */}
-                <div className="p-6 border-b border-white/5 bg-linear-to-r from-cyan-500/5 to-blue-500/5">
+                <div className="p-6 border-b border-white/5 bg-gradient-to-r from-cyan-500/5 to-blue-500/5">
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex-1">
                       <h3 className="text-xl font-bold text-white mb-1">{item.form.name}</h3>

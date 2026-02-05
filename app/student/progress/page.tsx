@@ -43,10 +43,10 @@ export default function StudentProgressPage() {
   }, [user, router])
 
   const categories = [
-    { id: "skills", label: "Clinical Skills", emoji: "🏥", color: "from-slate-800/40 to-slate-800/40" },
-    { id: "knowledge", label: "Medical Knowledge", emoji: "📚", color: "from-slate-800/40 to-slate-800/40" },
-    { id: "communication", label: "Communication", emoji: "💬", color: "from-slate-800/40 to-slate-800/40" },
-    { id: "professionalism", label: "Professionalism", emoji: "⭐", color: "from-slate-800/40 to-slate-800/40" },
+    { id: "skills", label: "Clinical Skills", emoji: "🏥", color: "from-slate-900/80 to-slate-800/60" },
+    { id: "knowledge", label: "Medical Knowledge", emoji: "📚", color: "from-slate-900/80 to-slate-800/60" },
+    { id: "communication", label: "Communication", emoji: "💬", color: "from-slate-900/80 to-slate-800/60" },
+    { id: "professionalism", label: "Professionalism", emoji: "⭐", color: "from-slate-900/80 to-slate-800/60" },
   ]
 
   if (loading) {
@@ -103,7 +103,7 @@ export default function StudentProgressPage() {
               <Reveal key={cat.id} delay={0.1 * idx} y={20}>
                 <motion.div
                   whileHover={{ y: -4 }}
-                  className={`p-6 rounded-2xl border border-white/10 bg-linear-to-br ${cat.color} backdrop-blur-xl hover:border-white/20 transition-all`}
+                  className={`p-6 rounded-2xl border border-white/10 bg-gradient-to-br ${cat.color} backdrop-blur-xl hover:border-white/20 transition-all`}
                 >
                   <div className="flex items-center justify-between mb-4">
                     <div className="text-3xl">{cat.emoji}</div>
@@ -119,7 +119,7 @@ export default function StudentProgressPage() {
                     </div>
                     <div className="w-full bg-white/10 rounded-full h-2">
                       <div
-                        className="bg-linear-to-r from-cyan-400 to-indigo-500 h-2 rounded-full transition-all duration-500"
+                        className="bg-gradient-to-r from-cyan-400 to-indigo-500 h-2 rounded-full transition-all duration-500"
                         style={{ width: `${avgValue}%` }}
                       />
                     </div>
