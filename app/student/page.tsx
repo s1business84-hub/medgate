@@ -135,7 +135,7 @@ export default function StudentPortal() {
               <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center gap-4 max-w-lg">
                 {/* Level Badge */}
                 <div className="flex items-center gap-2">
-                  <div className="px-3 py-1 rounded-full text-sm font-bold text-white bg-linear-to-r from-purple-600 to-pink-600">
+                  <div className="px-3 py-1 rounded-full text-sm font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600">
                     Level {Math.ceil(xpData.xpPoints / 100)}
                   </div>
                 </div>
@@ -150,7 +150,7 @@ export default function StudentPortal() {
                   </div>
                   <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden border border-yellow-500/20">
                     <motion.div
-                      className="h-full bg-linear-to-r from-yellow-400 to-orange-400"
+                      className="h-full bg-gradient-to-r from-yellow-400 to-orange-400"
                       initial={{ width: 0 }}
                       animate={{ width: `${Math.min((xpData.xpPoints % 100) * 1, 100)}%` }}
                       transition={{ type: "spring", stiffness: 100, damping: 20 }}
@@ -163,7 +163,7 @@ export default function StudentPortal() {
               <StaggerItem>
                 <Link
                   href="/student/career-path"
-                  className="btn-secondary hover-scale px-4 sm:px-6 py-2 sm:py-3 rounded-lg backdrop-blur-md border-purple-500/30 bg-linear-to-r from-purple-500/20 to-blue-500/20 hover:from-purple-500/30 hover:to-blue-500/30 text-white font-medium flex items-center justify-center gap-2"
+                  className="btn-secondary hover-scale px-4 sm:px-6 py-2 sm:py-3 rounded-lg backdrop-blur-md border-purple-500/30 bg-gradient-to-r from-purple-500/20 to-blue-500/20 hover:from-purple-500/30 hover:to-blue-500/30 text-white font-medium flex items-center justify-center gap-2"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -174,7 +174,7 @@ export default function StudentPortal() {
               <StaggerItem>
                 <Link
                   href="/student/progress"
-                  className="btn-secondary hover-scale px-4 sm:px-6 py-2 sm:py-3 rounded-lg backdrop-blur-md border-cyan-500/30 bg-linear-to-r from-cyan-500/20 to-indigo-500/20 hover:from-cyan-500/30 hover:to-indigo-500/30 text-white font-medium flex items-center justify-center gap-2"
+                  className="btn-secondary hover-scale px-4 sm:px-6 py-2 sm:py-3 rounded-lg backdrop-blur-md border-cyan-500/30 bg-gradient-to-r from-cyan-500/20 to-indigo-500/20 hover:from-cyan-500/30 hover:to-indigo-500/30 text-white font-medium flex items-center justify-center gap-2"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7H7v10h6V7z M17 7h-2v4h2V7z M5 20h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v13a2 2 0 002 2z" />
@@ -185,7 +185,7 @@ export default function StudentPortal() {
               <StaggerItem>
                 <Link
                   href="/student/form-submission"
-                  className="btn-secondary hover-scale px-4 sm:px-6 py-2 sm:py-3 rounded-lg backdrop-blur-md border-blue-500/30 bg-linear-to-r from-blue-500/20 to-cyan-500/20 hover:from-blue-500/30 hover:to-cyan-500/30 text-white font-medium flex items-center justify-center gap-2"
+                  className="btn-secondary hover-scale px-4 sm:px-6 py-2 sm:py-3 rounded-lg backdrop-blur-md border-blue-500/30 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 hover:from-blue-500/30 hover:to-cyan-500/30 text-white font-medium flex items-center justify-center gap-2"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -224,7 +224,7 @@ export default function StudentPortal() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="rounded-xl border border-cyan-500/30 bg-linear-to-br from-cyan-500/10 to-blue-500/10 backdrop-blur-xl p-4"
+              className="rounded-xl border border-cyan-500/30 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 backdrop-blur-xl p-4"
             >
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-semibold text-cyan-300 uppercase tracking-wider">Learning Hours</span>
@@ -241,7 +241,7 @@ export default function StudentPortal() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.15 }}
-              className="rounded-xl border border-purple-500/30 bg-linear-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-xl p-4"
+              className="rounded-xl border border-purple-500/30 bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-xl p-4"
             >
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-semibold text-purple-300 uppercase tracking-wider">Avg Progress</span>

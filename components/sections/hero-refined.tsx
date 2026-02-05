@@ -157,6 +157,36 @@ export function Hero() {
           <motion.div className="absolute w-px h-full left-1/4 bg-gradient-to-b from-transparent via-pink-500/25 to-transparent" animate={{ y: ['-100%', '100%'] }} transition={{ duration: 25, repeat: Infinity, ease: "linear" }} />
         </motion.div>
         
+        {/* Additional floating orbs for depth */}
+        <GlowingOrb className="top-1/2 left-1/4" color="radial-gradient(circle, rgba(34, 211, 238, 0.3) 0%, transparent 60%)" size="400px" delay={2} />
+        <GlowingOrb className="bottom-1/4 right-1/3" color="radial-gradient(circle, rgba(168, 85, 247, 0.35) 0%, transparent 65%)" size="450px" delay={2.5} />
+        
+        {/* Animated star field */}
+        <div className="absolute inset-0 overflow-hidden">
+          {[...Array(30)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-white rounded-full"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                opacity: [0, 1, 0],
+                scale: [0, 1, 0],
+              }}
+              transition={{
+                duration: 3 + Math.random() * 2,
+                repeat: Infinity,
+                delay: Math.random() * 5,
+              }}
+            />
+          ))}
+        </div>
+        
+        {/* Gradient overlay at bottom for smooth transition */}
+        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-black via-slate-950/80 to-transparent pointer-events-none" />
+        
         {/* Glass noise texture */}
         <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")` }} />
       </div>
@@ -298,13 +328,160 @@ export function Hero() {
           </Reveal>
         </div>
 
+        {/* Define-Design-Develop Cards */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl"
+        >
+          {/* DEFINE Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            viewport={{ once: true }}
+            whileHover={{ scale: 1.02, y: -5 }}
+            className="relative group rounded-2xl border border-cyan-500/30 bg-gradient-to-br from-cyan-500/10 via-cyan-600/5 to-transparent backdrop-blur-xl p-6 overflow-hidden"
+          >
+            {/* Animated gradient background */}
+            <motion.div
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              style={{
+                background: 'radial-gradient(circle at 50% 0%, rgba(6, 182, 212, 0.15), transparent 70%)'
+              }}
+            />
+            
+            {/* Content */}
+            <div className="relative z-10">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-cyan-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                <Shield className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">Define</h3>
+              <p className="text-sm text-slate-400 mb-4">
+                Clear eligibility criteria and program requirements
+              </p>
+              <ul className="space-y-2 text-xs text-slate-300">
+                <li className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                  Academic & regulatory standards
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                  Success metrics defined
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                  Hospital certifications
+                </li>
+              </ul>
+            </div>
+            
+            {/* Corner accent */}
+            <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-cyan-500/20 to-transparent rounded-bl-full" />
+          </motion.div>
+
+          {/* DESIGN Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+            whileHover={{ scale: 1.02, y: -5 }}
+            className="relative group rounded-2xl border border-purple-500/30 bg-gradient-to-br from-purple-500/10 via-purple-600/5 to-transparent backdrop-blur-xl p-6 overflow-hidden"
+          >
+            {/* Animated gradient background */}
+            <motion.div
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              style={{
+                background: 'radial-gradient(circle at 50% 0%, rgba(168, 85, 247, 0.15), transparent 70%)'
+              }}
+            />
+            
+            {/* Content */}
+            <div className="relative z-10">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                <Zap className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">Design</h3>
+              <p className="text-sm text-slate-400 mb-4">
+                Structured workflows and transparent processes
+              </p>
+              <ul className="space-y-2 text-xs text-slate-300">
+                <li className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+                  Student application journey
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+                  Hospital decision workflows
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+                  Real-time tracking systems
+                </li>
+              </ul>
+            </div>
+            
+            {/* Corner accent */}
+            <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-purple-500/20 to-transparent rounded-bl-full" />
+          </motion.div>
+
+          {/* DEVELOP Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            viewport={{ once: true }}
+            whileHover={{ scale: 1.02, y: -5 }}
+            className="relative group rounded-2xl border border-pink-500/30 bg-gradient-to-br from-pink-500/10 via-pink-600/5 to-transparent backdrop-blur-xl p-6 overflow-hidden"
+          >
+            {/* Animated gradient background */}
+            <motion.div
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              style={{
+                background: 'radial-gradient(circle at 50% 0%, rgba(236, 72, 153, 0.15), transparent 70%)'
+              }}
+            />
+            
+            {/* Content */}
+            <div className="relative z-10">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-pink-400 to-pink-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                <Star className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">Develop</h3>
+              <p className="text-sm text-slate-400 mb-4">
+                Continuous refinement through pilot programs
+              </p>
+              <ul className="space-y-2 text-xs text-slate-300">
+                <li className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-pink-400" />
+                  Real-world pilot testing
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-pink-400" />
+                  Feedback-driven improvements
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-pink-400" />
+                  Scalable excellence models
+                </li>
+              </ul>
+            </div>
+            
+            {/* Corner accent */}
+            <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-pink-500/20 to-transparent rounded-bl-full" />
+          </motion.div>
+        </motion.div>
+
         {/* Trust indicators card */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="mt-16 max-w-4xl"
+          className="mt-12 max-w-4xl"
         >
           <div className="relative rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 overflow-hidden">
             {/* Glass reflection */}
