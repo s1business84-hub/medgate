@@ -398,9 +398,9 @@ export function StudentVerificationCenter({ studentName, studentEmail, studentId
                   </div>
                 ) : (
                   <div className="mt-3 flex flex-col sm:flex-row sm:items-center gap-3">
-                    <label className="inline-flex items-center gap-2 cursor-pointer text-xs text-slate-300">
-                      <UploadCloud className="w-4 h-4" />
-                      <span className="font-medium">Select file</span>
+                    <label className="inline-flex items-center gap-2 cursor-pointer px-6 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-purple-500 text-white font-medium hover:from-cyan-600 hover:to-purple-600 transition-all shadow-lg hover:shadow-xl">
+                      <UploadCloud className="w-5 h-5" />
+                      <span>Upload Document</span>
                       <input
                         type="file"
                         accept={doc.accept}

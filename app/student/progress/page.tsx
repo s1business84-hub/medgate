@@ -68,10 +68,10 @@ export default function StudentProgressPage() {
   }
 
   const categories = [
-    { id: "skills", label: "Clinical Skills", emoji: "🏥", color: "from-blue-500/20 to-cyan-500/20" },
-    { id: "knowledge", label: "Medical Knowledge", emoji: "📚", color: "from-purple-500/20 to-pink-500/20" },
-    { id: "communication", label: "Communication", emoji: "💬", color: "from-green-500/20 to-emerald-500/20" },
-    { id: "professionalism", label: "Professionalism", emoji: "⭐", color: "from-yellow-500/20 to-orange-500/20" },
+    { id: "skills", label: "Clinical Skills", emoji: "🏥", color: "from-slate-800/40 to-slate-800/40" },
+    { id: "knowledge", label: "Medical Knowledge", emoji: "📚", color: "from-slate-800/40 to-slate-800/40" },
+    { id: "communication", label: "Communication", emoji: "💬", color: "from-slate-800/40 to-slate-800/40" },
+    { id: "professionalism", label: "Professionalism", emoji: "⭐", color: "from-slate-800/40 to-slate-800/40" },
   ]
 
   if (loading) {

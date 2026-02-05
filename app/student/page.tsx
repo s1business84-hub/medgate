@@ -112,7 +112,7 @@ export default function StudentPortal() {
           <Reveal>
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
             <div className="flex-1">
-              <h1 className="text-3xl sm:text-4xl font-bold bg-clip-text bg-linear-to-r from-slate-900 via-blue-800 to-slate-900 text-transparent mb-2">Student Portal</h1>
+              <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2">Student Portal</h1>
               <p className="text-slate-300">Welcome back, {user.name}!</p>
               {/* Level & XP Section */}
               <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center gap-4 max-w-lg">
@@ -142,7 +142,7 @@ export default function StudentPortal() {
                 </div>
               </div>
             </div>
-            <StaggerGroup className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto" staggerDelay={0.06} initialDelay={0.1}>
+            <StaggerGroup className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto flex-wrap" staggerDelay={0.06} initialDelay={0.1}>
               <StaggerItem>
                 <Link
                   href="/student/career-path"
