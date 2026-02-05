@@ -32,76 +32,90 @@ export default function StudentPortal() {
     certifications: 0,
   });
 
+  // Move load function outside useEffect so it can be reused
+  const loadApplications = async () => {
+    try {
+      const { getApplications, getStudents, getStudentProgress } = await import("@/lib/storage");
+      const allApps = getApplications();
+      const students = getStudents();
+      
+      // Try to find applications by user.id (from User table) or by student record
+      // First, try to find a student record by email
+      const studentRecord = students.find((s: any) => s.email === user.email);
+      
+      // Filter applications by either user.id (for newly created accounts) or studentRecord.id (for existing students)
+      const myApps = allApps.filter((a: any) => 
+        a.studentId === user.id || (studentRecord && a.studentId === studentRecord.id)
+      );
+      
+      // Load XP data
+      if (studentRecord) {
+        const progress = getStudentProgress(studentRecord.id);
+        if (progress) {
+          setXpData(progress);
+        }
+        
+        // Calculate learning hours, average progress, and certifications
+        const completedApps = myApps.filter((a: any) => a.status === 'Completed');
+        const totalHours = completedApps.reduce((sum: number, app: any) => sum + (app.totalHours || 0), 0);
+        const progressValues = myApps.map((a: any) => a.progressPercentage || 0).filter((p: number) => p > 0);
+        const avgProgress = progressValues.length > 0 ? Math.round(progressValues.reduce((a: number, b: number) => a + b, 0) / progressValues.length) : 0;
+        const certCount = myApps.filter((a: any) => a.certificateEarned).length;
+        
+        setStudentStats({
+          learningHours: totalHours,
+          avgProgress: avgProgress,
+          certifications: certCount,
+        });
+      }
+      
+      // Load program details for enrichment
+      const enrichedApps = await Promise.all(
+        myApps.map(async (app: any) => {
+          try {
+            const mockProgramsRaw = localStorage.getItem("mockPrograms");
+            const mockPrograms = mockProgramsRaw ? JSON.parse(mockProgramsRaw) : [];
+            const program = mockPrograms.find((p: any) => p.id === app.programId);
+            return {
+              ...app,
+              programName: program?.name || "Unknown Program",
+              hospitalName: program?.hospitalName || "Unknown Hospital",
+            };
+          } catch {
+            return app;
+          }
+        })
+      );
+      
+      setApplications(enrichedApps);
+      if (enrichedApps.length > 0 && !selectedApplicationId) {
+        setSelectedApplicationId(enrichedApps[0].id);
+      }
+    } catch (error) {
+      console.error("Error loading applications:", error);
+    } finally {
+      setLoadingApps(false);
+    }
+  };
+
   useEffect(() => {
     if (user && user.role === "student") {
-      const loadApplications = async () => {
-        try {
-          const { getApplications, getStudents, getStudentProgress } = await import("@/lib/storage");
-          const allApps = getApplications();
-          const students = getStudents();
-          
-          // Try to find applications by user.id (from User table) or by student record
-          // First, try to find a student record by email
-          const studentRecord = students.find((s: any) => s.email === user.email);
-          
-          // Filter applications by either user.id (for newly created accounts) or studentRecord.id (for existing students)
-          const myApps = allApps.filter((a: any) => 
-            a.studentId === user.id || (studentRecord && a.studentId === studentRecord.id)
-          );
-          
-          // Load XP data
-          if (studentRecord) {
-            const progress = getStudentProgress(studentRecord.id);
-            if (progress) {
-              setXpData(progress);
-            }
-            
-            // Calculate learning hours, average progress, and certifications
-            const completedApps = myApps.filter((a: any) => a.status === 'Completed');
-            const totalHours = completedApps.reduce((sum: number, app: any) => sum + (app.totalHours || 0), 0);
-            const progressValues = myApps.map((a: any) => a.progressPercentage || 0).filter((p: number) => p > 0);
-            const avgProgress = progressValues.length > 0 ? Math.round(progressValues.reduce((a: number, b: number) => a + b, 0) / progressValues.length) : 0;
-            const certCount = myApps.filter((a: any) => a.certificateEarned).length;
-            
-            setStudentStats({
-              learningHours: totalHours,
-              avgProgress: avgProgress,
-              certifications: certCount,
-            });
-          }
-          
-          // Load program details for enrichment
-          const enrichedApps = await Promise.all(
-            myApps.map(async (app: any) => {
-              try {
-                const mockProgramsRaw = localStorage.getItem("mockPrograms");
-                const mockPrograms = mockProgramsRaw ? JSON.parse(mockProgramsRaw) : [];
-                const program = mockPrograms.find((p: any) => p.id === app.programId);
-                return {
-                  ...app,
-                  programName: program?.name || "Unknown Program",
-                  hospitalName: program?.hospitalName || "Unknown Hospital",
-                };
-              } catch {
-                return app;
-              }
-            })
-          );
-          
-          setApplications(enrichedApps);
-          if (enrichedApps.length > 0 && !selectedApplicationId) {
-            setSelectedApplicationId(enrichedApps[0].id);
-          }
-        } catch (error) {
-          console.error("Error loading applications:", error);
-        } finally {
-          setLoadingApps(false);
-        }
-      };
-
       loadApplications();
     }
   }, [user, selectedApplicationId]);
+
+  // Reload applications when page comes into focus
+  useEffect(() => {
+    const handleFocus = () => {
+      if (user && user.role === "student") {
+        setLoadingApps(true);
+        loadApplications();
+      }
+    };
+
+    window.addEventListener("focus", handleFocus);
+    return () => window.removeEventListener("focus", handleFocus);
+  }, [user]);
 
   // If user is logged in and is a student, show full portal
   if (user && user.role === "student") {

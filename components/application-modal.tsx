@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { X, CheckCircle, Upload, FileText, User, Mail, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -16,6 +17,7 @@ interface ApplicationModalProps {
 }
 
 export function ApplicationModal({ isOpen, onClose, programName, hospitalName, programId, hospitalId }: ApplicationModalProps) {
+  const router = useRouter()
   const [step, setStep] = useState(1)
   const [formData, setFormData] = useState({
     firstName: "",
@@ -111,6 +113,14 @@ export function ApplicationModal({ isOpen, onClose, programName, hospitalName, p
       }
 
       setIsSubmitted(true)
+      
+      // Show success toast and redirect to student dashboard
+      ;(await import("@/lib/toast")).showToast("Application submitted successfully! Redirecting to dashboard...")
+      
+      // Redirect after a short delay
+      setTimeout(() => {
+        router.push("/student")
+      }, 1500)
     } catch (err: any) {
       ;(await import("@/lib/toast")).showToast(err?.message || "Failed to submit application")
     } finally {
