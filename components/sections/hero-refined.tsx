@@ -1,7 +1,7 @@
 "use client"
 
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion"
-import { CheckCircle, Users, Award, ArrowRight, Sparkles, Globe, Shield, Zap, GraduationCap, Building2, Star } from "lucide-react"
+import { CheckCircle, Users, Award, ArrowRight, Sparkles, Globe, Shield, Zap, GraduationCap, Star, Building } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import gsap from "gsap"
@@ -20,18 +20,18 @@ import { cn } from "@/lib/utils"
 function GlowingOrb({ className, color, size, delay = 0 }: { className: string; color: string; size: string; delay?: number }) {
   return (
     <motion.div
-      className={cn("absolute rounded-full blur-3xl pointer-events-none", className)}
+      className={cn("absolute rounded-full blur-3xl pointer-events-none will-change-auto", className)}
       style={{ 
         background: color,
         width: size,
         height: size,
       }}
       animate={{
-        scale: [1, 1.2, 1],
-        opacity: [0.4, 0.7, 0.4],
+        scale: [1, 1.1, 1],
+        opacity: [0.4, 0.6, 0.4],
       }}
       transition={{
-        duration: 4,
+        duration: 5,
         delay,
         repeat: Infinity,
         ease: "easeInOut"
@@ -46,30 +46,6 @@ const features = [
   { icon: Globe, label: "UAE Coverage", color: "from-purple-400 to-purple-600" },
   { icon: Zap, label: "Fast Processing", color: "from-pink-400 to-pink-600" },
   { icon: Star, label: "Premium Support", color: "from-emerald-400 to-emerald-600" },
-]
-
-const stats = [
-  {
-    label: "Partner Hospitals",
-    value: "50+",
-    icon: Building2,
-    color: "cyan",
-    description: "World-class institutions"
-  },
-  {
-    label: "Success Rate",
-    value: "98%",
-    icon: Award,
-    color: "purple",
-    description: "Placement achievement"
-  },
-  {
-    label: "Active Students",
-    value: "1,200+",
-    icon: GraduationCap,
-    color: "pink",
-    description: "Growing community"
-  },
 ]
 
 export function Hero() {
@@ -98,8 +74,8 @@ export function Hero() {
     const handleMouseMove = (e: MouseEvent) => {
       const { clientX, clientY } = e;
       const { innerWidth, innerHeight } = window;
-      mouseX.set((clientX / innerWidth - 0.5) * 30);
-      mouseY.set((clientY / innerHeight - 0.5) * 30);
+      mouseX.set((clientX / innerWidth - 0.5) * 20);
+      mouseY.set((clientY / innerHeight - 0.5) * 20);
     };
     
     window.addEventListener('mousemove', handleMouseMove);
@@ -118,8 +94,8 @@ export function Hero() {
         {
           opacity: 1,
           y: 0,
-          stagger: 0.1,
-          duration: 0.8,
+          stagger: 0.05,
+          duration: 0.6,
           ease: "power3.out",
           scrollTrigger: {
             trigger: ".hero-stats",
@@ -149,26 +125,24 @@ export function Hero() {
         {/* Animated grid */}
         <div className="absolute inset-0 overflow-hidden">
           <motion.div
-            className="absolute inset-0"
+            className="absolute inset-0 will-change-auto"
             style={{
               backgroundImage: `linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px)`,
               backgroundSize: '60px 60px',
             }}
             animate={{ backgroundPosition: ['0px 0px', '60px 60px'] }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
           />
         </div>
         
         {/* Vibrant glowing orbs */}
         <GlowingOrb className="-top-40 -left-40" color="radial-gradient(circle, rgba(6, 182, 212, 0.5) 0%, transparent 70%)" size="600px" delay={0} />
-        <GlowingOrb className="top-1/4 -right-20" color="radial-gradient(circle, rgba(168, 85, 247, 0.45) 0%, transparent 70%)" size="500px" delay={1} />
-        <GlowingOrb className="bottom-0 left-1/3" color="radial-gradient(circle, rgba(236, 72, 153, 0.4) 0%, transparent 70%)" size="550px" delay={2} />
-        <GlowingOrb className="top-1/2 left-1/4" color="radial-gradient(circle, rgba(34, 211, 238, 0.35) 0%, transparent 70%)" size="400px" delay={1.5} />
-        <GlowingOrb className="-bottom-20 -right-20" color="radial-gradient(circle, rgba(99, 102, 241, 0.45) 0%, transparent 70%)" size="500px" delay={0.5} />
+        <GlowingOrb className="top-1/4 -right-20" color="radial-gradient(circle, rgba(168, 85, 247, 0.45) 0%, transparent 70%)" size="500px" delay={1.5} />
+        <GlowingOrb className="bottom-0 left-1/3" color="radial-gradient(circle, rgba(236, 72, 153, 0.4) 0%, transparent 70%)" size="550px" delay={3} />
         
         {/* Interactive mesh gradient */}
         <motion.div
-          className="absolute inset-0 opacity-70"
+          className="absolute inset-0 opacity-70 will-change-auto"
           style={{
             background: `radial-gradient(ellipse at 20% 30%, rgba(6, 182, 212, 0.2) 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(168, 85, 247, 0.15) 0%, transparent 45%), radial-gradient(ellipse at 40% 80%, rgba(236, 72, 153, 0.12) 0%, transparent 50%), radial-gradient(ellipse at 90% 70%, rgba(34, 211, 238, 0.1) 0%, transparent 40%)`,
             x: springX,
@@ -178,9 +152,9 @@ export function Hero() {
         
         {/* Animated gradient lines */}
         <motion.div className="absolute inset-0 overflow-hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 2 }}>
-          <motion.div className="absolute h-px w-full top-1/4 bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" animate={{ x: ['-100%', '100%'] }} transition={{ duration: 8, repeat: Infinity, ease: "linear" }} />
-          <motion.div className="absolute h-px w-full top-2/3 bg-gradient-to-r from-transparent via-purple-500/30 to-transparent" animate={{ x: ['100%', '-100%'] }} transition={{ duration: 10, repeat: Infinity, ease: "linear" }} />
-          <motion.div className="absolute w-px h-full left-1/4 bg-gradient-to-b from-transparent via-pink-500/25 to-transparent" animate={{ y: ['-100%', '100%'] }} transition={{ duration: 12, repeat: Infinity, ease: "linear" }} />
+          <motion.div className="absolute h-px w-full top-1/4 bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" animate={{ x: ['-100%', '100%'] }} transition={{ duration: 15, repeat: Infinity, ease: "linear" }} />
+          <motion.div className="absolute h-px w-full top-2/3 bg-gradient-to-r from-transparent via-purple-500/30 to-transparent" animate={{ x: ['100%', '-100%'] }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} />
+          <motion.div className="absolute w-px h-full left-1/4 bg-gradient-to-b from-transparent via-pink-500/25 to-transparent" animate={{ y: ['-100%', '100%'] }} transition={{ duration: 25, repeat: Infinity, ease: "linear" }} />
         </motion.div>
         
         {/* Glass noise texture */}
@@ -284,7 +258,7 @@ export function Hero() {
                     <motion.div
                       className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500"
                       animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
-                      transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                      transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
                       style={{ backgroundSize: '200% 200%' }}
                     />
                     <span className="relative z-10 text-white">Browse Programs</span>
@@ -300,7 +274,7 @@ export function Hero() {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.98 }}
                     >
-                      <Building2 className="w-4 h-4 text-cyan-400" />
+                      <Building className="w-4 h-4 text-cyan-400" />
                       <span>For Hospitals</span>
                     </motion.button>
                   </Link>
@@ -322,67 +296,6 @@ export function Hero() {
               <Phone3D />
             </motion.div>
           </Reveal>
-        </div>
-
-        {/* Stats section with liquid glass cards */}
-        <div className="hero-stats mt-20 grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl">
-          {stats.map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              className="hero-stat"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -8, scale: 1.02 }}
-            >
-              <div className={cn(
-                "relative rounded-2xl border bg-white/5 backdrop-blur-xl p-6 overflow-hidden transition-all duration-500 hover:shadow-xl group",
-                stat.color === "cyan" ? "border-cyan-500/20 hover:border-cyan-500/40" :
-                stat.color === "purple" ? "border-purple-500/20 hover:border-purple-500/40" :
-                "border-pink-500/20 hover:border-pink-500/40"
-              )}>
-                {/* Glow effect on hover */}
-                <div className={cn(
-                  "absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500",
-                  stat.color === "cyan" ? "bg-gradient-to-r from-cyan-500/10 via-transparent to-transparent" :
-                  stat.color === "purple" ? "bg-gradient-to-r from-purple-500/10 via-transparent to-transparent" :
-                  "bg-gradient-to-r from-pink-500/10 via-transparent to-transparent"
-                )} />
-                <div className="relative flex items-start gap-4">
-                  <motion.div 
-                    className={cn(
-                      "flex h-14 w-14 items-center justify-center rounded-xl",
-                      stat.color === "cyan" ? "bg-gradient-to-br from-cyan-500/20 to-cyan-600/20 border border-cyan-500/30" :
-                      stat.color === "purple" ? "bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30" :
-                      "bg-gradient-to-br from-pink-500/20 to-pink-600/20 border border-pink-500/30"
-                    )}
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <stat.icon className={cn(
-                      "h-7 w-7",
-                      stat.color === "cyan" ? "text-cyan-400" :
-                      stat.color === "purple" ? "text-purple-400" : "text-pink-400"
-                    )} />
-                  </motion.div>
-                  <div>
-                    <motion.div 
-                      className="text-3xl font-bold bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent"
-                      initial={{ scale: 0.5 }}
-                      whileInView={{ scale: 1 }}
-                      transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                      viewport={{ once: true }}
-                    >
-                      {stat.value}
-                    </motion.div>
-                    <div className="text-sm font-medium text-slate-300">{stat.label}</div>
-                    <div className="text-xs text-slate-500 mt-1">{stat.description}</div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
         </div>
 
         {/* Trust indicators card */}
