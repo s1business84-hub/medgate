@@ -42,13 +42,16 @@ export default function SupervisorDemoPage() {
       window.localStorage.setItem(alertsKey, JSON.stringify(mockStaffAlerts));
     }
     
-    // Auto-login the supervisor user
-    const loggedInUser = loginUser("supervisor@example.com", "password");
-    
-    if (loggedInUser) {
-      // Force redirect to full dashboard
-      window.location.href = "/supervisor";
-    }
+    // Small delay to ensure data is written to localStorage
+    setTimeout(() => {
+      // Auto-login the supervisor user
+      const loggedInUser = loginUser("supervisor@example.com", "password");
+      
+      if (loggedInUser) {
+        // Force redirect to full dashboard
+        window.location.href = "/supervisor";
+      }
+    }, 100);
   };
 
   // Calculate metrics from actual demo data
