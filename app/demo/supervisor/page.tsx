@@ -16,13 +16,15 @@ export default function SupervisorDemoPage() {
   const router = useRouter();
 
   useEffect(() => {
-    // Load demo data from localStorage
-    const loadedStudents = getStudents();
-    const loadedApplications = getApplications();
-    
-    setStudents(loadedStudents);
-    setApplications(loadedApplications);
-    setLoading(false);
+    // Load demo data from localStorage asynchronously
+    Promise.resolve().then(() => {
+      const loadedStudents = getStudents();
+      const loadedApplications = getApplications();
+      
+      setStudents(loadedStudents);
+      setApplications(loadedApplications);
+      setLoading(false);
+    });
   }, []);
 
   // Auto-login and redirect to full dashboard
@@ -137,7 +139,7 @@ export default function SupervisorDemoPage() {
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-slate-950 text-slate-100">
       <LiquidParallax />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
+      <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
 
       <motion.div
         className="relative max-w-6xl mx-auto px-4 py-16 md:py-20"
@@ -157,7 +159,7 @@ export default function SupervisorDemoPage() {
 
         {/* Header */}
         <motion.div variants={itemVariants} className="mb-12">
-          <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent">
+          <h1 className="text-5xl font-bold mb-4 bg-linear-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent">
             Supervisor Dashboard
           </h1>
           <p className="text-xl text-slate-300">
@@ -176,7 +178,7 @@ export default function SupervisorDemoPage() {
             <motion.div
               key={idx}
               variants={itemVariants}
-              className={`rounded-xl border border-white/10 bg-gradient-to-br ${metric.color}/10 p-6 backdrop-blur-sm hover:border-white/20 transition-colors`}
+              className={`rounded-xl border border-white/10 bg-linear-to-br ${metric.color}/10 p-6 backdrop-blur-sm hover:border-white/20 transition-colors`}
             >
               <p className="text-slate-400 text-sm mb-2">{metric.label}</p>
               <p className="text-3xl font-bold text-white">{metric.value}</p>
@@ -195,7 +197,7 @@ export default function SupervisorDemoPage() {
                 className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm p-8 hover:bg-white/10 transition-colors group"
               >
                 <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-lg bg-gradient-to-br from-purple-500/20 to-pink-500/20 group-hover:from-purple-500/30 group-hover:to-pink-500/30 transition-colors">
+                  <div className="p-3 rounded-lg bg-linear-to-br from-purple-500/20 to-pink-500/20 group-hover:from-purple-500/30 group-hover:to-pink-500/30 transition-colors">
                     <feature.icon className="w-6 h-6 text-purple-300" />
                   </div>
                   <div className="flex-1">
@@ -257,7 +259,7 @@ export default function SupervisorDemoPage() {
           <p className="text-slate-400 mb-4">Ready to monitor your students' progress?</p>
           <button 
             onClick={handleAccessFullDashboard}
-            className="px-8 py-3 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all"
+            className="px-8 py-3 rounded-lg bg-linear-to-r from-purple-500 to-pink-500 font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all"
           >
             Open Demo Dashboard
           </button>
