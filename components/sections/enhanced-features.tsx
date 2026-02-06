@@ -5,7 +5,7 @@ import { RevealText } from "@/components/ui/reveal-text";
 import { MagneticHover } from "@/components/ui/magnetic-hover";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Sparkles, Shield, Zap } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 const partners = [
   "UAE HOSPITALS",
@@ -16,29 +16,11 @@ const partners = [
   "ACADEMIC PARTNERS",
 ];
 
-const processSteps = [
-  {
-    icon: Sparkles,
-    title: "Define",
-    description: "Clear eligibility criteria and program requirements",
-  },
-  {
-    icon: Shield,
-    title: "Design",
-    description: "Structured workflows and transparent processes",
-  },
-  {
-    icon: Zap,
-    title: "Develop",
-    description: "Continuous refinement through pilot programs",
-  },
-];
-
 export function EnhancedFeatures() {
   return (
     <section className="relative bg-slate-950 py-24 sm:py-32 overflow-hidden">
       {/* Subtle gradient background */}
-      <div className="absolute inset-0 bg-linear-to-b from-slate-900/50 via-slate-950 to-slate-900/50 -z-10" />
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 via-slate-950 to-slate-900/50 -z-10" />
       
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Section header */}
@@ -55,29 +37,6 @@ export function EnhancedFeatures() {
           >
             A comprehensive platform designed around institutional needs and student success
           </motion.p>
-        </div>
-
-        {/* Process cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-          {processSteps.map((step, index) => (
-            <motion.div
-              key={step.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ y: -8 }}
-              className="group"
-            >
-              <div className="relative rounded-2xl bg-slate-900/50 backdrop-blur-sm border border-slate-800 p-8 hover:border-slate-700 transition-all duration-300 h-full">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 mb-6">
-                  <step.icon className="h-6 w-6 text-cyan-400" />
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-3">{step.title}</h3>
-                <p className="text-slate-400 leading-relaxed">{step.description}</p>
-              </div>
-            </motion.div>
-          ))}
         </div>
 
         {/* Partners marquee */}
