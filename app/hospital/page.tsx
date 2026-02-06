@@ -63,7 +63,7 @@ export default function HospitalPortal() {
       router.push("/hospital-login");
       return;
     }
-    setIsCheckingAuth(false);
+    queueMicrotask(() => setIsCheckingAuth(false));
 
     // Load applications and alerts for this hospital
     const hospitalApps = getApplicationsByHospital(user.hospitalId || "");

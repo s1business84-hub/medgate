@@ -52,7 +52,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // Initialize demo data and load current user on client-side only
     initializeDemoData();
     const currentUser = getCurrentUser();
-    setUser(currentUser);
+    queueMicrotask(() => setUser(currentUser));
   }, []);
 
   const login = (email: string, password: string): boolean => {

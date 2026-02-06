@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
@@ -33,7 +33,9 @@ export default function StudentPortal() {
   });
 
   // Move load function outside useEffect so it can be reused
-  const loadApplications = async () => {
+  const loadApplications = useCallback(async () => {
+    if (!user) return;
+    
     try {
       const { getApplications, getStudents, getStudentProgress } = await import("@/lib/storage");
       const allApps = getApplications();
@@ -96,13 +98,13 @@ export default function StudentPortal() {
     } finally {
       setLoadingApps(false);
     }
-  };
+  }, [user, selectedApplicationId]);
 
   useEffect(() => {
     if (user && user.role === "student") {
       loadApplications();
     }
-  }, [user, selectedApplicationId]);
+  }, [user, selectedApplicationId, loadApplications]);
 
   // Reload applications when page comes into focus
   useEffect(() => {
@@ -115,7 +117,7 @@ export default function StudentPortal() {
 
     window.addEventListener("focus", handleFocus);
     return () => window.removeEventListener("focus", handleFocus);
-  }, [user]);
+  }, [user, loadApplications]);
 
   // If user is logged in and is a student, show full portal
   if (user && user.role === "student") {
