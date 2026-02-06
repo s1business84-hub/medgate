@@ -43,124 +43,14 @@ interface StudentData {
   applications?: ApplicationRecord[];
 }
 
-// Mock demo data
-const mockStudents: StudentData[] = [
-  {
-    id: "STU001",
-    name: "Ahmed Al Mansouri",
-    gmuid: "GMU-2024-001",
-    year: 4,
-    formProgress: 85,
-    category: "Clinical Skills",
-    avgProgress: 82,
-    entries: 12,
-    lastUpdate: "2025-01-23",
-    completedPrograms: 3,
-    level: 4,
-    role: "Observer",
-    formsAssigned: ["Consent", "Checklist"],
-    observerships: [
-      { id: "OBS-1", title: "Internal Medicine", type: "observership", totalSessions: 10, sessionsCompleted: 8, assignedSupervisor: "Dr. Aisha Al Shehhi" },
-      { id: "ELC-1", title: "Cardiology Elective", type: "elective", totalSessions: 12, sessionsCompleted: 9, assignedSupervisor: "Prof. Mohammed Al Kaabi" },
-    ],
-    applications: [
-      { id: "APP-101", program: "Surgery Observership", status: "approved", appliedOn: "2025-01-05" },
-      { id: "APP-102", program: "Radiology Elective", status: "pending", appliedOn: "2025-01-18" },
-    ],
-  },
-  {
-    id: "STU002",
-    name: "Fatima Al Kaabi",
-    gmuid: "GMU-2024-002",
-    year: 3,
-    formProgress: 72,
-    category: "Medical Knowledge",
-    avgProgress: 75,
-    entries: 9,
-    lastUpdate: "2025-01-22",
-    completedPrograms: 2,
-    level: 3,
-    role: "Observer",
-    formsAssigned: ["Consent"],
-    observerships: [
-      { id: "OBS-2", title: "Pediatrics", type: "observership", totalSessions: 8, sessionsCompleted: 5, assignedSupervisor: "Dr. Latifa Al Mansoori" },
-      { id: "ELC-2", title: "Dermatology Elective", type: "elective", totalSessions: 6, sessionsCompleted: 3, assignedSupervisor: "Dr. Hana Al Hashmi" },
-    ],
-    applications: [
-      { id: "APP-103", program: "Neurology Observership", status: "waitlisted", appliedOn: "2025-01-10" },
-    ],
-  },
-  {
-    id: "STU003",
-    name: "Mohammed Al Owais",
-    gmuid: "GMU-2024-003",
-    year: 2,
-    formProgress: 65,
-    category: "Communication",
-    avgProgress: 68,
-    entries: 8,
-    lastUpdate: "2025-01-20",
-    completedPrograms: 1,
-    level: 2,
-    role: "Observer",
-    formsAssigned: [],
-    observerships: [
-      { id: "OBS-3", title: "Emergency Medicine", type: "observership", totalSessions: 10, sessionsCompleted: 4, assignedSupervisor: "Dr. Omar Al Janabi" },
-    ],
-    applications: [
-      { id: "APP-104", program: "Orthopedics Elective", status: "declined", appliedOn: "2025-01-12" },
-    ],
-  },
-  {
-    id: "STU004",
-    name: "Layla Al Mansouri",
-    gmuid: "GMU-2024-004",
-    year: 4,
-    formProgress: 90,
-    category: "Professionalism",
-    avgProgress: 88,
-    entries: 15,
-    lastUpdate: "2025-01-24",
-    completedPrograms: 4,
-    level: 5,
-    role: "Team Lead",
-    formsAssigned: ["Consent", "Checklist", "Feedback"],
-    observerships: [
-      { id: "OBS-4", title: "Surgery", type: "observership", totalSessions: 12, sessionsCompleted: 12, assignedSupervisor: "Prof. Ahmed Al Zaabi" },
-      { id: "ELC-3", title: "ICU Elective", type: "elective", totalSessions: 8, sessionsCompleted: 7, assignedSupervisor: "Dr. Salma Al Mazrouei" },
-    ],
-    applications: [
-      { id: "APP-105", program: "Pathology Observership", status: "approved", appliedOn: "2025-01-08" },
-    ],
-  },
-  {
-    id: "STU005",
-    name: "Hassan Al Noor",
-    gmuid: "GMU-2024-005",
-    year: 1,
-    formProgress: 45,
-    category: "Clinical Skills",
-    avgProgress: 52,
-    entries: 5,
-    lastUpdate: "2025-01-19",
-    completedPrograms: 0,
-    level: 1,
-    role: "Observer",
-    formsAssigned: [],
-    observerships: [
-      { id: "OBS-5", title: "Family Medicine", type: "observership", totalSessions: 6, sessionsCompleted: 2 },
-    ],
-    applications: [
-      { id: "APP-106", program: "Anesthesiology Elective", status: "pending", appliedOn: "2025-01-21" },
-    ],
-  },
-];
+// Empty initial state - students will be added when they create applications
+// Data will be synced from student applications and observerships
 
 export default function SupervisorDashboard() {
   const { user } = useAuth();
   const router = useRouter();
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
-  const [students, setStudents] = useState<StudentData[]>(mockStudents);
+  const [students, setStudents] = useState<StudentData[]>([]);
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState("all");
   const [activeTab, setActiveTab] = useState<
@@ -235,7 +125,7 @@ export default function SupervisorDashboard() {
   }, [generateObserverId]);
 
   const resetDemo = () => {
-    setStudents(mockStudents);
+    setStudents([]);
     try {
       window.localStorage.removeItem("supervisor_students");
     } catch {}
