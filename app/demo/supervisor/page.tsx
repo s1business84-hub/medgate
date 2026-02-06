@@ -62,22 +62,26 @@ export default function SupervisorDemoPage() {
         hospitals: mockHospitals.length,
         programs: mockPrograms.length
       });
-    }
-    
-    // Small delay to ensure data is written to localStorage
-    setTimeout(() => {
-      // Auto-login the supervisor user
+      
+      // Auto-login the supervisor user immediately
       const loggedInUser = loginUser("supervisor@example.com", "password");
       
       console.log("Login result:", loggedInUser);
       
       if (loggedInUser) {
-        // Force redirect to full dashboard
-        window.location.href = "/supervisor";
+        // Manually set current user to ensure it persists
+        window.localStorage.setItem("electivio_current_user", JSON.stringify(loggedInUser));
+        console.log("Current user set:", loggedInUser);
+        
+        // Force redirect to full dashboard with a slight delay
+        setTimeout(() => {
+          window.location.href = "/supervisor";
+        }, 100);
       } else {
         console.error("Login failed - user not found or password incorrect");
+        alert("Login failed. Please try again or check the console for errors.");
       }
-    }, 200);
+    }
   };
 
   // Calculate metrics from actual demo data
