@@ -4,11 +4,37 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Play, Zap, Copy, Check } from "lucide-react"
 import Link from "next/link"
+import { getUsers, getStudents, getApplications, getStaffAlerts } from "@/lib/storage"
+import { mockUsers, mockStudents, mockApplications, mockStaffAlerts } from "@/lib/mockData"
 
 export function DemoButton() {
   const [isOpen, setIsOpen] = useState(false)
   const [selectedTab, setSelectedTab] = useState("student")
   const [copiedEmail, setCopiedEmail] = useState<string | null>(null)
+
+  // Initialize demo data in localStorage
+  const initializeDemoData = () => {
+    if (typeof window === 'undefined') return;
+    
+    // Force reinitialize users
+    const usersKey = "electivio_users";
+    const existingUsers = getUsers();
+    if (existingUsers.length === 0) {
+      window.localStorage.setItem(usersKey, JSON.stringify(mockUsers));
+    }
+    
+    // Force reinitialize students
+    const studentsKey = "electivio_students";
+    window.localStorage.setItem(studentsKey, JSON.stringify(mockStudents));
+    
+    // Force reinitialize applications
+    const applicationsKey = "electivio_applications";
+    window.localStorage.setItem(applicationsKey, JSON.stringify(mockApplications));
+    
+    // Force reinitialize staff alerts
+    const alertsKey = "electivio_staff_alerts";
+    window.localStorage.setItem(alertsKey, JSON.stringify(mockStaffAlerts));
+  }
 
   const demoCredentials = {
     student: {
@@ -70,13 +96,13 @@ export function DemoButton() {
         onClick={() => setIsOpen(!isOpen)}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="group relative inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-green-500 to-emerald-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
+        className="group relative inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
       >
         <Play className="w-5 h-5" />
         <span>Try Demo</span>
         
         {/* Animated background glow */}
-        <div className="absolute inset-0 bg-linear-to-r from-green-400 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </motion.button>
 
       <AnimatePresence>
@@ -100,7 +126,7 @@ export function DemoButton() {
               className="absolute top-full mt-3 left-1/2 -translate-x-1/2 w-[min(24rem,calc(100vw-2rem))] max-h-[85vh] overflow-y-auto bg-slate-900/98 backdrop-blur-xl border border-green-500/30 rounded-2xl shadow-2xl z-50"
             >
               {/* Header */}
-              <div className="p-4 border-b border-green-500/20 bg-linear-to-r from-green-500/10 to-emerald-500/10">
+              <div className="p-4 border-b border-green-500/20 bg-gradient-to-r from-green-500/10 to-emerald-500/10">
                 <div className="flex items-center gap-2 mb-1">
                   <Zap className="w-5 h-5 text-green-400" />
                   <h3 className="font-bold text-white">Try Electivio</h3>
@@ -175,7 +201,10 @@ export function DemoButton() {
                 {/* Action Button */}
                 <Link
                   href={current.href}
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => {
+                    initializeDemoData();
+                    setIsOpen(false);
+                  }}
                   className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-500/20 hover:bg-green-500/30 border border-green-500/50 rounded-lg text-green-300 font-semibold transition-all duration-200 group/btn"
                 >
                   <Play className="w-4 h-4 group-hover/btn:scale-110 transition-transform" />
