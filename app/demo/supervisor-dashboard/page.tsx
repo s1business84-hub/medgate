@@ -1,23 +1,47 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { ArrowLeft, Users, BarChart3, TrendingUp, Award, FileText, CheckCircle, Brain, Target, AlertTriangle, Sparkles, ThumbsUp, ThumbsDown, Plus, Trash2, Edit, X } from "lucide-react";
+import { ArrowLeft, Users, BarChart3, TrendingUp, Award, FileText, CheckCircle, Brain, Target, AlertTriangle, Sparkles, ThumbsUp, ThumbsDown, Plus, Trash2, Edit, X, Star, Zap, Trophy, BookOpen, Clock, Calendar, Activity, Shield, Medal, Flame } from "lucide-react";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
 import { mockStudents, mockApplications } from "@/lib/mockData";
 
 export default function SupervisorDemoDashboard() {
-  const [students] = useState<any[]>(mockStudents);
+  // Generate initial student data once
+  const initialStudents = useMemo(() => {
+    const baseDate = new Date('2024-02-01').getTime();
+    return mockStudents.map((s, idx) => ({
+      ...s,
+      xp: 1500 + (idx * 300),
+      level: 3 + idx,
+      rank: ["Novice", "Apprentice", "Practitioner", "Expert", "Master"][idx % 5],
+      formsCompleted: 8 + (idx * 2),
+      totalForms: 20 + (idx * 3),
+      sessionsAttended: 15 + (idx * 5),
+      hoursLogged: 75 + (idx * 15),
+      achievements: 4 + idx,
+      streak: 10 + (idx * 5),
+      lastActive: new Date(baseDate - (idx * 24 * 60 * 60 * 1000)).toISOString(),
+      formProgress: 70 + (idx * 5),
+      performanceScore: 80 + (idx * 3),
+    }));
+  }, []);
+
+  const [students, setStudents] = useState<any[]>(initialStudents);
   const [applications, setApplications] = useState<any[]>(mockApplications);
-  const [selectedTab, setSelectedTab] = useState<"overview" | "students" | "insights" | "applications">("overview");
+  const [selectedTab, setSelectedTab] = useState<"overview" | "students" | "insights" | "applications">("students");
   const [showStatusModal, setShowStatusModal] = useState<string | null>(null);
   const [showObservershipModal, setShowObservershipModal] = useState(false);
+  const [showPromotionModal, setShowPromotionModal] = useState<string | null>(null);
+  const [showFormModal, setShowFormModal] = useState<string | null>(null);
+  const [selectedStudent, setSelectedStudent] = useState<any | null>(null);
   const [observerships, setObserverships] = useState<any[]>([
     { id: "obs-1", studentId: "student-1", studentName: "Alex Chen", hospital: "Stanford Medical Center", program: "Cardiology", startDate: "2024-01-15", endDate: "2024-03-15", status: "Active" },
     { id: "obs-2", studentId: "student-2", studentName: "Sarah Martinez", hospital: "Mayo Clinic", program: "Neurology", startDate: "2024-02-01", endDate: "2024-04-01", status: "Active" },
     { id: "obs-3", studentId: "student-3", studentName: "James Wilson", hospital: "Johns Hopkins", program: "Pediatrics", startDate: "2024-01-20", endDate: "2024-03-20", status: "Completed" },
   ]);
+
 
   // Handle application status change
   const handleStatusChange = (appId: string, newStatus: string) => {
@@ -40,6 +64,41 @@ export default function SupervisorDemoDashboard() {
 
   const handleDeleteObservership = (obsId: string) => {
     setObserverships(prev => prev.filter(o => o.id !== obsId));
+  };
+
+  // Handle student actions
+  const handlePromoteStudent = (studentId: string) => {
+    setStudents(prev => prev.map(s => 
+      s.id === studentId 
+        ? { 
+            ...s, 
+            level: s.level + 1, 
+            xp: s.xp + 500,
+            rank: s.level >= 9 ? "Master" : s.level >= 7 ? "Expert" : s.level >= 5 ? "Practitioner" : s.level >= 3 ? "Apprentice" : "Novice"
+          } 
+        : s
+    ));
+    setShowPromotionModal(null);
+  };
+
+  const handleAddXP = (studentId: string, amount: number) => {
+    setStudents(prev => prev.map(s => {
+      if (s.id === studentId) {
+        const newXP = s.xp + amount;
+        const newLevel = Math.floor(newXP / 500) + 1;
+        return { ...s, xp: newXP, level: newLevel };
+      }
+      return s;
+    }));
+  };
+
+  const handleAssignForm = (studentId: string, formName: string) => {
+    setStudents(prev => prev.map(s => 
+      s.id === studentId 
+        ? { ...s, totalForms: s.totalForms + 1 } 
+        : s
+    ));
+    setShowFormModal(null);
   };
 
   // Calculate metrics
@@ -266,8 +325,203 @@ export default function SupervisorDemoDashboard() {
           </motion.div>
         )}
 
-        {/* Students List */}
-        {(selectedTab === "overview" || selectedTab === "students") && (
+        {/* Enhanced Students Grid - Tile View */}
+        {selectedTab === "students" && (
+          <div className="mb-8">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-purple-500/20">
+                  <Users className="w-6 h-6 text-purple-400" />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold">Student Management Hub</h2>
+                  <p className="text-sm text-slate-400">{students.length} active students • Manage XP, levels & forms</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-purple-400 animate-pulse" />
+                <span className="text-sm text-purple-400 font-semibold">Live Tracking</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+              {students.map((student, idx) => {
+                const rankColors = {
+                  Novice: "from-slate-500 to-gray-500",
+                  Apprentice: "from-blue-500 to-cyan-500",
+                  Practitioner: "from-purple-500 to-pink-500",
+                  Expert: "from-orange-500 to-red-500",
+                  Master: "from-yellow-500 to-amber-500"
+                };
+                const rankColor = rankColors[student.rank as keyof typeof rankColors] || rankColors.Novice;
+
+                return (
+                  <motion.div
+                    key={student.id}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: idx * 0.05 }}
+                    className="group relative rounded-2xl p-6 bg-white/5 border border-white/10 hover:bg-white/10 hover:border-purple-500/50 transition-all overflow-hidden"
+                  >
+                    {/* Glow effect */}
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                    
+                    {/* Header with Avatar and Basic Info */}
+                    <div className="relative mb-4">
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex items-center gap-3">
+                          <div className={`w-14 h-14 rounded-xl bg-linear-to-br ${rankColor} flex items-center justify-center text-white text-xl font-bold shadow-lg`}>
+                            {student.name.split(' ').map((n: string) => n[0]).join('')}
+                          </div>
+                          <div>
+                            <p className="font-bold text-white text-lg leading-tight">{student.name}</p>
+                            <p className="text-xs text-slate-400">{student.university}</p>
+                          </div>
+                        </div>
+                        <div className={`px-2 py-1 rounded-lg bg-linear-to-r ${rankColor} bg-opacity-20 border border-white/20`}>
+                          <p className="text-xs font-bold text-white">Lvl {student.level}</p>
+                        </div>
+                      </div>
+
+                      {/* Rank Badge */}
+                      <div className="flex items-center justify-between">
+                        <span className={`px-3 py-1 rounded-full bg-linear-to-r ${rankColor} text-white text-xs font-bold shadow-md flex items-center gap-1`}>
+                          <Trophy className="w-3 h-3" />
+                          {student.rank}
+                        </span>
+                        <span className="flex items-center gap-1 text-xs text-slate-400">
+                          <Flame className="w-3 h-3 text-orange-400" />
+                          {student.streak} day streak
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* XP Progress Bar */}
+                    <div className="relative mb-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs font-semibold text-purple-300 flex items-center gap-1">
+                          <Zap className="w-3 h-3" />
+                          XP Progress
+                        </span>
+                        <span className="text-xs font-bold text-white">{student.xp} / {(student.level) * 500}</span>
+                      </div>
+                      <div className="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: `${(student.xp % 500) / 5}%` }}
+                          transition={{ duration: 1, delay: idx * 0.1 }}
+                          className={`bg-linear-to-r ${rankColor} h-2.5 rounded-full shadow-lg`}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Stats Grid */}
+                    <div className="grid grid-cols-2 gap-3 mb-4">
+                      <div className="bg-white/5 rounded-lg p-3 border border-white/10">
+                        <div className="flex items-center gap-2 mb-1">
+                          <FileText className="w-4 h-4 text-blue-400" />
+                          <span className="text-xs text-slate-400">Forms</span>
+                        </div>
+                        <p className="text-lg font-bold text-white">{student.formsCompleted}/{student.totalForms}</p>
+                        <div className="w-full bg-slate-700/50 rounded-full h-1 mt-1">
+                          <div 
+                            className="bg-blue-500 h-1 rounded-full" 
+                            style={{ width: `${(student.formsCompleted / student.totalForms) * 100}%` }}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="bg-white/5 rounded-lg p-3 border border-white/10">
+                        <div className="flex items-center gap-2 mb-1">
+                          <Clock className="w-4 h-4 text-green-400" />
+                          <span className="text-xs text-slate-400">Hours</span>
+                        </div>
+                        <p className="text-lg font-bold text-white">{student.hoursLogged}h</p>
+                        <p className="text-xs text-green-400 mt-1">Logged</p>
+                      </div>
+
+                      <div className="bg-white/5 rounded-lg p-3 border border-white/10">
+                        <div className="flex items-center gap-2 mb-1">
+                          <Calendar className="w-4 h-4 text-purple-400" />
+                          <span className="text-xs text-slate-400">Sessions</span>
+                        </div>
+                        <p className="text-lg font-bold text-white">{student.sessionsAttended}</p>
+                        <p className="text-xs text-purple-400 mt-1">Attended</p>
+                      </div>
+
+                      <div className="bg-white/5 rounded-lg p-3 border border-white/10">
+                        <div className="flex items-center gap-2 mb-1">
+                          <Medal className="w-4 h-4 text-yellow-400" />
+                          <span className="text-xs text-slate-400">Badges</span>
+                        </div>
+                        <p className="text-lg font-bold text-white">{student.achievements}</p>
+                        <p className="text-xs text-yellow-400 mt-1">Earned</p>
+                      </div>
+                    </div>
+
+                    {/* Performance Score */}
+                    <div className="bg-linear-to-r from-purple-500/10 to-pink-500/10 rounded-lg p-3 mb-4 border border-purple-500/20">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs font-semibold text-purple-300 flex items-center gap-1">
+                          <Activity className="w-3 h-3" />
+                          Performance Score
+                        </span>
+                        <span className="text-lg font-bold text-white">{student.performanceScore}%</span>
+                      </div>
+                      <div className="w-full bg-slate-700/50 rounded-full h-2">
+                        <div 
+                          className="bg-linear-to-r from-purple-500 to-pink-500 h-2 rounded-full" 
+                          style={{ width: `${student.performanceScore}%` }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Last Active */}
+                    <div className="text-xs text-slate-400 mb-4 flex items-center gap-1">
+                      <Clock className="w-3 h-3" />
+                      Last active: {new Date(student.lastActive).toLocaleDateString()}
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="grid grid-cols-2 gap-2">
+                      <button
+                        onClick={() => setShowPromotionModal(student.id)}
+                        className="flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-green-500/20 text-green-300 border border-green-500/30 hover:bg-green-500/30 transition-all text-sm font-semibold"
+                      >
+                        <TrendingUp className="w-4 h-4" />
+                        Promote
+                      </button>
+                      <button
+                        onClick={() => setShowFormModal(student.id)}
+                        className="flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-blue-500/20 text-blue-300 border border-blue-500/30 hover:bg-blue-500/30 transition-all text-sm font-semibold"
+                      >
+                        <Plus className="w-4 h-4" />
+                        Add Form
+                      </button>
+                      <button
+                        onClick={() => handleAddXP(student.id, 100)}
+                        className="flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-purple-500/20 text-purple-300 border border-purple-500/30 hover:bg-purple-500/30 transition-all text-sm font-semibold"
+                      >
+                        <Zap className="w-4 h-4" />
+                        +100 XP
+                      </button>
+                      <button
+                        onClick={() => setSelectedStudent(student)}
+                        className="flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-slate-500/20 text-slate-300 border border-slate-500/30 hover:bg-slate-500/30 transition-all text-sm font-semibold"
+                      >
+                        <Edit className="w-4 h-4" />
+                        Manage
+                      </button>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Students List for Overview */}
+        {selectedTab === "overview" && (
           <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 mb-8">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
@@ -793,6 +1047,180 @@ export default function SupervisorDemoDashboard() {
                       className="flex-1 px-4 py-2 rounded-lg bg-blue-500/20 text-blue-300 border border-blue-500/30 hover:bg-blue-500/30 transition-all font-semibold"
                     >
                       Add Observership
+                    </button>
+                  </div>
+                </form>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Promotion Modal */}
+        <AnimatePresence>
+          {showPromotionModal && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+              onClick={() => setShowPromotionModal(null)}
+            >
+              <motion.div
+                initial={{ scale: 0.9, y: 20 }}
+                animate={{ scale: 1, y: 0 }}
+                exit={{ scale: 0.9, y: 20 }}
+                onClick={(e) => e.stopPropagation()}
+                className="bg-slate-900 border border-white/20 rounded-2xl p-6 max-w-md w-full"
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-3">
+                    <div className="p-3 rounded-xl bg-green-500/20">
+                      <TrendingUp className="w-6 h-6 text-green-400" />
+                    </div>
+                    <h3 className="text-2xl font-bold">Promote Student</h3>
+                  </div>
+                  <button
+                    onClick={() => setShowPromotionModal(null)}
+                    className="p-2 rounded-lg hover:bg-white/10 transition-colors"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+
+                <div className="bg-white/5 rounded-xl p-4 mb-6">
+                  <p className="text-slate-300 mb-4">
+                    Promoting this student will:
+                  </p>
+                  <ul className="space-y-2 text-sm text-slate-400">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-400" />
+                      Increase level by 1
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-400" />
+                      Award +500 XP bonus
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-400" />
+                      Update rank if threshold reached
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-400" />
+                      Unlock new achievements
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => setShowPromotionModal(null)}
+                    className="flex-1 px-4 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-all"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={() => handlePromoteStudent(showPromotionModal)}
+                    className="flex-1 px-4 py-2 rounded-lg bg-green-500/20 text-green-300 border border-green-500/30 hover:bg-green-500/30 transition-all font-semibold"
+                  >
+                    Confirm Promotion
+                  </button>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Form Assignment Modal */}
+        <AnimatePresence>
+          {showFormModal && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+              onClick={() => setShowFormModal(null)}
+            >
+              <motion.div
+                initial={{ scale: 0.9, y: 20 }}
+                animate={{ scale: 1, y: 0 }}
+                exit={{ scale: 0.9, y: 20 }}
+                onClick={(e) => e.stopPropagation()}
+                className="bg-slate-900 border border-white/20 rounded-2xl p-6 max-w-md w-full"
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-3">
+                    <div className="p-3 rounded-xl bg-blue-500/20">
+                      <FileText className="w-6 h-6 text-blue-400" />
+                    </div>
+                    <h3 className="text-2xl font-bold">Assign Form</h3>
+                  </div>
+                  <button
+                    onClick={() => setShowFormModal(null)}
+                    className="p-2 rounded-lg hover:bg-white/10 transition-colors"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const formData = new FormData(e.currentTarget);
+                    handleAssignForm(showFormModal, formData.get('formName') as string);
+                  }}
+                  className="space-y-4"
+                >
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300 mb-2">Select Form Type</label>
+                    <select
+                      name="formName"
+                      required
+                      className="w-full px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-white focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                    >
+                      <option value="">Choose a form...</option>
+                      <option value="Completion Attestation">Completion Attestation</option>
+                      <option value="Exposure Log">Clinical Exposure Log</option>
+                      <option value="Supervisor Confirmation">Supervisor Confirmation</option>
+                      <option value="Performance Evaluation">Performance Evaluation</option>
+                      <option value="Safety Checklist">Safety & Compliance Checklist</option>
+                      <option value="Weekly Report">Weekly Progress Report</option>
+                      <option value="Final Assessment">Final Assessment Form</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300 mb-2">Due Date</label>
+                    <input
+                      type="date"
+                      name="dueDate"
+                      required
+                      className="w-full px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-white focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300 mb-2">Instructions (Optional)</label>
+                    <textarea
+                      name="instructions"
+                      rows={3}
+                      className="w-full px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-white placeholder-slate-400 focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all resize-none"
+                      placeholder="Add any specific instructions..."
+                    />
+                  </div>
+
+                  <div className="flex gap-3 pt-4">
+                    <button
+                      type="button"
+                      onClick={() => setShowFormModal(null)}
+                      className="flex-1 px-4 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-all"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className="flex-1 px-4 py-2 rounded-lg bg-blue-500/20 text-blue-300 border border-blue-500/30 hover:bg-blue-500/30 transition-all font-semibold"
+                    >
+                      Assign Form
                     </button>
                   </div>
                 </form>
