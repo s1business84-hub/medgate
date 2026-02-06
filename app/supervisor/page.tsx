@@ -519,7 +519,7 @@ export default function SupervisorDashboard() {
 
   if (loading) {
     return (
-      <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950 flex items-center justify-center">
+      <div className="relative min-h-screen overflow-visible bg-gradient-to-b from-slate-950 via-purple-900/20 to-slate-950 flex items-center justify-center">
         <LiquidParallax depth={14} className="opacity-70" />
         <p className="text-slate-300 relative z-10">Loading supervisor dashboard...</p>
       </div>
@@ -625,7 +625,7 @@ export default function SupervisorDashboard() {
                 whileHover={{ scale: 1.05 }}
                 className={`px-4 py-2 rounded-full font-medium transition-all ${
                   filter === cat.id
-                    ? "bg-linear-to-r from-purple-500 to-pink-600 text-white shadow-lg"
+                    ? "bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-lg"
                     : "bg-white/10 text-slate-300 hover:bg-white/20"
                 }`}
               >
@@ -651,7 +651,7 @@ export default function SupervisorDashboard() {
               onClick={() => setActiveTab(tab.id as any)}
               className={`px-4 py-2 rounded-full font-medium transition-all ${
                 activeTab === tab.id
-                  ? "bg-linear-to-r from-purple-500 to-pink-600 text-white shadow-lg"
+                  ? "bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-lg"
                   : "bg-white/10 text-slate-300 hover:bg-white/20"
               }`}
             >
@@ -706,7 +706,7 @@ export default function SupervisorDashboard() {
                         initial={{ width: 0 }}
                         whileInView={{ width: `${student.formProgress}%` }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="bg-linear-to-r from-purple-500 to-pink-500 h-2 rounded-full"
+                        className="bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full"
                       />
                     </div>
                   </div>
