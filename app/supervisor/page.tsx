@@ -178,7 +178,7 @@ export default function SupervisorDashboard() {
       router.push("/login");
       return;
     }
-    setIsCheckingAuth(false);
+    queueMicrotask(() => setIsCheckingAuth(false));
   }, [user, router]);
 
   // Load students from localStorage on mount
@@ -188,7 +188,7 @@ export default function SupervisorDashboard() {
       if (saved) {
         try {
           const parsed = JSON.parse(saved) as StudentData[];
-          setStudents(parsed);
+          queueMicrotask(() => setStudents(parsed));
         } catch {}
       }
     }
@@ -1078,7 +1078,7 @@ export default function SupervisorDashboard() {
             <div className="lg:col-span-1">
               <div className="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl">
                 <h3 className="text-lg font-bold text-white mb-4">Select Student</h3>
-                <div className="space-y-2 max-h-[600px] overflow-y-auto">
+                <div className="space-y-2 max-h-[37.5rem] overflow-y-auto">
                   {filteredStudents.map((student) => (
                     <button
                       key={student.id}
@@ -1170,7 +1170,7 @@ export default function SupervisorDashboard() {
                         value={progressForm.notes}
                         onChange={(e) => setProgressForm({ ...progressForm, notes: e.target.value })}
                         placeholder="e.g., Demonstrated improved suturing technique, actively participated in 3 procedures, showed excellent patient communication..."
-                        className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-cyan-400 min-h-[120px]"
+                        className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-cyan-400 min-h-[7.5rem]"
                         rows={5}
                       />
                     </div>
