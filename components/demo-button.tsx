@@ -39,26 +39,29 @@ export function DemoButton() {
     // Initialize demo data first
     initializeDemoData();
     
-    // Auto-login the user
-    const loggedInUser = loginUser(email, password);
-    
-    if (loggedInUser) {
-      // Redirect to the actual full dashboard based on role
-      const dashboardMap: Record<string, string> = {
-        student: "/student",
-        staff: "/hospital",
-        supervisor: "/supervisor",
-        admin: "/admin"
-      };
+    // Small delay to ensure data is written to localStorage
+    setTimeout(() => {
+      // Auto-login the user
+      const loggedInUser = loginUser(email, password);
       
-      const targetRoute = dashboardMap[role] || "/login";
-      
-      // Close modal and redirect
-      setIsOpen(false);
-      
-      // Force a page refresh to ensure auth context updates
-      window.location.href = targetRoute;
-    }
+      if (loggedInUser) {
+        // Redirect to the actual full dashboard based on role
+        const dashboardMap: Record<string, string> = {
+          student: "/student",
+          staff: "/hospital",
+          supervisor: "/supervisor",
+          admin: "/admin"
+        };
+        
+        const targetRoute = dashboardMap[role] || "/login";
+        
+        // Close modal and redirect
+        setIsOpen(false);
+        
+        // Force a page refresh to ensure auth context updates
+        window.location.href = targetRoute;
+      }
+    }, 100);
   }
 
   const demoCredentials = {
