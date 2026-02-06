@@ -27,61 +27,16 @@ export default function SupervisorDemoPage() {
     });
   }, []);
 
-  // Auto-login and redirect to full dashboard
+  // Redirect to demo dashboard
   const handleAccessFullDashboard = () => {
-    // Initialize ALL demo data
+    // Initialize demo data in localStorage for the demo dashboard to use
     if (typeof window !== 'undefined') {
-      // Users
-      window.localStorage.setItem("electivio_users", JSON.stringify(mockUsers));
-      
-      // Students
       window.localStorage.setItem("electivio_students", JSON.stringify(mockStudents));
-      
-      // Applications
       window.localStorage.setItem("electivio_applications", JSON.stringify(mockApplications));
-      
-      // Hospitals
-      window.localStorage.setItem("electivio_hospitals", JSON.stringify(mockHospitals));
-      
-      // Programs
-      window.localStorage.setItem("electivio_programs", JSON.stringify(mockPrograms));
-      
-      // Documents
-      window.localStorage.setItem("electivio_documents", JSON.stringify(mockDocuments));
-      
-      // Payments
-      window.localStorage.setItem("electivio_payments", JSON.stringify(mockPayments));
-      
-      // Staff alerts
-      window.localStorage.setItem("electivio_staff_alerts", JSON.stringify(mockStaffAlerts));
-      
-      console.log("Demo data initialized:", {
-        users: mockUsers.length,
-        students: mockStudents.length,
-        applications: mockApplications.length,
-        hospitals: mockHospitals.length,
-        programs: mockPrograms.length
-      });
-      
-      // Auto-login the supervisor user immediately
-      const loggedInUser = loginUser("supervisor@example.com", "password");
-      
-      console.log("Login result:", loggedInUser);
-      
-      if (loggedInUser) {
-        // Manually set current user to ensure it persists
-        window.localStorage.setItem("electivio_current_user", JSON.stringify(loggedInUser));
-        console.log("Current user set:", loggedInUser);
-        
-        // Force redirect to full dashboard with a slight delay
-        setTimeout(() => {
-          window.location.href = "/supervisor";
-        }, 100);
-      } else {
-        console.error("Login failed - user not found or password incorrect");
-        alert("Login failed. Please try again or check the console for errors.");
-      }
     }
+    
+    // Redirect to the demo dashboard page
+    router.push("/demo/supervisor-dashboard");
   };
 
   // Calculate metrics from actual demo data
