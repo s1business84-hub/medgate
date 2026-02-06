@@ -255,12 +255,12 @@ export default function SupervisorDemoPage() {
         {/* Call to Action */}
         <motion.div variants={itemVariants} className="mt-12 text-center">
           <p className="text-slate-400 mb-4">Ready to monitor your students' progress?</p>
-            <button 
+          <button 
             onClick={handleAccessFullDashboard}
             className="px-8 py-3 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all"
-            >
+          >
             Open Demo Dashboard
-            </button>
+          </button>
         </motion.div>
       </motion.div>
     </div>
