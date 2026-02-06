@@ -7,7 +7,7 @@ import Link from "next/link";
 import { ArrowLeft, BarChart3, TrendingUp, Users, AlertCircle } from "lucide-react";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
 import { getStudents, getApplications, loginUser } from "@/lib/storage";
-import { mockUsers, mockStudents, mockApplications, mockStaffAlerts } from "@/lib/mockData";
+import { mockUsers, mockStudents, mockApplications, mockStaffAlerts, mockHospitals, mockPrograms, mockDocuments, mockPayments } from "@/lib/mockData";
 
 export default function SupervisorDemoPage() {
   const [students, setStudents] = useState<any[]>([]);
@@ -27,19 +27,39 @@ export default function SupervisorDemoPage() {
 
   // Auto-login and redirect to full dashboard
   const handleAccessFullDashboard = () => {
-    // Initialize demo data
+    // Initialize ALL demo data
     if (typeof window !== 'undefined') {
-      const usersKey = "electivio_users";
-      window.localStorage.setItem(usersKey, JSON.stringify(mockUsers));
+      // Users
+      window.localStorage.setItem("electivio_users", JSON.stringify(mockUsers));
       
-      const studentsKey = "electivio_students";
-      window.localStorage.setItem(studentsKey, JSON.stringify(mockStudents));
+      // Students
+      window.localStorage.setItem("electivio_students", JSON.stringify(mockStudents));
       
-      const applicationsKey = "electivio_applications";
-      window.localStorage.setItem(applicationsKey, JSON.stringify(mockApplications));
+      // Applications
+      window.localStorage.setItem("electivio_applications", JSON.stringify(mockApplications));
       
-      const alertsKey = "electivio_staff_alerts";
-      window.localStorage.setItem(alertsKey, JSON.stringify(mockStaffAlerts));
+      // Hospitals
+      window.localStorage.setItem("electivio_hospitals", JSON.stringify(mockHospitals));
+      
+      // Programs
+      window.localStorage.setItem("electivio_programs", JSON.stringify(mockPrograms));
+      
+      // Documents
+      window.localStorage.setItem("electivio_documents", JSON.stringify(mockDocuments));
+      
+      // Payments
+      window.localStorage.setItem("electivio_payments", JSON.stringify(mockPayments));
+      
+      // Staff alerts
+      window.localStorage.setItem("electivio_staff_alerts", JSON.stringify(mockStaffAlerts));
+      
+      console.log("Demo data initialized:", {
+        users: mockUsers.length,
+        students: mockStudents.length,
+        applications: mockApplications.length,
+        hospitals: mockHospitals.length,
+        programs: mockPrograms.length
+      });
     }
     
     // Small delay to ensure data is written to localStorage
@@ -47,11 +67,15 @@ export default function SupervisorDemoPage() {
       // Auto-login the supervisor user
       const loggedInUser = loginUser("supervisor@example.com", "password");
       
+      console.log("Login result:", loggedInUser);
+      
       if (loggedInUser) {
         // Force redirect to full dashboard
         window.location.href = "/supervisor";
+      } else {
+        console.error("Login failed - user not found or password incorrect");
       }
-    }, 100);
+    }, 200);
   };
 
   // Calculate metrics from actual demo data
@@ -231,12 +255,12 @@ export default function SupervisorDemoPage() {
         {/* Call to Action */}
         <motion.div variants={itemVariants} className="mt-12 text-center">
           <p className="text-slate-400 mb-4">Ready to monitor your students' progress?</p>
-          <button 
+            <button 
             onClick={handleAccessFullDashboard}
             className="px-8 py-3 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all"
-          >
-            Access Full Dashboard
-          </button>
+            >
+            Open Demo Dashboard
+            </button>
         </motion.div>
       </motion.div>
     </div>

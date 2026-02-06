@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Play, Zap, Copy, Check } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { getUsers, getStudents, getApplications, getStaffAlerts, loginUser } from "@/lib/storage"
-import { mockUsers, mockStudents, mockApplications, mockStaffAlerts } from "@/lib/mockData"
+import { mockUsers, mockStudents, mockApplications, mockStaffAlerts, mockHospitals, mockPrograms, mockDocuments, mockPayments } from "@/lib/mockData"
 
 export function DemoButton() {
   const [isOpen, setIsOpen] = useState(false)
@@ -17,21 +17,15 @@ export function DemoButton() {
   const initializeDemoData = () => {
     if (typeof window === 'undefined') return;
     
-    // Force reinitialize users
-    const usersKey = "electivio_users";
-    window.localStorage.setItem(usersKey, JSON.stringify(mockUsers));
-    
-    // Force reinitialize students
-    const studentsKey = "electivio_students";
-    window.localStorage.setItem(studentsKey, JSON.stringify(mockStudents));
-    
-    // Force reinitialize applications
-    const applicationsKey = "electivio_applications";
-    window.localStorage.setItem(applicationsKey, JSON.stringify(mockApplications));
-    
-    // Force reinitialize staff alerts
-    const alertsKey = "electivio_staff_alerts";
-    window.localStorage.setItem(alertsKey, JSON.stringify(mockStaffAlerts));
+    // Force reinitialize all demo data
+    window.localStorage.setItem("electivio_users", JSON.stringify(mockUsers));
+    window.localStorage.setItem("electivio_students", JSON.stringify(mockStudents));
+    window.localStorage.setItem("electivio_applications", JSON.stringify(mockApplications));
+    window.localStorage.setItem("electivio_staff_alerts", JSON.stringify(mockStaffAlerts));
+    window.localStorage.setItem("electivio_hospitals", JSON.stringify(mockHospitals));
+    window.localStorage.setItem("electivio_programs", JSON.stringify(mockPrograms));
+    window.localStorage.setItem("electivio_documents", JSON.stringify(mockDocuments));
+    window.localStorage.setItem("electivio_payments", JSON.stringify(mockPayments));
   }
 
   // Launch demo and redirect to demo preview page
