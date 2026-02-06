@@ -6,6 +6,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, BookOpen, Award, Brain, TrendingUp, Sparkles, ChevronRight, AlertCircle, X } from "lucide-react";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
+import { loginUser } from "@/lib/storage";
+import { mockUsers } from "@/lib/mockData";
 
 export default function StudentDemoPage() {
   const router = useRouter();
@@ -371,21 +373,32 @@ export default function StudentDemoPage() {
 
         {/* Call to Action */}
         <motion.div variants={itemVariants} className="mt-12 text-center space-y-6">
-          <p className="text-slate-400 mb-4">This is a demo of the student portal. Start by creating an account or logging in.</p>
+          <p className="text-slate-400 mb-4">Ready to access your full student dashboard?</p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
-              onClick={() => setShowAI(true)}
-              className="group relative px-8 py-3 bg-linear-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300"
+              onClick={() => {
+                if (typeof window !== 'undefined') {
+                  const usersKey = "electivio_users";
+                  window.localStorage.setItem(usersKey, JSON.stringify(mockUsers));
+                }
+                setTimeout(() => {
+                  const loggedInUser = loginUser("student@example.com", "password");
+                  if (loggedInUser) {
+                    window.location.href = "/student";
+                  }
+                }, 100);
+              }}
+              className="group relative px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300"
             >
               <div className="flex items-center gap-2">
                 <Sparkles className="w-5 h-5" />
-                <span>Find Your Perfect Program</span>
+                <span>Access Full Dashboard</span>
               </div>
             </button>
             
             <Link href="/login">
-              <button className="px-8 py-3 rounded-lg bg-linear-to-r from-cyan-500 to-blue-500 font-semibold hover:shadow-lg hover:shadow-cyan-500/50 transition-all">
+              <button className="px-8 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 font-semibold hover:shadow-lg hover:shadow-cyan-500/50 transition-all">
                 Go Back to Login
               </button>
             </Link>

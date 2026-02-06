@@ -2,10 +2,14 @@
 
 import { motion, cubicBezier } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ArrowLeft, Users, BookMarked, TrendingUp, CheckCircle } from "lucide-react";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
+import { loginUser } from "@/lib/storage";
+import { mockUsers } from "@/lib/mockData";
 
 export default function HospitalDemoPage() {
+  const router = useRouter();
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -146,12 +150,24 @@ export default function HospitalDemoPage() {
 
         {/* Call to Action */}
         <motion.div variants={itemVariants} className="mt-12 text-center">
-          <p className="text-slate-400 mb-4">This is a demo of the hospital admin dashboard. Register your institution to get started.</p>
-          <Link href="/login?role=hospital">
-            <button className="px-8 py-3 rounded-lg bg-linear-to-r from-orange-500 to-red-500 font-semibold hover:shadow-lg hover:shadow-orange-500/50 transition-all">
-              Register Hospital
-            </button>
-          </Link>
+          <p className="text-slate-400 mb-4">Ready to manage your hospital's applications?</p>
+          <button 
+            onClick={() => {
+              if (typeof window !== 'undefined') {
+                const usersKey = "electivio_users";
+                window.localStorage.setItem(usersKey, JSON.stringify(mockUsers));
+              }
+              setTimeout(() => {
+                const loggedInUser = loginUser("hospital1@electivio.com", "password");
+                if (loggedInUser) {
+                  window.location.href = "/hospital";
+                }
+              }, 100);
+            }}
+            className="px-8 py-3 rounded-lg bg-gradient-to-r from-orange-500 to-red-500 font-semibold hover:shadow-lg hover:shadow-orange-500/50 transition-all"
+          >
+            Access Full Dashboard
+          </button>
         </motion.div>
       </motion.div>
     </div>

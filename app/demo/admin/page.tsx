@@ -2,10 +2,14 @@
 
 import { motion, cubicBezier } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ArrowLeft, BarChart3, Shield, Zap, Globe } from "lucide-react";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
+import { loginUser } from "@/lib/storage";
+import { mockUsers } from "@/lib/mockData";
 
 export default function AdminDemoPage() {
+  const router = useRouter();
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -148,12 +152,24 @@ export default function AdminDemoPage() {
 
         {/* Call to Action */}
         <motion.div variants={itemVariants} className="mt-12 text-center">
-          <p className="text-slate-400 mb-4">This is a demo of the admin control panel. Contact us to request administrator access.</p>
-          <Link href="/login">
-            <button className="px-8 py-3 rounded-lg bg-linear-to-r from-purple-500 to-pink-500 font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all">
-              Back to Login
-            </button>
-          </Link>
+          <p className="text-slate-400 mb-4">Ready to access the admin control panel?</p>
+          <button 
+            onClick={() => {
+              if (typeof window !== 'undefined') {
+                const usersKey = "electivio_users";
+                window.localStorage.setItem(usersKey, JSON.stringify(mockUsers));
+              }
+              setTimeout(() => {
+                const loggedInUser = loginUser("admin@example.com", "password");
+                if (loggedInUser) {
+                  window.location.href = "/admin";
+                }
+              }, 100);
+            }}
+            className="px-8 py-3 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all"
+          >
+            Access Full Dashboard
+          </button>
         </motion.div>
       </motion.div>
     </div>

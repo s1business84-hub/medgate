@@ -34,33 +34,28 @@ export function DemoButton() {
     window.localStorage.setItem(alertsKey, JSON.stringify(mockStaffAlerts));
   }
 
-  // Auto-login and redirect to full dashboard
+  // Launch demo and redirect to demo preview page
   const handleLaunchDemo = (email: string, password: string, role: string) => {
     // Initialize demo data first
     initializeDemoData();
     
     // Small delay to ensure data is written to localStorage
     setTimeout(() => {
-      // Auto-login the user
-      const loggedInUser = loginUser(email, password);
+      // Redirect to the demo preview page based on role
+      const demoMap: Record<string, string> = {
+        student: "/demo/student",
+        staff: "/demo/hospital",
+        supervisor: "/demo/supervisor",
+        admin: "/demo/admin"
+      };
       
-      if (loggedInUser) {
-        // Redirect to the actual full dashboard based on role
-        const dashboardMap: Record<string, string> = {
-          student: "/student",
-          staff: "/hospital",
-          supervisor: "/supervisor",
-          admin: "/admin"
-        };
-        
-        const targetRoute = dashboardMap[role] || "/login";
-        
-        // Close modal and redirect
-        setIsOpen(false);
-        
-        // Force a page refresh to ensure auth context updates
-        window.location.href = targetRoute;
-      }
+      const targetRoute = demoMap[role] || "/login";
+      
+      // Close modal and redirect
+      setIsOpen(false);
+      
+      // Redirect to demo preview page
+      window.location.href = targetRoute;
     }, 100);
   }
 
