@@ -195,19 +195,7 @@ export default function SupervisorDashboard() {
     );
   }
 
-  const getInitialStudents = () => {
-    if (typeof window !== "undefined") {
-      const saved = window.localStorage.getItem("supervisor_students");
-      if (saved) {
-        try {
-          return JSON.parse(saved) as StudentData[];
-        } catch {}
-      }
-    }
-    return mockStudents;
-  };
-
-  const [students, setStudents] = useState<StudentData[]>(getInitialStudents);
+  const [students, setStudents] = useState<StudentData[]>(mockStudents);
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState("all");
   const [activeTab, setActiveTab] = useState<
@@ -220,10 +208,26 @@ export default function SupervisorDashboard() {
     notes: "",
   });
 
+  // Load students from localStorage on mount
   useEffect(() => {
-    try {
-      window.localStorage.setItem("supervisor_students", JSON.stringify(students));
-    } catch {}
+    if (typeof window !== "undefined") {
+      const saved = window.localStorage.getItem("supervisor_students");
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved) as StudentData[];
+          setStudents(parsed);
+        } catch {}
+      }
+    }
+  }, []);
+
+  // Save students to localStorage whenever they change
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      try {
+        window.localStorage.setItem("supervisor_students", JSON.stringify(students));
+      } catch {}
+    }
   }, [students]);
 
   const promoteStudent = (id: string) => {

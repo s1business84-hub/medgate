@@ -28,8 +28,15 @@ export default function AdminPage() {
     }
   }, [user, router]);
 
-  const [applications, setApplications] = useState(getApplications());
+  const [applications, setApplications] = useState<Application[]>([]);
   const [selectedApp, setSelectedApp] = useState<Application | null>(null);
+
+  // Load applications on mount
+  useEffect(() => {
+    if (user && user.role === "admin") {
+      setApplications(getApplications());
+    }
+  }, [user]);
   const [actionInProgress, setActionInProgress] = useState(false);
   const [rejectReason, setRejectReason] = useState("");
   const [showRejectModal, setShowRejectModal] = useState(false);
