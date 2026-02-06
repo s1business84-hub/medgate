@@ -2,8 +2,8 @@
 
 import { createContext, useContext, useState, ReactNode } from 'react';
 import { User } from '@/lib/types';
-import { getCurrentUser, loginUser, logoutUser, createUser, getUsers } from '@/lib/storage';
-import { mockUsers } from '@/lib/mockData';
+import { getCurrentUser, loginUser, logoutUser, createUser, getUsers, getStudents, getApplications, getStaffAlerts } from '@/lib/storage';
+import { mockUsers, mockStudents, mockApplications, mockStaffAlerts } from '@/lib/mockData';
 
 interface AuthContextType {
   user: User | null;
@@ -13,13 +13,42 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// Helper to initialize demo data in localStorage
+function initializeDemoData() {
+  if (typeof window === 'undefined') return;
+  
+  // Initialize users
+  const existingUsers = getUsers();
+  if (existingUsers.length === 0) {
+    mockUsers.forEach(user => createUser(user));
+  }
+  
+  // Initialize students
+  const existingStudents = getStudents();
+  if (existingStudents.length === 0) {
+    const studentsKey = "electivio_students";
+    window.localStorage.setItem(studentsKey, JSON.stringify(mockStudents));
+  }
+  
+  // Initialize applications
+  const existingApplications = getApplications();
+  if (existingApplications.length === 0) {
+    const applicationsKey = "electivio_applications";
+    window.localStorage.setItem(applicationsKey, JSON.stringify(mockApplications));
+  }
+  
+  // Initialize staff alerts
+  const existingAlerts = getStaffAlerts();
+  if (existingAlerts.length === 0) {
+    const alertsKey = "electivio_staff_alerts";
+    window.localStorage.setItem(alertsKey, JSON.stringify(mockStaffAlerts));
+  }
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(() => {
-    // Initialize demo users if they don't exist
-    const existingUsers = getUsers();
-    if (existingUsers.length === 0) {
-      mockUsers.forEach(user => createUser(user));
-    }
+    // Initialize demo data on first load
+    initializeDemoData();
     return getCurrentUser();
   });
 

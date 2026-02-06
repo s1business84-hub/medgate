@@ -1,4 +1,4 @@
-import type { Student, Program, Application, Document, Payment, AuditLog, Hospital } from "./types";
+import type { Student, Program, Application, Document, Payment, AuditLog, Hospital, StaffApplicationAlert } from "./types";
 
 export const mockHospitals: Hospital[] = [
   {
@@ -195,6 +195,17 @@ export const mockPrograms: Program[] = [
 
 export const mockStudents: Student[] = [
   {
+    id: "stu_demo",
+    name: "John Smith",
+    email: "student@example.com",
+    phone: "+971501234567",
+    nationality: "United States",
+    university: "Harvard Medical School",
+    yearOfStudy: 4,
+    complianceStatus: "Complete",
+    createdAt: "2024-01-10T08:00:00Z",
+  },
+  {
     id: "stu_1",
     name: "John Doe",
     email: "john.doe@example.com",
@@ -219,6 +230,33 @@ export const mockStudents: Student[] = [
 ];
 
 export const mockApplications: Application[] = [
+  {
+    id: "app_demo_1",
+    studentId: "stu_demo",
+    programId: "prog_1",
+    hospitalId: "h1",
+    status: "Under Review",
+    submissionDate: "2024-02-10T14:30:00Z",
+    sessionCount: 2,
+  },
+  {
+    id: "app_demo_2",
+    studentId: "stu_demo",
+    programId: "prog_3",
+    hospitalId: "h3",
+    status: "Approved",
+    submissionDate: "2024-01-25T10:15:00Z",
+    sessionCount: 1,
+  },
+  {
+    id: "app_demo_3",
+    studentId: "stu_demo",
+    programId: "prog_5",
+    hospitalId: "h4",
+    status: "Submitted",
+    submissionDate: "2024-02-12T09:00:00Z",
+    sessionCount: 3,
+  },
   {
     id: "app_1",
     studentId: "stu_1",
@@ -290,6 +328,35 @@ export const mockAuditLogs: AuditLog[] = [
     action: "Application Status Updated",
     details: "Updated application app_1 status to Approved",
     timestamp: "2024-02-02T14:00:00Z",
+  },
+];
+
+export const mockStaffAlerts: StaffApplicationAlert[] = [
+  {
+    id: "alert_demo_1",
+    hospitalId: "h1",
+    applicationId: "app_demo_1",
+    studentId: "stu_demo",
+    studentName: "John Smith",
+    studentEmail: "student@example.com",
+    programId: "prog_1",
+    submittedAt: "2024-02-10T14:30:00Z",
+    readBy: [],
+    status: "pending",
+    alertCreatedAt: "2024-02-10T14:30:00Z",
+  },
+  {
+    id: "alert_demo_3",
+    hospitalId: "h4",
+    applicationId: "app_demo_3",
+    studentId: "stu_demo",
+    studentName: "John Smith",
+    studentEmail: "student@example.com",
+    programId: "prog_5",
+    submittedAt: "2024-02-12T09:00:00Z",
+    readBy: [],
+    status: "pending",
+    alertCreatedAt: "2024-02-12T09:00:00Z",
   },
 ];
 
