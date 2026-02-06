@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { User } from '@/lib/types';
 import { getCurrentUser, loginUser, logoutUser, createUser, getUsers, getStudents, getApplications, getStaffAlerts } from '@/lib/storage';
 import { mockUsers, mockStudents, mockApplications, mockStaffAlerts } from '@/lib/mockData';
@@ -46,11 +46,14 @@ function initializeDemoData() {
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(() => {
-    // Initialize demo data on first load
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    // Initialize demo data and load current user on client-side only
     initializeDemoData();
-    return getCurrentUser();
-  });
+    const currentUser = getCurrentUser();
+    setUser(currentUser);
+  }, []);
 
   const login = (email: string, password: string): boolean => {
     const loggedInUser = loginUser(email, password);
