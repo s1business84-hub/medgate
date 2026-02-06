@@ -3,14 +3,15 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Play, Zap, Copy, Check } from "lucide-react"
-import Link from "next/link"
-import { getUsers, getStudents, getApplications, getStaffAlerts } from "@/lib/storage"
+import { useRouter } from "next/navigation"
+import { getUsers, getStudents, getApplications, getStaffAlerts, loginUser } from "@/lib/storage"
 import { mockUsers, mockStudents, mockApplications, mockStaffAlerts } from "@/lib/mockData"
 
 export function DemoButton() {
   const [isOpen, setIsOpen] = useState(false)
   const [selectedTab, setSelectedTab] = useState("student")
   const [copiedEmail, setCopiedEmail] = useState<string | null>(null)
+  const router = useRouter()
 
   // Initialize demo data in localStorage
   const initializeDemoData = () => {
@@ -18,10 +19,7 @@ export function DemoButton() {
     
     // Force reinitialize users
     const usersKey = "electivio_users";
-    const existingUsers = getUsers();
-    if (existingUsers.length === 0) {
-      window.localStorage.setItem(usersKey, JSON.stringify(mockUsers));
-    }
+    window.localStorage.setItem(usersKey, JSON.stringify(mockUsers));
     
     // Force reinitialize students
     const studentsKey = "electivio_students";
@@ -36,12 +34,38 @@ export function DemoButton() {
     window.localStorage.setItem(alertsKey, JSON.stringify(mockStaffAlerts));
   }
 
+  // Auto-login and redirect to full dashboard
+  const handleLaunchDemo = (email: string, password: string, role: string) => {
+    // Initialize demo data first
+    initializeDemoData();
+    
+    // Auto-login the user
+    const loggedInUser = loginUser(email, password);
+    
+    if (loggedInUser) {
+      // Redirect to the actual full dashboard based on role
+      const dashboardMap: Record<string, string> = {
+        student: "/student",
+        staff: "/hospital",
+        supervisor: "/supervisor",
+        admin: "/admin"
+      };
+      
+      const targetRoute = dashboardMap[role] || "/login";
+      
+      // Close modal and redirect
+      setIsOpen(false);
+      
+      // Force a page refresh to ensure auth context updates
+      window.location.href = targetRoute;
+    }
+  }
+
   const demoCredentials = {
     student: {
       id: "student",
       label: "Student Demo",
       icon: "👨‍🎓",
-      href: "/demo/student",
       email: "student@example.com",
       password: "password",
       description: "Medical trainee exploring programs and tracking progress",
@@ -50,7 +74,6 @@ export function DemoButton() {
       id: "staff",
       label: "Staff Demo",
       icon: "🏥",
-      href: "/demo/hospital",
       email: "hospital1@electivio.com",
       password: "password",
       description: "Hospital administrator managing applications and students",
@@ -59,7 +82,6 @@ export function DemoButton() {
       id: "supervisor",
       label: "Supervisor Demo",
       icon: "📊",
-      href: "/demo/supervisor",
       email: "supervisor@example.com",
       password: "password",
       description: "Supervisor tracking student progress and reviewing forms",
@@ -68,7 +90,6 @@ export function DemoButton() {
       id: "admin",
       label: "Admin Demo",
       icon: "🔐",
-      href: "/demo/admin",
       email: "admin@example.com",
       password: "password",
       description: "Platform founders viewing analytics and system-wide metrics",
@@ -199,17 +220,13 @@ export function DemoButton() {
                 </div>
 
                 {/* Action Button */}
-                <Link
-                  href={current.href}
-                  onClick={() => {
-                    initializeDemoData();
-                    setIsOpen(false);
-                  }}
+                <button
+                  onClick={() => handleLaunchDemo(current.email, current.password, selectedTab)}
                   className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-500/20 hover:bg-green-500/30 border border-green-500/50 rounded-lg text-green-300 font-semibold transition-all duration-200 group/btn"
                 >
                   <Play className="w-4 h-4 group-hover/btn:scale-110 transition-transform" />
                   Launch {current.label}
-                </Link>
+                </button>
               </motion.div>
 
               {/* Footer */}
