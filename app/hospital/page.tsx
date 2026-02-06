@@ -388,7 +388,7 @@ export default function HospitalPortal() {
             )}
 
             {/* Stats Grid */}
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               {/* Stats */}
               <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-lg shadow p-8">
                 <div className="flex items-center justify-between">
@@ -421,6 +421,21 @@ export default function HospitalPortal() {
                     </p>
                   </div>
                   <CheckCircle className="w-12 h-12 text-emerald-400 opacity-30" />
+                </div>
+              </div>
+
+              <div 
+                className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-lg shadow p-8 cursor-pointer hover:bg-white/10 transition-all duration-300 hover:border-cyan-400/30"
+                onClick={() => setShowAlerts(!showAlerts)}
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-slate-300 text-sm mb-2">New Alerts</p>
+                    <p className="text-3xl font-bold text-cyan-400">
+                      {staffAlerts.length}
+                    </p>
+                  </div>
+                  <Bell className="w-12 h-12 text-cyan-400 opacity-30" />
                 </div>
               </div>
             </div>

@@ -76,7 +76,7 @@ export default function ForHospitalsPage() {
         {/* Hero Section */}
         <div className="text-center mb-20 animate-fade-in" style={{ animationDelay: '0.1s' }}>
           <div className="inline-block mb-6">
-            <div className="w-20 h-20 bg-linear-to-br from-cyan-600 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg">
+            <div className="w-20 h-20 bg-gradient-to-br from-cyan-600 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg">
               <Building2 className="w-10 h-10 text-white" />
             </div>
           </div>
@@ -110,7 +110,7 @@ export default function ForHospitalsPage() {
                 transition={{ duration: 0.3 }}
                 className="mt-6 max-w-2xl mx-auto overflow-hidden"
               >
-                <div className="bg-linear-to-br from-cyan-600/20 to-indigo-600/20 border border-cyan-500/30 rounded-xl backdrop-blur-xl p-8">
+                <div className="bg-gradient-to-br from-cyan-600/20 to-indigo-600/20 border border-cyan-500/30 rounded-xl backdrop-blur-xl p-8">
                   <h3 className="text-2xl font-bold text-slate-100 mb-6">Contact our founders</h3>
                   <div className="space-y-4 mb-6">
                     <div className="flex items-start gap-4 pb-4 border-b border-white/10">
@@ -197,15 +197,15 @@ export default function ForHospitalsPage() {
                       whileHover={{ y: -8, transition: { duration: 0.2 } }}
                     >
                       {/* Animated gradient overlay */}
-                      <div className={`absolute inset-0 bg-linear-to-br from-cyan-600/10 via-transparent to-indigo-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+                      <div className={`absolute inset-0 bg-gradient-to-br from-cyan-600/10 via-transparent to-indigo-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
                       
                       {/* Liquid glass shine effect */}
                       <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-300">
-                        <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-linear-to-br from-white to-transparent rounded-full blur-xl" />
+                        <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-gradient-to-br from-white to-transparent rounded-full blur-xl" />
                       </div>
                       
                       <div className="relative z-10 p-8">
-                        <div className={`w-16 h-16 bg-linear-to-br ${benefit.gradient} rounded-xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
+                        <div className={`w-16 h-16 bg-gradient-to-br ${benefit.gradient} rounded-xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
                           <benefit.icon className="w-8 h-8 text-white" />
                         </div>
                         <h3 className="text-xl font-bold text-slate-100 mb-3">
@@ -214,7 +214,7 @@ export default function ForHospitalsPage() {
                         <p className="text-slate-300 group-hover:text-slate-200 transition-colors leading-relaxed">
                           {benefit.description}
                         </p>
-                        <div className={`mt-6 h-1 bg-linear-to-r ${benefit.gradient} rounded-full transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500`} />
+                        <div className={`mt-6 h-1 bg-gradient-to-r ${benefit.gradient} rounded-full transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500`} />
                       </div>
                     </motion.div>
                   </ScrollReveal>
@@ -232,7 +232,7 @@ export default function ForHospitalsPage() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="relative bg-linear-to-br from-cyan-600 via-indigo-600 to-purple-600 rounded-3xl p-8 md:p-12 text-white overflow-hidden group border border-white/10">
+          <div className="relative bg-gradient-to-br from-cyan-600 via-indigo-600 to-purple-600 rounded-3xl p-8 md:p-12 text-white overflow-hidden group border border-white/10">
             {/* Animated background elements */}
             <div className="absolute top-0 right-0 w-96 h-96 bg-white opacity-5 rounded-full blur-3xl -mr-48 -mt-48 group-hover:scale-125 transition-transform duration-500" />
             <div className="absolute bottom-0 left-0 w-80 h-80 bg-white opacity-5 rounded-full blur-3xl -ml-40 -mb-40 group-hover:scale-110 transition-transform duration-500" />
