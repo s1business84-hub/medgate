@@ -3,7 +3,7 @@
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion"
 import { CheckCircle, Users, Award, ArrowRight, Sparkles, Globe, Shield, Zap, GraduationCap, Star, Building } from "lucide-react"
 import Link from "next/link"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, useMemo } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/all"
 
@@ -15,6 +15,18 @@ import { PageTransition } from "@/components/ui/page-transition"
 import { Phone3D } from "../3d-phone"
 import { ScrollCue } from "../animation/ScrollCue"
 import { cn } from "@/lib/utils"
+
+// Generate star positions outside of component to avoid calling Math.random during render
+const generateStarPositions = (count: number) => {
+  return Array.from({ length: count }, () => ({
+    left: Math.random() * 100,
+    top: Math.random() * 100,
+    duration: 3 + Math.random() * 2,
+    delay: Math.random() * 5,
+  }));
+};
+
+const STAR_POSITIONS = generateStarPositions(30);
 
 // Glowing orb component for liquid glass effect
 function GlowingOrb({ className, color, size, delay = 0 }: { className: string; color: string; size: string; delay?: number }) {
@@ -163,22 +175,22 @@ export function Hero() {
         
         {/* Animated star field */}
         <div className="absolute inset-0 overflow-hidden">
-          {[...Array(30)].map((_, i) => (
+          {STAR_POSITIONS.map((star, i) => (
             <motion.div
               key={i}
               className="absolute w-1 h-1 bg-white rounded-full"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
+                left: `${star.left}%`,
+                top: `${star.top}%`,
               }}
               animate={{
                 opacity: [0, 1, 0],
                 scale: [0, 1, 0],
               }}
               transition={{
-                duration: 3 + Math.random() * 2,
+                duration: star.duration,
                 repeat: Infinity,
-                delay: Math.random() * 5,
+                delay: star.delay,
               }}
             />
           ))}
@@ -316,7 +328,7 @@ export function Hero() {
           {/* Right Column - 3D Phone */}
           <Reveal delay={0.3} y={40}>
             <motion.div 
-              className="flex justify-center lg:justify-end items-center h-[500px] relative"
+              className="flex justify-center lg:justify-end items-center h-125 relative"
               style={{ y: parallaxY }}
             >
               {/* Glow behind phone */}
