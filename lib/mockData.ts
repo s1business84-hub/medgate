@@ -362,7 +362,23 @@ export const mockStaffAlerts: StaffApplicationAlert[] = [
 
 // For backward compatibility
 export const hospitals = mockHospitals;
-export const programs = mockPrograms.map(p => {
+interface ProgramWithMetadata extends Program {
+  departmentName: string;
+  programType: "Observership" | "Hands on" | "Internship" | "Residency" | "Elective";
+  eligibility: { yearOfStudyMin: string; language: string };
+  requiredDocuments: readonly string[];
+  durationWeeksOptions: number[];
+  dailyHoursMax: number;
+  startDates: string[];
+  seatsAvailable: number;
+  handsOnLevel: "observe" | "Limited supervised exposure" | "supervised" | "independent";
+  certificateProvided: boolean;
+  feeAed: number;
+  learningObjectives: string[];
+  keySkills: string[];
+}
+
+export const programs: ProgramWithMetadata[] = mockPrograms.map(p => {
   // Determine program type based on name/content
   let programType: "Observership" | "Hands on" | "Internship" | "Residency" | "Elective" = "Observership";
   if (p.name.toLowerCase().includes('elective')) {
@@ -425,7 +441,7 @@ export const programs = mockPrograms.map(p => {
     feeAed,
     learningObjectives,
     keySkills,
-  };
+  } as ProgramWithMetadata;
 });
 
 export const mockUsers = [

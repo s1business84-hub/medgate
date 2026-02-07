@@ -17,8 +17,8 @@ interface Program {
   durationWeeksOptions: number[];
   dailyHoursMax: number;
   handsOnLevel: string;
-  learningObjectives?: string[];
-  keySkills?: string[];
+  learningObjectives: string[];
+  keySkills: string[];
   requirements: string[];
   hospitalId?: string;
   bestFor?: string;
