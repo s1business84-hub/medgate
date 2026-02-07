@@ -6,9 +6,11 @@ import { Target, Plus, Trash2, Brain, Sparkles } from "lucide-react"
 
 interface Goal {
   id: string
+  type: "academic" | "personal" // academic = supervisor set, personal = student set
   category: string
   targetValue: number
   deadline: string
+  setBy?: string // "supervisor" or "student"
   aiSuggestion?: string
 }
 
@@ -22,6 +24,7 @@ export function AIAnalyticsPanel({ entries, onGoalsUpdate }: AIAnalyticsProps) {
   const [showForm, setShowForm] = useState(false)
   const [aiInsights, setAiInsights] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
+  const [goalType, setGoalType] = useState<"academic" | "personal">("personal")
   const [formData, setFormData] = useState({
     category: "skills",
     targetValue: 80,
@@ -131,9 +134,11 @@ export function AIAnalyticsPanel({ entries, onGoalsUpdate }: AIAnalyticsProps) {
 
     const newGoal: Goal = {
       id: Date.now().toString(),
+      type: goalType,
       category: formData.category,
       targetValue: formData.targetValue,
       deadline: formData.deadline,
+      setBy: "student", // In student portal, always set by student
     }
 
     const updated = [...goals, newGoal]
@@ -208,7 +213,7 @@ export function AIAnalyticsPanel({ entries, onGoalsUpdate }: AIAnalyticsProps) {
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-bold text-white flex items-center gap-2">
             <Target className="w-6 h-6 text-cyan-400" />
-            Learning Goals
+            Goals & Targets
           </h2>
           <motion.button
             onClick={() => setShowForm(!showForm)}
@@ -227,6 +232,36 @@ export function AIAnalyticsPanel({ entries, onGoalsUpdate }: AIAnalyticsProps) {
             animate={{ opacity: 1, height: "auto" }}
             className="mb-4 p-4 bg-white/10 rounded-lg space-y-3"
           >
+            <div>
+              <label className="text-xs font-medium text-slate-300 mb-2 block">Goal Type</label>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setGoalType("personal")}
+                  className={`flex-1 px-4 py-2 rounded-lg font-semibold transition ${
+                    goalType === "personal"
+                      ? "bg-cyan-500 text-white"
+                      : "bg-white/10 text-slate-300 hover:bg-white/20"
+                  }`}
+                >
+                  Personal Goal
+                </button>
+                <button
+                  onClick={() => setGoalType("academic")}
+                  className={`flex-1 px-4 py-2 rounded-lg font-semibold transition ${
+                    goalType === "academic"
+                      ? "bg-purple-500 text-white"
+                      : "bg-white/10 text-slate-300 hover:bg-white/20"
+                  }`}
+                >
+                  Academic Goal
+                </button>
+              </div>
+              <p className="text-xs text-slate-400 mt-2">
+                {goalType === "personal" 
+                  ? "Set your own learning objectives and milestones"
+                  : "Goals aligned with your clinical training requirements"}
+              </p>
+            </div>
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="text-xs font-medium text-slate-300">Category</label>
@@ -281,33 +316,85 @@ export function AIAnalyticsPanel({ entries, onGoalsUpdate }: AIAnalyticsProps) {
         )}
 
         {goals.length > 0 ? (
-          <div className="space-y-2">
-            {goals.map((goal) => (
-              <motion.div
-                key={goal.id}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="p-3 bg-white/5 border border-white/10 rounded-lg flex items-center justify-between"
-              >
-                <div className="flex-1">
-                  <p className="font-semibold text-white capitalize">{goal.category}</p>
-                  <p className="text-sm text-slate-400">
-                    Target: {goal.targetValue}% by {new Date(goal.deadline).toLocaleDateString()}
-                  </p>
+          <div className="space-y-4">
+            {/* Academic Goals Section */}
+            {goals.filter(g => g.type === "academic").length > 0 && (
+              <div>
+                <h3 className="text-sm font-semibold text-purple-300 mb-2 flex items-center gap-2">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/>
+                  </svg>
+                  Academic Goals
+                </h3>
+                <div className="space-y-2">
+                  {goals.filter(g => g.type === "academic").map((goal) => (
+                    <motion.div
+                      key={goal.id}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="p-3 bg-purple-500/10 border border-purple-500/30 rounded-lg flex items-center justify-between"
+                    >
+                      <div className="flex-1">
+                        <p className="font-semibold text-white capitalize">{goal.category}</p>
+                        <p className="text-sm text-slate-400">
+                          Target: {goal.targetValue}% by {new Date(goal.deadline).toLocaleDateString()}
+                        </p>
+                        <p className="text-xs text-purple-300 mt-1">Set by {goal.setBy || "supervisor"}</p>
+                      </div>
+                      <motion.button
+                        onClick={() => handleDeleteGoal(goal.id)}
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        className="p-2 text-red-400 hover:text-red-300 hover:bg-red-500/20 rounded-lg transition"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </motion.button>
+                    </motion.div>
+                  ))}
                 </div>
-                <motion.button
-                  onClick={() => handleDeleteGoal(goal.id)}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="p-2 text-red-400 hover:text-red-300 hover:bg-red-500/20 rounded-lg transition"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </motion.button>
-              </motion.div>
-            ))}
+              </div>
+            )}
+
+            {/* Personal Goals Section */}
+            {goals.filter(g => g.type === "personal").length > 0 && (
+              <div>
+                <h3 className="text-sm font-semibold text-cyan-300 mb-2 flex items-center gap-2">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"/>
+                  </svg>
+                  Personal Goals
+                </h3>
+                <div className="space-y-2">
+                  {goals.filter(g => g.type === "personal").map((goal) => (
+                    <motion.div
+                      key={goal.id}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="p-3 bg-cyan-500/10 border border-cyan-500/30 rounded-lg flex items-center justify-between"
+                    >
+                      <div className="flex-1">
+                        <p className="font-semibold text-white capitalize">{goal.category}</p>
+                        <p className="text-sm text-slate-400">
+                          Target: {goal.targetValue}% by {new Date(goal.deadline).toLocaleDateString()}
+                        </p>
+                        <p className="text-xs text-cyan-300 mt-1">Self-directed</p>
+                      </div>
+                      <motion.button
+                        onClick={() => handleDeleteGoal(goal.id)}
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        className="p-2 text-red-400 hover:text-red-300 hover:bg-red-500/20 rounded-lg transition"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </motion.button>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         ) : (
-          <p className="text-sm text-slate-400">No goals set yet. Add one to stay motivated!</p>
+          <p className="text-sm text-slate-400">No goals set yet. Add academic or personal goals to track your progress!</p>
         )}
       </motion.div>
     </div>
