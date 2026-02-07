@@ -514,18 +514,18 @@ export function Hero() {
                 </p>
               </div>
               <div className="flex flex-wrap gap-4">
-                <Link
-                  href="/programs"
+                <motion.button 
+                  onClick={(e) => handleNavigate(e, "/programs")}
                   className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-cyan-500 to-purple-500 text-white font-medium hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300"
                 >
-                  Get Started
+                  Browse Programs
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
+                </motion.button>
                 <Link
-                  href="/purpose"
+                  href="/for-hospitals"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 text-slate-300 hover:text-white hover:border-white/40 transition-all duration-300"
                 >
-                  Learn More
+                  For Hospitals
                 </Link>
               </div>
             </div>

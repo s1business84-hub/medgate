@@ -44,12 +44,6 @@ export function Header() {
             <Link href="/about" className="text-slate-300 hover:text-cyan-300 transition-colors font-medium text-sm px-3 py-2 rounded hover:bg-white/5">
               About
             </Link>
-            <Link href="/purpose" className="text-slate-300 hover:text-cyan-300 transition-colors font-medium text-sm px-3 py-2 rounded hover:bg-white/5">
-              Purpose
-            </Link>
-            <Link href="/programs" className="text-slate-300 hover:text-cyan-300 transition-colors font-medium text-sm px-3 py-2 rounded hover:bg-white/5">
-              Programs
-            </Link>
             <Link href="/faq" className="text-slate-300 hover:text-cyan-300 transition-colors font-medium text-sm px-3 py-2 rounded hover:bg-white/5">
               FAQ
             </Link>
@@ -134,12 +128,6 @@ export function Header() {
             </Link>
             <Link href="/about" className="block text-slate-300 hover:text-cyan-300 transition-colors font-medium px-3 py-2 rounded hover:bg-white/5">
               About
-            </Link>
-            <Link href="/purpose" className="block text-slate-300 hover:text-cyan-300 transition-colors font-medium px-3 py-2 rounded hover:bg-white/5">
-              Purpose
-            </Link>
-            <Link href="/programs" className="block text-slate-300 hover:text-cyan-300 transition-colors font-medium px-3 py-2 rounded hover:bg-white/5">
-              Programs
             </Link>
             <Link href="/faq" className="block text-slate-300 hover:text-cyan-300 transition-colors font-medium px-3 py-2 rounded hover:bg-white/5">
               FAQ

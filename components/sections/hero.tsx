@@ -133,9 +133,9 @@ export function Hero() {
               </MagneticHover>
               
               <MagneticHover>
-                <Link href="/purpose">
+                <Link href="/for-hospitals">
                   <button className="inline-flex items-center gap-2 bg-slate-900 text-white px-8 py-4 rounded-full font-semibold text-base border border-slate-800 hover:border-slate-700 hover:bg-slate-800 transition-all duration-300">
-                    Our Purpose
+                    For Hospitals
                   </button>
                 </Link>
               </MagneticHover>
