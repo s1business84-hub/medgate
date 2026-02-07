@@ -274,9 +274,9 @@ export default function HospitalPortal() {
     <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
       <LiquidParallax />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
-      <div className="relative max-w-7xl mx-auto px-6 py-12">
+      <div className="relative max-w-7xl mx-auto px-6 py-20">
         {/* Header */}
-        <div className="flex items-center justify-between mb-12 animate-fade-in">
+        <div className="flex items-center justify-between mb-20 animate-fade-in">
           <div>
             <h1 className="text-3xl font-bold mb-2">
               <AnimatedGradientText className="text-3xl font-bold">Hospital Portal</AnimatedGradientText>
@@ -312,9 +312,9 @@ export default function HospitalPortal() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
           {/* Left Sidebar - Audit Card & Alerts Toggle */}
-          <div className="lg:col-span-1 space-y-6">
+          <div className="lg:col-span-1 space-y-8">
             {/* Alerts Toggle Card */}
             {staffAlerts.length > 0 && (
               <div className="rounded-xl border border-cyan-400/30 bg-cyan-500/10 backdrop-blur-xl shadow-lg p-6 sticky top-8">
@@ -352,7 +352,7 @@ export default function HospitalPortal() {
           </div>
 
           {/* Main Content */}
-          <div className="lg:col-span-3 space-y-10">
+          <div className="lg:col-span-3 space-y-14">
             {/* Application Alerts Section */}
             {showAlerts && staffAlerts.length > 0 && (
               <div className="bg-gradient-to-br from-cyan-950/20 to-blue-950/20 border border-cyan-400/20 rounded-xl p-8">
@@ -388,7 +388,7 @@ export default function HospitalPortal() {
             )}
 
             {/* Stats Grid */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {/* Stats */}
               <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-lg shadow p-8">
                 <div className="flex items-center justify-between">
@@ -441,16 +441,16 @@ export default function HospitalPortal() {
             </div>
 
             {/* Applications and Details Grid */}
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-3 gap-10">
               {/* Applications List */}
               <div className="md:col-span-2">
                 <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-lg shadow">
                   <div className="p-8 border-b border-white/10">
-                    <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center justify-between mb-8">
                       <h2 className="text-xl font-bold text-slate-100">Applications</h2>
                     </div>
                     {/* Filter Tabs */}
-                    <div className="flex gap-3 flex-wrap">
+                    <div className="flex gap-4 flex-wrap">
                       {[
                         { id: "all", label: "All", count: applications.length },
                         { id: "approved", label: "Approved", count: applications.filter(a => a.status === "Approved").length },
@@ -478,7 +478,7 @@ export default function HospitalPortal() {
                       <p>No applications yet</p>
                     </div>
                   ) : (
-                    <div className="divide-y">
+                    <div className="divide-y divide-white/10">
                       {applications
                         .filter((app) => {
                           if (appFilter === "all") return true;
@@ -491,7 +491,7 @@ export default function HospitalPortal() {
                         <div
                           key={app.id}
                           onClick={() => setSelectedApp(app)}
-                          className={`p-4 cursor-pointer transition-colors ${
+                          className={`p-6 cursor-pointer transition-colors border-b border-white/5 ${
                             selectedApp?.id === app.id ? "bg-indigo-950/40" : "hover:bg-white/5"
                           }`}
                         >
@@ -538,30 +538,30 @@ export default function HospitalPortal() {
           <div>
             {selectedApp ? (
               <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-lg shadow sticky top-8">
-                <div className="p-6 border-b border-white/10">
+                <div className="p-8 border-b border-white/10">
                   <h3 className="text-lg font-bold text-slate-100">Application Details</h3>
                 </div>
 
-                <div className="p-6 space-y-4">
+                <div className="p-8 space-y-6">
                   <div>
-                    <p className="text-sm text-slate-300 mb-1">Student Name</p>
-                    <p className="font-semibold text-slate-100">{getStudentName(selectedApp.studentId)}</p>
+                    <p className="text-xs uppercase tracking-wider text-slate-400 mb-2 font-semibold">Student Name</p>
+                    <p className="font-semibold text-slate-100 text-lg">{getStudentName(selectedApp.studentId)}</p>
                   </div>
 
                   <div>
-                    <p className="text-sm text-slate-300 mb-1">Email</p>
-                    <p className="font-semibold text-slate-100 break-all">{getStudentEmail(selectedApp.studentId)}</p>
+                    <p className="text-xs uppercase tracking-wider text-slate-400 mb-2 font-semibold">Email</p>
+                    <p className="font-semibold text-slate-100 break-all text-sm">{getStudentEmail(selectedApp.studentId)}</p>
                   </div>
 
                   <div>
-                    <p className="text-sm text-slate-300 mb-1">Submission Date</p>
+                    <p className="text-xs uppercase tracking-wider text-slate-400 mb-2 font-semibold">Submission Date</p>
                     <p className="font-semibold text-slate-100">
                       {new Date(selectedApp.submissionDate).toLocaleDateString()}
                     </p>
                   </div>
 
                   <div>
-                    <p className="text-sm text-slate-300 mb-1">Status</p>
+                    <p className="text-xs uppercase tracking-wider text-slate-400 mb-2 font-semibold">Status</p>
                     <span
                       className={`inline-block px-3 py-1 rounded-full text-sm font-medium border ${
                         selectedApp.status === "Approved"
@@ -589,7 +589,7 @@ export default function HospitalPortal() {
 
                   {/* Action Buttons */}
                   {selectedApp.status === "Submitted" && (
-                    <div className="pt-4 border-t border-white/10 space-y-2">
+                    <div className="pt-8 border-t border-white/10 space-y-3">
                       <Button
                         onClick={() => handleApproval(selectedApp.id)}
                         disabled={actionInProgress}
@@ -612,7 +612,7 @@ export default function HospitalPortal() {
 
                   {/* Create Form Button - Available for Approved/In Training */}
                   {(selectedApp.status === "Approved" || selectedApp.status === "In Training" || selectedApp.status === "Stage 2 Accepted") && (
-                    <div className="pt-4 border-t border-white/10">
+                    <div className="pt-8 border-t border-white/10">
                       <Button
                         onClick={() => setShowFormModal(true)}
                         className="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-medium py-2 rounded-lg transition-colors"
