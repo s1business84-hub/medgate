@@ -17,8 +17,8 @@ interface Program {
   durationWeeksOptions: number[];
   dailyHoursMax: number;
   handsOnLevel: string;
-  learningObjectives: string[];
-  keySkills: string[];
+  learningObjectives?: string[];
+  keySkills?: string[];
   requirements: string[];
   hospitalId: string;
   bestFor?: string;
@@ -143,29 +143,35 @@ export function ProgramDetailClient({ program, hospital, relatedPrograms }: Prog
               <motion.div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-8">
                 <h2 className="text-2xl font-bold text-slate-100 mb-4">Program Overview</h2>
                 <p className="text-slate-300 leading-relaxed mb-4">{program.description}</p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 pt-6 border-t border-white/10">
-                  <div>
-                    <p className="text-xs text-slate-400 font-medium mb-2">Learning Objectives</p>
-                    <ul className="space-y-2">
-                      {program.learningObjectives.slice(0, 3).map((obj, idx) => (
-                        <li key={idx} className="flex items-start gap-2 text-sm text-slate-300">
-                          <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                          <span>{obj}</span>
-                        </li>
-                      ))}
-                    </ul>
+                {(program.learningObjectives || program.keySkills) && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 pt-6 border-t border-white/10">
+                    {program.learningObjectives && program.learningObjectives.length > 0 && (
+                      <div>
+                        <p className="text-xs text-slate-400 font-medium mb-2">Learning Objectives</p>
+                        <ul className="space-y-2">
+                          {program.learningObjectives.slice(0, 3).map((obj, idx) => (
+                            <li key={idx} className="flex items-start gap-2 text-sm text-slate-300">
+                              <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                              <span>{obj}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    {program.keySkills && program.keySkills.length > 0 && (
+                      <div>
+                        <p className="text-xs text-slate-400 font-medium mb-2">Key Skills</p>
+                        <div className="flex flex-wrap gap-2">
+                          {program.keySkills.slice(0, 4).map((skill, idx) => (
+                            <span key={idx} className="px-3 py-1 rounded-full text-xs bg-cyan-500/15 text-cyan-200 border border-cyan-300/30">
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <div>
-                    <p className="text-xs text-slate-400 font-medium mb-2">Key Skills</p>
-                    <div className="flex flex-wrap gap-2">
-                      {program.keySkills.slice(0, 4).map((skill, idx) => (
-                        <span key={idx} className="px-3 py-1 rounded-full text-xs bg-cyan-500/15 text-cyan-200 border border-cyan-300/30">
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+                )}
               </motion.div>
             </Reveal>
 

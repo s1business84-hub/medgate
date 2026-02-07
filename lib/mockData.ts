@@ -390,6 +390,22 @@ export const programs = mockPrograms.map(p => {
   // Demo data - daily hours
   let dailyHoursMax = programType === "Observership" ? 6 : 8;
 
+  // Demo data - learning objectives
+  const learningObjectives = [
+    "Understand clinical workflows and patient care processes",
+    "Observe diagnostic and therapeutic procedures",
+    "Develop professional communication skills in healthcare settings",
+    "Gain exposure to medical decision-making processes"
+  ];
+
+  // Demo data - key skills
+  const keySkills = [
+    "Clinical Observation",
+    "Medical Documentation",
+    "Patient Communication",
+    "Professional Ethics"
+  ];
+
   return {
     ...p,
     departmentName: p.name,
@@ -407,6 +423,8 @@ export const programs = mockPrograms.map(p => {
     handsOnLevel,
     certificateProvided: true,
     feeAed,
+    learningObjectives,
+    keySkills,
   };
 });
 
