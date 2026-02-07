@@ -6,6 +6,7 @@ import { Target, Plus, Trash2, Brain, Sparkles } from "lucide-react"
 
 interface Goal {
   id: string
+  studentId?: string
   type: "academic" | "personal" // academic = supervisor set, personal = student set
   category: string
   targetValue: number
@@ -16,10 +17,11 @@ interface Goal {
 
 interface AIAnalyticsProps {
   entries: any[]
+  studentId?: string
   onGoalsUpdate: (goals: Goal[]) => void
 }
 
-export function AIAnalyticsPanel({ entries, onGoalsUpdate }: AIAnalyticsProps) {
+export function AIAnalyticsPanel({ entries, onGoalsUpdate, studentId }: AIAnalyticsProps) {
   const [goals, setGoals] = useState<Goal[]>([])
   const [showForm, setShowForm] = useState(false)
   const [aiInsights, setAiInsights] = useState<string[]>([])
@@ -35,9 +37,13 @@ export function AIAnalyticsPanel({ entries, onGoalsUpdate }: AIAnalyticsProps) {
   useEffect(() => {
     const saved = localStorage.getItem("student_goals")
     if (saved) {
-      setGoals(JSON.parse(saved))
+      const parsed: Goal[] = JSON.parse(saved)
+      const filtered = studentId
+        ? parsed.filter((goal) => !goal.studentId || goal.studentId === studentId)
+        : parsed
+      setGoals(filtered)
     }
-  }, [])
+  }, [studentId])
 
   // Generate AI insights
   const generateAIInsights = async () => {
@@ -134,6 +140,7 @@ export function AIAnalyticsPanel({ entries, onGoalsUpdate }: AIAnalyticsProps) {
 
     const newGoal: Goal = {
       id: Date.now().toString(),
+      studentId,
       type: goalType,
       category: formData.category,
       targetValue: formData.targetValue,

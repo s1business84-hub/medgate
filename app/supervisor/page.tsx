@@ -25,6 +25,16 @@ interface ApplicationRecord {
   appliedOn: string;
 }
 
+interface AcademicGoal {
+  id: string;
+  studentId: string;
+  type: "academic";
+  category: string;
+  targetValue: number;
+  deadline: string;
+  setBy: "supervisor";
+}
+
 interface StudentData {
   id: string;
   name: string;
@@ -54,13 +64,20 @@ export default function SupervisorDashboard() {
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState("all");
   const [activeTab, setActiveTab] = useState<
-    "overview" | "observerships" | "students" | "forms" | "roles" | "applications" | "progress"
+    "overview" | "observerships" | "students" | "forms" | "roles" | "applications" | "progress" | "goals"
   >("overview");
   const [selectedStudent, setSelectedStudent] = useState<string | null>(null);
   const [progressForm, setProgressForm] = useState({
     category: "skills",
     value: 0,
     notes: "",
+  });
+  const [academicGoals, setAcademicGoals] = useState<AcademicGoal[]>([]);
+  const [goalForm, setGoalForm] = useState({
+    studentId: "",
+    category: "skills",
+    targetValue: 80,
+    deadline: "",
   });
 
   useEffect(() => {
@@ -93,12 +110,52 @@ export default function SupervisorDashboard() {
     }
   }, [students]);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedGoals = window.localStorage.getItem("student_goals");
+      if (savedGoals) {
+        try {
+          const parsed = JSON.parse(savedGoals) as AcademicGoal[];
+          queueMicrotask(() => setAcademicGoals(parsed.filter((g) => g.type === "academic")));
+        } catch {}
+      }
+    }
+  }, []);
+
   const promoteStudent = (id: string) => {
     setStudents((prev) =>
       prev.map((s) =>
         s.id === id ? { ...s, level: Math.min(s.level + 1, 5) } : s
       )
     );
+  };
+
+  const addAcademicGoal = () => {
+    if (!goalForm.studentId || !goalForm.deadline) return;
+    const newGoal: AcademicGoal = {
+      id: Date.now().toString(),
+      studentId: goalForm.studentId,
+      type: "academic",
+      category: goalForm.category,
+      targetValue: goalForm.targetValue,
+      deadline: goalForm.deadline,
+      setBy: "supervisor",
+    };
+
+    const saved = window.localStorage.getItem("student_goals");
+    const existing = saved ? (JSON.parse(saved) as AcademicGoal[]) : [];
+    const updated = [...existing, newGoal];
+    window.localStorage.setItem("student_goals", JSON.stringify(updated));
+    setAcademicGoals(updated.filter((g) => g.type === "academic"));
+    setGoalForm({ studentId: "", category: "skills", targetValue: 80, deadline: "" });
+  };
+
+  const deleteAcademicGoal = (goalId: string) => {
+    const saved = window.localStorage.getItem("student_goals");
+    const existing = saved ? (JSON.parse(saved) as AcademicGoal[]) : [];
+    const updated = existing.filter((g) => g.id !== goalId);
+    window.localStorage.setItem("student_goals", JSON.stringify(updated));
+    setAcademicGoals(updated.filter((g) => g.type === "academic"));
   };
 
   const levelBadge = (level: number) => {
@@ -388,7 +445,7 @@ export default function SupervisorDashboard() {
     return (
       <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100 flex items-center justify-center">
         <LiquidParallax />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
+        <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
         <div className="relative text-center">
           <div className="w-12 h-12 border-4 border-indigo-400/40 border-t-indigo-400 rounded-full animate-spin mx-auto mb-4" />
           <p className="text-slate-300">Redirecting to login...</p>
@@ -401,7 +458,7 @@ export default function SupervisorDashboard() {
     return (
       <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100 flex items-center justify-center">
         <LiquidParallax />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
+        <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
         <div className="relative text-center">
           <div className="w-12 h-12 border-4 border-indigo-400/40 border-t-indigo-400 rounded-full animate-spin mx-auto mb-4" />
           <p className="text-slate-300">Loading supervisor dashboard...</p>
@@ -412,7 +469,7 @@ export default function SupervisorDashboard() {
 
   if (loading) {
     return (
-      <div className="relative min-h-screen overflow-visible bg-gradient-to-b from-slate-950 via-purple-900/20 to-slate-950 flex items-center justify-center">
+      <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950 flex items-center justify-center">
         <LiquidParallax depth={14} className="opacity-70" />
         <p className="text-slate-300 relative z-10">Loading supervisor dashboard...</p>
       </div>
@@ -420,7 +477,7 @@ export default function SupervisorDashboard() {
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-slate-900 via-slate-950 to-black">
+    <div className="relative min-h-screen overflow-hidden bg-linear-to-b from-slate-900 via-slate-950 to-black">
       <LiquidParallax depth={14} className="opacity-70" />
 
       <div className="max-w-7xl mx-auto px-4 py-12 relative z-10">
@@ -435,7 +492,7 @@ export default function SupervisorDashboard() {
                 <ArrowLeft className="w-6 h-6 text-slate-300" />
               </Link>
               <div>
-                <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent flex items-center gap-2">
+                <h1 className="text-5xl font-bold bg-linear-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent flex items-center gap-2">
                   Supervisor Dashboard
                 </h1>
                 <p className="text-xl text-slate-300">Track student progress, visualize clinical development, and gain AI-powered insights</p>
@@ -455,7 +512,7 @@ export default function SupervisorDashboard() {
             <Reveal key={stat.label} delay={0.1 * idx} y={20}>
               <motion.div
                 whileHover={{ y: -4 }}
-                className={`p-6 rounded-xl border border-white/10 bg-gradient-to-br ${stat.color}/10 backdrop-blur-sm hover:border-white/20 transition-all`}
+                className={`p-6 rounded-xl border border-white/10 bg-linear-to-br ${stat.color}/10 backdrop-blur-sm hover:border-white/20 transition-all`}
               >
                 <p className="text-slate-400 text-sm mb-2">{stat.label}</p>
                 <p className="text-3xl font-bold text-white">{stat.value}</p>
@@ -518,7 +575,7 @@ export default function SupervisorDashboard() {
                 whileHover={{ scale: 1.05 }}
                 className={`px-4 py-2 rounded-full font-medium transition-all ${
                   filter === cat.id
-                    ? "bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-lg"
+                    ? "bg-linear-to-r from-purple-500 to-pink-600 text-white shadow-lg"
                     : "bg-white/10 text-slate-300 hover:bg-white/20"
                 }`}
               >
@@ -536,6 +593,7 @@ export default function SupervisorDashboard() {
             { id: "observerships", label: "Observerships" },
             { id: "students", label: "Students" },
             { id: "forms", label: "Forms" },
+            { id: "goals", label: "Goals" },
             { id: "roles", label: "Roles" },
             { id: "applications", label: "Applications" },
           ].map((tab) => (
@@ -544,7 +602,7 @@ export default function SupervisorDashboard() {
               onClick={() => setActiveTab(tab.id as any)}
               className={`px-4 py-2 rounded-full font-medium transition-all ${
                 activeTab === tab.id
-                  ? "bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-lg"
+                  ? "bg-linear-to-r from-purple-500 to-pink-600 text-white shadow-lg"
                   : "bg-white/10 text-slate-300 hover:bg-white/20"
               }`}
             >
@@ -557,10 +615,10 @@ export default function SupervisorDashboard() {
           <button onClick={resetDemo} className="px-4 py-2 rounded-md bg-white/10 hover:bg-white/20 text-slate-200 text-sm">
             Reset Demo Data
           </button>
-          <button onClick={exportToCSV} className="px-4 py-2 rounded-md bg-gradient-to-r from-green-600 to-emerald-600 hover:opacity-90 text-white text-sm">
+          <button onClick={exportToCSV} className="px-4 py-2 rounded-md bg-linear-to-r from-green-600 to-emerald-600 hover:opacity-90 text-white text-sm">
             Export to CSV
           </button>
-          <label className="px-4 py-2 rounded-md bg-gradient-to-r from-blue-600 to-cyan-600 hover:opacity-90 text-white text-sm cursor-pointer">
+          <label className="px-4 py-2 rounded-md bg-linear-to-r from-blue-600 to-cyan-600 hover:opacity-90 text-white text-sm cursor-pointer">
             Import from CSV
             <input type="file" accept=".csv" onChange={importFromCSV} className="hidden" />
           </label>
@@ -599,7 +657,7 @@ export default function SupervisorDashboard() {
                         initial={{ width: 0 }}
                         whileInView={{ width: `${student.formProgress}%` }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full"
+                        className="bg-linear-to-r from-purple-500 to-pink-500 h-2 rounded-full"
                       />
                     </div>
                   </div>
@@ -645,7 +703,7 @@ export default function SupervisorDashboard() {
                   <div className="mt-4 flex justify-end">
                     <button
                       onClick={() => promoteStudent(student.id)}
-                      className="text-xs px-3 py-1 rounded-md bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:opacity-90"
+                      className="text-xs px-3 py-1 rounded-md bg-linear-to-r from-purple-600 to-pink-600 text-white hover:opacity-90"
                     >
                       Promote Level
                     </button>
@@ -715,7 +773,7 @@ export default function SupervisorDashboard() {
                             <p className="text-sm font-bold text-cyan-400">{pct}%</p>
                           </div>
                           <div className="w-full bg-white/10 rounded-full h-2">
-                            <motion.div initial={{ width: 0 }} whileInView={{ width: `${pct}%` }} transition={{ duration: 0.8, ease: "easeOut" }} className="bg-gradient-to-r from-cyan-500 to-indigo-500 h-2 rounded-full" />
+                            <motion.div initial={{ width: 0 }} whileInView={{ width: `${pct}%` }} transition={{ duration: 0.8, ease: "easeOut" }} className="bg-linear-to-r from-cyan-500 to-indigo-500 h-2 rounded-full" />
                           </div>
                           <div className="flex items-center justify-between mt-2">
                             <p className="text-xs text-slate-400">Sessions: {obs.sessionsCompleted}/{obs.totalSessions}</p>
@@ -782,7 +840,7 @@ export default function SupervisorDashboard() {
                             initial={{ width: 0 }}
                             whileInView={{ width: `${pct}%` }}
                             transition={{ duration: 0.8, ease: "easeOut" }}
-                            className="bg-gradient-to-r from-cyan-500 to-indigo-500 h-2 rounded-full"
+                            className="bg-linear-to-r from-cyan-500 to-indigo-500 h-2 rounded-full"
                           />
                         </div>
                         <div className="flex items-center justify-between mt-2">
@@ -822,7 +880,7 @@ export default function SupervisorDashboard() {
                   </div>
                   <div className="mt-2 flex justify-end">
                     <button
-                      className="text-xs px-3 py-1 rounded-md bg-gradient-to-r from-cyan-600 to-indigo-600 text-white"
+                      className="text-xs px-3 py-1 rounded-md bg-linear-to-r from-cyan-600 to-indigo-600 text-white"
                       onClick={() => {
                         const title = (document.getElementById(`title-${student.id}`) as HTMLInputElement)?.value || "Untitled";
                         const type = ((document.getElementById(`type-${student.id}`) as HTMLSelectElement)?.value as any) || "observership";
@@ -907,6 +965,120 @@ export default function SupervisorDashboard() {
           </div>
         )}
 
+        {/* Goals Tab */}
+        {activeTab === "goals" && (
+          <div className="grid lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-1">
+              <div className="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl">
+                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                  <Target className="w-5 h-5 text-purple-300" />
+                  Academic Goal Assignment
+                </h3>
+                <div className="space-y-4">
+                  <div>
+                    <label className="text-xs font-medium text-slate-300">Student</label>
+                    <select
+                      value={goalForm.studentId}
+                      onChange={(e) => setGoalForm({ ...goalForm, studentId: e.target.value })}
+                      className="w-full mt-1 px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white text-sm"
+                    >
+                      <option value="">Select student...</option>
+                      {filteredStudents.map((student) => (
+                        <option key={student.id} value={student.id}>{student.name}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="text-xs font-medium text-slate-300">Category</label>
+                    <select
+                      value={goalForm.category}
+                      onChange={(e) => setGoalForm({ ...goalForm, category: e.target.value })}
+                      className="w-full mt-1 px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white text-sm"
+                    >
+                      {progressCategories.map((cat) => (
+                        <option key={cat.id} value={cat.id}>{cat.label}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="text-xs font-medium text-slate-300">Target: {goalForm.targetValue}%</label>
+                    <input
+                      type="range"
+                      min="0"
+                      max="100"
+                      value={goalForm.targetValue}
+                      onChange={(e) => setGoalForm({ ...goalForm, targetValue: parseInt(e.target.value, 10) })}
+                      className="w-full mt-2 accent-purple-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs font-medium text-slate-300">Deadline</label>
+                    <input
+                      type="date"
+                      value={goalForm.deadline}
+                      onChange={(e) => setGoalForm({ ...goalForm, deadline: e.target.value })}
+                      className="w-full mt-1 px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white text-sm"
+                    />
+                  </div>
+                  <button
+                    onClick={addAcademicGoal}
+                    className="w-full px-4 py-2 rounded-lg bg-linear-to-r from-purple-500 to-pink-600 text-white font-semibold hover:opacity-90 transition"
+                  >
+                    Assign Academic Goal
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div className="lg:col-span-2 space-y-4">
+              {filteredStudents.length === 0 ? (
+                <div className="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl text-slate-300">
+                  No students available to assign goals.
+                </div>
+              ) : (
+                filteredStudents.map((student) => {
+                  const studentGoals = academicGoals.filter((g) => g.studentId === student.id);
+                  return (
+                    <div key={student.id} className="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl">
+                      <div className="flex items-center justify-between mb-4">
+                        <div>
+                          <h4 className="text-lg font-bold text-white">{student.name}</h4>
+                          <p className="text-xs text-slate-400">Academic Goals</p>
+                        </div>
+                        <span className="text-xs px-2 py-1 rounded-full bg-purple-500/20 text-purple-300">
+                          {studentGoals.length} goals
+                        </span>
+                      </div>
+                      {studentGoals.length > 0 ? (
+                        <div className="space-y-2">
+                          {studentGoals.map((goal) => (
+                            <div key={goal.id} className="p-3 rounded-lg bg-purple-500/10 border border-purple-500/30 flex items-center justify-between">
+                              <div>
+                                <p className="text-sm font-semibold text-white capitalize">{goal.category}</p>
+                                <p className="text-xs text-slate-400">
+                                  Target: {goal.targetValue}% • Due {new Date(goal.deadline).toLocaleDateString()}
+                                </p>
+                              </div>
+                              <button
+                                onClick={() => deleteAcademicGoal(goal.id)}
+                                className="text-xs px-3 py-1 rounded-md bg-white/10 hover:bg-white/20 text-slate-200"
+                              >
+                                Remove
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="text-sm text-slate-400">No academic goals assigned yet.</p>
+                      )}
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          </div>
+        )}
+
         {/* Applications Tab */}
         {activeTab === "applications" && (
           <div className="space-y-4">
@@ -968,14 +1140,14 @@ export default function SupervisorDashboard() {
             <div className="lg:col-span-1">
               <div className="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl">
                 <h3 className="text-lg font-bold text-white mb-4">Select Student</h3>
-                <div className="space-y-2 max-h-[37.5rem] overflow-y-auto">
+                <div className="space-y-2 max-h-150 overflow-y-auto">
                   {filteredStudents.map((student) => (
                     <button
                       key={student.id}
                       onClick={() => setSelectedStudent(student.id)}
                       className={`w-full text-left p-4 rounded-lg transition-all ${
                         selectedStudent === student.id
-                          ? "bg-gradient-to-r from-purple-500/20 to-pink-500/20 border-2 border-purple-400"
+                          ? "bg-linear-to-r from-purple-500/20 to-pink-500/20 border-2 border-purple-400"
                           : "bg-white/5 border border-white/10 hover:bg-white/10"
                       }`}
                     >
@@ -1060,7 +1232,7 @@ export default function SupervisorDashboard() {
                         value={progressForm.notes}
                         onChange={(e) => setProgressForm({ ...progressForm, notes: e.target.value })}
                         placeholder="e.g., Demonstrated improved suturing technique, actively participated in 3 procedures, showed excellent patient communication..."
-                        className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-cyan-400 min-h-[7.5rem]"
+                        className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-cyan-400 min-h-30"
                         rows={5}
                       />
                     </div>
@@ -1070,7 +1242,7 @@ export default function SupervisorDashboard() {
                       onClick={handleLogProgress}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="w-full px-6 py-4 bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-semibold rounded-lg hover:shadow-xl shadow-lg transition-all"
+                      className="w-full px-6 py-4 bg-linear-to-r from-cyan-500 to-indigo-600 text-white font-semibold rounded-lg hover:shadow-xl shadow-lg transition-all"
                     >
                       Save Progress Entry
                     </motion.button>

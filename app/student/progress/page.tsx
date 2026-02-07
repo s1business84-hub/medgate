@@ -51,7 +51,7 @@ export default function StudentProgressPage() {
 
   if (loading) {
     return (
-      <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-slate-900 via-slate-950 to-black flex items-center justify-center">
+      <div className="relative min-h-screen overflow-hidden bg-linear-to-b from-slate-900 via-slate-950 to-black flex items-center justify-center">
         <LiquidParallax depth={14} className="opacity-70" />
         <p className="text-slate-300 relative z-10">Loading progress tracking...</p>
       </div>
@@ -60,7 +60,7 @@ export default function StudentProgressPage() {
 
   if (!user) {
     return (
-      <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-slate-900 via-slate-950 to-black flex items-center justify-center">
+      <div className="relative min-h-screen overflow-hidden bg-linear-to-b from-slate-900 via-slate-950 to-black flex items-center justify-center">
         <LiquidParallax depth={14} className="opacity-70" />
         <p className="text-slate-300 relative z-10">Please log in to track your progress</p>
       </div>
@@ -68,7 +68,7 @@ export default function StudentProgressPage() {
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-slate-900 via-slate-950 to-black">
+    <div className="relative min-h-screen overflow-hidden bg-linear-to-b from-slate-900 via-slate-950 to-black">
       <LiquidParallax depth={14} className="opacity-70" />
       
       <div className="max-w-6xl mx-auto px-4 py-12 relative z-10">
@@ -103,7 +103,7 @@ export default function StudentProgressPage() {
               <Reveal key={cat.id} delay={0.1 * idx} y={20}>
                 <motion.div
                   whileHover={{ y: -4 }}
-                  className={`p-6 rounded-2xl border border-white/10 bg-gradient-to-br ${cat.color} backdrop-blur-xl hover:border-white/20 transition-all`}
+                  className={`p-6 rounded-2xl border border-white/10 bg-linear-to-br ${cat.color} backdrop-blur-xl hover:border-white/20 transition-all`}
                 >
                   <div className="flex items-center justify-between mb-4">
                     <div className="text-3xl">{cat.emoji}</div>
@@ -119,7 +119,7 @@ export default function StudentProgressPage() {
                     </div>
                     <div className="w-full bg-white/10 rounded-full h-2">
                       <div
-                        className="bg-gradient-to-r from-cyan-400 to-indigo-500 h-2 rounded-full transition-all duration-500"
+                        className="bg-linear-to-r from-cyan-400 to-indigo-500 h-2 rounded-full transition-all duration-500"
                         style={{ width: `${avgValue}%` }}
                       />
                     </div>
@@ -134,6 +134,7 @@ export default function StudentProgressPage() {
         <Reveal delay={0.4} y={20}>
           <AIAnalyticsPanel 
             entries={entries}
+            studentId={user?.id}
             onGoalsUpdate={(goals) => {
               // Goals are auto-saved in localStorage
             }}
