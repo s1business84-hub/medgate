@@ -20,7 +20,7 @@ interface Program {
   learningObjectives?: string[];
   keySkills?: string[];
   requirements: string[];
-  hospitalId: string;
+  hospitalId?: string;
   bestFor?: string;
   exposureLevel?: string;
   limitations?: string;
