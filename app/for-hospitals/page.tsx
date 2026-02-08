@@ -154,7 +154,7 @@ export default function ForHospitalsPage() {
             </div>
           </ScrollReveal>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             <StaggerGroup staggerDelay={0.12} initialDelay={0.2}>
               {[
                 {
@@ -204,7 +204,7 @@ export default function ForHospitalsPage() {
                         <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-gradient-to-br from-white to-transparent rounded-full blur-xl" />
                       </div>
                       
-                      <div className="relative z-10 p-8">
+                      <div className="relative z-10 p-6 lg:p-8">
                         <div className={`w-16 h-16 bg-gradient-to-br ${benefit.gradient} rounded-xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
                           <benefit.icon className="w-8 h-8 text-white" />
                         </div>
