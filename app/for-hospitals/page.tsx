@@ -64,9 +64,9 @@ export default function ForHospitalsPage() {
           <LiquidParallax />
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(34,211,238,0.15),transparent_40%),radial-gradient(circle_at_80%_20%,rgba(99,102,241,0.12),transparent_35%),radial-gradient(circle_at_40%_80%,rgba(139,92,246,0.13),transparent_38%),linear-gradient(180deg,#0a0e1a_0%,#0f172a_50%,#0a0e1a_100%)]" />
           
-          <div className="relative max-w-6xl mx-auto px-6 py-16">
+          <div className="relative max-w-6xl mx-auto px-6 py-12 md:py-16">
         {/* Header */}
-        <div className="flex items-center justify-between mb-12 animate-fade-in">
+        <div className="flex items-center justify-between mb-8 md:mb-12 animate-fade-in">
           <Link href="/" className="flex items-center text-cyan-300 hover:text-cyan-200 transition-all duration-300 hover:translate-x-1">
             <ArrowLeft className="w-5 h-5 mr-2" />
             Back to Home
@@ -74,7 +74,7 @@ export default function ForHospitalsPage() {
         </div>
 
         {/* Hero Section */}
-        <div className="text-center mb-20 animate-fade-in" style={{ animationDelay: '0.1s' }}>
+        <div className="text-center mb-12 md:mb-20 animate-fade-in" style={{ animationDelay: '0.1s' }}>
           <div className="inline-block mb-6">
             <div className="w-20 h-20 bg-gradient-to-br from-cyan-600 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg">
               <Building2 className="w-10 h-10 text-white" />
@@ -142,9 +142,9 @@ export default function ForHospitalsPage() {
         </div>
 
         {/* Benefits Section */}
-        <section className="mb-20">
+        <section className="mb-12 md:mb-20">
           <ScrollReveal direction="up">
-            <div className="text-center mb-12">
+            <div className="text-center mb-8 md:mb-12">
               <h2 className="text-3xl sm:text-4xl font-bold text-slate-100 mb-4">
                 <AnimatedGradientText>Why Choose Electivio?</AnimatedGradientText>
               </h2>
@@ -226,7 +226,7 @@ export default function ForHospitalsPage() {
 
         {/* Features Section */}
         <motion.section 
-          className="mb-20"
+          className="mb-12 md:mb-20"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -276,7 +276,7 @@ export default function ForHospitalsPage() {
         </motion.section>
 
         {/* How It Works */}
-        <section className="mb-20 animate-fade-in" style={{ animationDelay: '0.6s' }}>
+        <section className="mb-12 md:mb-20 animate-fade-in" style={{ animationDelay: '0.6s' }}>
           <h2 className="text-4xl font-bold text-slate-100 mb-12 text-center">
             <AnimatedGradientText>How Electivio Is Designed to Support Hospitals</AnimatedGradientText>
           </h2>
