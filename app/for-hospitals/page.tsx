@@ -154,7 +154,7 @@ export default function ForHospitalsPage() {
             </div>
           </ScrollReveal>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             <StaggerGroup staggerDelay={0.12} initialDelay={0.2}>
               {[
                 {
