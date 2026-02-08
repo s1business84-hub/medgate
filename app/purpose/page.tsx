@@ -321,15 +321,15 @@ export default function PurposePage() {
           </motion.div>
         </section>
 
-        <section className="mb-24">
-          <div className="text-center mb-12">
+        <section className="mb-16 md:mb-24">
+          <div className="text-center mb-8 md:mb-12">
             <h2 className="purpose-heading text-3xl font-bold text-white mb-6">
               Join Electivio
             </h2>
-            <p className="text-lg text-slate-400 mb-8">
+            <p className="text-lg text-slate-400 mb-6 md:mb-8">
               Whether you are a medical student seeking structured clinical exposure or a healthcare institution looking to streamline program management, Electivio is being built with you in mind.
             </p>
-            <div className="flex justify-center gap-3 mb-8">
+            <div className="flex justify-center gap-3 mb-6 md:mb-8">
               <button
                 onClick={() => setActiveCard("students")}
                 className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${
@@ -352,14 +352,14 @@ export default function PurposePage() {
               </button>
             </div>
           </div>
-          <div className="relative h-80 md:h-72">
+          <div className="relative h-72 md:h-72">
             <AnimatePresence mode="wait">
               {activeCard === "students" ? (
-                <motion.div key="students" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="purpose-card absolute inset-0 bg-linear-to-br from-cyan-500/10 to-blue-500/10 border border-white/10 rounded-3xl backdrop-blur-xl p-8 md:p-12 shadow-2xl overflow-hidden group">
+                <motion.div key="students" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="purpose-card absolute inset-0 bg-linear-to-br from-cyan-500/10 to-blue-500/10 border border-white/10 rounded-3xl backdrop-blur-xl p-7 md:p-12 shadow-2xl overflow-hidden group">
                   <div className="absolute -top-40 -right-40 w-80 h-80 bg-cyan-500/20 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-500" />
                   <div className="relative z-10">
-                    <h3 className="text-3xl font-bold text-cyan-300 mb-6">Browse Programs</h3>
-                    <p className="text-lg text-slate-400 leading-relaxed mb-8">
+                    <h3 className="text-3xl font-bold text-cyan-300 mb-4 md:mb-6">Browse Programs</h3>
+                    <p className="text-lg text-slate-400 leading-relaxed mb-6 md:mb-8">
                       Discover structured observership and elective opportunities across the UAE. Explore programs that match your interests and eligibility, with clear requirements and transparent timelines.
                     </p>
                     <Link href="/programs">
@@ -370,11 +370,11 @@ export default function PurposePage() {
                   </div>
                 </motion.div>
               ) : (
-                <motion.div key="hospitals" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="purpose-card absolute inset-0 bg-linear-to-br from-emerald-500/10 to-teal-500/10 border border-white/10 rounded-3xl backdrop-blur-xl p-8 md:p-12 shadow-2xl overflow-hidden group">
+                <motion.div key="hospitals" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="purpose-card absolute inset-0 bg-linear-to-br from-emerald-500/10 to-teal-500/10 border border-white/10 rounded-3xl backdrop-blur-xl p-7 md:p-12 shadow-2xl overflow-hidden group">
                   <div className="absolute -top-40 -right-40 w-80 h-80 bg-emerald-500/20 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-500" />
                   <div className="relative z-10">
-                    <h3 className="text-3xl font-bold text-emerald-300 mb-6">For Hospitals</h3>
-                    <p className="text-lg text-slate-400 leading-relaxed mb-8">
+                    <h3 className="text-3xl font-bold text-emerald-300 mb-4 md:mb-6">For Hospitals</h3>
+                    <p className="text-lg text-slate-400 leading-relaxed mb-6 md:mb-8">
                       Streamline your observership and elective program management. Publish clear eligibility criteria, manage applications efficiently, and connect with qualified students—all while maintaining institutional control.
                     </p>
                     <Link href="/for-hospitals">
