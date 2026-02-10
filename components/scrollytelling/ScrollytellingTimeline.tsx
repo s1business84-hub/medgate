@@ -129,11 +129,19 @@ export function ScrollytellingTimeline({ steps }: ScrollytellingTimelineProps) {
 
             {/* Card content */}
             <motion.div
-              className="flex-1 group relative rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg hover:shadow-2xl overflow-hidden transition-all duration-300 hover:-translate-y-2"
+              className="flex-1 group relative rounded-3xl border border-white/20 bg-white/8 backdrop-blur-3xl shadow-lg hover:shadow-2xl overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:border-white/30"
               whileHover={{ scale: 1.02 }}
             >
-              {/* Gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-600/10 to-indigo-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              {/* Base gradient glass tint */}
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-white/3 to-indigo-500/5" />
+
+              {/* Gradient overlay on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-600/8 via-transparent to-indigo-600/8 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+              {/* Liquid glass shine effect */}
+              <div className="absolute inset-0 transition-opacity duration-300">
+                <div className="absolute top-0 left-0 w-2/3 h-2/3 bg-gradient-to-br from-white/25 via-white/10 to-transparent rounded-full blur-3xl group-hover:from-white/35 transition-all" />
+              </div>
 
               {/* Animated left accent */}
               <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-500 to-indigo-600 scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top" />

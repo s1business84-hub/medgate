@@ -122,15 +122,19 @@ export function ScrollytellingFeatures({ features }: ScrollytellingFeaturesProps
             ref={(el) => {
               itemsRef.current[idx] = el;
             }}
-            className="group relative rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg hover:shadow-2xl overflow-hidden transition-all duration-300"
+            className="group relative rounded-3xl border border-white/20 bg-white/8 backdrop-blur-3xl shadow-lg hover:shadow-2xl overflow-hidden transition-all duration-300 hover:border-white/30"
             whileHover={{ y: -8 }}
           >
-            {/* Animated gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-cyan-600/10 via-transparent to-indigo-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            {/* Base gradient glass tint - always visible */}
+            <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-white/3 to-indigo-500/5" />
 
-            {/* Liquid glass shine effect */}
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-300">
-              <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-gradient-to-br from-white to-transparent rounded-full blur-xl" />
+            {/* Animated gradient overlay on hover */}
+            <div className="absolute inset-0 bg-gradient-to-br from-cyan-600/8 via-transparent to-indigo-600/8 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+            {/* Liquid glass shine effect - top left shimmer */}
+            <div className="absolute inset-0 transition-opacity duration-300">
+              <div className="absolute top-0 left-0 w-2/3 h-2/3 bg-gradient-to-br from-white/25 via-white/10 to-transparent rounded-full blur-3xl group-hover:from-white/35 transition-all" />
+              <div className="absolute bottom-[-20%] right-[-10%] w-1/2 h-1/2 bg-gradient-to-tl from-indigo-400/10 to-transparent rounded-full blur-3xl" />
             </div>
 
             <div className="relative z-10 p-6 lg:p-8">

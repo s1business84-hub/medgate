@@ -192,7 +192,10 @@ export default function ForHospitalsPage() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="relative bg-gradient-to-br from-cyan-600 via-indigo-600 to-purple-600 rounded-3xl p-10 md:p-16 text-white overflow-hidden group border border-white/10">
+          <div className="relative bg-gradient-to-br from-cyan-600 via-indigo-600 to-purple-600 rounded-3xl p-10 md:p-16 text-white overflow-hidden group border border-white/20 backdrop-blur-xl">
+            {/* Base glass effect */}
+            <div className="absolute inset-0 bg-white/5 backdrop-blur-3xl" />
+            
             {/* Animated background elements */}
             <div className="absolute top-0 right-0 w-96 h-96 bg-white opacity-5 rounded-full blur-3xl -mr-48 -mt-48 group-hover:scale-125 transition-transform duration-500" />
             <div className="absolute bottom-0 left-0 w-80 h-80 bg-white opacity-5 rounded-full blur-3xl -ml-40 -mb-40 group-hover:scale-110 transition-transform duration-500" />
@@ -211,19 +214,24 @@ export default function ForHospitalsPage() {
                 ].map((feature, idx) => (
                   <motion.div 
                     key={feature.title}
-                    className="backdrop-blur-sm bg-white/10 rounded-xl p-7 border border-white/20 hover:bg-white/20 transition-all duration-300"
+                    className="group/item backdrop-blur-2xl bg-white/15 rounded-2xl p-7 border border-white/25 hover:bg-white/25 hover:border-white/40 transition-all duration-300 relative overflow-hidden"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.4, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
                   >
-                    <div className="flex items-start">
-                      <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center mr-4 shrink-0">
+                    {/* Liquid shimmer on hover */}
+                    <div className="absolute inset-0 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300">
+                      <div className="absolute top-0 left-0 w-2/3 h-2/3 bg-gradient-to-br from-white/20 to-transparent rounded-full blur-3xl" />
+                    </div>
+                    
+                    <div className="relative z-10 flex items-start">
+                      <div className="w-12 h-12 bg-white/30 rounded-lg flex items-center justify-center mr-4 shrink-0 group-hover/item:bg-white/40 transition-all">
                         <feature.icon className="w-6 h-6 text-white" />
                       </div>
                       <div>
                         <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
-                        <p className="text-slate-100">{feature.desc}</p>
+                        <p className="text-white/90">{feature.desc}</p>
                       </div>
                     </div>
                   </motion.div>
@@ -271,7 +279,16 @@ export default function ForHospitalsPage() {
 
         {/* Call to Action */}
         <section className="text-center animate-fade-in mb-8" style={{ animationDelay: '0.7s' }}>
-          <div className="relative rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl p-10 md:p-16 overflow-hidden group">
+          <div className="relative rounded-3xl border border-white/20 bg-white/8 backdrop-blur-3xl shadow-2xl p-10 md:p-16 overflow-hidden group hover:border-white/30 transition-all">
+            {/* Base glass tint */}
+            <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-white/3 to-indigo-500/5" />
+            
+            {/* Liquid shimmer effect */}
+            <div className="absolute inset-0 transition-opacity duration-300">
+              <div className="absolute top-0 left-0 w-2/3 h-2/3 bg-gradient-to-br from-white/25 via-white/10 to-transparent rounded-full blur-3xl group-hover:from-white/35 transition-all" />
+              <div className="absolute bottom-[-30%] right-[-10%] w-1/2 h-1/2 bg-gradient-to-tl from-indigo-400/10 to-transparent rounded-full blur-3xl" />
+            </div>
+            
             {/* Animated gradient glow */}
             <div className="absolute -top-20 -right-20 w-40 h-40 bg-linear-to-br from-cyan-400 to-indigo-400 rounded-full opacity-0 blur-3xl group-hover:opacity-20 transition-opacity duration-500" />
             
@@ -286,7 +303,7 @@ export default function ForHospitalsPage() {
                   value={onboardingEmail}
                   onChange={(e) => setOnboardingEmail(e.target.value)}
                   placeholder="Enter your work email"
-                  className="w-full sm:max-w-xs px-4 py-3 border border-white/15 bg-white/5 text-slate-100 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+                  className="w-full sm:max-w-xs px-4 py-3 border border-white/20 bg-white/10 backdrop-blur-xl text-slate-100 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-white/40 focus:bg-white/15 transition-all"
                   required
                 />
                 <Button
