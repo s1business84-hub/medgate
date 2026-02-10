@@ -7,9 +7,6 @@ import { Button } from "@/components/ui/button";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
 import { motion, AnimatePresence } from "framer-motion";
-import { ScrollableViewport, ScrollSection } from "@/components/scrollable-viewport";
-import { ScrollReveal } from "@/components/animation/ScrollReveal";
-import { StaggerGroup, StaggerItem } from "@/components/animation/StaggerGroup";
 import { ScrollytellingTimeline } from "@/components/scrollytelling/ScrollytellingTimeline";
 import { ScrollytellingFeatures } from "@/components/scrollytelling/ScrollytellingFeatures";
 import { ParallaxHero } from "@/components/scrollytelling/ParallaxHero";
@@ -56,18 +53,12 @@ export default function ForHospitalsPage() {
   };
 
   return (
-    <ScrollableViewport
-      showProgress={true}
-      showNavigationDots={true}
-      showArrows={true}
-      snapToSections={false}
-    >
-      <ScrollSection id="for-hospitals">
-        {/* Hero Section with Parallax */}
-        <ParallaxHero className="relative min-h-screen overflow-hidden text-slate-100">
-          <LiquidParallax />
-          
-          <div className="relative max-w-6xl mx-auto px-6 py-16 md:py-20">
+    <div className="relative">
+      {/* Hero Section with Parallax */}
+      <ParallaxHero className="relative min-h-screen overflow-hidden text-slate-100">
+        <LiquidParallax />
+        
+        <div className="relative max-w-6xl mx-auto px-6 py-16 md:py-20">
             {/* Header */}
             <div className="flex items-center justify-between mb-8 md:mb-12 animate-fade-in">
               <Link href="/" className="flex items-center text-cyan-300 hover:text-cyan-200 transition-all duration-300 hover:translate-x-1">
@@ -146,18 +137,18 @@ export default function ForHospitalsPage() {
           </div>
         </ParallaxHero>
 
+        {/* Main Content Wrapper */}
+        <div className="max-w-6xl mx-auto px-6 py-16 md:py-20">
         {/* Benefits Section */}
         <section className="mb-16 md:mb-24">
-          <ScrollReveal direction="up">
-            <div className="text-center mb-10 md:mb-16">
-              <h2 className="text-3xl sm:text-4xl font-bold text-slate-100 mb-4">
-                <AnimatedGradientText>Why Choose Electivio?</AnimatedGradientText>
-              </h2>
-              <p className="text-lg text-slate-300 max-w-2xl mx-auto">
-                Designed to support observership and elective program management for healthcare institutions
-              </p>
-            </div>
-          </ScrollReveal>
+          <div className="text-center mb-10 md:mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-100 mb-4">
+              <AnimatedGradientText>Why Choose Electivio?</AnimatedGradientText>
+            </h2>
+            <p className="text-lg text-slate-300 max-w-2xl mx-auto">
+              Designed to support observership and elective program management for healthcare institutions
+            </p>
+          </div>
 
           <ScrollytellingFeatures
             features={[
@@ -325,7 +316,7 @@ export default function ForHospitalsPage() {
             </div>
           </div>
         </section>
-      </ScrollSection>
-    </ScrollableViewport>
+        </div>
+    </div>
   );
 }
