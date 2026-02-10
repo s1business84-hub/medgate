@@ -64,7 +64,7 @@ export default function ForHospitalsPage() {
           <LiquidParallax />
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(34,211,238,0.15),transparent_40%),radial-gradient(circle_at_80%_20%,rgba(99,102,241,0.12),transparent_35%),radial-gradient(circle_at_40%_80%,rgba(139,92,246,0.13),transparent_38%),linear-gradient(180deg,#0a0e1a_0%,#0f172a_50%,#0a0e1a_100%)]" />
           
-          <div className="relative max-w-6xl mx-auto px-6 py-12 md:py-16">
+          <div className="relative max-w-6xl mx-auto px-6 py-16 md:py-20">
         {/* Header */}
         <div className="flex items-center justify-between mb-8 md:mb-12 animate-fade-in">
           <Link href="/" className="flex items-center text-cyan-300 hover:text-cyan-200 transition-all duration-300 hover:translate-x-1">
@@ -142,9 +142,9 @@ export default function ForHospitalsPage() {
         </div>
 
         {/* Benefits Section */}
-        <section className="mb-12 md:mb-20">
+        <section className="mb-16 md:mb-24">
           <ScrollReveal direction="up">
-            <div className="text-center mb-8 md:mb-12">
+            <div className="text-center mb-10 md:mb-16">
               <h2 className="text-3xl sm:text-4xl font-bold text-slate-100 mb-4">
                 <AnimatedGradientText>Why Choose Electivio?</AnimatedGradientText>
               </h2>
@@ -154,7 +154,7 @@ export default function ForHospitalsPage() {
             </div>
           </ScrollReveal>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10">
             <StaggerGroup staggerDelay={0.12} initialDelay={0.2}>
               {[
                 {
@@ -226,62 +226,60 @@ export default function ForHospitalsPage() {
 
         {/* Features Section */}
         <motion.section 
-          className="mb-12 md:mb-20"
+          className="mb-16 md:mb-24"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="relative bg-gradient-to-br from-cyan-600 via-indigo-600 to-purple-600 rounded-3xl p-8 md:p-12 text-white overflow-hidden group border border-white/10">
+          <div className="relative bg-gradient-to-br from-cyan-600 via-indigo-600 to-purple-600 rounded-3xl p-10 md:p-16 text-white overflow-hidden group border border-white/10">
             {/* Animated background elements */}
             <div className="absolute top-0 right-0 w-96 h-96 bg-white opacity-5 rounded-full blur-3xl -mr-48 -mt-48 group-hover:scale-125 transition-transform duration-500" />
             <div className="absolute bottom-0 left-0 w-80 h-80 bg-white opacity-5 rounded-full blur-3xl -ml-40 -mb-40 group-hover:scale-110 transition-transform duration-500" />
             
             <div className="relative z-10">
-              <h2 className="text-4xl font-bold mb-8 text-center">Platform Capabilities (Planned)</h2>
+              <h2 className="text-4xl font-bold mb-10 text-center">Platform Capabilities (Planned)</h2>
               
-              <div className="relative">
-                <div className="flex gap-6 overflow-x-auto pb-4 -mx-6 px-6 snap-x snap-mandatory">
-                  {[
-                  { icon: CheckCircle2, title: 'Eligibility Criteria & Program Requirements', desc: 'Define and publish program-specific eligibility and documentation standards' },
-                  { icon: FileCheck, title: 'Institution-Defined Intake Parameters', desc: 'Set custom requirements aligned with your institutional policies' },
-                  { icon: Users, title: 'Application Submission Interface (Planned)', desc: 'Central platform for receiving and organizing applications' },
-                  { icon: BarChart3, title: 'Status Visibility Tools (In Development)', desc: 'Dashboard to track application progress and program workflows' },
-                  { icon: Shield, title: 'Role-Based Access for Administrators', desc: 'Secure access controls for program coordinators and reviewers' },
-                  { icon: Shield, title: 'Secure Data Handling', desc: 'Privacy-focused architecture with encrypted data management' }
-                  ].map((feature, idx) => (
-                    <motion.div 
-                      key={feature.title}
-                      className="min-w-[280px] sm:min-w-[340px] md:min-w-[360px] snap-start backdrop-blur-sm bg-white/10 rounded-xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300"
-                      initial={{ opacity: 0, x: -30 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.4, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                    >
-                      <div className="flex items-start">
-                        <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center mr-4 shrink-0">
-                          <feature.icon className="w-6 h-6 text-white" />
-                        </div>
-                        <div>
-                          <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
-                          <p className="text-slate-100">{feature.desc}</p>
-                        </div>
+              <div className="grid grid-cols-1 gap-6">
+                {[
+                { icon: CheckCircle2, title: 'Eligibility Criteria & Program Requirements', desc: 'Define and publish program-specific eligibility and documentation standards' },
+                { icon: FileCheck, title: 'Institution-Defined Intake Parameters', desc: 'Set custom requirements aligned with your institutional policies' },
+                { icon: Users, title: 'Application Submission Interface (Planned)', desc: 'Central platform for receiving and organizing applications' },
+                { icon: BarChart3, title: 'Status Visibility Tools (In Development)', desc: 'Dashboard to track application progress and program workflows' },
+                { icon: Shield, title: 'Role-Based Access for Administrators', desc: 'Secure access controls for program coordinators and reviewers' },
+                { icon: Shield, title: 'Secure Data Handling', desc: 'Privacy-focused architecture with encrypted data management' }
+                ].map((feature, idx) => (
+                  <motion.div 
+                    key={feature.title}
+                    className="backdrop-blur-sm bg-white/10 rounded-xl p-7 border border-white/20 hover:bg-white/20 transition-all duration-300"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    <div className="flex items-start">
+                      <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center mr-4 shrink-0">
+                        <feature.icon className="w-6 h-6 text-white" />
                       </div>
-                    </motion.div>
-                  ))}
-                </div>
+                      <div>
+                        <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
+                        <p className="text-slate-100">{feature.desc}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
               </div>
             </div>
           </div>
         </motion.section>
 
         {/* How It Works */}
-        <section className="mb-12 md:mb-20 animate-fade-in" style={{ animationDelay: '0.6s' }}>
-          <h2 className="text-4xl font-bold text-slate-100 mb-12 text-center">
+        <section className="mb-16 md:mb-24 animate-fade-in" style={{ animationDelay: '0.6s' }}>
+          <h2 className="text-4xl font-bold text-slate-100 mb-16 text-center">
             <AnimatedGradientText>How Electivio Is Designed to Support Hospitals</AnimatedGradientText>
           </h2>
           
-          <div className="space-y-6">
+          <div className="space-y-8">
             {[
               {
                 step: 1,
@@ -318,7 +316,7 @@ export default function ForHospitalsPage() {
                 {/* Animated left accent */}
                 <div className="absolute left-0 top-0 bottom-0 w-2 bg-linear-to-b from-cyan-500 to-indigo-600 scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top" />
                 
-                <div className="relative z-10 p-8">
+                <div className="relative z-10 p-8 md:p-10">
                   <div className="flex items-start">
                     <div className="w-16 h-16 rounded-full flex items-center justify-center mr-6 shrink-0 bg-linear-to-br from-cyan-500 to-indigo-600 shadow-md group-hover:scale-110 transition-transform duration-300">
                       <span className="text-white font-bold text-2xl">{step.step}</span>
@@ -339,8 +337,8 @@ export default function ForHospitalsPage() {
         </section>
 
         {/* Call to Action */}
-        <section className="text-center animate-fade-in" style={{ animationDelay: '0.7s' }}>
-          <div className="relative rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl p-8 md:p-12 overflow-hidden group">
+        <section className="text-center animate-fade-in mb-8" style={{ animationDelay: '0.7s' }}>
+          <div className="relative rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl p-10 md:p-16 overflow-hidden group">
             {/* Animated gradient glow */}
             <div className="absolute -top-20 -right-20 w-40 h-40 bg-linear-to-br from-cyan-400 to-indigo-400 rounded-full opacity-0 blur-3xl group-hover:opacity-20 transition-opacity duration-500" />
             
