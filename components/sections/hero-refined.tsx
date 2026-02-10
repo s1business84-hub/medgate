@@ -14,6 +14,7 @@ import Reveal from "@/components/Reveal"
 import { PageTransition } from "@/components/ui/page-transition"
 import { Phone3D } from "../3d-phone"
 import { ScrollCue } from "../animation/ScrollCue"
+import { LetterByLetter } from "@/components/animation/LetterByLetter"
 import { cn } from "@/lib/utils"
 
 // Generate star positions outside of component to avoid calling Math.random during render
@@ -239,12 +240,14 @@ export function Hero() {
                 Medical Training
               </RevealText>
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
               >
                 <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1]">
-                  <AnimatedGradientText>Reimagined</AnimatedGradientText>
+                  <AnimatedGradientText>
+                    <LetterByLetter text="Reimagined" delay={0.5} duration={0.06} />
+                  </AnimatedGradientText>
                 </h1>
               </motion.div>
             </div>
