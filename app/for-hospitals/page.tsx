@@ -10,6 +10,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ScrollableViewport, ScrollSection } from "@/components/scrollable-viewport";
 import { ScrollReveal } from "@/components/animation/ScrollReveal";
 import { StaggerGroup, StaggerItem } from "@/components/animation/StaggerGroup";
+import { ScrollytellingTimeline } from "@/components/scrollytelling/ScrollytellingTimeline";
+import { ScrollytellingFeatures } from "@/components/scrollytelling/ScrollytellingFeatures";
+import { ParallaxHero } from "@/components/scrollytelling/ParallaxHero";
 
 async function sendOnboardingEmail(email: string) {
   const res = await fetch("/api/send-onboarding-email", {
@@ -60,45 +63,45 @@ export default function ForHospitalsPage() {
       snapToSections={false}
     >
       <ScrollSection id="for-hospitals">
-        <div className="relative min-h-screen overflow-hidden text-slate-100">
+        {/* Hero Section with Parallax */}
+        <ParallaxHero className="relative min-h-screen overflow-hidden text-slate-100">
           <LiquidParallax />
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(34,211,238,0.15),transparent_40%),radial-gradient(circle_at_80%_20%,rgba(99,102,241,0.12),transparent_35%),radial-gradient(circle_at_40%_80%,rgba(139,92,246,0.13),transparent_38%),linear-gradient(180deg,#0a0e1a_0%,#0f172a_50%,#0a0e1a_100%)]" />
           
           <div className="relative max-w-6xl mx-auto px-6 py-16 md:py-20">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8 md:mb-12 animate-fade-in">
-          <Link href="/" className="flex items-center text-cyan-300 hover:text-cyan-200 transition-all duration-300 hover:translate-x-1">
-            <ArrowLeft className="w-5 h-5 mr-2" />
-            Back to Home
-          </Link>
-        </div>
-
-        {/* Hero Section */}
-        <div className="text-center mb-12 md:mb-20 animate-fade-in" style={{ animationDelay: '0.1s' }}>
-          <div className="inline-block mb-6">
-            <div className="w-20 h-20 bg-gradient-to-br from-cyan-600 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg">
-              <Building2 className="w-10 h-10 text-white" />
+            {/* Header */}
+            <div className="flex items-center justify-between mb-8 md:mb-12 animate-fade-in">
+              <Link href="/" className="flex items-center text-cyan-300 hover:text-cyan-200 transition-all duration-300 hover:translate-x-1">
+                <ArrowLeft className="w-5 h-5 mr-2" />
+                Back to Home
+              </Link>
             </div>
-          </div>
-          <h1 className="text-4xl md:text-6xl font-bold text-slate-100 mb-6">
-            Built to Support Hospital-Managed <span className="block"><AnimatedGradientText>Observership and Elective Programs</AnimatedGradientText></span>
-          </h1>
-          <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed mb-8">
-            Electivio is being developed to support healthcare institutions in managing formal observership and elective programs through structured intake, clear eligibility standards, and transparent application workflows.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/hospital/create-account">
-              <Button size="lg" className="bg-linear-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-semibold shadow-lg">
-                Join Us Now
-              </Button>
-            </Link>
-            <button
-              onClick={() => setShowFounderContact(!showFounderContact)}
-              className="px-8 py-3 rounded-lg font-semibold text-white bg-white/10 border border-white/25 hover:bg-white/15 transition-all duration-300"
-            >
-              Schedule a Pilot Intro Call
-            </button>
-          </div>
+
+            {/* Hero Section */}
+            <div className="text-center mb-12 md:mb-16 animate-fade-in" style={{ animationDelay: '0.1s' }}>
+              <div className="inline-block mb-5">
+                <div className="w-20 h-20 bg-gradient-to-br from-cyan-600 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg">
+                  <Building2 className="w-10 h-10 text-white" />
+                </div>
+              </div>
+              <h1 className="text-4xl md:text-6xl font-bold text-slate-100 mb-5 leading-tight">
+                Built to Support Hospital-Managed <span className="block"><AnimatedGradientText>Observership and Elective Programs</AnimatedGradientText></span>
+              </h1>
+              <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed mb-6">
+                Electivio is being developed to support healthcare institutions in managing formal observership and elective programs through structured intake, clear eligibility standards, and transparent application workflows.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <Link href="/hospital/create-account">
+                  <Button size="lg" className="bg-linear-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-semibold shadow-lg">
+                    Join Us Now
+                  </Button>
+                </Link>
+                <button
+                  onClick={() => setShowFounderContact(!showFounderContact)}
+                  className="px-8 py-3 rounded-lg font-semibold text-white bg-white/10 border border-white/25 hover:bg-white/15 transition-all duration-300"
+                >
+                  Schedule a Pilot Intro Call
+                </button>
+              </div>
           
           {/* Founder Contact Dropdown Card - Shows when Schedule button clicked */}
           <AnimatePresence>
@@ -108,7 +111,7 @@ export default function ForHospitalsPage() {
                 animate={{ opacity: 1, y: 0, height: "auto" }}
                 exit={{ opacity: 0, y: -20, height: 0 }}
                 transition={{ duration: 0.3 }}
-                className="mt-6 max-w-2xl mx-auto overflow-hidden"
+                className="mt-5 max-w-2xl mx-auto overflow-hidden"
               >
                 <div className="bg-gradient-to-br from-cyan-600/20 to-indigo-600/20 border border-cyan-500/30 rounded-xl backdrop-blur-xl p-8">
                   <h3 className="text-2xl font-bold text-slate-100 mb-6">Contact our founders</h3>
@@ -139,7 +142,9 @@ export default function ForHospitalsPage() {
               </motion.div>
             )}
           </AnimatePresence>
-        </div>
+            </div>
+          </div>
+        </ParallaxHero>
 
         {/* Benefits Section */}
         <section className="mb-16 md:mb-24">
@@ -154,74 +159,38 @@ export default function ForHospitalsPage() {
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10">
-            <StaggerGroup staggerDelay={0.12} initialDelay={0.2}>
-              {[
-                {
-                  icon: Shield,
-                  title: 'Designed for Institutional Control',
-                  description: 'Hospitals define eligibility criteria, documentation requirements, intake capacity, and review workflows. Electivio supports, not overrides, institutional processes.',
-                  gradient: 'from-blue-600 to-cyan-600',
-                  bgGradient: 'from-blue-50 to-cyan-50',
-                  index: 0
-                },
-                {
-                  icon: FileCheck,
-                  title: 'Standardized Intake',
-                  description: 'Built to centralize program information and applications, reducing unstructured emails, calls, and ad-hoc requests.',
-                  gradient: 'from-indigo-600 to-purple-600',
-                  bgGradient: 'from-indigo-50 to-purple-50',
-                  index: 1
-                },
-                {
-                  icon: CheckCircle2,
-                  title: 'Clear Applicant Alignment',
-                  description: 'Students apply based on published criteria, helping institutions receive applications aligned with their requirements.',
-                  gradient: 'from-purple-600 to-pink-600',
-                  bgGradient: 'from-purple-50 to-pink-50',
-                  index: 2
-                },
-                {
-                  icon: Shield,
-                  title: 'Privacy-First Architecture',
-                  description: 'Designed with role-based access and data protection principles to support responsible handling of applicant information.',
-                  gradient: 'from-green-600 to-emerald-600',
-                  bgGradient: 'from-green-50 to-emerald-50',
-                  index: 3
-                }
-              ].map((benefit) => (
-                <StaggerItem key={benefit.title}>
-                  <ScrollReveal direction={benefit.index % 2 === 0 ? "left" : "right"} delay={0}>
-                    <motion.div 
-                      className="group relative rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg hover:shadow-2xl overflow-hidden transition-all duration-300"
-                      whileHover={{ y: -8, transition: { duration: 0.2 } }}
-                    >
-                      {/* Animated gradient overlay */}
-                      <div className={`absolute inset-0 bg-gradient-to-br from-cyan-600/10 via-transparent to-indigo-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-                      
-                      {/* Liquid glass shine effect */}
-                      <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-300">
-                        <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-gradient-to-br from-white to-transparent rounded-full blur-xl" />
-                      </div>
-                      
-                      <div className="relative z-10 p-6 lg:p-8">
-                        <div className={`w-16 h-16 bg-gradient-to-br ${benefit.gradient} rounded-xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
-                          <benefit.icon className="w-8 h-8 text-white" />
-                        </div>
-                        <h3 className="text-xl font-bold text-slate-100 mb-3">
-                          {benefit.title}
-                        </h3>
-                        <p className="text-slate-300 group-hover:text-slate-200 transition-colors leading-relaxed">
-                          {benefit.description}
-                        </p>
-                        <div className={`mt-6 h-1 bg-gradient-to-r ${benefit.gradient} rounded-full transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500`} />
-                      </div>
-                    </motion.div>
-                  </ScrollReveal>
-                </StaggerItem>
-              ))}
-            </StaggerGroup>
-          </div>
+          <ScrollytellingFeatures
+            features={[
+              {
+                title: 'Designed for Institutional Control',
+                description: 'Hospitals define eligibility criteria, documentation requirements, intake capacity, and review workflows. Electivio supports, not overrides, institutional processes.',
+                icon: Shield,
+                gradient: 'from-blue-600 to-cyan-600',
+                delay: 0,
+              },
+              {
+                title: 'Standardized Intake',
+                description: 'Built to centralize program information and applications, reducing unstructured emails, calls, and ad-hoc requests.',
+                icon: FileCheck,
+                gradient: 'from-indigo-600 to-purple-600',
+                delay: 0.1,
+              },
+              {
+                title: 'Clear Applicant Alignment',
+                description: 'Students apply based on published criteria, helping institutions receive applications aligned with their requirements.',
+                icon: CheckCircle2,
+                gradient: 'from-purple-600 to-pink-600',
+                delay: 0.2,
+              },
+              {
+                title: 'Privacy-First Architecture',
+                description: 'Designed with role-based access and data protection principles to support responsible handling of applicant information.',
+                icon: Shield,
+                gradient: 'from-green-600 to-emerald-600',
+                delay: 0.3,
+              }
+            ]}
+          />
         </section>
 
         {/* Features Section */}
@@ -279,8 +248,8 @@ export default function ForHospitalsPage() {
             <AnimatedGradientText>How Electivio Is Designed to Support Hospitals</AnimatedGradientText>
           </h2>
           
-          <div className="space-y-8">
-            {[
+          <ScrollytellingTimeline
+            steps={[
               {
                 step: 1,
                 title: 'Define Program Criteria',
@@ -305,35 +274,8 @@ export default function ForHospitalsPage() {
                 description: 'Tools are being built to help manage program intake, status visibility, and applicant tracking.',
                 icon: BarChart3
               }
-            ].map((step) => (
-              <div 
-                key={step.step}
-                className="group relative rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg hover:shadow-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1"
-              >
-                {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-linear-to-r from-cyan-600/10 to-indigo-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                
-                {/* Animated left accent */}
-                <div className="absolute left-0 top-0 bottom-0 w-2 bg-linear-to-b from-cyan-500 to-indigo-600 scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top" />
-                
-                <div className="relative z-10 p-8 md:p-10">
-                  <div className="flex items-start">
-                    <div className="w-16 h-16 rounded-full flex items-center justify-center mr-6 shrink-0 bg-linear-to-br from-cyan-500 to-indigo-600 shadow-md group-hover:scale-110 transition-transform duration-300">
-                      <span className="text-white font-bold text-2xl">{step.step}</span>
-                    </div>
-                    <div className="grow">
-                      <h3 className="text-2xl font-bold text-slate-100 mb-3">
-                        {step.title}
-                      </h3>
-                      <p className="text-slate-300 group-hover:text-slate-200 transition-colors leading-relaxed text-lg">
-                        {step.description}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+            ]}
+          />
         </section>
 
         {/* Call to Action */}
@@ -383,8 +325,6 @@ export default function ForHospitalsPage() {
             </div>
           </div>
         </section>
-      </div>
-      </div>
       </ScrollSection>
     </ScrollableViewport>
   );

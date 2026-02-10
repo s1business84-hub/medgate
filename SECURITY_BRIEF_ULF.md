@@ -1,4 +1,4 @@
-# MedGate Security & Data Protection Brief
+ # MedGate Security & Data Protection Brief
 ## For ULF Medical University Technical Team
 
 ---

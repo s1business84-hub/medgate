@@ -123,8 +123,25 @@ export default function StudentPortal() {
   if (user && user.role === "student") {
     return (
       <div className="relative min-h-screen overflow-hidden text-slate-100">
-        <LiquidParallax />
+        <LiquidParallax depth={26} className="opacity-90" />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(34,211,238,0.15),transparent_40%),radial-gradient(circle_at_80%_20%,rgba(99,102,241,0.12),transparent_35%),radial-gradient(circle_at_40%_80%,rgba(139,92,246,0.13),transparent_38%),linear-gradient(180deg,#0a0e1a_0%,#0f172a_50%,#0a0e1a_100%)]" />
+        <div className="pointer-events-none absolute inset-0">
+          <motion.div
+            className="absolute -left-20 top-24 h-64 w-64 rounded-full bg-cyan-500/15 blur-3xl"
+            animate={{ y: [0, -30, 0], scale: [1, 1.08, 1] }}
+            transition={{ duration: 14, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute right-[-10%] top-1/3 h-72 w-72 rounded-full bg-indigo-500/15 blur-3xl"
+            animate={{ y: [0, 35, 0], scale: [1.05, 0.98, 1.05] }}
+            transition={{ duration: 16, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute left-1/3 bottom-[-12%] h-80 w-80 rounded-full bg-sky-400/10 blur-3xl"
+            animate={{ y: [0, -26, 0], rotate: [0, 4, -4, 0] }}
+            transition={{ duration: 18, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+          />
+        </div>
 
         <div className="relative max-w-7xl mx-auto px-6 py-8">
           {/* Header with XP Meter */}
@@ -584,12 +601,34 @@ export default function StudentPortal() {
   // Public content for non-logged-in users
   return (
     <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
-      <LiquidParallax />
+      <LiquidParallax depth={28} className="opacity-95" />
       <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
+      <div className="pointer-events-none absolute inset-0">
+        <motion.div
+          className="absolute -left-16 top-16 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl"
+          animate={{ y: [0, -28, 0], scale: [1, 1.06, 1] }}
+          transition={{ duration: 13, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute right-[-8%] top-1/4 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl"
+          animate={{ y: [0, 32, 0], scale: [1.04, 0.98, 1.04] }}
+          transition={{ duration: 15, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute left-1/4 bottom-[-10%] h-96 w-96 rounded-full bg-sky-400/15 blur-3xl"
+          animate={{ y: [0, -24, 0], rotate: [0, 3, -3, 0] }}
+          transition={{ duration: 18, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+        />
+      </div>
 
       <div className="relative max-w-7xl mx-auto px-6 py-8">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8 animate-fade-in">
+        <motion.div
+          className="flex items-center justify-between mb-8"
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        >
           <div>
             <h1 className="text-3xl font-bold text-slate-100 mb-2">Student Portal</h1>
             <p className="text-slate-300">Early Access Portal for Observerships and Electives</p>
@@ -610,7 +649,7 @@ export default function StudentPortal() {
           >
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
-        </div>
+        </motion.div>
 
         {/* Mobile Menu with Animation */}
         <div
@@ -637,8 +676,16 @@ export default function StudentPortal() {
         </div>
 
         {/* Early Access Section */}
-        <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
-          <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg p-8">
+        <motion.div
+          initial={{ opacity: 0, y: 22 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <motion.div
+            className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg p-8"
+            whileHover={{ y: -6, boxShadow: "0 24px 60px -30px rgba(14,165,233,0.5)" }}
+            transition={{ duration: 0.25 }}
+          >
             <h2 className="text-3xl md:text-4xl font-bold text-slate-100 mb-4">Early Access Registration</h2>
             <p className="text-lg text-slate-300 mb-6 leading-relaxed">
               Electivio is conducting a pilot rollout of formal observership and elective program listings in collaboration with healthcare institutions. By creating an account, students may register for early access, receive program updates, and be notified when applications open.
@@ -695,8 +742,8 @@ export default function StudentPortal() {
                 </Button>
               </Link>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
 
       {/* Student Guidelines Section */}
