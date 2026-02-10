@@ -571,8 +571,8 @@ export default function StudentPortal() {
                 </div>
               ) : (
                 <>
-                  {/* Application List */}
-                  <div className="space-y-4">
+                  {/* Application List - Horizontally Scrollable */}
+                  <div className="space-y-6">
                     <motion.h2 
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
@@ -580,59 +580,101 @@ export default function StudentPortal() {
                     >
                       Your Applications
                     </motion.h2>
-                    {applications.map((app, idx) => {
-                      const getStatusColor = (status: string) => {
-                        switch (status) {
-                          case 'Accepted':
-                          case 'Stage 2 Accepted':
-                          case 'In Training':
-                            return 'bg-gradient-to-r from-green-600/50 to-emerald-600/50 text-green-200 border-green-400/50 shadow-lg shadow-green-500/30';
-                          case 'Pending':
-                          case 'Submitted':
-                            return 'bg-gradient-to-r from-yellow-600/50 to-amber-600/50 text-yellow-200 border-yellow-400/50 shadow-lg shadow-yellow-500/30';
-                          case 'Rejected':
-                            return 'bg-gradient-to-r from-red-600/50 to-rose-600/50 text-red-200 border-red-400/50 shadow-lg shadow-red-500/30';
-                          case 'Completed':
-                            return 'bg-gradient-to-r from-blue-600/50 to-cyan-600/50 text-blue-200 border-blue-400/50 shadow-lg shadow-blue-500/30';
-                          default:
-                            return 'bg-gradient-to-r from-slate-600/50 to-slate-500/50 text-slate-200 border-slate-400/50';
-                        }
-                      };
+                    
+                    {/* Scrollable Container */}
+                    <div className="relative group">
+                      <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-slate-950 via-slate-950/50 to-transparent z-10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-slate-950 via-slate-950/50 to-transparent z-10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      
+                      <div className="flex gap-4 overflow-x-auto scroll-smooth pb-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-white/5 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gradient-to-r [&::-webkit-scrollbar-thumb]:from-cyan-500 [&::-webkit-scrollbar-thumb]:to-indigo-600 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:shadow-lg">
+                        {applications.map((app, idx) => {
+                          const getStatusColor = (status: string) => {
+                            switch (status) {
+                              case 'Accepted':
+                              case 'Stage 2 Accepted':
+                              case 'In Training':
+                                return 'bg-gradient-to-r from-green-600/50 to-emerald-600/50 text-green-200 border-green-400/50 shadow-lg shadow-green-500/30';
+                              case 'Pending':
+                              case 'Submitted':
+                                return 'bg-gradient-to-r from-yellow-600/50 to-amber-600/50 text-yellow-200 border-yellow-400/50 shadow-lg shadow-yellow-500/30';
+                              case 'Rejected':
+                                return 'bg-gradient-to-r from-red-600/50 to-rose-600/50 text-red-200 border-red-400/50 shadow-lg shadow-red-500/30';
+                              case 'Completed':
+                                return 'bg-gradient-to-r from-blue-600/50 to-cyan-600/50 text-blue-200 border-blue-400/50 shadow-lg shadow-blue-500/30';
+                              default:
+                                return 'bg-gradient-to-r from-slate-600/50 to-slate-500/50 text-slate-200 border-slate-400/50';
+                            }
+                          };
 
-                      return (
-                        <motion.button
-                          key={app.id}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: idx * 0.05 }}
-                          onClick={() => setSelectedApplicationId(app.id)}
-                          whileHover={{ scale: 1.02, y: -2 }}
-                          className={`relative w-full text-left p-5 rounded-xl transition-all border-2 overflow-hidden group ${
-                            selectedApplicationId === app.id
-                              ? 'bg-gradient-to-br from-cyan-600/40 to-blue-600/30 border-cyan-400/70 shadow-2xl shadow-cyan-500/40'
-                              : 'bg-white/8 border-white/20 hover:bg-white/12 hover:border-cyan-400/50 shadow-lg hover:shadow-cyan-500/40'
-                          }`}
-                        >
-                          <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/0 via-white/0 to-cyan-400/0 group-hover:via-white/10 transition-all duration-500" />
-                          <div className="relative z-10 flex items-center justify-between gap-4">
-                            <div className="flex-1">
-                              <h3 className="text-lg font-bold text-cyan-100 mb-2">{app.programName}</h3>
-                              <p className="text-sm text-slate-300 mb-2">{app.hospitalName}</p>
-                              <div className="flex items-center gap-2 text-xs text-slate-400 font-semibold">
-                                <span>{app.sessionCount || 1} session{(app.sessionCount || 1) > 1 ? 's' : ''}</span>
-                                <span>•</span>
-                                <span>Applied {new Date(app.submissionDate).toLocaleDateString()}</span>
+                          return (
+                            <motion.button
+                              key={app.id}
+                              initial={{ opacity: 0, y: 20 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: idx * 0.05 }}
+                              onClick={() => setSelectedApplicationId(app.id)}
+                              whileHover={{ scale: 1.05, y: -4 }}
+                              className={`relative flex-shrink-0 w-80 text-left p-6 rounded-2xl transition-all border-2 overflow-hidden group/card cursor-pointer ${
+                                selectedApplicationId === app.id
+                                  ? 'bg-gradient-to-br from-cyan-600/50 to-blue-600/40 border-cyan-300/80 shadow-2xl shadow-cyan-500/50'
+                                  : 'bg-gradient-to-br from-white/10 to-white/5 border-white/20 hover:from-cyan-500/20 hover:to-blue-500/15 hover:border-cyan-400/60 shadow-xl hover:shadow-2xl hover:shadow-cyan-500/40'
+                              }`}
+                            >
+                              {/* Animated gradient background */}
+                              <motion.div
+                                className="absolute inset-0 bg-gradient-to-br from-cyan-400/10 via-transparent to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500"
+                              />
+                              
+                              {/* Status badge positioned absolutely */}
+                              <div className="absolute top-4 right-4 z-20">
+                                <motion.span 
+                                  whileHover={{ scale: 1.05 }}
+                                  className={`px-3 py-1.5 rounded-full text-xs font-bold border-2 ${getStatusColor(app.status)} transition-all block text-center`}
+                                >
+                                  {app.status === 'Stage 2 Accepted' ? 'Stage 2' : app.status}
+                                </motion.span>
                               </div>
-                            </div>
-                            <div className="shrink-0">
-                              <span className={`px-4 py-2 rounded-lg text-sm font-bold border-2 ${getStatusColor(app.status)} transition-all`}>
-                                {app.status}
-                              </span>
-                            </div>
-                          </div>
-                        </motion.button>
-                      );
-                    })}
+                              
+                              {/* Content */}
+                              <div className="relative z-10 h-full flex flex-col justify-between">
+                                <div>
+                                  <h3 className="text-lg font-bold text-cyan-100 mb-1 line-clamp-2 pr-28">{app.programName}</h3>
+                                  <p className="text-sm text-slate-300 mb-3 line-clamp-1">{app.hospitalName}</p>
+                                  
+                                  {/* Progress bar */}
+                                  <div className="mb-4">
+                                    <div className="flex justify-between items-center mb-2">
+                                      <span className="text-xs font-semibold text-slate-300">Progress</span>
+                                      <span className="text-xs font-bold text-cyan-300">{app.progressPercentage || 0}%</span>
+                                    </div>
+                                    <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden border border-cyan-500/30">
+                                      <motion.div
+                                        className="h-full bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500 shadow-lg shadow-cyan-500/40"
+                                        initial={{ width: 0 }}
+                                        animate={{ width: `${app.progressPercentage || 0}%` }}
+                                        transition={{ duration: 0.8, delay: idx * 0.05 }}
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* Footer info */}
+                                <div className="space-y-2 pt-3 border-t border-white/10">
+                                  <div className="flex items-center gap-2 text-xs text-slate-400 font-semibold">
+                                    <span className="text-cyan-400">📚</span>
+                                    <span>{app.sessionCount || 1} session{(app.sessionCount || 1) > 1 ? 's' : ''}</span>
+                                  </div>
+                                  <div className="flex items-center gap-2 text-xs text-slate-400 font-semibold">
+                                    <span className="text-purple-400">📅</span>
+                                    <span>Applied {new Date(app.submissionDate).toLocaleDateString()}</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </motion.button>
+                          );
+                        })}
+                      </div>
+                    </div>
                   </div>
 
                   {/* Selected Application Details */}
