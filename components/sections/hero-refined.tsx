@@ -245,9 +245,7 @@ export function Hero() {
                 transition={{ duration: 0.5, delay: 0.5 }}
               >
                 <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1]">
-                  <AnimatedGradientText>
-                    <LetterByLetter text="Reimagined" delay={0.5} duration={0.06} />
-                  </AnimatedGradientText>
+                  <LetterByLetter text="Reimagined" delay={0.5} duration={0.06} gradient={true} />
                 </h1>
               </motion.div>
             </div>
