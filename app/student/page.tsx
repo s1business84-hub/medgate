@@ -124,23 +124,64 @@ export default function StudentPortal() {
     return (
       <div className="relative min-h-screen overflow-hidden text-slate-100">
         <LiquidParallax depth={26} className="opacity-90" />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(34,211,238,0.15),transparent_40%),radial-gradient(circle_at_80%_20%,rgba(99,102,241,0.12),transparent_35%),radial-gradient(circle_at_40%_80%,rgba(139,92,246,0.13),transparent_38%),linear-gradient(180deg,#0a0e1a_0%,#0f172a_50%,#0a0e1a_100%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-slate-950 via-indigo-950/40 to-slate-950" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_20%,rgba(6,182,212,0.25),transparent_40%),radial-gradient(circle_at_90%_30%,rgba(59,130,246,0.2),transparent_40%),radial-gradient(circle_at_50%_80%,rgba(168,85,247,0.2),transparent_40%)]" />
+        
+        {/* Enhanced animated background orbs */}
         <div className="pointer-events-none absolute inset-0">
+          {/* Top left cyan orb */}
           <motion.div
-            className="absolute -left-20 top-24 h-64 w-64 rounded-full bg-cyan-500/15 blur-3xl"
-            animate={{ y: [0, -30, 0], scale: [1, 1.08, 1] }}
+            className="absolute -left-32 top-0 h-96 w-96 rounded-full bg-gradient-to-br from-cyan-500/30 via-blue-500/20 to-transparent blur-3xl"
+            animate={{ 
+              y: [0, -40, 0], 
+              scale: [1, 1.15, 1],
+              x: [0, 20, 0],
+            }}
             transition={{ duration: 14, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
           />
+          
+          {/* Right indigo orb */}
           <motion.div
-            className="absolute right-[-10%] top-1/3 h-72 w-72 rounded-full bg-indigo-500/15 blur-3xl"
-            animate={{ y: [0, 35, 0], scale: [1.05, 0.98, 1.05] }}
+            className="absolute right-[-15%] top-1/3 h-96 w-96 rounded-full bg-gradient-to-bl from-indigo-600/30 via-purple-500/20 to-transparent blur-3xl"
+            animate={{ 
+              y: [0, 50, 0], 
+              scale: [1.1, 0.95, 1.1],
+              x: [0, -25, 0],
+            }}
             transition={{ duration: 16, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
           />
+          
+          {/* Bottom pink orb */}
           <motion.div
-            className="absolute left-1/3 bottom-[-12%] h-80 w-80 rounded-full bg-sky-400/10 blur-3xl"
-            animate={{ y: [0, -26, 0], rotate: [0, 4, -4, 0] }}
+            className="absolute left-1/4 -bottom-40 h-96 w-96 rounded-full bg-gradient-to-t from-pink-500/25 via-rose-500/15 to-transparent blur-3xl"
+            animate={{ 
+              y: [0, -35, 0], 
+              rotate: [0, 6, -6, 0],
+              scale: [1, 1.12, 1],
+            }}
             transition={{ duration: 18, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
           />
+          
+          {/* Floating particles */}
+          {[...Array(15)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1.5 h-1.5 bg-cyan-400/40 rounded-full"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, -40, 0],
+                opacity: [0, 0.8, 0],
+              }}
+              transition={{
+                duration: 4 + Math.random() * 3,
+                repeat: Infinity,
+                delay: Math.random() * 4,
+              }}
+            />
+          ))}
         </div>
 
         <div className="relative max-w-7xl mx-auto px-6 py-8">
@@ -148,34 +189,56 @@ export default function StudentPortal() {
           <Reveal>
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
             <div className="flex-1">
-              <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2">Student Portal</h1>
-              <p className="text-slate-300">Welcome back, {user.name}!</p>
+              <motion.h1 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
+                className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-cyan-300 via-blue-300 to-indigo-400 bg-clip-text text-transparent mb-2"
+              >
+                Student Portal
+              </motion.h1>
+              <motion.p 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="text-lg text-slate-200"
+              >
+                Welcome back, <span className="font-bold bg-gradient-to-r from-pink-300 to-purple-300 bg-clip-text text-transparent">{user.name}!</span>
+              </motion.p>
               {/* Level & XP Section */}
-              <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center gap-4 max-w-lg">
+              <div className="mt-6 flex flex-col sm:flex-row items-start sm:items-center gap-4 max-w-xl">
                 {/* Level Badge */}
-                <div className="flex items-center gap-2">
-                  <div className="px-3 py-1 rounded-full text-sm font-bold text-white bg-linear-to-r from-purple-600 to-pink-600">
-                    Level {Math.ceil(xpData.xpPoints / 100)}
+                <motion.div 
+                  whileHover={{ scale: 1.05 }}
+                  className="flex items-center gap-2"
+                >
+                  <div className="px-4 py-2 rounded-full text-sm font-bold text-white bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 shadow-lg shadow-purple-500/50 ring-2 ring-purple-400/30">
+                    ⭐ Level {Math.ceil(xpData.xpPoints / 100)}
                   </div>
-                </div>
+                </motion.div>
                 {/* XP Meter */}
-                <div className="flex-1">
+                <div className="flex-1 min-w-max sm:min-w-0">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="flex items-center gap-2 text-sm text-yellow-400 font-semibold">
-                      <Zap className="w-4 h-4" />
+                    <span className="flex items-center gap-2 text-sm text-yellow-300 font-bold">
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                      >
+                        <Zap className="w-5 h-5" />
+                      </motion.div>
                       XP Progress
                     </span>
-                    <span className="text-sm font-bold text-yellow-300">{xpData.xpPoints % 100} / 100 XP</span>
+                    <span className="text-sm font-bold text-yellow-200">{xpData.xpPoints % 100} / 100 XP</span>
                   </div>
-                  <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden border border-yellow-500/20">
+                  <div className="h-3 w-full rounded-full bg-gradient-to-r from-slate-800 to-slate-700 overflow-hidden border border-yellow-500/40 shadow-lg shadow-yellow-500/20">
                     <motion.div
-                      className="h-full bg-linear-to-r from-yellow-400 to-orange-400"
+                      className="h-full bg-gradient-to-r from-yellow-400 via-amber-400 to-orange-400 shadow-lg shadow-yellow-500/40"
                       initial={{ width: 0 }}
                       animate={{ width: `${Math.min((xpData.xpPoints % 100) * 1, 100)}%` }}
                       transition={{ type: "spring", stiffness: 100, damping: 20 }}
                     />
                   </div>
-                  <p className="text-xs text-slate-400 mt-2">
+                  <p className="text-xs text-slate-300 mt-2 font-semibold">
                     💡 Earn XP: Complete forms • Log sessions • Finish goals • Internship progress
                   </p>
                 </div>
@@ -183,56 +246,68 @@ export default function StudentPortal() {
             </div>
             <StaggerGroup className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto flex-wrap" staggerDelay={0.06} initialDelay={0.1}>
               <StaggerItem>
-                <Link
-                  href="/student/career-path"
-                  className="btn-secondary hover-scale px-4 sm:px-6 py-2 sm:py-3 rounded-lg backdrop-blur-md border-purple-500/30 bg-linear-to-r from-purple-500/20 to-blue-500/20 hover:from-purple-500/30 hover:to-blue-500/30 text-white font-medium flex items-center justify-center gap-2"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                  </svg>
-                  Career Path
-                </Link>
+                <motion.div whileHover={{ scale: 1.03 }}>
+                  <Link
+                    href="/student/career-path"
+                    className="btn-secondary hover-scale px-4 sm:px-6 py-3 rounded-lg backdrop-blur-xl border-2 border-purple-500/50 bg-gradient-to-br from-purple-600/30 to-blue-600/30 hover:from-purple-500/40 hover:to-blue-500/40 text-white font-bold flex items-center justify-center gap-2 shadow-lg shadow-purple-500/30 transition-all hover:shadow-purple-500/50"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                    Career Path
+                  </Link>
+                </motion.div>
               </StaggerItem>
               <StaggerItem>
-                <Link
-                  href="/student/progress"
-                  className="btn-secondary hover-scale px-4 sm:px-6 py-2 sm:py-3 rounded-lg backdrop-blur-md border-cyan-500/30 bg-linear-to-r from-cyan-500/20 to-indigo-500/20 hover:from-cyan-500/30 hover:to-indigo-500/30 text-white font-medium flex items-center justify-center gap-2"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7H7v10h6V7z M17 7h-2v4h2V7z M5 20h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v13a2 2 0 002 2z" />
-                  </svg>
-                  Progress
-                </Link>
+                <motion.div whileHover={{ scale: 1.03 }}>
+                  <Link
+                    href="/student/progress"
+                    className="btn-secondary hover-scale px-4 sm:px-6 py-3 rounded-lg backdrop-blur-xl border-2 border-cyan-500/50 bg-gradient-to-br from-cyan-600/30 to-teal-600/30 hover:from-cyan-500/40 hover:to-teal-500/40 text-white font-bold flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/30 transition-all hover:shadow-cyan-500/50"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7H7v10h6V7z M17 7h-2v4h2V7z M5 20h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v13a2 2 0 002 2z" />
+                    </svg>
+                    Progress
+                  </Link>
+                </motion.div>
               </StaggerItem>
               <StaggerItem>
-                <Link
-                  href="/student/form-submission"
-                  className="btn-secondary hover-scale px-4 sm:px-6 py-2 sm:py-3 rounded-lg backdrop-blur-md border-blue-500/30 bg-linear-to-r from-blue-500/20 to-cyan-500/20 hover:from-blue-500/30 hover:to-cyan-500/30 text-white font-medium flex items-center justify-center gap-2"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                  Forms
-                </Link>
+                <motion.div whileHover={{ scale: 1.03 }}>
+                  <Link
+                    href="/student/form-submission"
+                    className="btn-secondary hover-scale px-4 sm:px-6 py-3 rounded-lg backdrop-blur-xl border-2 border-blue-500/50 bg-gradient-to-br from-blue-600/30 to-indigo-600/30 hover:from-blue-500/40 hover:to-indigo-500/40 text-white font-bold flex items-center justify-center gap-2 shadow-lg shadow-blue-500/30 transition-all hover:shadow-blue-500/50"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    Forms
+                  </Link>
+                </motion.div>
               </StaggerItem>
               <StaggerItem>
                 <StudentInbox />
               </StaggerItem>
               <StaggerItem>
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.03 }}
                   onClick={() => {
                     logout();
                     router.push("/");
                   }}
-                  className="btn-secondary hover-scale px-4 sm:px-6 py-2 sm:py-3 rounded-lg backdrop-blur-md border-white/30 bg-white/40"
+                  className="btn-secondary hover-scale px-4 sm:px-6 py-3 rounded-lg backdrop-blur-xl border-2 border-red-500/50 bg-gradient-to-br from-red-600/30 to-rose-600/30 hover:from-red-500/40 hover:to-rose-500/40 text-white font-bold shadow-lg shadow-red-500/30 transition-all hover:shadow-red-500/50"
                 >
                   Logout
-                </button>
+                </motion.button>
               </StaggerItem>
               <StaggerItem>
-                <Link href="/" className="btn-secondary hover-scale px-4 sm:px-6 py-2 sm:py-3 rounded-lg backdrop-blur-md border-white/30 bg-white/40">
-                  ← Back to Home
-                </Link>
+                <motion.div whileHover={{ scale: 1.03 }}>
+                  <Link 
+                    href="/" 
+                    className="btn-secondary hover-scale px-4 sm:px-6 py-3 rounded-lg backdrop-blur-xl border-2 border-slate-400/50 bg-gradient-to-br from-slate-600/30 to-slate-500/30 hover:from-slate-500/40 hover:to-slate-400/40 text-white font-bold shadow-lg shadow-slate-500/30 transition-all hover:shadow-slate-500/50"
+                  >
+                    ← Back to Home
+                  </Link>
+                </motion.div>
               </StaggerItem>
             </StaggerGroup>
           </div>
@@ -246,16 +321,40 @@ export default function StudentPortal() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="rounded-xl border border-cyan-500/30 bg-linear-to-br from-cyan-500/10 to-blue-500/10 backdrop-blur-xl p-4"
+              whileHover={{ y: -8, scale: 1.03 }}
+              className="group relative rounded-2xl border-2 border-cyan-500/50 bg-gradient-to-br from-cyan-600/40 to-blue-600/30 backdrop-blur-xl p-6 shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-500/50 hover:border-cyan-400/70 transition-all duration-300 overflow-hidden cursor-pointer"
             >
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-semibold text-cyan-300 uppercase tracking-wider">Learning Hours</span>
-                <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+              {/* Animated gradient glow */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-br from-cyan-400/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                animate={{
+                  backgroundPosition: ['0% 0%', '100% 100%'],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                }}
+              />
+              <div className="relative z-10 flex items-center justify-between mb-3">
+                <span className="text-xs font-bold text-cyan-200 uppercase tracking-wider">Learning Hours</span>
+                <motion.div 
+                  animate={{ rotate: [0, 10, -10, 0] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  <svg className="w-6 h-6 text-cyan-300 drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </motion.div>
               </div>
-              <div className="text-3xl font-bold text-cyan-300 mb-1">{studentStats.learningHours}</div>
-              <p className="text-xs text-cyan-200/70">hours completed</p>
+              <motion.div 
+                className="text-4xl font-bold bg-gradient-to-r from-cyan-200 to-blue-200 bg-clip-text text-transparent mb-2"
+                whileHover={{ scale: 1.1 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                {studentStats.learningHours}
+              </motion.div>
+              <p className="text-sm text-cyan-100/90 font-semibold">hours completed</p>
             </motion.div>
 
             {/* Average Progress */}
@@ -263,16 +362,40 @@ export default function StudentPortal() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.15 }}
-              className="rounded-xl border border-purple-500/30 bg-linear-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-xl p-4"
+              whileHover={{ y: -8, scale: 1.03 }}
+              className="group relative rounded-2xl border-2 border-purple-500/50 bg-gradient-to-br from-purple-600/40 to-pink-600/30 backdrop-blur-xl p-6 shadow-2xl shadow-purple-500/30 hover:shadow-purple-500/50 hover:border-purple-400/70 transition-all duration-300 overflow-hidden cursor-pointer"
             >
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-semibold text-purple-300 uppercase tracking-wider">Avg Progress</span>
-                <svg className="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
+              {/* Animated gradient glow */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-br from-purple-400/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                animate={{
+                  backgroundPosition: ['0% 0%', '100% 100%'],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                }}
+              />
+              <div className="relative z-10 flex items-center justify-between mb-3">
+                <span className="text-xs font-bold text-purple-200 uppercase tracking-wider">Avg Progress</span>
+                <motion.div 
+                  animate={{ y: [0, -3, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  <svg className="w-6 h-6 text-purple-300 drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </motion.div>
               </div>
-              <div className="text-3xl font-bold text-purple-300 mb-1">{studentStats.avgProgress}%</div>
-              <p className="text-xs text-purple-200/70">per course</p>
+              <motion.div 
+                className="text-4xl font-bold bg-gradient-to-r from-purple-200 to-pink-200 bg-clip-text text-transparent mb-2"
+                whileHover={{ scale: 1.1 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                {studentStats.avgProgress}%
+              </motion.div>
+              <p className="text-sm text-purple-100/90 font-semibold">per course</p>
             </motion.div>
 
             {/* Certifications */}
@@ -280,16 +403,40 @@ export default function StudentPortal() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="rounded-xl border border-emerald-500/30 bg-linear-to-br from-emerald-500/10 to-green-500/10 backdrop-blur-xl p-4"
+              whileHover={{ y: -8, scale: 1.03 }}
+              className="group relative rounded-2xl border-2 border-emerald-500/50 bg-gradient-to-br from-emerald-600/40 to-teal-600/30 backdrop-blur-xl p-6 shadow-2xl shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:border-emerald-400/70 transition-all duration-300 overflow-hidden cursor-pointer"
             >
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-semibold text-emerald-300 uppercase tracking-wider">Certifications</span>
-                <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                </svg>
+              {/* Animated gradient glow */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-br from-emerald-400/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                animate={{
+                  backgroundPosition: ['0% 0%', '100% 100%'],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                }}
+              />
+              <div className="relative z-10 flex items-center justify-between mb-3">
+                <span className="text-xs font-bold text-emerald-200 uppercase tracking-wider">Certifications</span>
+                <motion.div 
+                  animate={{ rotate: [0, 360] }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                >
+                  <svg className="w-6 h-6 text-emerald-300 drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                  </svg>
+                </motion.div>
               </div>
-              <div className="text-3xl font-bold text-emerald-300 mb-1">{studentStats.certifications}</div>
-              <p className="text-xs text-emerald-200/70">{studentStats.certifications === 0 ? 'none yet' : studentStats.certifications === 1 ? 'earned' : 'earned'}</p>
+              <motion.div 
+                className="text-4xl font-bold bg-gradient-to-r from-emerald-200 to-teal-200 bg-clip-text text-transparent mb-2"
+                whileHover={{ scale: 1.1 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                {studentStats.certifications}
+              </motion.div>
+              <p className="text-sm text-emerald-100/90 font-semibold">{studentStats.certifications === 0 ? 'none yet' : studentStats.certifications === 1 ? 'earned' : 'earned'}</p>
             </motion.div>
           </div>
           </Reveal>
@@ -297,20 +444,35 @@ export default function StudentPortal() {
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             {/* Left Sidebar - Audit Card */}
             <div className="lg:col-span-1">
-              <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg p-4 sticky top-8">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="text-2xl">📋</div>
-                  <h3 className="text-lg font-semibold text-white">Your Records</h3>
+              <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
+                whileHover={{ y: -4 }}
+                className="group relative rounded-2xl border-2 border-blue-500/50 bg-gradient-to-br from-blue-600/40 to-cyan-600/30 backdrop-blur-xl shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/50 p-5 sticky top-8 overflow-hidden hover:border-blue-400/70 transition-all duration-300"
+              >
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-br from-blue-400/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                />
+                <div className="relative z-10 flex items-center gap-3 mb-4">
+                  <motion.div 
+                    className="text-3xl"
+                    animate={{ rotate: [0, 5, -5, 0] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    📋
+                  </motion.div>
+                  <h3 className="text-lg font-bold text-blue-100">Your Records</h3>
                 </div>
-                <p className="text-xs text-slate-300 mb-4">Download copies of your applications, exposure logs, and training records.</p>
+                <p className="text-sm text-blue-100/90 mb-4 font-semibold">Download copies of your applications, exposure logs, and training records.</p>
                 <div className="space-y-2">
                   <AuditExcelButton
                     dataTypes={["applications", "exposureLogs", "completionAttestations"]}
                     filterApplications={(apps) => apps.filter((a) => a.studentId === user.id)}
-                    className="w-full border-white/30 bg-white/40 text-slate-800 hover:bg-white/50"
+                    className="w-full border-2 border-blue-400/50 bg-gradient-to-r from-blue-500/30 to-cyan-500/30 text-blue-100 hover:bg-gradient-to-r hover:from-blue-500/50 hover:to-cyan-500/50 hover:text-white font-bold shadow-lg hover:shadow-blue-500/50 transition-all rounded-lg py-2.5"
                   />
                 </div>
-              </div>
+              </motion.div>
             </div>
 
             {/* Main Content */}
@@ -319,31 +481,66 @@ export default function StudentPortal() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="p-5 rounded-lg border border-yellow-500/40 bg-linear-to-r from-yellow-500/15 to-orange-500/15 backdrop-blur-sm"
+                className="relative p-6 rounded-2xl border-2 border-yellow-500/50 bg-gradient-to-br from-yellow-600/40 to-orange-600/30 backdrop-blur-xl shadow-2xl shadow-yellow-500/30 overflow-hidden"
               >
-                <div className="flex items-start gap-3">
-                  <div className="text-2xl">⚡</div>
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 via-transparent to-transparent opacity-0 group-hover:opacity-100"
+                  animate={{
+                    backgroundPosition: ['0% 0%', '100% 100%'],
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                  }}
+                />
+                <div className="relative z-10 flex items-start gap-4">
+                  <motion.div 
+                    className="text-4xl flex-shrink-0"
+                    animate={{ rotate: [0, 10, -10, 0] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    ⚡
+                  </motion.div>
                   <div className="flex-1">
-                    <h3 className="font-bold text-yellow-300 mb-2">XP Earning Guide</h3>
-                    <div className="grid md:grid-cols-2 gap-3">
-                      <div className="text-sm text-yellow-100">
-                        <p className="font-semibold text-yellow-200 mb-1">Complete Activities:</p>
-                        <ul className="space-y-1 text-xs">
-                          <li>✓ <strong>+10 XP</strong> per form completion</li>
-                          <li>✓ <strong>+5 XP</strong> per application submission</li>
-                          <li>✓ <strong>+3 XP</strong> per reflection logged</li>
+                    <h3 className="font-bold text-xl text-yellow-200 mb-3">XP Earning Guide</h3>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div className="text-sm text-yellow-50">
+                        <p className="font-bold text-yellow-100 mb-2 flex items-center gap-2">
+                          <span className="px-2 py-1 rounded-lg bg-yellow-500/30 border border-yellow-500/50">⚙️</span>
+                          Complete Activities
+                        </p>
+                        <ul className="space-y-1.5 text-xs">
+                          <li className="flex items-center gap-2">
+                            <span className="text-yellow-300 font-bold">✓</span> <strong className="text-yellow-200">+10 XP</strong> per form completion
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <span className="text-yellow-300 font-bold">✓</span> <strong className="text-yellow-200">+5 XP</strong> per application submission
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <span className="text-yellow-300 font-bold">✓</span> <strong className="text-yellow-200">+3 XP</strong> per reflection logged
+                          </li>
                         </ul>
                       </div>
-                      <div className="text-sm text-yellow-100">
-                        <p className="font-semibold text-yellow-200 mb-1">Achievements:</p>
-                        <ul className="space-y-1 text-xs">
-                          <li>✓ <strong>+15 XP</strong> per program completion</li>
-                          <li>✓ <strong>+20 XP</strong> per certification earned</li>
-                          <li>✓ <strong>100 XP = Level Up!</strong></li>
+                      <div className="text-sm text-yellow-50">
+                        <p className="font-bold text-yellow-100 mb-2 flex items-center gap-2">
+                          <span className="px-2 py-1 rounded-lg bg-yellow-500/30 border border-yellow-500/50">🏆</span>
+                          Achievements
+                        </p>
+                        <ul className="space-y-1.5 text-xs">
+                          <li className="flex items-center gap-2">
+                            <span className="text-yellow-300 font-bold">✓</span> <strong className="text-yellow-200">+15 XP</strong> per program completion
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <span className="text-yellow-300 font-bold">✓</span> <strong className="text-yellow-200">+20 XP</strong> per certification earned
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <span className="text-yellow-300 font-bold">⭐</span> <strong className="text-yellow-200">100 XP = Level Up!</strong>
+                          </li>
                         </ul>
                       </div>
                     </div>
-                    <p className="text-xs text-yellow-100/80 mt-2">Keep engaging to level up and unlock new opportunities!</p>
+                    <p className="text-sm text-yellow-100/90 mt-3 font-semibold">🚀 Keep engaging to level up and unlock new opportunities!</p>
                   </div>
                 </div>
               </motion.div>
@@ -376,53 +573,64 @@ export default function StudentPortal() {
                 <>
                   {/* Application List */}
                   <div className="space-y-4">
-                    <h2 className="text-xl font-bold text-slate-100">Your Applications</h2>
-                    {applications.map(app => {
+                    <motion.h2 
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="text-2xl font-bold bg-gradient-to-r from-cyan-300 to-indigo-300 bg-clip-text text-transparent"
+                    >
+                      Your Applications
+                    </motion.h2>
+                    {applications.map((app, idx) => {
                       const getStatusColor = (status: string) => {
                         switch (status) {
                           case 'Accepted':
                           case 'Stage 2 Accepted':
                           case 'In Training':
-                            return 'bg-green-500/20 text-green-300 border-green-500/30';
+                            return 'bg-gradient-to-r from-green-600/50 to-emerald-600/50 text-green-200 border-green-400/50 shadow-lg shadow-green-500/30';
                           case 'Pending':
                           case 'Submitted':
-                            return 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30';
+                            return 'bg-gradient-to-r from-yellow-600/50 to-amber-600/50 text-yellow-200 border-yellow-400/50 shadow-lg shadow-yellow-500/30';
                           case 'Rejected':
-                            return 'bg-red-500/20 text-red-300 border-red-500/30';
+                            return 'bg-gradient-to-r from-red-600/50 to-rose-600/50 text-red-200 border-red-400/50 shadow-lg shadow-red-500/30';
                           case 'Completed':
-                            return 'bg-blue-500/20 text-blue-300 border-blue-500/30';
+                            return 'bg-gradient-to-r from-blue-600/50 to-cyan-600/50 text-blue-200 border-blue-400/50 shadow-lg shadow-blue-500/30';
                           default:
-                            return 'bg-slate-500/20 text-slate-300 border-slate-500/30';
+                            return 'bg-gradient-to-r from-slate-600/50 to-slate-500/50 text-slate-200 border-slate-400/50';
                         }
                       };
 
                       return (
-                        <button
+                        <motion.button
                           key={app.id}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: idx * 0.05 }}
                           onClick={() => setSelectedApplicationId(app.id)}
-                          className={`w-full text-left p-4 rounded-lg transition-all ${
+                          whileHover={{ scale: 1.02, y: -2 }}
+                          className={`relative w-full text-left p-5 rounded-xl transition-all border-2 overflow-hidden group ${
                             selectedApplicationId === app.id
-                              ? 'bg-white/10 border-2 border-cyan-500/50'
-                              : 'bg-white/5 border border-white/10 hover:bg-white/10'
+                              ? 'bg-gradient-to-br from-cyan-600/40 to-blue-600/30 border-cyan-400/70 shadow-2xl shadow-cyan-500/40'
+                              : 'bg-white/8 border-white/20 hover:bg-white/12 hover:border-cyan-400/50 shadow-lg hover:shadow-cyan-500/40'
                           }`}
                         >
-                          <div className="flex items-center justify-between gap-4">
+                          <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/0 via-white/0 to-cyan-400/0 group-hover:via-white/10 transition-all duration-500" />
+                          <div className="relative z-10 flex items-center justify-between gap-4">
                             <div className="flex-1">
-                              <h3 className="text-lg font-semibold text-slate-100 mb-1">{app.programName}</h3>
-                              <p className="text-sm text-slate-400 mb-2">{app.hospitalName}</p>
-                              <div className="flex items-center gap-2 text-xs text-slate-400">
+                              <h3 className="text-lg font-bold text-cyan-100 mb-2">{app.programName}</h3>
+                              <p className="text-sm text-slate-300 mb-2">{app.hospitalName}</p>
+                              <div className="flex items-center gap-2 text-xs text-slate-400 font-semibold">
                                 <span>{app.sessionCount || 1} session{(app.sessionCount || 1) > 1 ? 's' : ''}</span>
                                 <span>•</span>
                                 <span>Applied {new Date(app.submissionDate).toLocaleDateString()}</span>
                               </div>
                             </div>
                             <div className="shrink-0">
-                              <span className={`px-3 py-1 rounded-full text-sm font-medium border ${getStatusColor(app.status)}`}>
+                              <span className={`px-4 py-2 rounded-lg text-sm font-bold border-2 ${getStatusColor(app.status)} transition-all`}>
                                 {app.status}
                               </span>
                             </div>
                           </div>
-                        </button>
+                        </motion.button>
                       );
                     })}
                   </div>
@@ -469,36 +677,70 @@ export default function StudentPortal() {
                     };
 
                     return (
-                      <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg p-6">
-                        <div className="mb-6">
+                      <motion.div 
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="relative rounded-2xl border-2 border-purple-500/50 bg-gradient-to-br from-purple-600/40 to-indigo-600/30 backdrop-blur-xl shadow-2xl shadow-purple-500/30 p-7 overflow-hidden"
+                      >
+                        <motion.div
+                          className="absolute inset-0 bg-gradient-to-br from-purple-400/20 via-transparent to-transparent opacity-0 group-hover:opacity-100"
+                          animate={{
+                            backgroundPosition: ['0% 0%', '100% 100%'],
+                          }}
+                          transition={{
+                            duration: 4,
+                            repeat: Infinity,
+                            repeatType: "reverse",
+                          }}
+                        />
+                        <div className="relative z-10 mb-6">
                           <div className="flex items-start justify-between gap-4 mb-4">
                             <div className="flex-1">
-                              <h2 className="text-2xl font-bold text-slate-100 mb-2">{selected?.programName}</h2>
-                              <p className="text-slate-300 mb-2">{selected?.hospitalName}</p>
+                              <motion.h2 
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                className="text-3xl font-bold bg-gradient-to-r from-purple-200 to-pink-200 bg-clip-text text-transparent mb-2"
+                              >
+                                {selected?.programName}
+                              </motion.h2>
+                              <p className="text-lg text-purple-100/90 font-semibold">{selected?.hospitalName}</p>
                             </div>
-                            <div className={`px-4 py-2 rounded-lg border-2 ${getStatusColor(selected?.status)} flex items-center gap-2`}>
-                              <span className="text-xl">{getStatusIcon(selected?.status)}</span>
+                            <motion.div 
+                              whileHover={{ scale: 1.05 }}
+                              className={`px-5 py-3 rounded-xl border-2 ${getStatusColor(selected?.status)} flex items-center gap-3 font-bold text-lg shadow-lg`}
+                            >
+                              <span className="text-2xl">{getStatusIcon(selected?.status)}</span>
                               <div>
                                 <p className="text-xs opacity-80">Status</p>
-                                <p className="text-sm font-bold">{selected?.status}</p>
+                                <p className="text-sm">{selected?.status}</p>
                               </div>
-                            </div>
+                            </motion.div>
                           </div>
 
                           {/* Program Progress Section */}
-                          <div className="mt-6 p-4 rounded-lg bg-linear-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20">
-                            <h3 className="text-sm font-bold text-white mb-4">Program Progress</h3>
+                          <motion.div 
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.1 }}
+                            className="mt-6 p-5 rounded-xl bg-gradient-to-br from-pink-600/40 to-rose-600/30 border-2 border-pink-500/50 shadow-lg shadow-pink-500/20"
+                          >
+                            <h3 className="text-lg font-bold text-pink-100 mb-5">Program Progress</h3>
                             
                             {/* Overall Progress */}
-                            <div className="space-y-4">
+                            <div className="space-y-5">
                               <div>
-                                <div className="flex justify-between items-center mb-2">
-                                  <span className="text-sm text-slate-300">Overall Completion</span>
-                                  <span className="text-sm font-bold text-purple-300">65%</span>
+                                <div className="flex justify-between items-center mb-3">
+                                  <span className="text-sm font-semibold text-pink-100">Overall Completion</span>
+                                  <motion.span 
+                                    className="text-sm font-bold text-pink-200"
+                                    whileHover={{ scale: 1.1 }}
+                                  >
+                                    65%
+                                  </motion.span>
                                 </div>
-                                <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
+                                <div className="h-3 w-full bg-white/10 rounded-full overflow-hidden border border-pink-400/30 shadow-inner">
                                   <motion.div
-                                    className="h-full bg-linear-to-r from-purple-500 to-pink-500"
+                                    className="h-full bg-gradient-to-r from-purple-500 via-pink-500 to-rose-500 shadow-lg shadow-pink-500/40"
                                     initial={{ width: 0 }}
                                     animate={{ width: '65%' }}
                                     transition={{ duration: 0.8 }}
@@ -508,13 +750,18 @@ export default function StudentPortal() {
 
                               {/* Form Completion */}
                               <div>
-                                <div className="flex justify-between items-center mb-2">
-                                  <span className="text-sm text-slate-300">Form Completion</span>
-                                  <span className="text-sm font-bold text-blue-300">52%</span>
+                                <div className="flex justify-between items-center mb-3">
+                                  <span className="text-sm font-semibold text-pink-100">Form Completion</span>
+                                  <motion.span 
+                                    className="text-sm font-bold text-blue-200"
+                                    whileHover={{ scale: 1.1 }}
+                                  >
+                                    52%
+                                  </motion.span>
                                 </div>
-                                <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
+                                <div className="h-3 w-full bg-white/10 rounded-full overflow-hidden border border-blue-400/30 shadow-inner">
                                   <motion.div
-                                    className="h-full bg-linear-to-r from-blue-500 to-cyan-500"
+                                    className="h-full bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500 shadow-lg shadow-blue-500/40"
                                     initial={{ width: 0 }}
                                     animate={{ width: '52%' }}
                                     transition={{ duration: 0.8, delay: 0.2 }}
@@ -524,13 +771,18 @@ export default function StudentPortal() {
 
                               {/* Module Completion */}
                               <div>
-                                <div className="flex justify-between items-center mb-2">
-                                  <span className="text-sm text-slate-300">Module Completion</span>
-                                  <span className="text-sm font-bold text-emerald-300">78%</span>
+                                <div className="flex justify-between items-center mb-3">
+                                  <span className="text-sm font-semibold text-pink-100">Module Completion</span>
+                                  <motion.span 
+                                    className="text-sm font-bold text-emerald-200"
+                                    whileHover={{ scale: 1.1 }}
+                                  >
+                                    78%
+                                  </motion.span>
                                 </div>
-                                <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
+                                <div className="h-3 w-full bg-white/10 rounded-full overflow-hidden border border-emerald-400/30 shadow-inner">
                                   <motion.div
-                                    className="h-full bg-linear-to-r from-emerald-500 to-teal-500"
+                                    className="h-full bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 shadow-lg shadow-emerald-500/40"
                                     initial={{ width: 0 }}
                                     animate={{ width: '78%' }}
                                     transition={{ duration: 0.8, delay: 0.4 }}
@@ -538,41 +790,79 @@ export default function StudentPortal() {
                                 </div>
                               </div>
                             </div>
-                          </div>
+                          </motion.div>
 
                           {selected?.notes && (
-                            <div className="mb-4 p-4 rounded-lg bg-white/10 border border-white/20">
-                              <p className="text-xs text-slate-400 mb-1">Notes from Hospital:</p>
-                              <p className="text-sm text-slate-200">{selected.notes}</p>
-                            </div>
+                            <motion.div 
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              transition={{ delay: 0.2 }}
+                              className="mt-6 p-5 rounded-xl bg-gradient-to-br from-blue-600/40 to-cyan-600/30 border-2 border-blue-500/50 shadow-lg shadow-blue-500/20"
+                            >
+                              <p className="text-xs font-bold text-blue-300 uppercase tracking-wider mb-2">💬 Notes from Hospital</p>
+                              <p className="text-sm text-blue-100 font-semibold">{selected.notes}</p>
+                            </motion.div>
                           )}
                           
-                          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            <div className="bg-white/10 rounded-lg p-3">
-                              <p className="text-xs text-slate-400 mb-1">Sessions</p>
-                              <p className="text-lg font-bold text-slate-100">{selected?.sessionCount || 1}</p>
-                            </div>
-                            <div className="bg-white/10 rounded-lg p-3">
-                              <p className="text-xs text-slate-400 mb-1">Department</p>
-                              <p className="text-sm font-semibold text-slate-100">{selected?.department || "General"}</p>
-                            </div>
-                            <div className="bg-white/10 rounded-lg p-3">
-                              <p className="text-xs text-slate-400 mb-1">Submitted</p>
-                              <p className="text-sm font-semibold text-slate-100">
-                                {new Date(selected?.submissionDate).toLocaleDateString()}
-                              </p>
-                            </div>
-                            <div className="bg-white/10 rounded-lg p-3">
-                              <p className="text-xs text-slate-400 mb-1">Regulatory</p>
-                              <p className="text-sm font-semibold text-slate-100">
-                                {selected?.regulatory?.type || "None"}
-                              </p>
-                            </div>
-                          </div>
+                          <motion.div 
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.3 }}
+                            className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4"
+                          >
+                            {[
+                              {
+                                label: 'Sessions',
+                                value: selected?.sessionCount || 1,
+                                icon: '📚',
+                                color: 'from-cyan-600/40 to-blue-600/30 border-cyan-500/50 shadow-cyan-500/20'
+                              },
+                              {
+                                label: 'Department',
+                                value: selected?.department || "General",
+                                icon: '🏥',
+                                color: 'from-purple-600/40 to-pink-600/30 border-purple-500/50 shadow-purple-500/20'
+                              },
+                              {
+                                label: 'Submitted',
+                                value: new Date(selected?.submissionDate).toLocaleDateString(),
+                                icon: '📅',
+                                color: 'from-emerald-600/40 to-teal-600/30 border-emerald-500/50 shadow-emerald-500/20'
+                              },
+                              {
+                                label: 'Regulatory',
+                                value: selected?.regulatory?.type || "None",
+                                icon: '⚖️',
+                                color: 'from-orange-600/40 to-rose-600/30 border-orange-500/50 shadow-orange-500/20'
+                              },
+                            ].map((stat, idx) => (
+                              <motion.div 
+                                key={idx}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.3 + idx * 0.05 }}
+                                whileHover={{ y: -2 }}
+                                className={`relative bg-gradient-to-br ${stat.color} border-2 rounded-xl p-4 shadow-lg transition-all`}
+                              >
+                                <p className="text-xs font-bold text-white/90 uppercase tracking-wider mb-2">{stat.icon} {stat.label}</p>
+                                <motion.p 
+                                  className="text-sm font-bold text-white truncate"
+                                  whileHover={{ scale: 1.05 }}
+                                >
+                                  {stat.value}
+                                </motion.p>
+                              </motion.div>
+                            ))}
+                          </motion.div>
                         </div>
 
                         {/* Sessions Component */}
-                        <div className="border-t border-white/10 pt-6">
+                        <motion.div 
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: 0.4 }}
+                          className="mt-8 pt-8 border-t-2 border-gradient-to-r from-cyan-500/20 via-purple-500/20 to-pink-500/20"
+                        >
                           <StudentSessions
                             applicationId={selected?.id}
                             onSessionStart={(sessionId, sessionNum) => {
@@ -585,8 +875,8 @@ export default function StudentPortal() {
                               console.log(`Fill form for session ${sessionNum}`);
                             }}
                           />
-                        </div>
-                      </div>
+                        </motion.div>
+                      </motion.div>
                     );
                   })()}
                 </>
