@@ -2,6 +2,11 @@
 
 This document contains exact UI copy for the pilot. Use these strings in components and toasts.
 
+**Role Notes:**
+- **Student**: Medical trainees applying for observerships and electives
+- **Supervisor**: Tracks student progress, reviews forms, confirms program supervision (formerly "Admin")
+- **Staff**: Hospital administrators managing applications (formerly "Hospital")
+
 ## Student / Applicant
 
 ### Exposure Acknowledgement
@@ -44,7 +49,7 @@ This document contains exact UI copy for the pilot. Use these strings in compone
 - **Description:** "Confirm the student has completed their training requirements."
 - **Success Toast:** "Completion attestation recorded."
 
-## Admin
+## Supervisor (Progress Tracking & Review)
 
 ### Application Actions
 - **Accept Button:** "Accept Application"
@@ -75,7 +80,7 @@ This document contains exact UI copy for the pilot. Use these strings in compone
 - **Observership Blocked (no supervisor):** "Cannot include in observership: no supervisor confirmation found for this application."
 - **Observership Blocked (no regulatory):** "Cannot include in observership: regulatory requirement not verified for this application."
 
-## Hospital
+## Staff (Hospital Administration)
 
 ### Form Assignment
 - **Modal Title:** "Assign Observation Form"
@@ -83,7 +88,7 @@ This document contains exact UI copy for the pilot. Use these strings in compone
 - **Form Description Field:** "Form Description"
 - **Success Toast:** "Form assigned successfully. Student will see it in their next session."
 
-### Hospital Dashboard
+### Staff Dashboard
 - **Pending Applications:** "Pending Applications"
 - **Active Training:** "Active Training"
 - **Completed Programs:** "Completed Programs"
@@ -100,7 +105,7 @@ This document contains exact UI copy for the pilot. Use these strings in compone
 - **DoH Verified:** "DoH: Verified"
 
 ### Tooltips & Messages
-- **Admin Toggle Tooltip:** "Toggle regulatory verification for this application. Verified applications can proceed for DHA/DoH-regulated programs."
+- **Supervisor Toggle Tooltip:** "Toggle regulatory verification for this application. Verified applications can proceed for DHA/DoH-regulated programs."
 - **Unverified Blocking Message:** "Regulatory: Unverified — action blocked until verification complete."
 - **Verification Success Toast:** "Regulatory status updated to verified."
 
@@ -131,14 +136,16 @@ This document contains exact UI copy for the pilot. Use these strings in compone
 - **Observership Confirmed:** "Congratulations! You have been included in the observership program. Please complete your onboarding to begin."
 - **EHS Allocation Created:** "An EHS allocation has been created for your program. Please check your application status."
 
-### Hospital Notifications
+### Staff Notifications
 - **New Application:** "New application received from [STUDENT_NAME]."
 - **Form Submitted:** "[STUDENT_NAME] submitted a session form."
 - **Training Started:** "[STUDENT_NAME] has started training."
+- **Application Approved:** "Application for [PROGRAM_NAME] has been approved and training can begin."
 
-### Admin Notifications
+### Supervisor Notifications
 - **Program Confirmed:** "Program [PROGRAM_ID] has a supervisor confirmation."
 - **Completion Attestation:** "[STUDENT_NAME] training completion has been attested by supervisor."
+- **Application Approved:** "New approved application for [PROGRAM_NAME] assigned to supervisor [SUPERVISOR_NAME]. Student can now begin training."
 
 ## Notes
 - Keep strings short and clear

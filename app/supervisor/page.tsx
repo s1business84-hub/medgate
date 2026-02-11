@@ -8,6 +8,7 @@ import { TrendingUp, Users, Target, BarChart3, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
 import Reveal from "@/components/Reveal";
+import { SupervisorNotifications } from "@/components/supervisor-notifications";
 
 interface Observership {
   id: string;
@@ -498,6 +499,7 @@ export default function SupervisorDashboard() {
                 <p className="text-xl text-slate-300">Track student progress, visualize clinical development, and gain AI-powered insights</p>
               </div>
             </div>
+            {user && <SupervisorNotifications userId={user.id} />}
           </div>
         </Reveal>
 

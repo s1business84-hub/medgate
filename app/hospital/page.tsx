@@ -18,6 +18,7 @@ import {
   createStaffAlert,
   markStaffAlertAsRead,
   getPendingApplicationAlerts,
+  getUsers,
 } from "@/lib/storage";
 import { getSupervisorConfirmations } from "@/lib/auditStore";
 import { Application, StaffApplicationAlert, Student } from "@/lib/types";
@@ -151,6 +152,22 @@ export default function HospitalPortal() {
         message: `Your observership application has been approved. Please complete your documentation and payment to confirm your participation.`,
         relatedApplicationId: appId,
       });
+
+      // Notify supervimsor if one is assigned
+      if (updated.supervisor) {
+        const allUsers = getUsers();
+        const supervisorUser = allUsers.find(u => u.role === "supervisor" || u.role === "admin");
+        
+        if (supervisorUser) {
+          createNotification({
+            userId: supervisorUser.id,
+            type: "application_review",
+            title: "New Approved Application",
+            message: `Application for ${updated.programId} has been approved and assigned to supervisor: ${updated.supervisor}. The student can now begin training.`,
+            relatedApplicationId: appId,
+          });
+        }
+      }
 
       // Update local state
       setApplications(applications.map(app => app.id === appId ? updated : app));

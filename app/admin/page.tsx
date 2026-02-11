@@ -14,6 +14,7 @@ import type { Application } from "@/lib/types";
 import { CheckCircle, XCircle, Clock } from "lucide-react";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
 import { AdminFormAssignment } from "@/components/admin-form-assignment";
+import { SupervisorNotifications } from "@/components/supervisor-notifications";
 
 export default function AdminPage() {
   const { user, logout } = useAuth();
@@ -411,7 +412,8 @@ export default function AdminPage() {
             <h1 className="text-3xl font-bold text-slate-100 mb-2">Supervisor Portal</h1>
             <p className="text-slate-300">Review and manage observership applications</p>
           </div>
-          <div className="flex gap-4 flex-wrap justify-end">
+          <div className="flex gap-4 flex-wrap justify-end items-center">
+            {user && <SupervisorNotifications userId={user.id} />}
             <button
               onClick={() => setShowObsForm(true)}
               className="px-6 py-2 rounded-lg bg-linear-to-r from-cyan-500 to-indigo-600 text-white font-semibold shadow-lg hover:from-cyan-400 hover:to-indigo-500 transition-all"
