@@ -33,9 +33,10 @@ export function ScrollableViewport({
   });
 
   const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
+    stiffness: 200,
+    damping: 40,
+    restDelta: 0.0001,
+    mass: 0.5,
   });
 
   useEffect(() => {
@@ -110,11 +111,13 @@ export function ScrollableViewport({
       <div
         ref={containerRef}
         className={`w-full h-full overflow-y-auto overflow-x-hidden ${
-          snapToSections ? "snap-y snap-mandatory" : ""
+          snapToSections ? "snap-y snap-proximity" : ""
         } scroll-smooth ${className}`}
         style={{
           scrollbarWidth: "thin",
           scrollbarColor: "rgba(59, 130, 246, 0.5) rgba(15, 23, 42, 0.3)",
+          WebkitOverflowScrolling: "touch",
+          overscrollBehavior: "contain",
         }}
       >
         {children}
@@ -198,18 +201,25 @@ export function ScrollableViewport({
           scroll-behavior: smooth;
         }
 
-        /* Snap points */
+        /* Snap points - proximity for smoother experience */
         .snap-y {
           scroll-snap-type: y proximity;
         }
 
-        .snap-mandatory {
-          scroll-snap-type: y mandatory;
+        .snap-proximity {
+          scroll-snap-type: y proximity;
         }
 
         [data-section] {
           scroll-snap-align: start;
           scroll-snap-stop: normal;
+        }
+        
+        /* Enhanced smooth scrolling */
+        .scroll-smooth {
+          scroll-behavior: smooth;
+          -webkit-overflow-scrolling: touch;
+          overscroll-behavior: contain;
         }
       `}</style>
     </div>
