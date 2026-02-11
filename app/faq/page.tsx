@@ -1,16 +1,13 @@
 "use client"
 
 import { useState } from "react"
-import { motion, AnimatePresence, Variants } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { ChevronDown, Sparkles, MessageCircle, Star, Zap, Heart } from "lucide-react"
 import Link from "next/link"
 
 import { LiquidParallax } from "@/components/ui/liquid-parallax"
 import { ScrollableViewport, ScrollSection } from "@/components/scrollable-viewport"
 import { AccordionItem } from "@/components/ui/Accordion"
-import { motionTokens } from "@/lib/motion"
-import { ScrollReveal } from "@/components/animation/ScrollReveal"
-import { StaggerGroup, StaggerItem } from "@/components/animation/StaggerGroup"
 
 const faqs = [
   {
@@ -66,32 +63,11 @@ const faqs = [
 const categories = ["All", ...Array.from(new Set(faqs.map(f => f.category)))]
 
 export default function FAQPage() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null)
   const [selectedCategory, setSelectedCategory] = useState("All")
 
   const filteredFaqs = selectedCategory === "All" 
     ? faqs 
     : faqs.filter(faq => faq.category === selectedCategory)
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.08,
-        delayChildren: 0.2
-      }
-    }
-  }
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 }
-    }
-  }
 
   // Animated background orbs
   const orbVariants = {
@@ -181,27 +157,21 @@ export default function FAQPage() {
         </motion.div>
 
         {/* FAQ Items */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-4"
-        >
-          <StaggerGroup staggerDelay={0.08} initialDelay={0.15}>
-            <AnimatePresence>
-              {filteredFaqs.map((faq, index) => (
-                <StaggerItem key={`${selectedCategory}-${index}`}>
-                  <ScrollReveal direction="up" delay={0}>
-                    <AccordionItem
-                      q={faq.question}
-                      a={faq.answer}
-                    />
-                  </ScrollReveal>
-                </StaggerItem>
-              ))}
-            </AnimatePresence>
-          </StaggerGroup>
-        </motion.div>
+        <div className="space-y-4">
+          {filteredFaqs.map((faq, index) => (
+            <motion.div
+              key={`${selectedCategory}-${index}`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.05 }}
+            >
+              <AccordionItem
+                q={faq.question}
+                a={faq.answer}
+              />
+            </motion.div>
+          ))}
+        </div>
 
         {/* CTA Section */}
         <motion.div
