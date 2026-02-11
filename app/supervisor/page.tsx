@@ -80,6 +80,13 @@ export default function SupervisorDashboard() {
     targetValue: 80,
     deadline: "",
   });
+  const [showAddStudentModal, setShowAddStudentModal] = useState(false);
+  const [newStudentForm, setNewStudentForm] = useState({
+    name: "",
+    gmuid: "",
+    year: 1,
+    category: "year-1",
+  });
 
   useEffect(() => {
     if (!user || user.role !== "supervisor") {
@@ -157,6 +164,35 @@ export default function SupervisorDashboard() {
     const updated = existing.filter((g) => g.id !== goalId);
     window.localStorage.setItem("student_goals", JSON.stringify(updated));
     setAcademicGoals(updated.filter((g) => g.type === "academic"));
+  };
+
+  const addStudentManually = () => {
+    if (!newStudentForm.name.trim() || !newStudentForm.gmuid.trim()) {
+      alert("Please fill in student name and GMUID");
+      return;
+    }
+    const newStudent: StudentData = {
+      id: `stu-${Date.now()}`,
+      name: newStudentForm.name,
+      gmuid: newStudentForm.gmuid,
+      year: newStudentForm.year,
+      formProgress: 0,
+      category: newStudentForm.category,
+      avgProgress: 0,
+      entries: 0,
+      lastUpdate: new Date().toISOString().slice(0, 10),
+      completedPrograms: 0,
+      level: 1,
+      role: undefined,
+      formsAssigned: [],
+      observerships: [],
+      applications: [],
+    };
+    const updated = [...students, newStudent];
+    setStudents(updated);
+    window.localStorage.setItem("supervisor_students", JSON.stringify(updated));
+    setShowAddStudentModal(false);
+    setNewStudentForm({ name: "", gmuid: "", year: 1, category: "year-1" });
   };
 
   const levelBadge = (level: number) => {
@@ -614,6 +650,14 @@ export default function SupervisorDashboard() {
         </div>
 
         <div className="mb-6 flex flex-wrap gap-3">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setShowAddStudentModal(true)}
+            className="px-6 py-3 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold shadow-lg text-base flex items-center gap-2"
+          >
+            <span className="text-xl">➕</span> ADD STUDENT MANUALLY
+          </motion.button>
           <button onClick={resetDemo} className="px-4 py-2 rounded-md bg-white/10 hover:bg-white/20 text-slate-200 text-sm">
             Reset Demo Data
           </button>
@@ -730,6 +774,14 @@ export default function SupervisorDashboard() {
         {/* Students Tab */}
         {activeTab === "students" && (
           <div className="space-y-6">
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => setShowAddStudentModal(true)}
+              className="w-full px-6 py-4 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold shadow-lg text-lg flex items-center justify-center gap-3 mb-6"
+            >
+              <span className="text-2xl">➕</span> ADD STUDENT MANUALLY
+            </motion.button>
             {filteredStudents.map((student) => (
               <div key={student.id} className="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl">
                 <div className="flex items-center justify-between mb-3">
@@ -819,6 +871,13 @@ export default function SupervisorDashboard() {
         )}
         {/* Observerships Tab */}
         {activeTab === "observerships" && (
+          <>
+            <div className="mb-6 p-6 rounded-xl bg-gradient-to-r from-cyan-600/20 to-indigo-600/20 border-2 border-cyan-500/50">
+              <h3 className="text-xl font-bold text-cyan-200 mb-4 flex items-center gap-2">
+                <span className="text-2xl">📋</span> Quick Add Observership
+              </h3>
+              <p className="text-sm text-cyan-100 mb-4">Select a student below and use the form in their card to add observerships/electives</p>
+            </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredStudents.map((student) => (
               <div key={student.id} className="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl">
@@ -898,6 +957,7 @@ export default function SupervisorDashboard() {
               </div>
             ))}
           </div>
+          </>
         )}
 
         {/* Roles Tab */}
@@ -929,6 +989,13 @@ export default function SupervisorDashboard() {
 
         {/* Forms Tab */}
         {activeTab === "forms" && (
+          <>
+            <div className="mb-6 p-6 rounded-xl bg-gradient-to-r from-blue-600/20 to-purple-600/20 border-2 border-blue-500/50">
+              <h3 className="text-xl font-bold text-blue-200 mb-4 flex items-center gap-2">
+                <span className="text-2xl">📄</span> Assign Forms to Students
+              </h3>
+              <p className="text-sm text-blue-100 mb-4">Click the buttons below each student to assign Consent, Checklist, or Feedback forms</p>
+            </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredStudents.map((student) => (
               <div key={student.id} className="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl">
@@ -965,10 +1032,18 @@ export default function SupervisorDashboard() {
               </div>
             ))}
           </div>
+          </>
         )}
 
         {/* Goals Tab */}
         {activeTab === "goals" && (
+          <>
+            <div className="mb-6 p-6 rounded-xl bg-gradient-to-r from-green-600/20 to-emerald-600/20 border-2 border-green-500/50">
+              <h3 className="text-xl font-bold text-green-200 mb-2 flex items-center gap-2">
+                <span className="text-2xl">🎯</span> Academic Goal Assignment
+              </h3>
+              <p className="text-sm text-green-100">Use the form below to assign academic goals to students</p>
+            </div>
           <div className="grid lg:grid-cols-3 gap-6">
             <div className="lg:col-span-1">
               <div className="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl">
@@ -1079,6 +1154,7 @@ export default function SupervisorDashboard() {
               )}
             </div>
           </div>
+          </>
         )}
 
         {/* Applications Tab */}
@@ -1263,6 +1339,84 @@ export default function SupervisorDashboard() {
           </div>
         )}
       </div>
+
+      {/* Add Student Modal */}
+      {showAddStudentModal && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-gradient-to-br from-slate-900 to-slate-950 border-2 border-purple-500/50 rounded-2xl p-8 max-w-md w-full shadow-2xl"
+          >
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Add Student Manually
+              </h2>
+              <button
+                onClick={() => setShowAddStudentModal(false)}
+                className="p-2 rounded-lg hover:bg-white/10 transition-colors"
+              >
+                <span className="text-slate-400 text-2xl">×</span>
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">Student Name *</label>
+                <input
+                  type="text"
+                  value={newStudentForm.name}
+                  onChange={(e) => setNewStudentForm({ ...newStudentForm, name: e.target.value })}
+                  placeholder="e.g., John Smith"
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-purple-400"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">GMUID *</label>
+                <input
+                  type="text"
+                  value={newStudentForm.gmuid}
+                  onChange={(e) => setNewStudentForm({ ...newStudentForm, gmuid: e.target.value })}
+                  placeholder="e.g., GMU-12345"
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-purple-400"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">Year of Study</label>
+                <select
+                  value={newStudentForm.year}
+                  onChange={(e) => {
+                    const year = parseInt(e.target.value);
+                    setNewStudentForm({ ...newStudentForm, year, category: `year-${year}` });
+                  }}
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-purple-400"
+                >
+                  {[1, 2, 3, 4, 5, 6, 7].map(y => (
+                    <option key={y} value={y}>Year {y}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="flex gap-3 mt-6">
+                <button
+                  onClick={() => setShowAddStudentModal(false)}
+                  className="flex-1 px-6 py-3 rounded-lg border border-white/20 text-slate-300 hover:bg-white/10 transition-all"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={addStudentManually}
+                  className="flex-1 px-6 py-3 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold shadow-lg transition-all"
+                >
+                  Add Student
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 }
