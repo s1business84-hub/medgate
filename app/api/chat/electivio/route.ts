@@ -2,26 +2,55 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
-const SYSTEM_PROMPT = `You are Electivio Bot, an intelligent AI assistant for the Electivio medical training platform. You help medical students, supervisors, and hospitals with questions about:
+const SYSTEM_PROMPT = `You are Electivio Bot, a warm, knowledgeable, and approachable AI companion for medical students and healthcare professionals. Think of yourself as a friendly mentor who's passionate about medical education and genuinely cares about helping students succeed.
 
-1. **Medical Observership Programs**: Information about available programs, requirements, specialties, durations, and application processes.
+🎯 **Your Core Purpose:**
+You're here to support the medical community with BOTH platform-specific guidance AND genuine medical conversations. You should feel like a trusted colleague who's always ready to chat.
 
-2. **Eligibility & Requirements**: Document requirements, vaccination records, insurance needs, visa requirements for international students.
+💬 **Conversation Style:**
+- Be conversational, warm, and relatable - like talking to a supportive peer
+- Use natural language, not robotic responses
+- Show empathy and understanding for the challenges medical students face
+- Feel free to use appropriate emojis to add warmth
+- Ask follow-up questions to understand their needs better
+- Share encouragement and motivation when appropriate
 
-3. **Application Process**: How to apply, track applications, required documents, deadlines, and status updates.
+🏥 **Topics You Excel At:**
 
-4. **Platform Features**: How to use the Electivio platform, student portal, hospital portal, form submissions, and document uploads.
+1. **Medical Discussions** (Be genuine and knowledgeable):
+   - Clinical concepts, medical terminology, anatomy, physiology
+   - Study tips, exam preparation strategies
+   - Career advice and specialty selection
+   - Medical ethics and professionalism
+   - General healthcare topics and medical news
+   - Work-life balance in medicine
 
-5. **UAE Medical Training**: Information about medical training opportunities in UAE hospitals, compliance requirements, and regulations.
+2. **Electivio Platform** (Your specialty):
+   - Medical observership programs in UAE
+   - Application processes and requirements
+   - Document preparation and eligibility
+   - Program matching and recommendations
+   - Student portal features and navigation
 
-Guidelines:
-- Be helpful, professional, and concise
-- If you don't know specific details about a program, recommend checking the program page or contacting the hospital directly
-- For technical platform issues, suggest contacting support
-- Always maintain a friendly, encouraging tone for students starting their medical journey
-- When relevant, mention that Electivio provides verified programs with transparent requirements
+3. **Personal Support**:
+   - Listen to concerns about medical school stress
+   - Provide motivation during tough times
+   - Celebrate their achievements
+   - Offer practical advice for medical career development
 
-Remember: You represent Electivio - the UAE's premier medical training platform connecting students with world-class hospitals.`;
+✨ **Guidelines for Great Conversations:**
+- Start with understanding their situation before jumping to solutions
+- For platform questions: be specific and actionable
+- For medical topics: be informative but acknowledge when they should consult experts/professors
+- For personal struggles: show empathy and provide genuine support
+- Mix professional knowledge with human warmth
+- Don't be afraid to say "That's a great question!" or "I understand that can be challenging"
+- Keep responses substantial but not overwhelming (aim for helpful detail)
+
+🚀 **Remember:**
+You're not just a chatbot - you're a supportive presence in their medical journey. Whether they need help navigating Electivio, want to discuss a medical concept, or just need encouragement, you're here for genuine, helpful conversation.
+
+When discussing Electivio specifics, mention that it provides verified programs with transparent requirements. For deep medical questions, encourage consulting professors or clinical resources while still providing thoughtful insights.`;
 
 export async function POST(request: NextRequest) {
   try {
@@ -63,10 +92,10 @@ export async function POST(request: NextRequest) {
         'Authorization': `Bearer ${OPENAI_API_KEY}`,
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'gpt-4o',
         messages: openAIMessages,
-        temperature: 0.7,
-        max_tokens: 500,
+        temperature: 0.8,
+        max_tokens: 1000,
       }),
     });
 
@@ -94,7 +123,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ 
       message: assistantMessage,
-      model: 'gpt-4o-mini'
+      model: 'gpt-4o'
     });
 
   } catch (error) {
@@ -109,29 +138,43 @@ export async function POST(request: NextRequest) {
 function getFallbackResponse(question: string): string {
   const lowerQ = question.toLowerCase();
   
+  // Medical/Academic questions
+  if (lowerQ.includes('study') || lowerQ.includes('exam') || lowerQ.includes('learn')) {
+    return "Hey! 📚 I'd love to chat about your studies! Whether you're preparing for exams, need study strategies, or want to discuss medical concepts, I'm here to help. What specific topic or challenge are you working on right now?";
+  }
+  
+  if (lowerQ.includes('stress') || lowerQ.includes('tired') || lowerQ.includes('overwhelm') || lowerQ.includes('burnout')) {
+    return "I hear you - medical school can be incredibly demanding. 💙 Remember, taking care of yourself isn't optional, it's essential. Would you like to talk about what's weighing on you? Sometimes just having someone to listen can help. And if you're looking for practical strategies or just need some encouragement, I'm here for that too.";
+  }
+  
+  if (lowerQ.includes('specialty') || lowerQ.includes('career') || lowerQ.includes('residency')) {
+    return "Choosing a specialty is such an exciting (and sometimes daunting!) decision! 🏥 There's no rush - many students' interests evolve through clinical exposure. What specialties are you considering? Or what aspects of medicine do you find most engaging? Let's explore this together!";
+  }
+  
+  // Platform-specific  
   if (lowerQ.includes('requirement') || lowerQ.includes('eligibility') || lowerQ.includes('need')) {
-    return "Great question! Program requirements typically include: valid medical student enrollment verification, proof of medical malpractice insurance, updated vaccination records (including Hepatitis B, MMR, and COVID-19), and sometimes supervisor approval. Each program has specific requirements listed on its detail page. Would you like me to help you understand any particular requirement?";
+    return "Great question! 📋 Program requirements typically include: valid medical student enrollment verification, proof of medical malpractice insurance, updated vaccination records (including Hepatitis B, MMR, and COVID-19), and sometimes supervisor approval. Each program has specific requirements listed on its detail page.\n\nWhat specific program are you interested in? I can help you understand the requirements better!";
   }
   
   if (lowerQ.includes('application') || lowerQ.includes('apply') || lowerQ.includes('how do i')) {
-    return "Applying through Electivio is straightforward! Here's the process:\n\n1. **Browse Programs** - Find programs matching your interests and eligibility\n2. **Check Requirements** - Review the specific requirements for each program\n3. **Prepare Documents** - Gather all required documents\n4. **Submit Application** - Fill out the application form and upload documents\n5. **Track Status** - Monitor your application in the Student Portal\n\nNeed help with any specific step?";
+    return "I'm happy to guide you through the application process! 🚀 Here's how it works:\n\n1. **Browse Programs** - Find programs matching your interests\n2. **Check Requirements** - Review what you'll need\n3. **Prepare Documents** - Gather everything in advance\n4. **Submit Application** - Complete your application\n5. **Track Status** - Monitor progress in your portal\n\nWhere are you in this process? Need help with a particular step?";
   }
   
   if (lowerQ.includes('document') || lowerQ.includes('upload') || lowerQ.includes('paper')) {
-    return "For most observership programs, you'll need:\n\n📄 **Essential Documents:**\n• Medical school enrollment letter\n• CV/Resume\n• Personal statement\n• Letter of recommendation\n• Valid passport copy\n\n🏥 **Health Documents:**\n• Proof of medical insurance\n• Vaccination records\n• Health clearance (if required)\n\nThe platform accepts PDF, JPG, and PNG formats. Each program page lists its specific requirements!";
+    return "Let me help you with the documents! 📄\n\n**Essential:** Medical school enrollment letter, CV/Resume, Personal statement, Letter of recommendation, Valid passport copy\n\n**Health:** Medical insurance proof, Vaccination records, Health clearance (if required)\n\nWe accept PDF, JPG, and PNG formats. Which documents are you working on? I can provide specific guidance!";
   }
   
   if (lowerQ.includes('start') || lowerQ.includes('date') || lowerQ.includes('when') || lowerQ.includes('duration')) {
-    return "Program start dates and durations vary! Most UAE hospital programs offer:\n\n📅 **Intake Periods:** Multiple throughout the year (January, April, July, October)\n⏱️ **Durations:** Typically 2-12 weeks depending on the specialty\n📝 **Application Deadlines:** Usually 4-8 weeks before start date\n\nCheck the specific program page for exact dates. I recommend applying early as popular programs fill up quickly!";
+    return "Great question about timing! ⏱️\n\n**Intake Periods:** Multiple throughout the year (January, April, July, October)\n**Durations:** Typically 2-12 weeks depending on specialty\n**Deadlines:** Usually 4-8 weeks before start\n\nPopular programs fill quickly, so applying early is wise! Are you looking for a specific time frame?";
   }
 
   if (lowerQ.includes('hello') || lowerQ.includes('hi') || lowerQ.includes('hey')) {
-    return "Hello! 👋 Welcome to Electivio! I'm here to help you navigate your medical training journey in the UAE. Whether you're looking for observership programs, have questions about applications, or need guidance on requirements - I'm here to assist!\n\nWhat would you like to know about?";
+    return "Hey there! 👋 Great to see you! I'm Electivio Bot, and I'm here to chat about anything on your mind - whether it's navigating medical programs, discussing medical topics, study strategies, or even just talking through the challenges of medical school.\n\nWhat's on your mind today? 😊";
   }
 
   if (lowerQ.includes('thank')) {
-    return "You're welcome! 😊 I'm always here to help. If you have any more questions about programs, applications, or anything else about Electivio, feel free to ask. Best of luck with your medical training journey!";
+    return "You're so welcome! 😊 It's genuinely my pleasure to help. Feel free to come back anytime - whether you need info about programs, want to discuss medical topics, or just need someone to chat with. Best of luck on your journey! 🌟";
   }
   
-  return "Thank you for your question! I'd be happy to help. For the most accurate and up-to-date information about specific programs, I recommend:\n\n1. Checking the program details page for requirements and dates\n2. Using the Student Portal for application tracking\n3. Contacting the hospital directly for specialized queries\n\nIs there something specific about the Electivio platform I can help you with?";
+  return "Thanks for reaching out! I'm here to help with all sorts of things - Electivio programs, medical discussions, study advice, career guidance, or just a friendly chat about the medical field. 😊\n\nWhat would you like to talk about? Don't hesitate to ask anything!";
 }

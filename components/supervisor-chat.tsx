@@ -17,7 +17,7 @@ export function SupervisorChat() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
-      text: "Hello! 👋 I'm Electivio Bot, your AI assistant for medical training programs in the UAE. I can help you with program information, application guidance, requirements, and more. How can I assist you today?",
+      text: "Hey there! 👋 I'm Electivio Bot - think of me as your friendly AI companion for all things medical education!\n\nI'm here to help you with:\n✨ Electivio programs & applications\n🏥 Medical topics & discussions\n📚 Study tips & career advice\n💙 Support & encouragement\n\nWhat's on your mind today? Feel free to ask me anything!",
       sender: "bot",
       timestamp: new Date(),
     },
@@ -35,9 +35,9 @@ export function SupervisorChat() {
 
   const quickQuestions = [
     "What programs are available?",
-    "What documents do I need to apply?",
-    "How long are observership programs?",
-    "What are the eligibility requirements?",
+    "How do I prepare for clinical rotations?",
+    "Tell me about specialty selection",
+    "Any study tips for medical exams?",
   ];
 
   const handleSendMessage = async () => {
