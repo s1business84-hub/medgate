@@ -571,7 +571,7 @@ export default function StudentPortal() {
                 </div>
               ) : (
                 <>
-                  {/* Application List - Horizontally Scrollable */}
+                  {/* Application List - Grid Layout */}
                   <div className="space-y-6">
                     <motion.h2 
                       initial={{ opacity: 0 }}
@@ -581,12 +581,8 @@ export default function StudentPortal() {
                       Your Applications
                     </motion.h2>
                     
-                    {/* Scrollable Container */}
-                    <div className="relative group">
-                      <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-slate-950 via-slate-950/50 to-transparent z-10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-slate-950 via-slate-950/50 to-transparent z-10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      
-                      <div className="flex gap-4 overflow-x-auto scroll-smooth pb-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-white/5 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gradient-to-r [&::-webkit-scrollbar-thumb]:from-cyan-500 [&::-webkit-scrollbar-thumb]:to-indigo-600 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:shadow-lg">
+                    {/* Grid Container */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {applications.map((app, idx) => {
                           const getStatusColor = (status: string) => {
                             switch (status) {
@@ -613,8 +609,8 @@ export default function StudentPortal() {
                               animate={{ opacity: 1, y: 0 }}
                               transition={{ delay: idx * 0.05 }}
                               onClick={() => setSelectedApplicationId(app.id)}
-                              whileHover={{ scale: 1.05, y: -4 }}
-                              className={`relative flex-shrink-0 w-80 text-left p-6 rounded-2xl transition-all border-2 overflow-hidden group/card cursor-pointer ${
+                              whileHover={{ scale: 1.03, y: -4 }}
+                              className={`relative w-full text-left p-6 rounded-2xl transition-all border-2 overflow-hidden group/card cursor-pointer ${
                                 selectedApplicationId === app.id
                                   ? 'bg-gradient-to-br from-cyan-600/50 to-blue-600/40 border-cyan-300/80 shadow-2xl shadow-cyan-500/50'
                                   : 'bg-gradient-to-br from-white/10 to-white/5 border-white/20 hover:from-cyan-500/20 hover:to-blue-500/15 hover:border-cyan-400/60 shadow-xl hover:shadow-2xl hover:shadow-cyan-500/40'
@@ -673,7 +669,6 @@ export default function StudentPortal() {
                             </motion.button>
                           );
                         })}
-                      </div>
                     </div>
                   </div>
 
