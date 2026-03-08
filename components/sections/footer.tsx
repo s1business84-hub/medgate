@@ -95,7 +95,7 @@ export function Footer() {
             <div className="space-y-2 text-sm text-slate-400">
               <div className="flex items-center">
                 <Mail className="h-4 w-4 mr-2 text-cyan-300 drop-shadow-[0_0_5px_rgba(34,211,238,0.3)]" />
-                helloelectivio@gmail.com
+                electivio.app@gmail.com
               </div>
               <div className="flex items-center">
                 <Phone className="h-4 w-4 mr-2 text-cyan-300 drop-shadow-[0_0_5px_rgba(34,211,238,0.3)]" />

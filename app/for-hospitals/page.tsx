@@ -321,7 +321,7 @@ export default function ForHospitalsPage() {
               )}
               {onboardingStatus === "sent" && (
                 <p className="text-sm text-cyan-200 mt-3">
-                  Onboarding steps sent from helloelectivio@gmail.com. Please check your inbox.
+                  Onboarding steps sent from electivio.app@gmail.com. Please check your inbox.
                 </p>
               )}
               {onboardingStatus === "error" && (
@@ -330,7 +330,7 @@ export default function ForHospitalsPage() {
                 </p>
               )}
               <div className="mt-6 text-sm text-slate-300">
-                We send onboarding steps from <span className="text-cyan-200">helloelectivio@gmail.com</span>.
+                We send onboarding steps from <span className="text-cyan-200">electivio.app@gmail.com</span>.
               </div>
             </div>
           </div>

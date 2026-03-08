@@ -99,7 +99,7 @@ export async function POST(request: Request) {
                         📬 Check Your Inbox
                       </p>
                       <p style="margin: 0; color: #cbd5e1; font-size: 15px; line-height: 1.6;">
-                        Keep an eye on your email for updates from <strong style="color: #e2e8f0;">helloelectivio@gmail.com</strong>. We promise to only send you valuable content — no spam!
+                        Keep an eye on your email for updates from <strong style="color: #e2e8f0;">electivio.app@gmail.com</strong>. We promise to only send you valuable content — no spam!
                       </p>
                     </div>
 
@@ -131,7 +131,7 @@ export async function POST(request: Request) {
                       <strong style="color: #94a3b8;">Electivio</strong> — Your Gateway to Medical Training Opportunities
                     </p>
                     <p style="margin: 0; color: #475569; font-size: 12px;">
-                      Dubai, UAE | helloelectivio@gmail.com
+                      Dubai, UAE | electivio.app@gmail.com
                     </p>
                     <p style="margin: 15px 0 0; color: #475569; font-size: 11px;">
                       You're receiving this because you subscribed to Electivio updates.

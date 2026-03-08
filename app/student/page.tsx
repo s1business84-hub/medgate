@@ -184,16 +184,16 @@ export default function StudentPortal() {
           ))}
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-6 py-8">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
           {/* Header with XP Meter */}
           <Reveal>
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-6 sm:mb-8 gap-5 sm:gap-6">
             <div className="flex-1">
               <motion.h1 
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5 }}
-                className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-cyan-300 via-blue-300 to-indigo-400 bg-clip-text text-transparent mb-2"
+                className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-cyan-300 via-blue-300 to-indigo-400 bg-clip-text text-transparent mb-2"
               >
                 Student Portal
               </motion.h1>
@@ -201,12 +201,12 @@ export default function StudentPortal() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="text-lg text-slate-200"
+                className="text-base sm:text-lg text-slate-200"
               >
                 Welcome back, <span className="font-bold bg-gradient-to-r from-pink-300 to-purple-300 bg-clip-text text-transparent">{user.name}!</span>
               </motion.p>
               {/* Level & XP Section */}
-              <div className="mt-6 flex flex-col sm:flex-row items-start sm:items-center gap-4 max-w-xl">
+              <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 max-w-xl">
                 {/* Level Badge */}
                 <motion.div 
                   whileHover={{ scale: 1.05 }}
@@ -244,12 +244,12 @@ export default function StudentPortal() {
                 </div>
               </div>
             </div>
-            <StaggerGroup className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto flex-wrap" staggerDelay={0.06} initialDelay={0.1}>
+            <StaggerGroup className="flex flex-wrap gap-2 w-full lg:w-auto" staggerDelay={0.06} initialDelay={0.1}>
               <StaggerItem>
                 <motion.div whileHover={{ scale: 1.03 }}>
                   <Link
                     href="/student/career-path"
-                    className="btn-secondary hover-scale px-4 sm:px-6 py-3 rounded-lg backdrop-blur-xl border-2 border-purple-500/50 bg-gradient-to-br from-purple-600/30 to-blue-600/30 hover:from-purple-500/40 hover:to-blue-500/40 text-white font-bold flex items-center justify-center gap-2 shadow-lg shadow-purple-500/30 transition-all hover:shadow-purple-500/50"
+                    className="btn-secondary hover-scale px-3 sm:px-5 py-2.5 sm:py-3 rounded-lg backdrop-blur-xl border-2 border-purple-500/50 bg-gradient-to-br from-purple-600/30 to-blue-600/30 hover:from-purple-500/40 hover:to-blue-500/40 text-white font-bold flex items-center justify-center gap-2 shadow-lg shadow-purple-500/30 transition-all hover:shadow-purple-500/50 text-sm sm:text-base"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -262,7 +262,7 @@ export default function StudentPortal() {
                 <motion.div whileHover={{ scale: 1.03 }}>
                   <Link
                     href="/student/progress"
-                    className="btn-secondary hover-scale px-4 sm:px-6 py-3 rounded-lg backdrop-blur-xl border-2 border-cyan-500/50 bg-gradient-to-br from-cyan-600/30 to-teal-600/30 hover:from-cyan-500/40 hover:to-teal-500/40 text-white font-bold flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/30 transition-all hover:shadow-cyan-500/50"
+                    className="btn-secondary hover-scale px-3 sm:px-5 py-2.5 sm:py-3 rounded-lg backdrop-blur-xl border-2 border-cyan-500/50 bg-gradient-to-br from-cyan-600/30 to-teal-600/30 hover:from-cyan-500/40 hover:to-teal-500/40 text-white font-bold flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/30 transition-all hover:shadow-cyan-500/50 text-sm sm:text-base"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7H7v10h6V7z M17 7h-2v4h2V7z M5 20h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v13a2 2 0 002 2z" />
@@ -275,7 +275,7 @@ export default function StudentPortal() {
                 <motion.div whileHover={{ scale: 1.03 }}>
                   <Link
                     href="/student/form-submission"
-                    className="btn-secondary hover-scale px-4 sm:px-6 py-3 rounded-lg backdrop-blur-xl border-2 border-blue-500/50 bg-gradient-to-br from-blue-600/30 to-indigo-600/30 hover:from-blue-500/40 hover:to-indigo-500/40 text-white font-bold flex items-center justify-center gap-2 shadow-lg shadow-blue-500/30 transition-all hover:shadow-blue-500/50"
+                    className="btn-secondary hover-scale px-3 sm:px-5 py-2.5 sm:py-3 rounded-lg backdrop-blur-xl border-2 border-blue-500/50 bg-gradient-to-br from-blue-600/30 to-indigo-600/30 hover:from-blue-500/40 hover:to-indigo-500/40 text-white font-bold flex items-center justify-center gap-2 shadow-lg shadow-blue-500/30 transition-all hover:shadow-blue-500/50 text-sm sm:text-base"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -294,7 +294,7 @@ export default function StudentPortal() {
                     logout();
                     router.push("/");
                   }}
-                  className="btn-secondary hover-scale px-4 sm:px-6 py-3 rounded-lg backdrop-blur-xl border-2 border-red-500/50 bg-gradient-to-br from-red-600/30 to-rose-600/30 hover:from-red-500/40 hover:to-rose-500/40 text-white font-bold shadow-lg shadow-red-500/30 transition-all hover:shadow-red-500/50"
+                  className="btn-secondary hover-scale px-3 sm:px-5 py-2.5 sm:py-3 rounded-lg backdrop-blur-xl border-2 border-red-500/50 bg-gradient-to-br from-red-600/30 to-rose-600/30 hover:from-red-500/40 hover:to-rose-500/40 text-white font-bold shadow-lg shadow-red-500/30 transition-all hover:shadow-red-500/50 text-sm sm:text-base"
                 >
                   Logout
                 </motion.button>
@@ -303,7 +303,7 @@ export default function StudentPortal() {
                 <motion.div whileHover={{ scale: 1.03 }}>
                   <Link 
                     href="/" 
-                    className="btn-secondary hover-scale px-4 sm:px-6 py-3 rounded-lg backdrop-blur-xl border-2 border-slate-400/50 bg-gradient-to-br from-slate-600/30 to-slate-500/30 hover:from-slate-500/40 hover:to-slate-400/40 text-white font-bold shadow-lg shadow-slate-500/30 transition-all hover:shadow-slate-500/50"
+                    className="btn-secondary hover-scale px-3 sm:px-5 py-2.5 sm:py-3 rounded-lg backdrop-blur-xl border-2 border-slate-400/50 bg-gradient-to-br from-slate-600/30 to-slate-500/30 hover:from-slate-500/40 hover:to-slate-400/40 text-white font-bold shadow-lg shadow-slate-500/30 transition-all hover:shadow-slate-500/50 text-sm sm:text-base"
                   >
                     ← Back to Home
                   </Link>
@@ -315,14 +315,14 @@ export default function StudentPortal() {
 
           {/* Student Stats */}
           <Reveal delay={0.1}>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+          <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
             {/* Learning Hours */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
               whileHover={{ y: -8, scale: 1.03 }}
-              className="group relative rounded-2xl border-2 border-cyan-500/50 bg-gradient-to-br from-cyan-600/40 to-blue-600/30 backdrop-blur-xl p-6 shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-500/50 hover:border-cyan-400/70 transition-all duration-300 overflow-hidden cursor-pointer"
+              className="group relative rounded-2xl border-2 border-cyan-500/50 bg-gradient-to-br from-cyan-600/40 to-blue-600/30 backdrop-blur-xl p-4 sm:p-6 shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-500/50 hover:border-cyan-400/70 transition-all duration-300 overflow-hidden cursor-pointer"
             >
               {/* Animated gradient glow */}
               <motion.div
@@ -348,13 +348,13 @@ export default function StudentPortal() {
                 </motion.div>
               </div>
               <motion.div 
-                className="text-4xl font-bold bg-gradient-to-r from-cyan-200 to-blue-200 bg-clip-text text-transparent mb-2"
+                className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-cyan-200 to-blue-200 bg-clip-text text-transparent mb-2"
                 whileHover={{ scale: 1.1 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 {studentStats.learningHours}
               </motion.div>
-              <p className="text-sm text-cyan-100/90 font-semibold">hours completed</p>
+              <p className="text-xs sm:text-sm text-cyan-100/90 font-semibold">hours completed</p>
             </motion.div>
 
             {/* Average Progress */}
@@ -363,7 +363,7 @@ export default function StudentPortal() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.15 }}
               whileHover={{ y: -8, scale: 1.03 }}
-              className="group relative rounded-2xl border-2 border-purple-500/50 bg-gradient-to-br from-purple-600/40 to-pink-600/30 backdrop-blur-xl p-6 shadow-2xl shadow-purple-500/30 hover:shadow-purple-500/50 hover:border-purple-400/70 transition-all duration-300 overflow-hidden cursor-pointer"
+              className="group relative rounded-2xl border-2 border-purple-500/50 bg-gradient-to-br from-purple-600/40 to-pink-600/30 backdrop-blur-xl p-4 sm:p-6 shadow-2xl shadow-purple-500/30 hover:shadow-purple-500/50 hover:border-purple-400/70 transition-all duration-300 overflow-hidden cursor-pointer"
             >
               {/* Animated gradient glow */}
               <motion.div
@@ -389,13 +389,13 @@ export default function StudentPortal() {
                 </motion.div>
               </div>
               <motion.div 
-                className="text-4xl font-bold bg-gradient-to-r from-purple-200 to-pink-200 bg-clip-text text-transparent mb-2"
+                className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-purple-200 to-pink-200 bg-clip-text text-transparent mb-2"
                 whileHover={{ scale: 1.1 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 {studentStats.avgProgress}%
               </motion.div>
-              <p className="text-sm text-purple-100/90 font-semibold">per course</p>
+              <p className="text-xs sm:text-sm text-purple-100/90 font-semibold">per course</p>
             </motion.div>
 
             {/* Certifications */}
@@ -404,7 +404,7 @@ export default function StudentPortal() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
               whileHover={{ y: -8, scale: 1.03 }}
-              className="group relative rounded-2xl border-2 border-emerald-500/50 bg-gradient-to-br from-emerald-600/40 to-teal-600/30 backdrop-blur-xl p-6 shadow-2xl shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:border-emerald-400/70 transition-all duration-300 overflow-hidden cursor-pointer"
+              className="group relative rounded-2xl border-2 border-emerald-500/50 bg-gradient-to-br from-emerald-600/40 to-teal-600/30 backdrop-blur-xl p-4 sm:p-6 shadow-2xl shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:border-emerald-400/70 transition-all duration-300 overflow-hidden cursor-pointer"
             >
               {/* Animated gradient glow */}
               <motion.div
@@ -430,18 +430,18 @@ export default function StudentPortal() {
                 </motion.div>
               </div>
               <motion.div 
-                className="text-4xl font-bold bg-gradient-to-r from-emerald-200 to-teal-200 bg-clip-text text-transparent mb-2"
+                className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-emerald-200 to-teal-200 bg-clip-text text-transparent mb-2"
                 whileHover={{ scale: 1.1 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 {studentStats.certifications}
               </motion.div>
-              <p className="text-sm text-emerald-100/90 font-semibold">{studentStats.certifications === 0 ? 'none yet' : studentStats.certifications === 1 ? 'earned' : 'earned'}</p>
+              <p className="text-xs sm:text-sm text-emerald-100/90 font-semibold">{studentStats.certifications === 0 ? 'none yet' : studentStats.certifications === 1 ? 'earned' : 'earned'}</p>
             </motion.div>
           </div>
           </Reveal>
 
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-6">
             {/* Left Sidebar - Audit Card */}
             <div className="lg:col-span-1">
               <motion.div 
@@ -449,7 +449,7 @@ export default function StudentPortal() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 }}
                 whileHover={{ y: -4 }}
-                className="group relative rounded-2xl border-2 border-blue-500/50 bg-gradient-to-br from-blue-600/40 to-cyan-600/30 backdrop-blur-xl shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/50 p-5 sticky top-8 overflow-hidden hover:border-blue-400/70 transition-all duration-300"
+                className="group relative rounded-2xl border-2 border-blue-500/50 bg-gradient-to-br from-blue-600/40 to-cyan-600/30 backdrop-blur-xl shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/50 p-4 sm:p-5 sticky top-8 overflow-hidden hover:border-blue-400/70 transition-all duration-300"
               >
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-br from-blue-400/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -582,7 +582,7 @@ export default function StudentPortal() {
                     </motion.h2>
                     
                     {/* Grid Container */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                         {applications.map((app, idx) => {
                           const getStatusColor = (status: string) => {
                             switch (status) {
@@ -610,7 +610,7 @@ export default function StudentPortal() {
                               transition={{ delay: idx * 0.05 }}
                               onClick={() => setSelectedApplicationId(app.id)}
                               whileHover={{ scale: 1.03, y: -4 }}
-                              className={`relative w-full text-left p-6 rounded-2xl transition-all border-2 overflow-hidden group/card cursor-pointer ${
+                              className={`relative w-full text-left p-4 sm:p-6 rounded-2xl transition-all border-2 overflow-hidden group/card cursor-pointer ${
                                 selectedApplicationId === app.id
                                   ? 'bg-gradient-to-br from-cyan-600/50 to-blue-600/40 border-cyan-300/80 shadow-2xl shadow-cyan-500/50'
                                   : 'bg-gradient-to-br from-white/10 to-white/5 border-white/20 hover:from-cyan-500/20 hover:to-blue-500/15 hover:border-cyan-400/60 shadow-xl hover:shadow-2xl hover:shadow-cyan-500/40'
@@ -717,7 +717,7 @@ export default function StudentPortal() {
                       <motion.div 
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="relative rounded-2xl border-2 border-purple-500/50 bg-gradient-to-br from-purple-600/40 to-indigo-600/30 backdrop-blur-xl shadow-2xl shadow-purple-500/30 p-7 overflow-hidden"
+                        className="relative rounded-2xl border-2 border-purple-500/50 bg-gradient-to-br from-purple-600/40 to-indigo-600/30 backdrop-blur-xl shadow-2xl shadow-purple-500/30 p-4 sm:p-7 overflow-hidden"
                       >
                         <motion.div
                           className="absolute inset-0 bg-gradient-to-br from-purple-400/20 via-transparent to-transparent opacity-0 group-hover:opacity-100"
@@ -731,12 +731,12 @@ export default function StudentPortal() {
                           }}
                         />
                         <div className="relative z-10 mb-6">
-                          <div className="flex items-start justify-between gap-4 mb-4">
+                          <div className="flex flex-col sm:flex-row items-start sm:items-start justify-between gap-3 sm:gap-4 mb-4">
                             <div className="flex-1">
                               <motion.h2 
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                className="text-3xl font-bold bg-gradient-to-r from-purple-200 to-pink-200 bg-clip-text text-transparent mb-2"
+                                className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-purple-200 to-pink-200 bg-clip-text text-transparent mb-2"
                               >
                                 {selected?.programName}
                               </motion.h2>
@@ -845,7 +845,7 @@ export default function StudentPortal() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.3 }}
-                            className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4"
+                            className="mt-4 sm:mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4"
                           >
                             {[
                               {
@@ -948,8 +948,7 @@ export default function StudentPortal() {
         />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-6 py-8">
-        {/* Header */}
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <motion.div
           className="flex items-center justify-between mb-8"
           initial={{ opacity: 0, y: 18 }}
@@ -957,8 +956,8 @@ export default function StudentPortal() {
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
           <div>
-            <h1 className="text-3xl font-bold text-slate-100 mb-2">Student Portal</h1>
-            <p className="text-slate-300">Early Access Portal for Observerships and Electives</p>
+            <h1 className="text-2xl sm:text-3xl font-bold text-slate-100 mb-2">Student Portal</h1>
+            <p className="text-sm sm:text-base text-slate-300">Early Access Portal for Observerships and Electives</p>
           </div>
           {/* Desktop Navigation */}
           <div className="hidden sm:flex gap-4">
@@ -1009,12 +1008,12 @@ export default function StudentPortal() {
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
         >
           <motion.div
-            className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg p-8"
+            className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg p-5 sm:p-8"
             whileHover={{ y: -6, boxShadow: "0 24px 60px -30px rgba(14,165,233,0.5)" }}
             transition={{ duration: 0.25 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-100 mb-4">Early Access Registration</h2>
-            <p className="text-lg text-slate-300 mb-6 leading-relaxed">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-100 mb-3 sm:mb-4">Early Access Registration</h2>
+            <p className="text-base sm:text-lg text-slate-300 mb-4 sm:mb-6 leading-relaxed">
               Electivio is conducting a pilot rollout of formal observership and elective program listings in collaboration with healthcare institutions. By creating an account, students may register for early access, receive program updates, and be notified when applications open.
             </p>
             

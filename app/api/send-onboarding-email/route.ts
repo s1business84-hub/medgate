@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import nodemailer from "nodemailer"
 
-const FROM_EMAIL = "helloelectivio@gmail.com"
+const FROM_EMAIL = "electivio.app@gmail.com"
 
 function getTransporter() {
   const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_SECURE } = process.env

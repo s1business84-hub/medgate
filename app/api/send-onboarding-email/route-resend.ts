@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import { Resend } from "resend"
 
-const FROM_EMAIL = "helloelectivio@gmail.com"
+const FROM_EMAIL = "electivio.app@gmail.com"
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 type EmailVariant = "welcome-student" | "welcome-hospital" | "onboarding-pack"

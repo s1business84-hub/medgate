@@ -168,7 +168,7 @@ export default function StudentDemoPage() {
       <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
 
       <motion.div
-        className="relative max-w-6xl mx-auto px-4 py-16 md:py-20"
+        className="relative max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 py-10 sm:py-16 md:py-20"
         initial="hidden"
         animate="visible"
         variants={containerVariants}
@@ -184,18 +184,18 @@ export default function StudentDemoPage() {
         </motion.div>
 
         {/* Header */}
-        <motion.div variants={itemVariants} className="mb-12">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
+        <motion.div variants={itemVariants} className="mb-8 sm:mb-12">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 mb-4">
             <div className="flex-1">
-              <h1 className="text-5xl font-bold mb-4 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
                 Student Portal Demo
               </h1>
-              <p className="text-xl text-slate-300">
+              <p className="text-base sm:text-lg md:text-xl text-slate-300 leading-relaxed">
                 Welcome to your medical education dashboard. Track your progress across multiple programs and institutions.
               </p>
             </div>
             {/* Level & XP Display */}
-            <div className="flex items-center gap-3 bg-linear-to-r from-purple-600 to-pink-600 px-4 py-2 rounded-lg">
+            <div className="flex items-center gap-3 bg-linear-to-r from-purple-600 to-pink-600 px-4 py-2.5 rounded-xl shadow-lg shadow-purple-500/25">
               <div>
                 <p className="text-xs text-purple-100">Level {Math.ceil(xpPoints / 100) + 1}</p>
                 <p className="font-bold text-white">{xpPoints} XP</p>
@@ -208,7 +208,7 @@ export default function StudentDemoPage() {
         </motion.div>
 
         {/* Stats Grid */}
-        <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-12">
+        <motion.div variants={itemVariants} className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-8 sm:mb-12">
           {[
             { icon: BookOpen, label: "Active Programs", value: "3", color: "from-blue-500 to-cyan-500" },
             { icon: Award, label: "Certifications", value: "2", color: "from-purple-500 to-pink-500" },
@@ -218,11 +218,11 @@ export default function StudentDemoPage() {
             <motion.div
               key={idx}
               variants={itemVariants}
-              className={`rounded-xl border border-white/10 bg-linear-to-br ${stat.color}/10 p-6 backdrop-blur-sm hover:border-white/20 transition-colors`}
+              className={`rounded-xl border border-white/10 bg-linear-to-br ${stat.color}/10 p-4 sm:p-6 backdrop-blur-sm hover:border-white/20 transition-colors`}
             >
-              <stat.icon className="w-6 h-6 mb-3 text-white" />
-              <p className="text-slate-400 text-sm mb-1">{stat.label}</p>
-              <p className="text-3xl font-bold text-white">{stat.value}</p>
+              <stat.icon className="w-5 h-5 sm:w-6 sm:h-6 mb-2 sm:mb-3 text-white" />
+              <p className="text-slate-400 text-xs sm:text-sm mb-1">{stat.label}</p>
+              <p className="text-2xl sm:text-3xl font-bold text-white">{stat.value}</p>
             </motion.div>
           ))}
         </motion.div>
@@ -230,8 +230,8 @@ export default function StudentDemoPage() {
         {/* Programs Section */}
         <motion.div variants={itemVariants}>
           {/* XP System Disclaimer */}
-          <div className="p-4 rounded-lg border border-yellow-500/30 bg-yellow-500/10 backdrop-blur-sm mb-6">
-            <p className="text-sm text-yellow-200 flex items-start gap-2">
+          <div className="p-3 sm:p-4 rounded-xl border border-yellow-500/30 bg-yellow-500/10 backdrop-blur-sm mb-6">
+            <p className="text-xs sm:text-sm text-yellow-200 flex items-start gap-2">
               <span className="text-lg">💡</span>
               <span>
                 <strong>How XP increases:</strong> Earn +10 XP per form completion, +5 XP per application submission, +15 XP per program completion, +20 XP per certification earned, and +3 XP per reflection logged. Reach 100 XP to advance to the next level!
@@ -239,21 +239,21 @@ export default function StudentDemoPage() {
             </p>
           </div>
 
-          <h2 className="text-2xl font-bold mb-6">Your Programs</h2>
-          <div className="space-y-4">
+          <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Your Programs</h2>
+          <div className="space-y-3 sm:space-y-4">
             {samplePrograms.map((program, idx) => (
               <motion.div
                 key={program.id}
                 onClick={() => setSelectedProgramData(program)}
                 variants={itemVariants}
-                className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 hover:bg-white/10 transition-colors cursor-pointer"
+                className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm p-4 sm:p-6 hover:bg-white/10 transition-colors cursor-pointer"
               >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-start gap-4">
-                    <span className="text-4xl">{program.icon}</span>
+                <div className="flex items-start justify-between mb-3 sm:mb-4">
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <span className="text-3xl sm:text-4xl">{program.icon}</span>
                     <div>
-                      <h3 className="text-lg font-semibold text-white">{program.name}</h3>
-                      <p className="text-slate-400 text-sm">{program.institution}</p>
+                      <h3 className="text-base sm:text-lg font-semibold text-white">{program.name}</h3>
+                      <p className="text-slate-400 text-xs sm:text-sm">{program.institution}</p>
                     </div>
                   </div>
                   <span
@@ -288,10 +288,10 @@ export default function StudentDemoPage() {
         {selectedProgramData && (
           <motion.div 
             variants={itemVariants}
-            className="mt-12 p-8 rounded-2xl border border-purple-500/30 bg-purple-500/10 backdrop-blur-xl"
+            className="mt-8 sm:mt-12 p-5 sm:p-8 rounded-2xl border border-purple-500/30 bg-purple-500/10 backdrop-blur-xl"
           >
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-white">{selectedProgramData.name}</h2>
+            <div className="flex items-start sm:items-center justify-between gap-3 mb-4 sm:mb-6">
+              <h2 className="text-xl sm:text-2xl font-bold text-white">{selectedProgramData.name}</h2>
               <button
                 onClick={() => setSelectedProgramData(null)}
                 className="p-2 hover:bg-white/10 rounded-lg transition-colors"
@@ -351,12 +351,12 @@ export default function StudentDemoPage() {
             </div>
 
             {/* Details Grid */}
-            <div className="grid grid-cols-2 gap-4 mb-6">
-              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-4 sm:mb-6">
+              <div className="p-3 sm:p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="text-xs text-slate-400 mb-1">Status</p>
-                <p className="text-white font-semibold">{selectedProgramData.status}</p>
+                <p className="text-white font-semibold text-sm">{selectedProgramData.status}</p>
               </div>
-              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <div className="p-3 sm:p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="text-xs text-slate-400 mb-1">Institution</p>
                 <p className="text-white font-semibold text-sm">{selectedProgramData.institution}</p>
               </div>
@@ -372,24 +372,24 @@ export default function StudentDemoPage() {
         )}
 
         {/* Call to Action */}
-        <motion.div variants={itemVariants} className="mt-12 text-center space-y-6">
-          <p className="text-slate-400 mb-4">Ready to access your full student dashboard?</p>
+        <motion.div variants={itemVariants} className="mt-16 md:mt-20 text-center space-y-6">
+          <p className="text-slate-400 text-lg mb-6">Ready to access your full student dashboard?</p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
               onClick={() => {
+                // Seed mock users synchronously
                 if (typeof window !== 'undefined') {
                   const usersKey = "electivio_users";
                   window.localStorage.setItem(usersKey, JSON.stringify(mockUsers));
                 }
-                setTimeout(() => {
-                  const loggedInUser = loginUser("student@example.com", "password");
-                  if (loggedInUser) {
-                    window.location.href = "/student";
-                  }
-                }, 100);
+                // Login immediately (no timeout race condition)
+                const loggedInUser = loginUser("student@example.com", "password");
+                if (loggedInUser) {
+                  router.push("/student");
+                }
               }}
-              className="group relative px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300"
+              className="group relative px-8 py-4 bg-linear-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300"
             >
               <div className="flex items-center gap-2">
                 <Sparkles className="w-5 h-5" />
@@ -398,7 +398,7 @@ export default function StudentDemoPage() {
             </button>
             
             <Link href="/login">
-              <button className="px-8 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 font-semibold hover:shadow-lg hover:shadow-cyan-500/50 transition-all">
+              <button className="px-8 py-4 rounded-xl bg-linear-to-r from-cyan-500 to-blue-500 font-semibold hover:shadow-lg hover:shadow-cyan-500/50 hover:scale-105 transition-all duration-300">
                 Go Back to Login
               </button>
             </Link>
