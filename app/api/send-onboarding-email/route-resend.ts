@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 import { Resend } from "resend"
 
 const FROM_EMAIL = "electivio.app@gmail.com"
+const FROM_HEADER = `Electivio <${FROM_EMAIL}>`
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 type EmailVariant = "welcome-student" | "welcome-hospital" | "onboarding-pack"
@@ -170,15 +171,18 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Email is required" }, { status: 400 })
     }
 
-    // Check if we should use Resend or fallback to nodemailer
-    if (process.env.RESEND_API_KEY) {
+    const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_SECURE } = process.env
+    const hasSmtpConfig = Boolean(SMTP_HOST && SMTP_PORT && SMTP_USER && SMTP_PASS)
+
+    // Prefer SMTP when available so mail is sent from the configured Gmail account.
+    if (!hasSmtpConfig && process.env.RESEND_API_KEY) {
       console.log("Using Resend to send email to:", email, "Type:", type)
       
       const mail = buildEmailContent(type as EmailVariant, email, name)
 
       try {
         const { data, error } = await resend.emails.send({
-          from: "Electivio <onboarding@resend.dev>", // Resend requires verified domain, using their test domain
+          from: FROM_HEADER,
           to: [email],
           subject: mail.subject,
           html: mail.html,
@@ -210,8 +214,6 @@ export async function POST(req: Request) {
 
       const mail = buildEmailContent(type as EmailVariant, email, name)
 
-      const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_SECURE } = process.env
-
       if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS) {
         return NextResponse.json({ 
           error: "Email service not configured. Please set RESEND_API_KEY or SMTP configuration." 
@@ -230,7 +232,7 @@ export async function POST(req: Request) {
         })
 
         const info = await transporter.sendMail({
-          from: FROM_EMAIL,
+          from: FROM_HEADER,
           to: email,
           subject: mail.subject,
           text: mail.text,

@@ -525,6 +525,22 @@ export function updateSession(id: string, updates: Partial<Session>): Session | 
 }
 
 export function startSession(id: string): Session | null {
+  const target = getSession(id);
+  if (!target || target.status !== 'not_started') return null;
+
+  const applicationSessions = getSessions(target.applicationId);
+  const hasInProgress = applicationSessions.some(
+    (session) => session.status === 'in_progress' && session.id !== id
+  );
+  if (hasInProgress) return null;
+
+  const previousIncomplete = applicationSessions.some(
+    (session) =>
+      session.sessionNumber < target.sessionNumber &&
+      session.status !== 'completed'
+  );
+  if (previousIncomplete) return null;
+
   return updateSession(id, {
     status: 'in_progress',
     startedAt: new Date().toISOString(),
@@ -532,6 +548,17 @@ export function startSession(id: string): Session | null {
 }
 
 export function completeSession(id: string): Session | null {
+  const target = getSession(id);
+  if (!target || target.status !== 'in_progress') return null;
+
+  const applicationSessions = getSessions(target.applicationId);
+  const previousIncomplete = applicationSessions.some(
+    (session) =>
+      session.sessionNumber < target.sessionNumber &&
+      session.status !== 'completed'
+  );
+  if (previousIncomplete) return null;
+
   return updateSession(id, {
     status: 'completed',
     completedAt: new Date().toISOString(),

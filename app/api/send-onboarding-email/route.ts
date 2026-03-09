@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 import nodemailer from "nodemailer"
 
 const FROM_EMAIL = "electivio.app@gmail.com"
+const FROM_HEADER = `Electivio <${FROM_EMAIL}>`
 
 function getTransporter() {
   const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_SECURE } = process.env
@@ -196,7 +197,7 @@ export async function POST(req: Request) {
       console.log("Transporter created successfully")
 
       const info = await transporter.sendMail({
-        from: FROM_EMAIL,
+        from: FROM_HEADER,
         to: email,
         subject: mail.subject,
         text: mail.text,

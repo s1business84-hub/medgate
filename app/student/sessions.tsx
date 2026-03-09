@@ -131,26 +131,32 @@ export function StudentSessions({
         Observership Sessions ({sessions.length})
       </h3>
 
-      {sessions.map(session => {
-        const isNotStarted = session.status === "not_started"
-        const isInProgress = session.status === "in_progress"
-        const isCompleted = session.status === "completed"
+      {(() => {
+        const inProgressSession = sessions.find((s) => s.status === "in_progress")
+        const nextNotStartedSession = sessions.find((s) => s.status === "not_started")
 
-        const statusIcon =
-          isCompleted ? (
-            <CheckCircle className="w-6 h-6 text-green-600" />
-          ) : isInProgress ? (
-            <Clock className="w-6 h-6 text-blue-600 animate-spin" />
-          ) : (
-            <AlertCircle className="w-6 h-6 text-gray-400" />
-          )
+        return sessions.map(session => {
+          const isNotStarted = session.status === "not_started"
+          const isInProgress = session.status === "in_progress"
+          const isCompleted = session.status === "completed"
+          const canStart = isNotStarted && !inProgressSession && nextNotStartedSession?.id === session.id
+          const canComplete = isInProgress && inProgressSession?.id === session.id
 
-        const statusLabel =
-          isCompleted ? "Completed" : isInProgress ? "In Progress" : "Not Started"
+          const statusIcon =
+            isCompleted ? (
+              <CheckCircle className="w-6 h-6 text-green-600" />
+            ) : isInProgress ? (
+              <Clock className="w-6 h-6 text-blue-600" />
+            ) : (
+              <AlertCircle className="w-6 h-6 text-gray-400" />
+            )
 
-        const statusColor = isCompleted ? "bg-green-50 border-green-200" : isInProgress ? "bg-blue-50 border-blue-200" : "bg-gray-50 border-gray-200"
+          const statusLabel =
+            isCompleted ? "Completed" : isInProgress ? "In Progress" : "Not Started"
 
-        return (
+          const statusColor = isCompleted ? "bg-green-50 border-green-200" : isInProgress ? "bg-blue-50 border-blue-200" : "bg-gray-50 border-gray-200"
+
+          return (
           <div key={session.id} className={`border rounded-lg p-4 ${statusColor}`}>
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-start gap-3">
@@ -177,17 +183,19 @@ export function StudentSessions({
                 {isNotStarted && (
                   <Button
                     onClick={() => handleStartSession(session)}
+                    disabled={!canStart}
                     className="bg-blue-600 hover:bg-blue-700 text-white"
                     size="sm"
                   >
                     <Play className="w-4 h-4 mr-2" />
-                    Start
+                    {canStart ? "Start" : "Locked"}
                   </Button>
                 )}
 
                 {isInProgress && (
                   <Button
                     onClick={() => handleCompleteSession(session)}
+                    disabled={!canComplete}
                     className="bg-green-600 hover:bg-green-700 text-white"
                     size="sm"
                   >
@@ -217,13 +225,20 @@ export function StudentSessions({
                 )}
               </div>
             </div>
+
+            {isNotStarted && !canStart && (
+              <p className="mt-3 text-xs text-gray-600">
+                Complete earlier sessions first.
+              </p>
+            )}
           </div>
-        )
-      })}
+          )
+        })
+      })()}
 
       <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
         <p className="text-sm text-blue-900">
-          <strong>How it works:</strong> Start each session to begin your observership. When you complete a session, you'll be asked to fill out an assessment form. Your supervisor will review your responses.
+          <strong>How it works:</strong> Sessions unlock one-by-one. Start and complete each session in order, then submit the related form for supervisor review.
         </p>
       </div>
     </div>

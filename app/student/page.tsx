@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
@@ -31,6 +31,18 @@ export default function StudentPortal() {
     avgProgress: 0,
     certifications: 0,
   });
+
+  const backgroundParticles = useMemo(
+    () =>
+      Array.from({ length: 8 }, (_, i) => ({
+        id: i,
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 100}%`,
+        duration: 6 + Math.random() * 2,
+        delay: Math.random() * 3,
+      })),
+    []
+  );
 
   // Move load function outside useEffect so it can be reused
   const loadApplications = useCallback(async () => {
@@ -133,52 +145,52 @@ export default function StudentPortal() {
           <motion.div
             className="absolute -left-32 top-0 h-96 w-96 rounded-full bg-gradient-to-br from-cyan-500/30 via-blue-500/20 to-transparent blur-3xl"
             animate={{ 
-              y: [0, -40, 0], 
-              scale: [1, 1.15, 1],
-              x: [0, 20, 0],
+              y: [0, -24, 0], 
+              scale: [1, 1.08, 1],
+              x: [0, 12, 0],
             }}
-            transition={{ duration: 14, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+            transition={{ duration: 20, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
           />
           
           {/* Right indigo orb */}
           <motion.div
             className="absolute right-[-15%] top-1/3 h-96 w-96 rounded-full bg-gradient-to-bl from-indigo-600/30 via-purple-500/20 to-transparent blur-3xl"
             animate={{ 
-              y: [0, 50, 0], 
-              scale: [1.1, 0.95, 1.1],
-              x: [0, -25, 0],
+              y: [0, 28, 0], 
+              scale: [1.05, 0.98, 1.05],
+              x: [0, -14, 0],
             }}
-            transition={{ duration: 16, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+            transition={{ duration: 22, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
           />
           
           {/* Bottom pink orb */}
           <motion.div
             className="absolute left-1/4 -bottom-40 h-96 w-96 rounded-full bg-gradient-to-t from-pink-500/25 via-rose-500/15 to-transparent blur-3xl"
             animate={{ 
-              y: [0, -35, 0], 
-              rotate: [0, 6, -6, 0],
-              scale: [1, 1.12, 1],
+              y: [0, -20, 0], 
+              rotate: [0, 3, -3, 0],
+              scale: [1, 1.06, 1],
             }}
-            transition={{ duration: 18, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+            transition={{ duration: 24, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
           />
           
           {/* Floating particles */}
-          {[...Array(15)].map((_, i) => (
+          {backgroundParticles.map((particle) => (
             <motion.div
-              key={i}
+              key={particle.id}
               className="absolute w-1.5 h-1.5 bg-cyan-400/40 rounded-full"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
+                left: particle.left,
+                top: particle.top,
               }}
               animate={{
-                y: [0, -40, 0],
-                opacity: [0, 0.8, 0],
+                y: [0, -24, 0],
+                opacity: [0, 0.55, 0],
               }}
               transition={{
-                duration: 4 + Math.random() * 3,
+                duration: particle.duration,
                 repeat: Infinity,
-                delay: Math.random() * 4,
+                delay: particle.delay,
               }}
             />
           ))}
