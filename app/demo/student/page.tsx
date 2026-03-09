@@ -63,6 +63,14 @@ export default function StudentDemoPage() {
       progress: 0,
       icon: "📊",
     },
+    {
+      id: 4,
+      name: "Neurology Case Review Track",
+      institution: "Karolinska Institute",
+      status: "In Progress",
+      progress: 42,
+      icon: "🧠",
+    },
   ];
 
   const questions = [
@@ -240,24 +248,24 @@ export default function StudentDemoPage() {
           </div>
 
           <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Your Programs</h2>
-          <div className="space-y-3 sm:space-y-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4">
             {samplePrograms.map((program, idx) => (
               <motion.div
                 key={program.id}
                 onClick={() => setSelectedProgramData(program)}
                 variants={itemVariants}
-                className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm p-4 sm:p-6 hover:bg-white/10 transition-colors cursor-pointer"
+                className="cursor-pointer rounded-xl border border-white/10 bg-white/5 p-3 sm:p-4 backdrop-blur-sm transition-colors hover:bg-white/10"
               >
-                <div className="flex items-start justify-between mb-3 sm:mb-4">
-                  <div className="flex items-start gap-3 sm:gap-4">
-                    <span className="text-3xl sm:text-4xl">{program.icon}</span>
+                <div className="mb-3 flex flex-col gap-3 sm:mb-4">
+                  <div className="flex items-start gap-2 sm:gap-3">
+                    <span className="text-2xl sm:text-3xl">{program.icon}</span>
                     <div>
-                      <h3 className="text-base sm:text-lg font-semibold text-white">{program.name}</h3>
-                      <p className="text-slate-400 text-xs sm:text-sm">{program.institution}</p>
+                      <h3 className="text-sm sm:text-base font-semibold text-white leading-tight">{program.name}</h3>
+                      <p className="text-slate-400 text-xs">{program.institution}</p>
                     </div>
                   </div>
                   <span
-                    className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                    className={`inline-flex w-fit rounded-full px-2.5 py-1 text-[11px] font-semibold ${
                       program.status === "Completed"
                         ? "bg-green-500/20 text-green-300"
                         : program.status === "In Progress"
@@ -278,7 +286,7 @@ export default function StudentDemoPage() {
                     transition={{ duration: 1, delay: idx * 0.2 }}
                   />
                 </div>
-                <p className="text-slate-400 text-sm mt-2">{program.progress}% Complete</p>
+                <p className="mt-2 text-xs sm:text-sm text-slate-400">{program.progress}% Complete</p>
               </motion.div>
             ))}
           </div>

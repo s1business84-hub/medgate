@@ -3,15 +3,12 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Play, Zap, Copy, Check } from "lucide-react"
-import { useRouter } from "next/navigation"
-import { getUsers, getStudents, getApplications, getStaffAlerts, loginUser } from "@/lib/storage"
 import { mockUsers, mockStudents, mockApplications, mockStaffAlerts, mockHospitals, mockPrograms, mockDocuments, mockPayments } from "@/lib/mockData"
 
 export function DemoButton() {
   const [isOpen, setIsOpen] = useState(false)
   const [selectedTab, setSelectedTab] = useState("student")
   const [copiedEmail, setCopiedEmail] = useState<string | null>(null)
-  const router = useRouter()
 
   // Initialize demo data in localStorage
   const initializeDemoData = () => {
@@ -136,10 +133,10 @@ export function DemoButton() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="absolute top-full mt-4 left-1/2 -translate-x-1/2 w-[min(24rem,calc(100vw-2rem))] max-h-[85vh] overflow-y-auto bg-slate-900/98 backdrop-blur-xl border border-green-500/30 rounded-2xl shadow-2xl z-50"
+              className="fixed left-1/2 top-1/2 z-50 flex w-[min(28rem,calc(100vw-1.5rem))] max-h-[min(92vh,44rem)] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-2xl border border-green-500/30 bg-slate-900/98 shadow-2xl backdrop-blur-xl"
             >
               {/* Header */}
-              <div className="p-4 border-b border-green-500/20 bg-gradient-to-r from-green-500/10 to-emerald-500/10">
+              <div className="border-b border-green-500/20 bg-gradient-to-r from-green-500/10 to-emerald-500/10 p-4">
                 <div className="flex items-center gap-2 mb-1">
                   <Zap className="w-5 h-5 text-green-400" />
                   <h3 className="font-bold text-white">Try Electivio</h3>
@@ -148,12 +145,12 @@ export function DemoButton() {
               </div>
 
               {/* Tabs */}
-              <div className="flex gap-1 p-3 border-b border-green-500/20 bg-slate-800/30">
+              <div className="grid grid-cols-2 gap-2 border-b border-green-500/20 bg-slate-800/30 p-3 sm:grid-cols-4 sm:gap-1">
                 {tabs.map((tab) => (
                   <button
                     key={tab.id}
                     onClick={() => setSelectedTab(tab.id)}
-                    className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                    className={`flex items-center justify-center gap-2 rounded-lg px-2 py-2 text-xs font-medium transition-all sm:px-3 sm:text-sm ${
                       selectedTab === tab.id
                         ? "bg-green-500/30 text-green-300 border border-green-500/50"
                         : "bg-slate-700/30 text-slate-300 hover:bg-slate-700/50 border border-transparent"
@@ -171,16 +168,16 @@ export function DemoButton() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.2 }}
-                className="p-4 space-y-3"
+                className="flex-1 overflow-y-auto p-4"
               >
                 {/* Description */}
-                <div>
+                <div className="mb-3">
                   <p className="text-sm font-semibold text-white mb-1">{current.label}</p>
                   <p className="text-xs text-slate-400">{current.description}</p>
                 </div>
 
                 {/* Credentials Box */}
-                <div className="bg-slate-800/50 border border-slate-700/50 rounded-lg p-4 space-y-3">
+                <div className="rounded-lg border border-slate-700/50 bg-slate-800/50 p-4 space-y-3">
                   {/* Email */}
                   <div>
                     <label className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Email</label>
@@ -190,7 +187,7 @@ export function DemoButton() {
                       </code>
                       <button
                         onClick={() => handleCopyEmail(current.email)}
-                        className="p-2 rounded hover:bg-slate-700/50 transition-colors text-slate-300 hover:text-green-300"
+                        className="rounded p-2 text-slate-300 transition-colors hover:bg-slate-700/50 hover:text-green-300"
                         title="Copy email"
                       >
                         {copiedEmail === current.email ? (
@@ -210,18 +207,18 @@ export function DemoButton() {
                     </code>
                   </div>
                 </div>
-
-                {/* Sticky action ensures the start button stays visible on short screens */}
-                <div className="sticky bottom-0 -mx-4 px-4 pt-3 pb-1 bg-linear-to-t from-slate-900 via-slate-900/95 to-transparent">
-                  <button
-                    onClick={() => handleLaunchDemo(current.email, current.password, selectedTab)}
-                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-500/20 hover:bg-green-500/30 border border-green-500/50 rounded-lg text-green-300 font-semibold transition-all duration-200 group/btn"
-                  >
-                    <Play className="w-4 h-4 group-hover/btn:scale-110 transition-transform" />
-                    Start {current.label}
-                  </button>
-                </div>
               </motion.div>
+
+              {/* Always-visible action area */}
+              <div className="border-t border-green-500/20 bg-slate-900/95 px-4 py-3">
+                <button
+                  onClick={() => handleLaunchDemo(current.email, current.password, selectedTab)}
+                  className="group/btn flex w-full items-center justify-center gap-2 rounded-lg border border-green-500/50 bg-green-500/20 px-4 py-3 font-semibold text-green-300 transition-all duration-200 hover:bg-green-500/30"
+                >
+                  <Play className="w-4 h-4 transition-transform group-hover/btn:scale-110" />
+                  Start {current.label}
+                </button>
+              </div>
 
               {/* Footer */}
               <div className="p-3 border-t border-green-500/20 bg-slate-950/50">
