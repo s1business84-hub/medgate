@@ -136,7 +136,7 @@ export function DemoButton() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="absolute top-full mt-3 left-1/2 -translate-x-1/2 w-[min(24rem,calc(100vw-2rem))] max-h-[85vh] overflow-y-auto bg-slate-900/98 backdrop-blur-xl border border-green-500/30 rounded-2xl shadow-2xl z-50"
+              className="absolute top-full mt-4 left-1/2 -translate-x-1/2 w-[min(24rem,calc(100vw-2rem))] max-h-[85vh] overflow-y-auto bg-slate-900/98 backdrop-blur-xl border border-green-500/30 rounded-2xl shadow-2xl z-50"
             >
               {/* Header */}
               <div className="p-4 border-b border-green-500/20 bg-gradient-to-r from-green-500/10 to-emerald-500/10">
@@ -171,7 +171,7 @@ export function DemoButton() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.2 }}
-                className="p-4 space-y-4"
+                className="p-4 space-y-3"
               >
                 {/* Description */}
                 <div>
@@ -211,14 +211,16 @@ export function DemoButton() {
                   </div>
                 </div>
 
-                {/* Action Button */}
-                <button
-                  onClick={() => handleLaunchDemo(current.email, current.password, selectedTab)}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-500/20 hover:bg-green-500/30 border border-green-500/50 rounded-lg text-green-300 font-semibold transition-all duration-200 group/btn"
-                >
-                  <Play className="w-4 h-4 group-hover/btn:scale-110 transition-transform" />
-                  Launch {current.label}
-                </button>
+                {/* Sticky action ensures the start button stays visible on short screens */}
+                <div className="sticky bottom-0 -mx-4 px-4 pt-3 pb-1 bg-linear-to-t from-slate-900 via-slate-900/95 to-transparent">
+                  <button
+                    onClick={() => handleLaunchDemo(current.email, current.password, selectedTab)}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-500/20 hover:bg-green-500/30 border border-green-500/50 rounded-lg text-green-300 font-semibold transition-all duration-200 group/btn"
+                  >
+                    <Play className="w-4 h-4 group-hover/btn:scale-110 transition-transform" />
+                    Start {current.label}
+                  </button>
+                </div>
               </motion.div>
 
               {/* Footer */}
