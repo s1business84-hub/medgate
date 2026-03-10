@@ -113,7 +113,7 @@ export function ScrollytellingFeatures({ features }: ScrollytellingFeaturesProps
     <div
       ref={containerRef}
       style={{ perspective: '1200px' }}
-      className="py-20 md:py-32"
+      className="py-20 md:py-32 perf-section"
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10 max-w-7xl mx-auto px-6">
         {features.map((feature, idx) => (
@@ -122,7 +122,7 @@ export function ScrollytellingFeatures({ features }: ScrollytellingFeaturesProps
             ref={(el) => {
               itemsRef.current[idx] = el;
             }}
-            className="group relative rounded-3xl border border-white/20 bg-white/8 backdrop-blur-3xl shadow-lg hover:shadow-2xl overflow-hidden transition-all duration-300 hover:border-white/30"
+            className="group relative rounded-3xl border border-white/20 bg-white/8 backdrop-blur-3xl shadow-lg hover:shadow-2xl overflow-hidden transition-all duration-300 hover:border-white/30 perf-card"
             whileHover={{ y: -8 }}
           >
             {/* Base gradient glass tint - always visible */}

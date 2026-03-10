@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server"
 import nodemailer from "nodemailer"
 
-const FROM_EMAIL = "electivio.app@gmail.com"
+const SMTP_AUTH_USER = process.env.SMTP_USER
+const FROM_EMAIL = process.env.SMTP_FROM_EMAIL || SMTP_AUTH_USER
+const REPLY_TO_EMAIL = process.env.SMTP_REPLY_TO_EMAIL || FROM_EMAIL
 const FROM_HEADER = `Electivio <${FROM_EMAIL}>`
 
 function getTransporter() {
@@ -184,6 +186,12 @@ export async function POST(req: Request) {
   try {
     const { email, type = "onboarding-pack", name } = await req.json()
 
+    if (!FROM_EMAIL || !REPLY_TO_EMAIL) {
+      return NextResponse.json({
+        error: "Sender configuration is missing. Set SMTP_USER and optional SMTP_FROM_EMAIL/SMTP_REPLY_TO_EMAIL.",
+      }, { status: 500 })
+    }
+
     if (!email || typeof email !== "string") {
       return NextResponse.json({ error: "Email is required" }, { status: 400 })
     }
@@ -198,6 +206,7 @@ export async function POST(req: Request) {
 
       const info = await transporter.sendMail({
         from: FROM_HEADER,
+        replyTo: REPLY_TO_EMAIL,
         to: email,
         subject: mail.subject,
         text: mail.text,

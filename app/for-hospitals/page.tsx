@@ -103,7 +103,7 @@ export default function ForHospitalsPage() {
                 animate={{ opacity: 1, y: 0, height: "auto" }}
                 exit={{ opacity: 0, y: -20, height: 0 }}
                 transition={{ duration: 0.3 }}
-                className="mt-5 max-w-2xl mx-auto overflow-hidden"
+                className="mt-5 max-w-2xl mx-auto overflow-hidden perf-card"
               >
                 <div className="bg-gradient-to-br from-cyan-600/20 to-indigo-600/20 border border-cyan-500/30 rounded-xl backdrop-blur-xl p-8">
                   <h3 className="text-2xl font-bold text-slate-100 mb-6">Contact our founders</h3>
@@ -142,7 +142,7 @@ export default function ForHospitalsPage() {
         <div className="relative bg-slate-950 text-slate-100">
         <div className="max-w-6xl mx-auto px-6 py-16 md:py-20">
         {/* Benefits Section */}
-        <section className="mb-16 md:mb-24">
+        <section className="mb-16 md:mb-24 perf-section">
           <div className="text-center mb-10 md:mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-slate-100 mb-4">
               <AnimatedGradientText>Why Choose Electivio?</AnimatedGradientText>
@@ -216,7 +216,7 @@ export default function ForHospitalsPage() {
                 ].map((feature, idx) => (
                   <motion.div 
                     key={feature.title}
-                    className="group/item backdrop-blur-2xl bg-slate-800/50 rounded-2xl p-7 border border-cyan-500/30 hover:bg-slate-700/50 hover:border-cyan-400/50 transition-all duration-300 relative overflow-hidden"
+                    className="group/item backdrop-blur-2xl bg-slate-800/50 rounded-2xl p-7 border border-cyan-500/30 hover:bg-slate-700/50 hover:border-cyan-400/50 transition-all duration-300 relative overflow-hidden perf-card"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -280,8 +280,8 @@ export default function ForHospitalsPage() {
         </section>
 
         {/* Call to Action */}
-        <section className="text-center animate-fade-in mb-8" style={{ animationDelay: '0.7s' }}>
-          <div className="relative rounded-3xl border border-cyan-500/30 bg-slate-900/50 backdrop-blur-3xl shadow-2xl p-10 md:p-16 overflow-hidden group hover:border-cyan-500/50 transition-all">
+        <section className="text-center animate-fade-in mb-8 perf-section" style={{ animationDelay: '0.7s' }}>
+          <div className="relative rounded-3xl border border-cyan-500/30 bg-slate-900/50 backdrop-blur-3xl shadow-2xl p-10 md:p-16 overflow-hidden group hover:border-cyan-500/50 transition-all perf-card">
             {/* Base glass tint */}
             <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-white/3 to-indigo-500/5" />
             
@@ -321,7 +321,7 @@ export default function ForHospitalsPage() {
               )}
               {onboardingStatus === "sent" && (
                 <p className="text-sm text-cyan-200 mt-3">
-                  Onboarding steps sent from electivio.app@gmail.com. Please check your inbox.
+                  Onboarding steps sent! Please check your inbox.
                 </p>
               )}
               {onboardingStatus === "error" && (
@@ -330,7 +330,7 @@ export default function ForHospitalsPage() {
                 </p>
               )}
               <div className="mt-6 text-sm text-slate-300">
-                We send onboarding steps from <span className="text-cyan-200">electivio.app@gmail.com</span>.
+                We send onboarding steps via email.
               </div>
             </div>
           </div>

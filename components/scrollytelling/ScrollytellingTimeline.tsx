@@ -103,7 +103,7 @@ export function ScrollytellingTimeline({ steps }: ScrollytellingTimelineProps) {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative py-20 md:py-32">
+    <div ref={containerRef} className="relative py-20 md:py-32 perf-section">
       {/* Central connecting line */}
       <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-cyan-500 to-transparent opacity-0" ref={timelineRef} />
 
@@ -129,7 +129,7 @@ export function ScrollytellingTimeline({ steps }: ScrollytellingTimelineProps) {
 
             {/* Card content */}
             <motion.div
-              className="flex-1 group relative rounded-3xl border border-white/20 bg-white/8 backdrop-blur-3xl shadow-lg hover:shadow-2xl overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:border-white/30"
+              className="flex-1 group relative rounded-3xl border border-white/20 bg-white/8 backdrop-blur-3xl shadow-lg hover:shadow-2xl overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:border-white/30 perf-card"
               whileHover={{ scale: 1.02 }}
             >
               {/* Base gradient glass tint */}

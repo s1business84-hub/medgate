@@ -1,7 +1,8 @@
 import { NextResponse, NextRequest } from "next/server"
 import nodemailer from "nodemailer"
 
-const FROM_EMAIL = process.env.SMTP_USER || "electivio.app@gmail.com"
+const FROM_EMAIL = process.env.SMTP_FROM_EMAIL || process.env.SMTP_USER
+const REPLY_TO_EMAIL = process.env.SMTP_REPLY_TO_EMAIL || FROM_EMAIL
 
 function getTransporter() {
   const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS } = process.env
@@ -126,7 +127,7 @@ function buildDecisionEmail({
           </p>
 
           <p style="color: #666; font-size: 14px;">
-            If you have any questions about your application decision, please don't hesitate to reach out to us at <strong>support@electivio.com</strong> or reply to this email.
+            If you have any questions about your application decision, please don't hesitate to reach out to us at <strong>${REPLY_TO_EMAIL}</strong> or reply to this email.
           </p>
         </div>
 
@@ -144,6 +145,13 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
     const { studentEmail, studentName, decision, programName, hospitalName, reason, notes, actionUrl } = body
+
+    if (!FROM_EMAIL || !REPLY_TO_EMAIL) {
+      return NextResponse.json(
+        { error: "Sender configuration is missing. Set SMTP_USER and optional SMTP_FROM_EMAIL/SMTP_REPLY_TO_EMAIL." },
+        { status: 500 }
+      )
+    }
 
     // Validate required fields
     if (!studentEmail || !studentName || !decision || !programName || !hospitalName) {
@@ -178,7 +186,8 @@ export async function POST(request: NextRequest) {
     })
 
     await transporter.sendMail({
-      from: FROM_EMAIL,
+      from: `Electivio <${FROM_EMAIL}>`,
+      replyTo: REPLY_TO_EMAIL,
       to: studentEmail,
       subject: `Application Decision: ${decision.charAt(0).toUpperCase() + decision.slice(1)} for ${programName}`,
       html: htmlContent,

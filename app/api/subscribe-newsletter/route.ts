@@ -1,9 +1,19 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
+const FROM_EMAIL = process.env.SMTP_FROM_EMAIL || process.env.SMTP_USER;
+const REPLY_TO_EMAIL = process.env.SMTP_REPLY_TO_EMAIL || FROM_EMAIL;
+
 export async function POST(request: Request) {
   try {
     const { email } = await request.json();
+
+    if (!FROM_EMAIL || !REPLY_TO_EMAIL) {
+      return NextResponse.json(
+        { error: 'Sender configuration is missing. Set SMTP_USER and optional SMTP_FROM_EMAIL/SMTP_REPLY_TO_EMAIL.' },
+        { status: 500 }
+      );
+    }
 
     if (!email || !email.includes('@')) {
       return NextResponse.json(
@@ -99,7 +109,7 @@ export async function POST(request: Request) {
                         📬 Check Your Inbox
                       </p>
                       <p style="margin: 0; color: #cbd5e1; font-size: 15px; line-height: 1.6;">
-                        Keep an eye on your email for updates from <strong style="color: #e2e8f0;">electivio.app@gmail.com</strong>. We promise to only send you valuable content — no spam!
+                        Keep an eye on your email for updates from <strong style="color: #e2e8f0;">${FROM_EMAIL}</strong>. We promise to only send you valuable content — no spam!
                       </p>
                     </div>
 
@@ -131,7 +141,7 @@ export async function POST(request: Request) {
                       <strong style="color: #94a3b8;">Electivio</strong> — Your Gateway to Medical Training Opportunities
                     </p>
                     <p style="margin: 0; color: #475569; font-size: 12px;">
-                      Dubai, UAE | electivio.app@gmail.com
+                      Dubai, UAE | ${FROM_EMAIL}
                     </p>
                     <p style="margin: 15px 0 0; color: #475569; font-size: 11px;">
                       You're receiving this because you subscribed to Electivio updates.
@@ -148,7 +158,8 @@ export async function POST(request: Request) {
 
     // Send email
     await transporter.sendMail({
-      from: `"Electivio" <${process.env.SMTP_USER}>`,
+      from: `"Electivio" <${FROM_EMAIL}>`,
+      replyTo: REPLY_TO_EMAIL,
       to: email,
       subject: '🎉 Welcome to Electivio — You\'re All Set!',
       html: htmlContent,

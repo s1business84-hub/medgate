@@ -19,6 +19,23 @@ body {
   font-family: var(--font-family-sans);
 }
 
+/* Scroll/render performance utilities for card-heavy pages */
+.perf-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 900px;
+}
+
+.perf-card {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+  contain: layout paint;
+}
+
+.perf-hover {
+  will-change: transform;
+}
+
 /* Custom Design Tokens */
 :root {
   --primary-blue: #3b82f6;
