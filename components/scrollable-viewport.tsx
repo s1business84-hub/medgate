@@ -46,6 +46,9 @@ export function ScrollableViewport({
     mass: 0.5,
   });
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- the fixed
+  // overlays below must not render during SSR; gating them on a post-mount
+  // flag is the standard way to keep server and client markup identical.
   useEffect(() => setMounted(true), []);
 
   useEffect(() => {
@@ -99,7 +102,7 @@ export function ScrollableViewport({
     <div ref={containerRef} className={`relative w-full ${className}`}>
       {showProgress && mounted && (
         <motion.div
-          className="fixed top-0 left-0 right-0 h-1 bg-linear-to-r from-cyan-500 via-blue-500 to-indigo-500 origin-left z-50"
+          className="fixed top-0 left-0 right-0 h-1 bg-linear-to-r from-blue-500 via-blue-400 to-blue-600 origin-left z-50"
           style={{ scaleX }}
         />
       )}
@@ -117,7 +120,7 @@ export function ScrollableViewport({
               whileTap={{ scale: 0.9 }}
               className={`w-3 h-3 rounded-full transition-all duration-300 ${
                 activeSection === index
-                  ? "bg-cyan-400 ring-2 ring-cyan-400/50 ring-offset-2 ring-offset-slate-900"
+                  ? "bg-blue-400 ring-2 ring-blue-400/50 ring-offset-2 ring-offset-slate-900"
                   : "bg-slate-600 hover:bg-slate-500"
               }`}
               aria-label={`Go to section ${index + 1}`}
@@ -137,7 +140,7 @@ export function ScrollableViewport({
               className="fixed top-20 left-1/2 -translate-x-1/2 z-40 p-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 transition-all duration-300 group"
               aria-label="Scroll up"
             >
-              <ChevronUp className="w-6 h-6 text-cyan-400 group-hover:text-cyan-300" />
+              <ChevronUp className="w-6 h-6 text-blue-400 group-hover:text-blue-300" />
             </motion.button>
           )}
 
@@ -149,7 +152,7 @@ export function ScrollableViewport({
               className="fixed bottom-8 left-1/2 -translate-x-1/2 z-40 p-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 transition-all duration-300 group"
               aria-label="Scroll down"
             >
-              <ChevronDown className="w-6 h-6 text-cyan-400 group-hover:text-cyan-300" />
+              <ChevronDown className="w-6 h-6 text-blue-400 group-hover:text-blue-300" />
             </motion.button>
           )}
         </>

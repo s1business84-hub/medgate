@@ -247,7 +247,7 @@ function DataGridColumnHeaderInner<TData, TValue>({
             <Settings2Icon className="size-3.5!" />
             <span>Columns</span>
           </DropdownMenuSubTrigger>
-          <DropdownMenuSubContent side="right">
+          <DropdownMenuSubContent>
             {table
               .getAllColumns()
               .filter((col) => col.getCanHide())
@@ -292,8 +292,7 @@ function DataGridColumnHeaderInner<TData, TValue>({
     return (
       <div className="-ms-2 flex h-full items-center justify-between gap-1.5">
         <DropdownMenu>
-          <DropdownMenuTrigger
-            render={
+          <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
                 className={headerButtonClassName}
@@ -303,8 +302,7 @@ function DataGridColumnHeaderInner<TData, TValue>({
                 {resolvedTitle}
                 {sortIcon}
               </Button>
-            }
-          />
+          </DropdownMenuTrigger>
           <DropdownMenuContent className="w-40" align="start">
             {menuItems}
           </DropdownMenuContent>

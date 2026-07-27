@@ -47,8 +47,7 @@ function DataGridColumnFilter<TData, TValue>({
 
   return (
     <Popover>
-      <PopoverTrigger
-        render={
+      <PopoverTrigger asChild>
           <Button variant="outline" size="sm">
             <CirclePlusIcon className="size-4" />
             {title}
@@ -83,8 +82,7 @@ function DataGridColumnFilter<TData, TValue>({
               </>
             )}
           </Button>
-        }
-      />
+      </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0" align="start">
         <div className="p-2">
           <Input

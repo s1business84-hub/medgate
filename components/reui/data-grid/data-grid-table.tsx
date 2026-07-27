@@ -1529,8 +1529,9 @@ function DataGridTableRowSelectAll() {
 
   return (
     <Checkbox
-      checked={isAllSelected}
-      indeterminate={isSomeSelected && !isAllSelected}
+      checked={
+        isSomeSelected && !isAllSelected ? "indeterminate" : isAllSelected
+      }
       disabled={isLoading || recordCount === 0}
       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
       aria-label="Select all"

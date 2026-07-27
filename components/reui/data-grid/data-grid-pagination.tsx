@@ -164,7 +164,6 @@ function DataGridPagination(props: DataGridPaginationProps): JSX.Element {
               </SelectTrigger>
               <SelectContent
                 align="start"
-                alignItemWithTrigger={false}
                 className="min-w-(--anchor-width)"
               >
                 {mergedProps.sizes?.map((size: number) => (
