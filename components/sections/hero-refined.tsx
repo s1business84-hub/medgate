@@ -158,14 +158,14 @@ export function Hero() {
         
         {/* Vibrant glowing orbs */}
         <GlowingOrb className="-top-40 -left-40" color="radial-gradient(circle, rgba(6, 182, 212, 0.5) 0%, transparent 70%)" size="600px" delay={0} />
-        <GlowingOrb className="top-1/4 -right-20" color="radial-gradient(circle, rgba(168, 85, 247, 0.45) 0%, transparent 70%)" size="500px" delay={1.5} />
-        <GlowingOrb className="bottom-0 left-1/3" color="radial-gradient(circle, rgba(236, 72, 153, 0.4) 0%, transparent 70%)" size="550px" delay={3} />
+        <GlowingOrb className="top-1/4 -right-20" color="radial-gradient(circle, rgba(59, 130, 246, 0.45) 0%, transparent 70%)" size="500px" delay={1.5} />
+        <GlowingOrb className="bottom-0 left-1/3" color="radial-gradient(circle, rgba(99, 102, 241, 0.4) 0%, transparent 70%)" size="550px" delay={3} />
         
         {/* Interactive mesh gradient */}
         <motion.div
           className="absolute inset-0 opacity-70 will-change-auto"
           style={{
-            background: `radial-gradient(ellipse at 20% 30%, rgba(6, 182, 212, 0.2) 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(168, 85, 247, 0.15) 0%, transparent 45%), radial-gradient(ellipse at 40% 80%, rgba(236, 72, 153, 0.12) 0%, transparent 50%), radial-gradient(ellipse at 90% 70%, rgba(34, 211, 238, 0.1) 0%, transparent 40%)`,
+            background: `radial-gradient(ellipse at 20% 30%, rgba(6, 182, 212, 0.2) 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 45%), radial-gradient(ellipse at 40% 80%, rgba(99, 102, 241, 0.12) 0%, transparent 50%), radial-gradient(ellipse at 90% 70%, rgba(34, 211, 238, 0.1) 0%, transparent 40%)`,
             x: springX,
             y: springY,
           }}
@@ -174,13 +174,13 @@ export function Hero() {
         {/* Animated gradient lines */}
         <motion.div className="absolute inset-0 overflow-hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 2 }}>
           <motion.div className="absolute h-px w-full top-1/4 bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" animate={{ x: ['-100%', '100%'] }} transition={{ duration: 15, repeat: Infinity, ease: "linear" }} />
-          <motion.div className="absolute h-px w-full top-2/3 bg-gradient-to-r from-transparent via-purple-500/30 to-transparent" animate={{ x: ['100%', '-100%'] }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} />
-          <motion.div className="absolute w-px h-full left-1/4 bg-gradient-to-b from-transparent via-pink-500/25 to-transparent" animate={{ y: ['-100%', '100%'] }} transition={{ duration: 25, repeat: Infinity, ease: "linear" }} />
+          <motion.div className="absolute h-px w-full top-2/3 bg-gradient-to-r from-transparent via-blue-500/30 to-transparent" animate={{ x: ['100%', '-100%'] }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} />
+          <motion.div className="absolute w-px h-full left-1/4 bg-gradient-to-b from-transparent via-indigo-500/25 to-transparent" animate={{ y: ['-100%', '100%'] }} transition={{ duration: 25, repeat: Infinity, ease: "linear" }} />
         </motion.div>
         
         {/* Additional floating orbs for depth */}
         <GlowingOrb className="top-1/2 left-1/4" color="radial-gradient(circle, rgba(34, 211, 238, 0.3) 0%, transparent 60%)" size="400px" delay={2} />
-        <GlowingOrb className="bottom-1/4 right-1/3" color="radial-gradient(circle, rgba(168, 85, 247, 0.35) 0%, transparent 65%)" size="450px" delay={2.5} />
+        <GlowingOrb className="bottom-1/4 right-1/3" color="radial-gradient(circle, rgba(59, 130, 246, 0.35) 0%, transparent 65%)" size="450px" delay={2.5} />
         
         {/* Animated star field */}
         <div className="absolute inset-0 overflow-hidden">
@@ -212,7 +212,7 @@ export function Hero() {
         <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")` }} />
       </div>
 
-      <div className="mx-auto max-w-7xl px-6 lg:px-8 py-20 sm:py-28">
+      <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8 py-12 sm:py-20 lg:py-28">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left Column - Content */}
           <div className="mx-auto max-w-2xl">
@@ -221,28 +221,28 @@ export function Hero() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="mb-8"
+              className="mb-5 sm:mb-8"
             >
-              <span className="group inline-flex items-center gap-2 text-xs font-medium bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-pink-500/10 border border-white/10 rounded-full px-4 py-2 backdrop-blur-sm hover:border-white/20 transition-all duration-500">
+              <span className="group inline-flex items-center gap-2 text-[11px] sm:text-xs font-medium bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-indigo-500/10 border border-white/10 rounded-full px-3 sm:px-4 py-2 backdrop-blur-sm hover:border-white/20 transition-all duration-500">
                 <motion.span 
                   className="relative flex h-2 w-2"
                   animate={{ scale: [1, 1.2, 1] }}
                   transition={{ duration: 2, repeat: Infinity }}
                 >
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-gradient-to-r from-cyan-400 to-purple-400"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-gradient-to-r from-cyan-400 to-indigo-400"></span>
                 </motion.span>
-                <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-pink-300 bg-clip-text text-transparent font-semibold">
+                <span className="bg-gradient-to-r from-cyan-300 via-blue-300 to-indigo-300 bg-clip-text text-transparent font-semibold">
                   Now Live • UAE Medical Training Platform
                 </span>
-                <Sparkles className="w-3 h-3 text-purple-400" />
+                <Sparkles className="w-3 h-3 text-indigo-400" />
               </span>
             </motion.div>
 
             {/* Main headline with reveal animation */}
             <div className="mb-6">
               <RevealText 
-                className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.1]"
+                className="text-[2.5rem] sm:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.05]"
                 stagger={0.02}
               >
                 Medical Training
@@ -252,7 +252,7 @@ export function Hero() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.5 }}
               >
-                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1]">
+                <h1 className="text-[2.5rem] sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05]">
                   <LetterByLetter text="Reimagined" delay={0.5} duration={0.06} gradient={true} />
                 </h1>
               </motion.div>
@@ -263,12 +263,12 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.6 }}
-              className="text-lg text-slate-300 mb-8 max-w-lg"
+              className="text-base sm:text-lg text-slate-300 mb-6 sm:mb-8 max-w-lg"
             >
               Connect with top UAE hospitals for structured medical observerships. 
               <span className="text-cyan-400"> Verified programs.</span>
-              <span className="text-purple-400"> Seamless applications.</span>
-              <span className="text-pink-400"> Real results.</span>
+              <span className="text-blue-400"> Seamless applications.</span>
+              <span className="text-indigo-400"> Real results.</span>
             </motion.p>
 
             {/* Feature pills */}
@@ -276,7 +276,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.7 }}
-              className="flex flex-wrap gap-3 mb-8"
+              className="flex flex-wrap gap-2 sm:gap-3 mb-6 sm:mb-8"
             >
               {features.map((feature, i) => (
                 <motion.div
@@ -298,7 +298,7 @@ export function Hero() {
 
             {/* CTA Buttons */}
             <Reveal delay={0.7} y={30}>
-              <div className="flex flex-col sm:flex-row items-start gap-4">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-start gap-3 sm:gap-4">
                 <MagneticHover>
                   <motion.button 
                     onClick={(e) => handleNavigate(e, "/programs")}
@@ -307,14 +307,14 @@ export function Hero() {
                     whileTap={{ scale: 0.98 }}
                   >
                     <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500"
+                      className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600"
                       animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
                       transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
                       style={{ backgroundSize: '200% 200%' }}
                     />
                     <span className="relative z-10 text-white">Browse Programs</span>
                     <ArrowRight className="relative z-10 w-4 h-4 text-white group-hover:translate-x-1 transition-transform duration-300" />
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 blur-xl opacity-50 group-hover:opacity-80 transition-opacity" />
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600 blur-xl opacity-50 group-hover:opacity-80 transition-opacity" />
                   </motion.button>
                 </MagneticHover>
                 
@@ -342,7 +342,7 @@ export function Hero() {
             >
               {/* Glow behind phone */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-80 h-80 rounded-full bg-gradient-to-r from-cyan-500/30 via-purple-500/20 to-pink-500/30 blur-3xl animate-pulse" />
+                <div className="w-80 h-80 rounded-full bg-gradient-to-r from-cyan-500/30 via-blue-500/20 to-indigo-500/30 blur-3xl animate-pulse" />
               </div>
               <Phone3D />
             </motion.div>
@@ -410,19 +410,19 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
             whileHover={{ scale: 1.02, y: -5 }}
-            className="relative group rounded-2xl border border-purple-500/30 bg-gradient-to-br from-purple-500/10 via-purple-600/5 to-transparent backdrop-blur-xl p-6 overflow-hidden"
+            className="relative group rounded-2xl border border-blue-500/30 bg-gradient-to-br from-blue-500/10 via-blue-600/5 to-transparent backdrop-blur-xl p-6 overflow-hidden"
           >
             {/* Animated gradient background */}
             <motion.div
               className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
               style={{
-                background: 'radial-gradient(circle at 50% 0%, rgba(168, 85, 247, 0.15), transparent 70%)'
+                background: 'radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15), transparent 70%)'
               }}
             />
             
             {/* Content */}
             <div className="relative z-10">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                 <Zap className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl font-bold text-white mb-2">Design</h3>
@@ -431,22 +431,22 @@ export function Hero() {
               </p>
               <ul className="space-y-2 text-xs text-slate-300">
                 <li className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
                   Student application journey
                 </li>
                 <li className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
                   Hospital decision workflows
                 </li>
                 <li className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
                   Real-time tracking systems
                 </li>
               </ul>
             </div>
             
             {/* Corner accent */}
-            <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-purple-500/20 to-transparent rounded-bl-full" />
+            <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-blue-500/20 to-transparent rounded-bl-full" />
           </motion.div>
 
           {/* DEVELOP Card */}
@@ -456,19 +456,19 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.3 }}
             viewport={{ once: true }}
             whileHover={{ scale: 1.02, y: -5 }}
-            className="relative group rounded-2xl border border-pink-500/30 bg-gradient-to-br from-pink-500/10 via-pink-600/5 to-transparent backdrop-blur-xl p-6 overflow-hidden"
+            className="relative group rounded-2xl border border-indigo-500/30 bg-gradient-to-br from-indigo-500/10 via-indigo-600/5 to-transparent backdrop-blur-xl p-6 overflow-hidden"
           >
             {/* Animated gradient background */}
             <motion.div
               className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
               style={{
-                background: 'radial-gradient(circle at 50% 0%, rgba(236, 72, 153, 0.15), transparent 70%)'
+                background: 'radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.15), transparent 70%)'
               }}
             />
             
             {/* Content */}
             <div className="relative z-10">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-pink-400 to-pink-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                 <Star className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl font-bold text-white mb-2">Develop</h3>
@@ -477,22 +477,22 @@ export function Hero() {
               </p>
               <ul className="space-y-2 text-xs text-slate-300">
                 <li className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-pink-400" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
                   Real-world pilot testing
                 </li>
                 <li className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-pink-400" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
                   Feedback-driven improvements
                 </li>
                 <li className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-pink-400" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
                   Scalable excellence models
                 </li>
               </ul>
             </div>
             
             {/* Corner accent */}
-            <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-pink-500/20 to-transparent rounded-bl-full" />
+            <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-indigo-500/20 to-transparent rounded-bl-full" />
           </motion.div>
         </motion.div>
 
@@ -511,7 +511,7 @@ export function Hero() {
             <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-6">
               <div>
                 <motion.p 
-                  className="text-xs uppercase tracking-[0.2em] bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent font-semibold"
+                  className="text-xs uppercase tracking-[0.2em] bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent font-semibold"
                 >
                   Trusted Platform
                 </motion.p>
@@ -525,7 +525,7 @@ export function Hero() {
               <div className="flex flex-wrap gap-4">
                 <motion.button 
                   onClick={(e) => handleNavigate(e, "/programs")}
-                  className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-cyan-500 to-purple-500 text-white font-medium hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300"
+                  className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-medium hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300"
                 >
                   Browse Programs
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -543,11 +543,11 @@ export function Hero() {
             <div className="relative grid grid-cols-2 md:grid-cols-3 gap-4 mt-8 pt-8 border-t border-white/10">
               {[
                 { icon: Shield, label: "Verified Institutions", color: "cyan" },
-                { icon: CheckCircle, label: "Compliance Ready", color: "purple" },
-                { icon: Users, label: "Mentor Support", color: "pink" },
-                { icon: Globe, label: "UAE Coverage", color: "emerald" },
-                { icon: Zap, label: "Fast Processing", color: "orange" },
-                { icon: Star, label: "Premium Experience", color: "yellow" },
+                { icon: CheckCircle, label: "Compliance Ready", color: "blue" },
+                { icon: Users, label: "Mentor Support", color: "indigo" },
+                { icon: Globe, label: "UAE Coverage", color: "cyan" },
+                { icon: Zap, label: "Fast Processing", color: "blue" },
+                { icon: Star, label: "Premium Experience", color: "indigo" },
               ].map((item, i) => (
                 <motion.div
                   key={item.label}
@@ -560,16 +560,16 @@ export function Hero() {
                   <div className={cn(
                     "w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:scale-110",
                     item.color === "cyan" ? "bg-cyan-500/20" :
-                    item.color === "purple" ? "bg-purple-500/20" :
-                    item.color === "pink" ? "bg-pink-500/20" :
+                    item.color === "blue" ? "bg-blue-500/20" :
+                    item.color === "indigo" ? "bg-indigo-500/20" :
                     item.color === "emerald" ? "bg-emerald-500/20" :
                     item.color === "orange" ? "bg-orange-500/20" : "bg-yellow-500/20"
                   )}>
                     <item.icon className={cn(
                       "w-4 h-4",
                       item.color === "cyan" ? "text-cyan-400" :
-                      item.color === "purple" ? "text-purple-400" :
-                      item.color === "pink" ? "text-pink-400" :
+                      item.color === "blue" ? "text-blue-400" :
+                      item.color === "indigo" ? "text-indigo-400" :
                       item.color === "emerald" ? "text-emerald-400" :
                       item.color === "orange" ? "text-orange-400" : "text-yellow-400"
                     )} />
