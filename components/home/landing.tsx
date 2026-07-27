@@ -26,6 +26,23 @@ import {
   Clock,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import {
+  Stepper,
+  StepperItem,
+  StepperTrigger,
+  StepperIndicator,
+  StepperSeparator,
+  StepperTitle,
+  StepperNav,
+} from "@/components/reui/stepper";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 /* ---------------------------------------------------------------- helpers */
 
@@ -170,51 +187,46 @@ function PlatformPreview() {
               Dubai Health Authority · 4 weeks
             </p>
           </div>
-          <span className="shrink-0 rounded-full bg-amber-500/10 px-2.5 py-1 text-[11px] font-semibold text-amber-300 ring-1 ring-amber-500/30">
+          <Badge
+            variant="secondary"
+            className="shrink-0 border-amber-500/30 bg-amber-500/10 text-amber-300"
+          >
             Interview
-          </span>
+          </Badge>
         </div>
 
-        {/* vertical on mobile, horizontal from sm */}
-        <ol className="mt-5 space-y-3 sm:space-y-0 sm:flex sm:items-start sm:gap-1">
-          {TRACKER.map((s, i) => (
-            <li key={s.label} className="flex sm:flex-col sm:flex-1 items-start sm:items-center gap-3 sm:gap-2">
-              <div className="flex sm:w-full items-center gap-0 sm:gap-1">
-                <span
-                  className={cn(
-                    "grid h-6 w-6 shrink-0 place-items-center rounded-full text-[11px] font-semibold ring-1",
-                    s.done
-                      ? "bg-blue-600 text-white ring-blue-500"
-                      : s.current
-                        ? "bg-slate-950 text-blue-300 ring-2 ring-blue-400"
-                        : "bg-slate-950 text-slate-500 ring-slate-200"
-                  )}
-                >
-                  {s.done ? <Check className="h-3.5 w-3.5" /> : i + 1}
-                </span>
-                <span
-                  aria-hidden
-                  className={cn(
-                    "hidden sm:block h-0.5 flex-1 rounded",
-                    i === TRACKER.length - 1
-                      ? "opacity-0"
-                      : s.done
-                        ? "bg-blue-500"
-                        : "bg-slate-200"
-                  )}
-                />
-              </div>
-              <span
-                className={cn(
-                  "text-[11px] leading-tight sm:text-center",
-                  s.done || s.current ? "text-white font-medium" : "text-slate-500"
-                )}
-              >
-                {s.label}
-              </span>
-            </li>
-          ))}
-        </ol>
+        {/* reUI stepper — vertical on mobile, horizontal from sm */}
+        <Stepper value={3} className="mt-5 hidden sm:block">
+          <StepperNav>
+            {TRACKER.map((s, i) => (
+              <StepperItem key={s.label} step={i + 1} className="not-last:flex-1">
+                <StepperTrigger className="flex-col gap-2" disabled>
+                  <StepperIndicator>{i + 1}</StepperIndicator>
+                  <StepperTitle className="text-[11px] font-medium">
+                    {s.label}
+                  </StepperTitle>
+                </StepperTrigger>
+                {i < TRACKER.length - 1 && <StepperSeparator />}
+              </StepperItem>
+            ))}
+          </StepperNav>
+        </Stepper>
+
+        <Stepper value={3} orientation="vertical" className="mt-5 sm:hidden">
+          <StepperNav className="gap-1">
+            {TRACKER.map((s, i) => (
+              <StepperItem key={s.label} step={i + 1} className="not-last:flex-1">
+                <StepperTrigger className="gap-3" disabled>
+                  <StepperIndicator>{i + 1}</StepperIndicator>
+                  <StepperTitle className="text-[13px] font-medium">
+                    {s.label}
+                  </StepperTitle>
+                </StepperTrigger>
+                {i < TRACKER.length - 1 && <StepperSeparator />}
+              </StepperItem>
+            ))}
+          </StepperNav>
+        </Stepper>
       </div>
     </div>
   );
@@ -334,26 +346,17 @@ export function HowItWorks() {
         <SectionHeading eyebrow="How it works" title="The same process, from both sides" />
 
         {/* tabs — full-width targets on mobile */}
-        <div
-          role="tablist"
-          aria-label="Choose a perspective"
-          className="mx-auto mt-7 grid w-full max-w-xs grid-cols-2 gap-1 rounded-xl border border-white/10 bg-slate-950 p-1"
+        {/* shadcn/ui Tabs */}
+        <Tabs
+          value={tab}
+          onValueChange={(v) => setTab(v as "student" | "hospital")}
+          className="mt-7"
         >
-          {(["student", "hospital"] as const).map((k) => (
-            <button
-              key={k}
-              role="tab"
-              aria-selected={tab === k}
-              onClick={() => setTab(k)}
-              className={cn(
-                "h-10 rounded-lg text-sm font-semibold capitalize transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400",
-                tab === k ? "bg-blue-600 text-white" : "text-slate-300 hover:bg-white/5"
-              )}
-            >
-              {k}
-            </button>
-          ))}
-        </div>
+          <TabsList className="mx-auto grid w-full max-w-xs grid-cols-2">
+            <TabsTrigger value="student">Student</TabsTrigger>
+            <TabsTrigger value="hospital">Hospital</TabsTrigger>
+          </TabsList>
+        </Tabs>
 
         <ol className="mt-9 grid gap-4 sm:gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((s, i) => (
@@ -600,48 +603,30 @@ const FAQS = [
 ];
 
 export function Faq() {
-  const [open, setOpen] = useState<number | null>(0);
-
   return (
     <section id="faq" className="scroll-mt-20 bg-slate-900/60 border-t border-white/10">
       <div className="mx-auto max-w-3xl px-5 sm:px-6 lg:px-8 py-14 sm:py-20">
         <SectionHeading eyebrow="FAQ" title="Common questions" />
 
-        <div className="mt-8 divide-y divide-white/10 overflow-hidden rounded-2xl border border-white/10 bg-slate-950">
-          {FAQS.map((f, i) => {
-            const isOpen = open === i;
-            return (
-              <div key={f.q}>
-                <h3>
-                  <button
-                    id={`faq-t-${i}`}
-                    aria-expanded={isOpen}
-                    aria-controls={`faq-p-${i}`}
-                    onClick={() => setOpen(isOpen ? null : i)}
-                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition-colors hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-400"
-                  >
-                    <span className="text-[15px] font-semibold text-white">{f.q}</span>
-                    <ChevronDown
-                      className={cn(
-                        "h-5 w-5 shrink-0 text-slate-500 transition-transform duration-200",
-                        isOpen && "rotate-180"
-                      )}
-                    />
-                  </button>
-                </h3>
-                <div
-                  id={`faq-p-${i}`}
-                  role="region"
-                  aria-labelledby={`faq-t-${i}`}
-                  hidden={!isOpen}
-                  className="px-5 pb-4 -mt-1"
-                >
-                  <p className="text-sm leading-relaxed text-slate-300">{f.a}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        {/* shadcn/ui Accordion — Radix under the hood, so keyboard and ARIA
+            semantics come for free. */}
+        <Accordion
+          type="single"
+          collapsible
+          defaultValue="faq-0"
+          className="mt-8 divide-y divide-white/10 overflow-hidden rounded-2xl border border-white/10 bg-slate-950"
+        >
+          {FAQS.map((f, i) => (
+            <AccordionItem key={f.q} value={`faq-${i}`} className="border-none px-5">
+              <AccordionTrigger className="py-4 text-left text-[15px] font-semibold text-white hover:no-underline">
+                {f.q}
+              </AccordionTrigger>
+              <AccordionContent className="pb-4 text-sm leading-relaxed text-slate-300">
+                {f.a}
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
       </div>
     </section>
   );

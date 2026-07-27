@@ -1,4 +1,6 @@
 @import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
 @config "../tailwind.config.js";
 
 :root {
@@ -9,24 +11,24 @@
   --font-family-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 
   /* shadcn/ui design tokens (HSL triples, consumed as hsl(var(--token)) via
-     tailwind.config.js). Mapped to the Electivio cyan→indigo dark palette. */
+     tailwind.config.js). Mapped to the Electivio blue-on-navy palette. */
   --card: 222 47% 7%;
   --card-foreground: 210 40% 98%;
   --popover: 222 47% 7%;
   --popover-foreground: 210 40% 98%;
-  --primary: 239 84% 67%;            /* indigo-500 #6366f1 */
+  --primary: 221 83% 53%;            /* blue-600 #2563eb */
   --primary-foreground: 0 0% 100%;
   --secondary: 217 33% 17%;          /* slate-800 */
   --secondary-foreground: 210 40% 98%;
   --muted: 217 33% 17%;
   --muted-foreground: 215 20% 65%;   /* slate-400 */
-  --accent: 187 86% 53%;             /* cyan-400 #22d3ee */
-  --accent-foreground: 222 47% 7%;
+  --accent: 217 33% 17%;             /* slate-800 (neutral step chip) */
+  --accent-foreground: 215 20% 65%;
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
   --border: 217 33% 17%;
   --input: 217 33% 17%;
-  --ring: 187 86% 53%;               /* cyan focus ring */
+  --ring: 217 91% 60%;               /* blue focus ring */
   --radius: 0.75rem;
 
   /* Marketing (light) system — clean healthcare SaaS.
@@ -39,7 +41,7 @@
   --m-accent-blue: 217 91% 60%;      /* brand blue */
   --m-accent-blue-soft: 214 95% 93%; /* blue wash */
   --m-accent: 38 92% 50%;            /* single warm accent */
-  --m-line: 214 32% 91%;             /* hairline borders */
+  --m-line: 214 32% 91%;             /* hairline borders */             --success: var(--color-emerald-500);             --success-foreground: var(--color-emerald-900);             --info: var(--color-violet-500);             --info-foreground: var(--color-violet-900);             --warning: var(--color-yellow-500);             --warning-foreground: var(--color-yellow-900);             --invert: var(--color-zinc-900);             --invert-foreground: var(--color-zinc-50);
 }
 
 body {
@@ -101,7 +103,7 @@ html {
   html {
     scroll-behavior: smooth;
   }
-  
+
   /* Enhanced smooth scrolling */
   html, body {
     scroll-padding-top: 20px;
@@ -594,4 +596,28 @@ button:active {
     transform: translateZ(0) scale(1);
     opacity: 0.9;
   }
+}
+
+.dark {
+  --destructive-foreground: var(--color-red-600);
+  --success: var(--color-emerald-500);
+  --success-foreground: var(--color-emerald-600);
+  --info: var(--color-violet-500);
+  --info-foreground: var(--color-violet-600);
+  --warning: var(--color-yellow-500);
+  --warning-foreground: var(--color-yellow-600);
+  --invert: var(--color-zinc-700);
+  --invert-foreground: var(--color-zinc-50);
+}
+
+@theme inline {
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-invert: var(--invert);
+  --color-invert-foreground: var(--invert-foreground);
 }

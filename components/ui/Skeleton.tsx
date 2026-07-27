@@ -1,7 +1,18 @@
-import React from "react";
+import { cn } from "@/lib/utils"
 
-export function Skeleton({ className }: { className: string }) {
-  return <div className={`skeleton rounded-xl ${className}`} />;
+/**
+ * Base skeleton — shadcn/ui shape, required by the reUI data-grid.
+ * The composed skeletons below are this project's own and were restored
+ * after the registry install overwrote this file.
+ */
+function Skeleton({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="skeleton"
+      className={cn("animate-pulse rounded-md bg-accent", className)}
+      {...props}
+    />
+  )
 }
 
 export function ProgramsSkeleton() {
@@ -24,3 +35,5 @@ export function LoginSkeleton() {
     </div>
   );
 }
+
+export { Skeleton }
