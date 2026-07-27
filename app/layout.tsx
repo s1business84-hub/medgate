@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="font-sans antialiased flex flex-col min-h-screen">
+      <body className="font-sans antialiased flex flex-col min-h-screen bg-slate-950">
         <AuthProvider>
           <SiteHeader />
           <div className="flex-1">

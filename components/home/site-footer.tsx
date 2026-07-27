@@ -47,37 +47,37 @@ export function SiteFooter() {
   };
 
   return (
-    <footer className="border-t border-slate-200 bg-white">
+    <footer className="border-t border-white/10 bg-slate-950">
       <div className="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-10 sm:py-12">
         <div className="grid gap-8 sm:gap-10 md:grid-cols-[1.2fr_1fr_1.4fr]">
           {/* brand + contact */}
           <div>
-            <span className="text-lg font-bold text-slate-900">Electivio</span>
-            <p className="mt-2 max-w-xs text-sm leading-relaxed text-slate-600">
+            <span className="text-lg font-bold text-white">Electivio</span>
+            <p className="mt-2 max-w-xs text-sm leading-relaxed text-slate-300">
               Structured observership and elective programmes with UAE healthcare
               institutions.
             </p>
-            <ul className="mt-4 space-y-2 text-sm text-slate-600">
+            <ul className="mt-4 space-y-2 text-sm text-slate-300">
               <li className="flex items-center gap-2">
-                <Mail className="h-4 w-4 shrink-0 text-slate-400" />
+                <Mail className="h-4 w-4 shrink-0 text-slate-500" />
                 <a
                   href="mailto:electivio.app@gmail.com"
-                  className="-my-2 inline-flex min-h-[44px] items-center py-2 hover:text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 rounded"
+                  className="-my-2 inline-flex min-h-[44px] items-center py-2 hover:text-teal-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 rounded"
                 >
                   electivio.app@gmail.com
                 </a>
               </li>
               <li className="flex items-center gap-2">
-                <Phone className="h-4 w-4 shrink-0 text-slate-400" />
+                <Phone className="h-4 w-4 shrink-0 text-slate-500" />
                 <a
                   href="tel:+971544530209"
-                  className="-my-2 inline-flex min-h-[44px] items-center py-2 hover:text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 rounded"
+                  className="-my-2 inline-flex min-h-[44px] items-center py-2 hover:text-teal-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 rounded"
                 >
                   +971 54 453 0209
                 </a>
               </li>
               <li className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 shrink-0 text-slate-400" />
+                <MapPin className="h-4 w-4 shrink-0 text-slate-500" />
                 Dubai, UAE
               </li>
             </ul>
@@ -85,7 +85,7 @@ export function SiteFooter() {
 
           {/* links */}
           <nav aria-label="Footer">
-            <h2 className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
+            <h2 className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">
               Explore
             </h2>
             <ul className="mt-3 space-y-2">
@@ -93,7 +93,7 @@ export function SiteFooter() {
                 <li key={l.href}>
                   <Link
                     href={l.href}
-                    className="-mx-2 inline-flex min-h-[44px] items-center px-2 text-sm text-slate-600 transition-colors hover:text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 rounded"
+                    className="-mx-2 inline-flex min-h-[44px] items-center px-2 text-sm text-slate-300 transition-colors hover:text-teal-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 rounded"
                   >
                     {l.label}
                   </Link>
@@ -104,10 +104,10 @@ export function SiteFooter() {
 
           {/* newsletter */}
           <div>
-            <h2 className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
+            <h2 className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">
               Stay updated
             </h2>
-            <p className="mt-3 text-sm text-slate-600">
+            <p className="mt-3 text-sm text-slate-300">
               Occasional updates on pilot programmes and platform availability.
             </p>
             <form onSubmit={submit} className="mt-3 flex flex-col sm:flex-row gap-2">
@@ -121,12 +121,12 @@ export function SiteFooter() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@university.edu"
                 disabled={state === "loading" || state === "ok"}
-                className="h-11 min-w-0 flex-1 rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 disabled:opacity-60"
+                className="h-11 min-w-0 flex-1 rounded-lg border border-white/15 bg-slate-950 px-3 text-sm text-white placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 disabled:opacity-60"
               />
               <button
                 type="submit"
                 disabled={state === "loading" || state === "ok"}
-                className="h-11 shrink-0 rounded-lg bg-teal-700 px-5 text-sm font-semibold text-white transition-colors hover:bg-teal-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2 disabled:opacity-60"
+                className="h-11 shrink-0 rounded-lg bg-teal-600 px-5 text-sm font-semibold text-white transition-colors hover:bg-teal-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 disabled:opacity-60"
               >
                 {state === "loading" ? "Sending…" : state === "ok" ? "Subscribed" : "Subscribe"}
               </button>
@@ -134,7 +134,7 @@ export function SiteFooter() {
             {msg && (
               <p
                 role="status"
-                className={`mt-2 text-xs ${state === "ok" ? "text-teal-700" : "text-red-600"}`}
+                className={`mt-2 text-xs ${state === "ok" ? "text-teal-300" : "text-red-400"}`}
               >
                 {msg}
               </p>
@@ -142,11 +142,11 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-9 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-t border-slate-200 pt-6">
-          <p className="text-xs text-slate-500">
+        <div className="mt-9 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-t border-white/10 pt-6">
+          <p className="text-xs text-slate-400">
             © {new Date().getFullYear()} Electivio. All rights reserved.
           </p>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-slate-400">
             Not a placement or recruitment service.
           </p>
         </div>

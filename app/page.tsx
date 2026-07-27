@@ -11,7 +11,7 @@ import {
 
 export default function Home() {
   return (
-    <main className="bg-white">
+    <main className="bg-slate-950">
       <Hero />
       <TrustStrip />
       <Benefits />
