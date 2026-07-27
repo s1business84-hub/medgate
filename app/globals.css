@@ -36,8 +36,8 @@
   --m-surface-muted: 210 40% 98%;    /* slate-50 */
   --m-navy: 215 41% 11%;             /* deep navy text */
   --m-navy-soft: 215 25% 35%;        /* body copy */
-  --m-teal: 175 84% 32%;             /* medical teal */
-  --m-teal-soft: 172 66% 95%;        /* teal wash */
+  --m-accent-blue: 217 91% 60%;      /* brand blue */
+  --m-accent-blue-soft: 214 95% 93%; /* blue wash */
   --m-accent: 38 92% 50%;            /* single warm accent */
   --m-line: 214 32% 91%;             /* hairline borders */
 }

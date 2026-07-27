@@ -4,7 +4,7 @@
  * Electivio marketing landing sections — light "clean healthcare SaaS" system.
  *
  * Deliberately restrained: white/slate-50 surfaces, deep navy type, medical
- * teal as the single brand colour, amber used once as a warm accent. Motion is
+ * blue as the single brand colour, amber used once as a warm accent. Motion is
  * a short fade-up on entry and nothing else — no parallax, shaders, orbital
  * timelines or glass stacking. Every section is written mobile-first.
  */
@@ -66,7 +66,7 @@ function SectionHeading({
   return (
     <div className={cn("max-w-2xl", align === "center" ? "mx-auto text-center" : "text-left")}>
       {eyebrow && (
-        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-teal-300">
+        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-blue-300">
           {eyebrow}
         </p>
       )}
@@ -85,22 +85,22 @@ function SectionHeading({
 export function Hero() {
   return (
     <section className="relative overflow-hidden bg-slate-950">
-      {/* one soft teal wash, no orbs or shaders */}
+      {/* one soft blue wash, no orbs or shaders */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-[420px] bg-[radial-gradient(60%_100%_at_50%_0%,rgba(20,184,166,0.16),transparent_70%)]"
+        className="pointer-events-none absolute inset-x-0 top-0 h-[420px] bg-[radial-gradient(60%_100%_at_50%_0%,rgba(59,130,246,0.16),transparent_70%)]"
       />
       <div className="relative mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 pt-12 pb-14 sm:pt-20 sm:pb-20 lg:pt-24">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
           <FadeUp>
-            <span className="inline-flex items-center gap-2 rounded-full border border-teal-500/30 bg-teal-500/10 px-3 py-1 text-xs font-medium text-teal-200">
-              <span className="h-1.5 w-1.5 rounded-full bg-teal-500" />
+            <span className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 text-xs font-medium text-blue-200">
+              <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
               Pilot programmes opening with UAE institutions
             </span>
 
             <h1 className="mt-5 text-[2.15rem] leading-[1.1] sm:text-5xl lg:text-[3.4rem] lg:leading-[1.05] font-bold tracking-tight text-white">
               Clinical training,{" "}
-              <span className="text-teal-300">structured end to end</span>
+              <span className="text-blue-300">structured end to end</span>
             </h1>
 
             <p className="mt-4 sm:mt-5 text-base sm:text-lg leading-relaxed text-slate-300 max-w-xl">
@@ -113,14 +113,14 @@ export function Hero() {
             <div className="mt-7 flex flex-col sm:flex-row gap-3">
               <Link
                 href="/student"
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-teal-600 px-6 text-sm sm:text-base font-semibold text-white shadow-sm transition-colors hover:bg-teal-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 text-sm sm:text-base font-semibold text-white shadow-sm transition-colors hover:bg-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
               >
                 I&apos;m a student
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
                 href="/for-hospitals"
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-white/15 bg-slate-950 px-6 text-sm sm:text-base font-semibold text-white transition-colors hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-white/15 bg-slate-950 px-6 text-sm sm:text-base font-semibold text-white transition-colors hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
               >
                 <Building2 className="h-4 w-4" />
                 I&apos;m a hospital
@@ -184,9 +184,9 @@ function PlatformPreview() {
                   className={cn(
                     "grid h-6 w-6 shrink-0 place-items-center rounded-full text-[11px] font-semibold ring-1",
                     s.done
-                      ? "bg-teal-600 text-white ring-teal-500"
+                      ? "bg-blue-600 text-white ring-blue-500"
                       : s.current
-                        ? "bg-slate-950 text-teal-300 ring-2 ring-teal-400"
+                        ? "bg-slate-950 text-blue-300 ring-2 ring-blue-400"
                         : "bg-slate-950 text-slate-500 ring-slate-200"
                   )}
                 >
@@ -199,7 +199,7 @@ function PlatformPreview() {
                     i === TRACKER.length - 1
                       ? "opacity-0"
                       : s.done
-                        ? "bg-teal-500"
+                        ? "bg-blue-500"
                         : "bg-slate-200"
                   )}
                 />
@@ -243,7 +243,7 @@ export function TrustStrip() {
               key={name}
               className="flex items-center gap-2 text-sm font-medium text-slate-300"
             >
-              <span className="h-1 w-1 shrink-0 rounded-full bg-teal-500" />
+              <span className="h-1 w-1 shrink-0 rounded-full bg-blue-500" />
               {name}
             </li>
           ))}
@@ -287,13 +287,13 @@ export function Benefits() {
           {BENEFITS.map((b, i) => (
             <FadeUp key={b.title} delay={i * 0.06}>
               {/* the one place a spotlight treatment is used */}
-              <article className="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-slate-950 p-6 transition-shadow hover:border-teal-500/40">
+              <article className="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-slate-950 p-6 transition-shadow hover:border-blue-500/40">
                 <div
                   aria-hidden
-                  className="pointer-events-none absolute -top-16 left-1/2 h-32 w-56 -translate-x-1/2 rounded-full bg-teal-400/0 blur-2xl transition-colors duration-500 group-hover:bg-teal-400/25"
+                  className="pointer-events-none absolute -top-16 left-1/2 h-32 w-56 -translate-x-1/2 rounded-full bg-blue-400/0 blur-2xl transition-colors duration-500 group-hover:bg-blue-400/25"
                 />
                 <div className="relative">
-                  <span className="grid h-11 w-11 place-items-center rounded-xl bg-teal-500/10 text-teal-300 ring-1 ring-teal-500/25">
+                  <span className="grid h-11 w-11 place-items-center rounded-xl bg-blue-500/10 text-blue-300 ring-1 ring-blue-500/25">
                     <b.icon className="h-5 w-5" />
                   </span>
                   <h3 className="mt-4 text-lg font-semibold text-white">{b.title}</h3>
@@ -346,8 +346,8 @@ export function HowItWorks() {
               aria-selected={tab === k}
               onClick={() => setTab(k)}
               className={cn(
-                "h-10 rounded-lg text-sm font-semibold capitalize transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400",
-                tab === k ? "bg-teal-600 text-white" : "text-slate-300 hover:bg-white/5"
+                "h-10 rounded-lg text-sm font-semibold capitalize transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400",
+                tab === k ? "bg-blue-600 text-white" : "text-slate-300 hover:bg-white/5"
               )}
             >
               {k}
@@ -359,7 +359,7 @@ export function HowItWorks() {
           {steps.map((s, i) => (
             <FadeUp key={s.title} delay={i * 0.05}>
               <li className="relative h-full rounded-2xl border border-white/10 bg-slate-950 p-5">
-                <span className="grid h-8 w-8 place-items-center rounded-lg bg-teal-600 text-sm font-semibold text-white">
+                <span className="grid h-8 w-8 place-items-center rounded-lg bg-blue-600 text-sm font-semibold text-white">
                   {i + 1}
                 </span>
                 <h3 className="mt-3.5 text-base font-semibold text-white">{s.title}</h3>
@@ -394,7 +394,7 @@ export function FeaturedProgrammes() {
           />
           <Link
             href="/programs"
-            className="shrink-0 -mx-2 inline-flex min-h-[44px] items-center gap-1.5 rounded px-2 text-sm font-semibold text-teal-300 hover:text-teal-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+            className="shrink-0 -mx-2 inline-flex min-h-[44px] items-center gap-1.5 rounded px-2 text-sm font-semibold text-blue-300 hover:text-blue-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
           >
             Browse all
             <ArrowRight className="h-4 w-4" />
@@ -404,14 +404,14 @@ export function FeaturedProgrammes() {
         <div className="mt-8 grid gap-4 sm:gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {PROGRAMMES.map((p, i) => (
             <FadeUp key={p.specialty} delay={i * 0.06}>
-              <article className="flex h-full flex-col rounded-2xl border border-white/10 bg-slate-950 p-5 transition-shadow hover:border-teal-500/40">
+              <article className="flex h-full flex-col rounded-2xl border border-white/10 bg-slate-950 p-5 transition-shadow hover:border-blue-500/40">
                 <div className="flex items-start justify-between gap-3">
                   <h3 className="text-base font-semibold text-white">{p.specialty}</h3>
                   <span
                     className={cn(
                       "shrink-0 rounded-full px-2.5 py-0.5 text-[11px] font-semibold ring-1",
                       p.status === "Pilot"
-                        ? "bg-teal-500/10 text-teal-200 ring-teal-500/30"
+                        ? "bg-blue-500/10 text-blue-200 ring-blue-500/30"
                         : "bg-slate-900/60 text-slate-300 ring-slate-200"
                     )}
                   >
@@ -438,7 +438,7 @@ export function FeaturedProgrammes() {
 
                 <Link
                   href="/programs"
-                  className="mt-5 inline-flex h-10 w-full items-center justify-center rounded-lg border border-white/15 text-sm font-semibold text-white transition-colors hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                  className="mt-5 inline-flex h-10 w-full items-center justify-center rounded-lg border border-white/15 text-sm font-semibold text-white transition-colors hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
                 >
                   View details
                 </Link>
@@ -479,11 +479,11 @@ export function About() {
                 { name: "Sanskaar", role: "Co-Founder & Lead Engineer", body: "Architects the platform — system design, infrastructure and the application workflows behind institutional onboarding." },
               ].map((f) => (
                 <article key={f.name} className="rounded-2xl border border-white/10 bg-slate-950 p-5">
-                  <span className="grid h-10 w-10 place-items-center rounded-full bg-teal-500/10 text-sm font-bold text-teal-300 ring-1 ring-teal-500/25">
+                  <span className="grid h-10 w-10 place-items-center rounded-full bg-blue-500/10 text-sm font-bold text-blue-300 ring-1 ring-blue-500/25">
                     {f.name.charAt(0)}
                   </span>
                   <h3 className="mt-3 text-base font-semibold text-white">{f.name}</h3>
-                  <p className="text-xs font-medium text-teal-300">{f.role}</p>
+                  <p className="text-xs font-medium text-blue-300">{f.role}</p>
                   <p className="mt-2 text-sm leading-relaxed text-slate-300">{f.body}</p>
                 </article>
               ))}
@@ -529,14 +529,14 @@ export function SplitCta() {
                 className={cn(
                   "flex h-full flex-col rounded-2xl p-6 sm:p-8",
                   c.dark
-                    ? "border border-teal-500/30 bg-teal-500/10 text-white"
+                    ? "border border-blue-500/30 bg-blue-500/10 text-white"
                     : "border border-white/10 bg-slate-900/60 text-white"
                 )}
               >
                 <span
                   className={cn(
                     "grid h-11 w-11 place-items-center rounded-xl",
-                    c.dark ? "bg-teal-500/15 text-teal-300 ring-1 ring-teal-500/30" : "bg-white/5 text-teal-300 ring-1 ring-white/10"
+                    c.dark ? "bg-blue-500/15 text-blue-300 ring-1 ring-blue-500/30" : "bg-white/5 text-blue-300 ring-1 ring-white/10"
                   )}
                 >
                   <c.icon className="h-5 w-5" />
@@ -544,7 +544,7 @@ export function SplitCta() {
                 <p
                   className={cn(
                     "mt-4 text-xs font-semibold uppercase tracking-[0.14em]",
-                    "text-teal-300"
+                    "text-blue-300"
                   )}
                 >
                   {c.audience}
@@ -558,8 +558,8 @@ export function SplitCta() {
                   className={cn(
                     "mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-xl px-6 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950",
                     c.dark
-                      ? "bg-teal-600 text-white hover:bg-teal-500 focus-visible:ring-teal-400"
-                      : "bg-teal-600 text-white hover:bg-teal-500 focus-visible:ring-teal-400"
+                      ? "bg-blue-600 text-white hover:bg-blue-500 focus-visible:ring-blue-400"
+                      : "bg-blue-600 text-white hover:bg-blue-500 focus-visible:ring-blue-400"
                   )}
                 >
                   {c.cta}
@@ -618,7 +618,7 @@ export function Faq() {
                     aria-expanded={isOpen}
                     aria-controls={`faq-p-${i}`}
                     onClick={() => setOpen(isOpen ? null : i)}
-                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition-colors hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-teal-400"
+                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition-colors hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-400"
                   >
                     <span className="text-[15px] font-semibold text-white">{f.q}</span>
                     <ChevronDown

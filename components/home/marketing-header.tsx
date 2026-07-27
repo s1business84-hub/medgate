@@ -30,7 +30,7 @@ function dashboardHref(role?: string) {
 function Wordmark() {
   return (
     <span className="flex items-center gap-2">
-      <span className="grid h-8 w-8 place-items-center rounded-lg bg-teal-600 text-sm font-bold text-white">
+      <span className="grid h-8 w-8 place-items-center rounded-lg bg-blue-600 text-sm font-bold text-white">
         E
       </span>
       <span className="text-lg font-bold tracking-tight text-white">Electivio</span>
@@ -51,7 +51,7 @@ export function MarketingHeader() {
         <div className="flex h-14 sm:h-16 items-center justify-between gap-4">
           <Link
             href="/"
-            className="rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+            className="rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
           >
             <Wordmark />
           </Link>
@@ -63,7 +63,7 @@ export function MarketingHeader() {
                 href={l.href}
                 aria-current={isActive(l.href) ? "page" : undefined}
                 className={cn(
-                  "relative rounded-lg px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950",
+                  "relative rounded-lg px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950",
                   isActive(l.href)
                     ? "text-white"
                     : "text-slate-300 hover:bg-white/5 hover:text-white"
@@ -71,7 +71,7 @@ export function MarketingHeader() {
               >
                 {l.label}
                 {isActive(l.href) && (
-                  <span className="absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-teal-500" />
+                  <span className="absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-blue-500" />
                 )}
               </Link>
             ))}
@@ -80,13 +80,13 @@ export function MarketingHeader() {
           <div className="hidden lg:flex items-center gap-2">
             <Link
               href={user ? dashboardHref(user.role) : "/login"}
-              className="inline-flex h-10 items-center rounded-lg px-3 text-sm font-semibold text-slate-200 transition-colors hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+              className="inline-flex h-10 items-center rounded-lg px-3 text-sm font-semibold text-slate-200 transition-colors hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
             >
               {user ? "Dashboard" : "Log in"}
             </Link>
             <Link
               href="/student"
-              className="inline-flex h-10 items-center rounded-lg bg-teal-600 px-4 text-sm font-semibold text-white transition-colors hover:bg-teal-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+              className="inline-flex h-10 items-center rounded-lg bg-blue-600 px-4 text-sm font-semibold text-white transition-colors hover:bg-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
             >
               Early access
             </Link>
@@ -98,7 +98,7 @@ export function MarketingHeader() {
               <SheetTrigger asChild>
                 <button
                   aria-label="Open menu"
-                  className="grid h-10 w-10 place-items-center rounded-lg text-slate-200 transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                  className="grid h-10 w-10 place-items-center rounded-lg text-slate-200 transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
                 >
                   <Menu className="h-6 w-6" />
                 </button>
@@ -133,7 +133,7 @@ export function MarketingHeader() {
                           className={cn(
                             "flex items-center justify-between rounded-xl px-4 py-3.5 text-base font-medium transition-colors",
                             isActive(l.href)
-                              ? "bg-teal-500/10 text-teal-100"
+                              ? "bg-blue-500/10 text-blue-100"
                               : "text-slate-200 hover:bg-white/5"
                           )}
                         >
@@ -153,7 +153,7 @@ export function MarketingHeader() {
                     <SheetClose asChild>
                       <Link
                         href="/student"
-                        className="flex h-12 w-full items-center justify-center rounded-xl bg-teal-600 text-base font-semibold text-white transition-colors hover:bg-teal-500"
+                        className="flex h-12 w-full items-center justify-center rounded-xl bg-blue-600 text-base font-semibold text-white transition-colors hover:bg-blue-500"
                       >
                         Early access
                       </Link>
