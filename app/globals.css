@@ -28,6 +28,18 @@
   --input: 217 33% 17%;
   --ring: 187 86% 53%;               /* cyan focus ring */
   --radius: 0.75rem;
+
+  /* Marketing (light) system — clean healthcare SaaS.
+     White surfaces, deep navy, medical teal, one warm accent.
+     The logged-in portal keeps the dark tokens above. */
+  --m-surface: 0 0% 100%;            /* white */
+  --m-surface-muted: 210 40% 98%;    /* slate-50 */
+  --m-navy: 215 41% 11%;             /* deep navy text */
+  --m-navy-soft: 215 25% 35%;        /* body copy */
+  --m-teal: 175 84% 32%;             /* medical teal */
+  --m-teal-soft: 172 66% 95%;        /* teal wash */
+  --m-accent: 38 92% 50%;            /* single warm accent */
+  --m-line: 214 32% 91%;             /* hairline borders */
 }
 
 body {

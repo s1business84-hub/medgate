@@ -15,8 +15,8 @@ import { Menu, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
-  { href: "/about", label: "About" },
-  { href: "/faq", label: "FAQ" },
+  { href: "/#about", label: "About" },
+  { href: "/#faq", label: "FAQ" },
   { href: "/student", label: "Student Portal" },
   { href: "/for-hospitals", label: "For Hospitals" },
 ];

@@ -1,8 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { AuthProvider } from "@/lib/auth-context";
-import { Header } from "@/components/header";
-import { Footer } from "@/components/sections/footer";
+import { SiteHeader, SiteFooterSlot } from "@/components/site-chrome";
 
 export const metadata: Metadata = {
   title: "Electivio - Medical Training Platform",
@@ -25,11 +24,11 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <body className="font-sans antialiased flex flex-col min-h-screen">
         <AuthProvider>
-          <Header />
-          <main className="flex-1">
+          <SiteHeader />
+          <div className="flex-1">
             {children}
-          </main>
-          <Footer />
+          </div>
+          <SiteFooterSlot />
         </AuthProvider>
       </body>
     </html>

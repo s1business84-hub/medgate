@@ -9,7 +9,7 @@ export default function NavigationMenu() {
   const [isOpen, setIsOpen] = useState(false)
 
   const menuItems = [
-    { href: "/about", label: "About", icon: Info },
+    { href: "/#about", label: "About", icon: Info },
     { href: "/purpose", label: "Purpose", icon: Target },
     { href: "/programs", label: "Programs", icon: BookOpen },
     { href: "/for-hospitals", label: "For Hospitals", icon: Users },

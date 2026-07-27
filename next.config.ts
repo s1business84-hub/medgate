@@ -14,6 +14,13 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.resolve(process.cwd()),
   },
+  // /about and /faq are merged into the homepage; keep the old URLs working.
+  async redirects() {
+    return [
+      { source: "/about", destination: "/#about", permanent: true },
+      { source: "/faq", destination: "/#faq", permanent: true },
+    ];
+  },
 };
 
 export default nextConfig;

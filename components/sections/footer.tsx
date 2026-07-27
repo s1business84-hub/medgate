@@ -18,7 +18,7 @@ const footerLinks = {
     { name: "For Hospitals", href: "/for-hospitals" },
   ],
   company: [
-    { name: "About", href: "/about" },
+    { name: "About", href: "/#about" },
     { name: "Our Purpose", href: "/purpose" },
   ],
   support: [
