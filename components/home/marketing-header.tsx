@@ -13,12 +13,11 @@ import { useAuth } from "@/lib/auth-context";
 import { Menu, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+// About and FAQ live on the homepage itself, so they stay out of the top nav.
 const NAV = [
   { href: "/programs", label: "Programmes" },
   { href: "/student", label: "For students" },
   { href: "/for-hospitals", label: "For hospitals" },
-  { href: "/#about", label: "About" },
-  { href: "/#faq", label: "FAQ" },
 ];
 
 function dashboardHref(role?: string) {
