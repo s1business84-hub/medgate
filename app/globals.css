@@ -621,3 +621,18 @@ button:active {
   --color-invert: var(--invert);
   --color-invert-foreground: var(--invert-foreground);
 }
+/* Marketing effects — slow aurora drift and glow-border pan */
+@keyframes aurora-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(4rem, 1.5rem, 0) scale(1.08); }
+}
+@keyframes aurora-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.05); }
+  50% { transform: translate3d(-3rem, 2rem, 0) scale(1); }
+}
+.animate-aurora-a { animation: aurora-a 16s ease-in-out infinite; }
+.animate-aurora-b { animation: aurora-b 20s ease-in-out infinite; }
+@keyframes glow-pan {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 250% 50%; }
+}

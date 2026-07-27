@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useTransition } from "react";
+import { CountUp } from "@/components/home/effects";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
@@ -411,7 +412,7 @@ export default function HospitalPortal() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-slate-300 text-sm mb-2">Total Applications</p>
-                    <p className="text-3xl font-bold text-slate-100">{applications.length}</p>
+                    <p className="text-3xl font-bold text-slate-100"><CountUp value={applications.length} /></p>
                   </div>
                   <Users className="w-12 h-12 text-blue-400 opacity-30" />
                 </div>
@@ -422,7 +423,7 @@ export default function HospitalPortal() {
                   <div>
                     <p className="text-slate-300 text-sm mb-2">Pending Review</p>
                     <p className="text-3xl font-bold text-amber-400">
-                      {applications.filter(a => a.status === "Submitted").length}
+                      <CountUp value={applications.filter(a => a.status === "Submitted").length} />
                     </p>
                   </div>
                   <Clock className="w-12 h-12 text-amber-400 opacity-30" />
@@ -434,7 +435,7 @@ export default function HospitalPortal() {
                   <div>
                     <p className="text-slate-300 text-sm mb-2">Approved</p>
                     <p className="text-3xl font-bold text-emerald-400">
-                      {applications.filter(a => a.status === "Approved").length}
+                      <CountUp value={applications.filter(a => a.status === "Approved").length} />
                     </p>
                   </div>
                   <CheckCircle className="w-12 h-12 text-emerald-400 opacity-30" />
@@ -449,7 +450,7 @@ export default function HospitalPortal() {
                   <div>
                     <p className="text-slate-300 text-sm mb-2">New Alerts</p>
                     <p className="text-3xl font-bold text-cyan-400">
-                      {staffAlerts.length}
+                      <CountUp value={staffAlerts.length} />
                     </p>
                   </div>
                   <Bell className="w-12 h-12 text-cyan-400 opacity-30" />

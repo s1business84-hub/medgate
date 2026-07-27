@@ -44,6 +44,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Aurora, RotatingWord, GlowCard } from "@/components/home/effects";
+import { Marquee } from "@/components/ui/marquee";
 
 /* ---------------------------------------------------------------- helpers */
 
@@ -103,11 +105,7 @@ function SectionHeading({
 export function Hero() {
   return (
     <section className="relative overflow-hidden bg-slate-950">
-      {/* one soft blue wash, no orbs or shaders */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-[420px] bg-[radial-gradient(60%_100%_at_50%_0%,rgba(59,130,246,0.16),transparent_70%)]"
-      />
+      <Aurora />
       <div className="relative mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 pt-12 pb-14 sm:pt-20 sm:pb-20 lg:pt-24">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
           <FadeUp>
@@ -117,8 +115,12 @@ export function Hero() {
             </span>
 
             <h1 className="mt-5 text-[2.15rem] leading-[1.1] sm:text-5xl lg:text-[3.4rem] lg:leading-[1.05] font-bold tracking-tight text-white">
-              Stop running observerships{" "}
-              <span className="text-blue-300">out of an inbox</span>
+              Stop running{" "}
+              <RotatingWord
+                words={["observerships", "electives", "rotations"]}
+                className="bg-linear-to-r from-blue-400 via-blue-300 to-indigo-300 bg-clip-text text-transparent"
+              />{" "}
+              <span className="block">out of an inbox</span>
             </h1>
 
             <p className="mt-4 sm:mt-5 text-base sm:text-lg leading-relaxed text-slate-300 max-w-xl">
@@ -250,17 +252,9 @@ export function TrustStrip() {
         <p className="text-center text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">
           Built for
         </p>
-        <ul className="mt-5 grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-center gap-x-4 gap-y-3 sm:gap-x-8">
-          {INSTITUTIONS.map((name) => (
-            <li
-              key={name}
-              className="flex items-center gap-2 text-sm font-medium text-slate-300"
-            >
-              <span className="h-1 w-1 shrink-0 rounded-full bg-blue-500" />
-              {name}
-            </li>
-          ))}
-        </ul>
+        <div className="relative mt-5 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
+          <Marquee items={INSTITUTIONS} speed={38} className="py-1 text-sm font-medium text-slate-300" />
+        </div>
       </div>
     </section>
   );
@@ -300,11 +294,7 @@ export function Benefits() {
           {BENEFITS.map((b, i) => (
             <FadeUp key={b.title} delay={i * 0.06}>
               {/* the one place a spotlight treatment is used */}
-              <article className="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-slate-950 p-6 transition-shadow hover:border-blue-500/40">
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute -top-16 left-1/2 h-32 w-56 -translate-x-1/2 rounded-full bg-blue-400/0 blur-2xl transition-colors duration-500 group-hover:bg-blue-400/25"
-                />
+              <GlowCard className="h-full overflow-hidden p-6">
                 <div className="relative">
                   <span className="grid h-11 w-11 place-items-center rounded-xl bg-blue-500/10 text-blue-300 ring-1 ring-blue-500/25">
                     <b.icon className="h-5 w-5" />
@@ -312,7 +302,7 @@ export function Benefits() {
                   <h3 className="mt-4 text-lg font-semibold text-white">{b.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-slate-300">{b.body}</p>
                 </div>
-              </article>
+              </GlowCard>
             </FadeUp>
           ))}
         </div>
@@ -438,7 +428,7 @@ export function HowItWorks() {
         <ol className="mt-9 grid gap-4 sm:gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((s, i) => (
             <FadeUp key={s.title} delay={i * 0.05}>
-              <li className="relative h-full rounded-2xl border border-white/10 bg-slate-950 p-5">
+              <li className="relative h-full rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-5">
                 <span className="grid h-8 w-8 place-items-center rounded-lg bg-blue-600 text-sm font-semibold text-white">
                   {i + 1}
                 </span>
@@ -484,7 +474,7 @@ export function FeaturedProgrammes() {
         <div className="mt-8 grid gap-4 sm:gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {PROGRAMMES.map((p, i) => (
             <FadeUp key={p.specialty} delay={i * 0.06}>
-              <article className="flex h-full flex-col rounded-2xl border border-white/10 bg-slate-950 p-5 transition-shadow hover:border-blue-500/40">
+              <article className="flex h-full flex-col rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-5 transition-colors hover:border-blue-500/40">
                 <div className="flex items-start justify-between gap-3">
                   <h3 className="text-base font-semibold text-white">{p.specialty}</h3>
                   <span
@@ -558,7 +548,7 @@ export function About() {
                 { name: "Kashish", role: "Founder & Program Director", body: "Leads platform direction and institutional collaboration, translating programme requirements into structured workflows." },
                 { name: "Sanskaar", role: "Co-Founder & Lead Engineer", body: "Architects the platform — system design, infrastructure and the application workflows behind institutional onboarding." },
               ].map((f) => (
-                <article key={f.name} className="rounded-2xl border border-white/10 bg-slate-950 p-5">
+                <article key={f.name} className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-5">
                   <span className="grid h-10 w-10 place-items-center rounded-full bg-blue-500/10 text-sm font-bold text-blue-300 ring-1 ring-blue-500/25">
                     {f.name.charAt(0)}
                   </span>
