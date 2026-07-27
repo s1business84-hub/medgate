@@ -48,7 +48,7 @@ export function EnhancedFeatures() {
             transition={{ duration: 0.6 }}
             className="text-center text-sm font-medium text-slate-500 mb-8"
           >
-            WORKING WITH
+            BUILT FOR
           </motion.p>
           <Marquee items={partners} speed={40} className="py-4" />
         </div>

@@ -207,7 +207,7 @@ export function Footer() {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   className={`text-xs ${
-                    status === "success" ? "text-green-400" : "text-red-400"
+                    status === "success" ? "text-cyan-300" : "text-red-400"
                   }`}
                 >
                   {message}

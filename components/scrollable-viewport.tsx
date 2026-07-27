@@ -9,16 +9,25 @@ interface ScrollableViewportProps {
   showProgress?: boolean;
   showNavigationDots?: boolean;
   showArrows?: boolean;
+  /** Retained for API compatibility; snapping is no longer used. */
   snapToSections?: boolean;
   className?: string;
 }
 
+/**
+ * Renders children in normal document flow and decorates the page with a scroll
+ * progress bar, section dots, and scroll arrows driven by window scroll.
+ *
+ * This previously wrapped children in a fixed-height `overflow-y-auto` element.
+ * That nested scroller broke `whileInView` reveals (they resolve against the
+ * viewport, not the inner container), leaving sections stuck at zero opacity,
+ * and it detached the sticky site header. Using window scroll fixes both.
+ */
 export function ScrollableViewport({
   children,
   showProgress = true,
   showNavigationDots = true,
   showArrows = true,
-  snapToSections = true,
   className = "",
 }: ScrollableViewportProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -26,11 +35,9 @@ export function ScrollableViewport({
   const [totalSections, setTotalSections] = useState(0);
   const [canScrollUp, setCanScrollUp] = useState(false);
   const [canScrollDown, setCanScrollDown] = useState(true);
-  const mounted = true;
+  const [mounted, setMounted] = useState(false);
 
-  const { scrollYProgress } = useScroll({
-    container: containerRef,
-  });
+  const { scrollYProgress } = useScroll();
 
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 200,
@@ -38,6 +45,8 @@ export function ScrollableViewport({
     restDelta: 0.0001,
     mass: 0.5,
   });
+
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -47,59 +56,47 @@ export function ScrollableViewport({
     setTotalSections(sections.length);
 
     const handleScroll = () => {
-      const scrollTop = container.scrollTop;
-      const scrollHeight = container.scrollHeight;
-      const clientHeight = container.clientHeight;
+      const scrollTop = window.scrollY;
+      const viewportHeight = window.innerHeight;
 
       setCanScrollUp(scrollTop > 50);
-      setCanScrollDown(scrollTop < scrollHeight - clientHeight - 50);
+      setCanScrollDown(
+        scrollTop < document.documentElement.scrollHeight - viewportHeight - 50
+      );
 
-      // Determine active section
+      // Active section = the last one whose top has passed the viewport middle.
+      let current = 0;
       sections.forEach((section, index) => {
         const rect = section.getBoundingClientRect();
-        const containerRect = container.getBoundingClientRect();
-        if (
-          rect.top >= containerRect.top &&
-          rect.top < containerRect.top + clientHeight / 2
-        ) {
-          setActiveSection(index);
-        }
+        if (rect.top <= viewportHeight / 2) current = index;
       });
+      setActiveSection(current);
     };
 
-    container.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
 
-    return () => container.removeEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollToSection = (index: number) => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const sections = container.querySelectorAll("[data-section]");
-    const targetSection = sections[index] as HTMLElement;
-
-    if (targetSection) {
-      targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    const sections = containerRef.current?.querySelectorAll("[data-section]");
+    (sections?.[index] as HTMLElement | undefined)?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
   };
 
   const scrollBy = (direction: "up" | "down") => {
-    const container = containerRef.current;
-    if (!container || !mounted) return;
-
-    const scrollAmount = window.innerHeight * 0.8;
-    container.scrollBy({
-      top: direction === "down" ? scrollAmount : -scrollAmount,
+    const amount = window.innerHeight * 0.8;
+    window.scrollBy({
+      top: direction === "down" ? amount : -amount,
       behavior: "smooth",
     });
   };
 
   return (
-    <div className="relative w-full h-screen overflow-hidden">
-      {/* Progress Bar */
-      /*shown at scale*/}
+    <div ref={containerRef} className={`relative w-full ${className}`}>
       {showProgress && mounted && (
         <motion.div
           className="fixed top-0 left-0 right-0 h-1 bg-linear-to-r from-cyan-500 via-blue-500 to-indigo-500 origin-left z-50"
@@ -107,25 +104,11 @@ export function ScrollableViewport({
         />
       )}
 
-      {/* Scrollable Container */}
-      <div
-        ref={containerRef}
-        className={`w-full h-full overflow-y-auto overflow-x-hidden ${
-          snapToSections ? "snap-y snap-proximity" : ""
-        } scroll-smooth ${className}`}
-        style={{
-          scrollbarWidth: "thin",
-          scrollbarColor: "rgba(59, 130, 246, 0.5) rgba(15, 23, 42, 0.3)",
-          WebkitOverflowScrolling: "touch",
-          overscrollBehavior: "contain",
-        }}
-      >
-        {children}
-      </div>
+      {children}
 
       {/* Navigation Dots */}
-      {showNavigationDots && totalSections > 0 && mounted && (
-        <div className="fixed right-6 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-3">
+      {showNavigationDots && totalSections > 1 && mounted && (
+        <div className="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col gap-3">
           {Array.from({ length: totalSections }).map((_, index) => (
             <motion.button
               key={index}
@@ -150,9 +133,8 @@ export function ScrollableViewport({
             <motion.button
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
               onClick={() => scrollBy("up")}
-              className="fixed top-8 left-1/2 -translate-x-1/2 z-40 p-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 transition-all duration-300 group"
+              className="fixed top-20 left-1/2 -translate-x-1/2 z-40 p-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 transition-all duration-300 group"
               aria-label="Scroll up"
             >
               <ChevronUp className="w-6 h-6 text-cyan-400 group-hover:text-cyan-300" />
@@ -163,9 +145,8 @@ export function ScrollableViewport({
             <motion.button
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
               onClick={() => scrollBy("down")}
-              className="fixed bottom-8 left-1/2 -translate-x-1/2 z-40 p-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 transition-all duration-300 group animate-bounce"
+              className="fixed bottom-8 left-1/2 -translate-x-1/2 z-40 p-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 transition-all duration-300 group"
               aria-label="Scroll down"
             >
               <ChevronDown className="w-6 h-6 text-cyan-400 group-hover:text-cyan-300" />
@@ -173,55 +154,6 @@ export function ScrollableViewport({
           )}
         </>
       )}
-
-      {/* Custom Scrollbar Styles */}
-      <style jsx global>{`
-        /* Webkit browsers (Chrome, Safari) */
-        .overflow-y-auto::-webkit-scrollbar {
-          width: 8px;
-        }
-
-        .overflow-y-auto::-webkit-scrollbar-track {
-          background: rgba(15, 23, 42, 0.3);
-          border-radius: 4px;
-        }
-
-        .overflow-y-auto::-webkit-scrollbar-thumb {
-          background: rgba(59, 130, 246, 0.5);
-          border-radius: 4px;
-          transition: background 0.3s ease;
-        }
-
-        .overflow-y-auto::-webkit-scrollbar-thumb:hover {
-          background: rgba(59, 130, 246, 0.7);
-        }
-
-        /* Smooth scroll behavior */
-        .scroll-smooth {
-          scroll-behavior: smooth;
-        }
-
-        /* Snap points - proximity for smoother experience */
-        .snap-y {
-          scroll-snap-type: y proximity;
-        }
-
-        .snap-proximity {
-          scroll-snap-type: y proximity;
-        }
-
-        [data-section] {
-          scroll-snap-align: start;
-          scroll-snap-stop: normal;
-        }
-        
-        /* Enhanced smooth scrolling */
-        .scroll-smooth {
-          scroll-behavior: smooth;
-          -webkit-overflow-scrolling: touch;
-          overscroll-behavior: contain;
-        }
-      `}</style>
     </div>
   );
 }
@@ -236,11 +168,7 @@ export function ScrollSection({
   id?: string;
 }) {
   return (
-    <section
-      data-section
-      id={id}
-      className={`min-h-screen w-full ${className}`}
-    >
+    <section data-section id={id} className={`w-full ${className}`}>
       {children}
     </section>
   );

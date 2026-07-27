@@ -157,7 +157,10 @@ export function FAQ() {
 
                     <button
                       onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                        className="relative flex w-full items-center justify-between px-6 py-5 text-left cursor-pointer z-10"
+                      id={`faq-trigger-${index}`}
+                      aria-expanded={openIndex === index}
+                      aria-controls={`faq-panel-${index}`}
+                        className="relative flex w-full items-center justify-between px-6 py-5 text-left cursor-pointer z-10 rounded-3xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
                     >
                       <div className="flex items-center gap-4 flex-1">
                         <motion.div
@@ -187,6 +190,9 @@ export function FAQ() {
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.16, ease: "easeInOut" }}
+                          id={`faq-panel-${index}`}
+                          role="region"
+                          aria-labelledby={`faq-trigger-${index}`}
                           className="relative border-t border-white/10 px-6 py-4 z-10"
                         >
                           <motion.p

@@ -5,6 +5,7 @@
 
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FileText, CheckCircle2, AlertCircle, Upload } from "lucide-react";
 import { ScrollReveal } from "./animation/ScrollReveal";
@@ -37,7 +38,7 @@ const guidelines = [
       "Commitment to program duration",
     ],
     icon: CheckCircle2,
-    color: "from-emerald-500 to-teal-500",
+    color: "from-cyan-500 to-blue-500",
   },
   {
     title: "Application Requirements",
@@ -51,7 +52,7 @@ const guidelines = [
       "Contact hospital directly if needed",
     ],
     icon: Upload,
-    color: "from-purple-500 to-pink-500",
+    color: "from-blue-500 to-indigo-600",
   },
 ];
 
@@ -88,7 +89,33 @@ const steps = [
   },
 ];
 
+const CHECKLIST_STORAGE_KEY = "electivio_readiness_checklist";
+
 export function StudentGuidelines() {
+  const [checked, setChecked] = useState<Record<string, boolean>>({});
+
+  // Load persisted progress after mount so SSR and first client render match.
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(CHECKLIST_STORAGE_KEY);
+      if (saved) setChecked(JSON.parse(saved));
+    } catch {
+      /* ignore malformed storage */
+    }
+  }, []);
+
+  const toggle = (key: string) => {
+    setChecked((prev) => {
+      const next = { ...prev, [key]: !prev[key] };
+      try {
+        localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(next));
+      } catch {
+        /* storage unavailable — progress stays in-memory */
+      }
+      return next;
+    });
+  };
+
   return (
     <section className="py-16 border-t border-white/10">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -105,8 +132,12 @@ export function StudentGuidelines() {
         </ScrollReveal>
 
         {/* Guidelines Grid */}
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
-          <StaggerGroup staggerDelay={0.12} initialDelay={0.1}>
+        <div className="mb-16">
+          <StaggerGroup
+            staggerDelay={0.12}
+            initialDelay={0.1}
+            className="grid md:grid-cols-3 gap-8"
+          >
             {guidelines.map((guideline) => {
               const Icon = guideline.icon;
               return (
@@ -120,22 +151,78 @@ export function StudentGuidelines() {
                           <Icon className="w-6 h-6 text-white" />
                         </div>
 
-                        <h3 className="text-xl font-bold text-white mb-6">{guideline.title}</h3>
+                        <h3 className="text-xl font-bold text-white mb-2">{guideline.title}</h3>
 
-                        <ul className="space-y-3">
-                          {guideline.items.map((item, idx) => (
-                            <motion.li
-                              key={idx}
-                              initial={{ opacity: 0, x: -10 }}
-                              whileInView={{ opacity: 1, x: 0 }}
-                              transition={{ delay: idx * 0.05 }}
-                              viewport={{ once: true }}
-                              className="flex items-start gap-3 text-slate-300"
-                            >
-                              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-1" />
-                              <span>{item}</span>
-                            </motion.li>
-                          ))}
+                        {(() => {
+                          const done = guideline.items.filter((item) =>
+                            checked[`${guideline.title}::${item}`]
+                          ).length;
+                          const pct = Math.round((done / guideline.items.length) * 100);
+                          return (
+                            <div className="mb-6">
+                              <div className="flex items-center justify-between text-xs text-slate-400 mb-2">
+                                <span>Your readiness</span>
+                                <span className="tabular-nums">
+                                  {done}/{guideline.items.length}
+                                </span>
+                              </div>
+                              <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
+                                <motion.div
+                                  className="h-full rounded-full bg-linear-to-r from-cyan-400 to-indigo-500"
+                                  animate={{ width: `${pct}%` }}
+                                  transition={{ duration: 0.35, ease: "easeOut" }}
+                                />
+                              </div>
+                            </div>
+                          );
+                        })()}
+
+                        <ul className="space-y-1">
+                          {guideline.items.map((item, idx) => {
+                            const key = `${guideline.title}::${item}`;
+                            const isChecked = !!checked[key];
+                            return (
+                              <motion.li
+                                key={idx}
+                                initial={{ opacity: 0, x: -10 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                transition={{ delay: idx * 0.05 }}
+                                viewport={{ once: true }}
+                              >
+                                <button
+                                  type="button"
+                                  onClick={() => toggle(key)}
+                                  aria-pressed={isChecked}
+                                  className="flex w-full items-start gap-3 text-left rounded-lg px-2 py-1.5 -mx-2 transition-colors hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                                >
+                                  <span
+                                    className={`mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-md border transition-all duration-200 ${
+                                      isChecked
+                                        ? "border-transparent bg-linear-to-br from-cyan-400 to-indigo-500"
+                                        : "border-white/25 bg-white/5"
+                                    }`}
+                                  >
+                                    {isChecked && (
+                                      <motion.span
+                                        initial={{ scale: 0 }}
+                                        animate={{ scale: 1 }}
+                                        transition={{ type: "spring", stiffness: 500, damping: 25 }}
+                                      >
+                                        <CheckCircle2 className="h-3.5 w-3.5 text-white" />
+                                      </motion.span>
+                                    )}
+                                  </span>
+                                  <span
+                                    className={`transition-colors ${
+                                      isChecked ? "text-slate-500 line-through" : "text-slate-300"
+                                    }`}
+                                  >
+                                    {item}
+                                  </span>
+                                </button>
+                              </motion.li>
+                            );
+                          })}
                         </ul>
                       </div>
                     </motion.div>
@@ -154,8 +241,12 @@ export function StudentGuidelines() {
               {/* Connection line */}
               <div className="hidden md:block absolute top-8 left-0 right-0 h-0.5 bg-gradient-to-r from-cyan-500/30 via-indigo-500/30 to-cyan-500/30" />
 
-              <div className="grid md:grid-cols-6 gap-4 relative z-10">
-                <StaggerGroup staggerDelay={0.1} initialDelay={0.2}>
+              <div className="relative z-10">
+                <StaggerGroup
+                  staggerDelay={0.1}
+                  initialDelay={0.2}
+                  className="grid grid-cols-2 md:grid-cols-6 gap-4"
+                >
                   {steps.map((item) => (
                     <StaggerItem key={item.step}>
                       <motion.div className="relative">

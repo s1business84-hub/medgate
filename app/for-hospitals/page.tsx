@@ -203,16 +203,16 @@ export default function ForHospitalsPage() {
             <div className="absolute bottom-0 left-0 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl -ml-40 -mb-40 group-hover:scale-110 transition-transform duration-500" />
             
             <div className="relative z-10">
-              <h2 className="text-4xl font-bold mb-10 text-center">Platform Capabilities (Planned)</h2>
-              
+              <h2 className="text-4xl font-bold mb-10 text-center">Platform Capabilities</h2>
+
               <div className="grid grid-cols-1 gap-6">
                 {[
-                { icon: CheckCircle2, title: 'Eligibility Criteria & Program Requirements', desc: 'Define and publish program-specific eligibility and documentation standards' },
-                { icon: FileCheck, title: 'Institution-Defined Intake Parameters', desc: 'Set custom requirements aligned with your institutional policies' },
-                { icon: Users, title: 'Application Submission Interface (Planned)', desc: 'Central platform for receiving and organizing applications' },
-                { icon: BarChart3, title: 'Status Visibility Tools (In Development)', desc: 'Dashboard to track application progress and program workflows' },
-                { icon: Shield, title: 'Role-Based Access for Administrators', desc: 'Secure access controls for program coordinators and reviewers' },
-                { icon: Shield, title: 'Secure Data Handling', desc: 'Privacy-focused architecture with encrypted data management' }
+                { icon: CheckCircle2, title: 'Eligibility Criteria & Program Requirements', desc: 'Define and publish program-specific eligibility and documentation standards', status: 'Planned' },
+                { icon: FileCheck, title: 'Institution-Defined Intake Parameters', desc: 'Set custom requirements aligned with your institutional policies', status: 'Planned' },
+                { icon: Users, title: 'Application Submission Interface', desc: 'Central platform for receiving and organizing applications', status: 'Planned' },
+                { icon: BarChart3, title: 'Status Visibility Tools', desc: 'Dashboard to track application progress and program workflows', status: 'In Development' },
+                { icon: Shield, title: 'Role-Based Access for Administrators', desc: 'Secure access controls for program coordinators and reviewers', status: 'Planned' },
+                { icon: Shield, title: 'Secure Data Handling', desc: 'Privacy-focused architecture with encrypted data management', status: 'Planned' }
                 ].map((feature, idx) => (
                   <motion.div 
                     key={feature.title}
@@ -232,7 +232,18 @@ export default function ForHospitalsPage() {
                         <feature.icon className="w-6 h-6 text-white" />
                       </div>
                       <div>
-                        <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
+                        <div className="flex flex-wrap items-center gap-2 mb-2">
+                          <h3 className="text-xl font-bold">{feature.title}</h3>
+                          <span
+                            className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold border ${
+                              feature.status === 'In Development'
+                                ? 'border-cyan-400/40 bg-cyan-500/15 text-cyan-300'
+                                : 'border-indigo-400/40 bg-indigo-500/15 text-indigo-300'
+                            }`}
+                          >
+                            {feature.status}
+                          </span>
+                        </div>
                         <p className="text-white/90">{feature.desc}</p>
                       </div>
                     </div>

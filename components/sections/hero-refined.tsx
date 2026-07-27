@@ -17,13 +17,21 @@ import { ScrollCue } from "../animation/ScrollCue"
 import { LetterByLetter } from "@/components/animation/LetterByLetter"
 import { cn } from "@/lib/utils"
 
-// Generate star positions outside of component to avoid calling Math.random during render
+// Seeded PRNG so the server and client produce identical star fields.
+// Module-scope Math.random() is NOT enough: the module is evaluated once on the
+// server and again in the browser, yielding different values and a hydration
+// mismatch on every load.
+const seededRandom = (seed: number) => {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+};
+
 const generateStarPositions = (count: number) => {
-  return Array.from({ length: count }, () => ({
-    left: Math.random() * 100,
-    top: Math.random() * 100,
-    duration: 3 + Math.random() * 2,
-    delay: Math.random() * 5,
+  return Array.from({ length: count }, (_, i) => ({
+    left: seededRandom(i * 4 + 1) * 100,
+    top: seededRandom(i * 4 + 2) * 100,
+    duration: 3 + seededRandom(i * 4 + 3) * 2,
+    delay: seededRandom(i * 4 + 4) * 5,
   }));
 };
 
@@ -56,9 +64,9 @@ function GlowingOrb({ className, color, size, delay = 0 }: { className: string; 
 // Feature pill data
 const features = [
   { icon: Shield, label: "Verified Programs", color: "from-cyan-400 to-cyan-600" },
-  { icon: Globe, label: "UAE Coverage", color: "from-purple-400 to-purple-600" },
-  { icon: Zap, label: "Fast Processing", color: "from-pink-400 to-pink-600" },
-  { icon: Star, label: "Premium Support", color: "from-emerald-400 to-emerald-600" },
+  { icon: Globe, label: "UAE Coverage", color: "from-cyan-400 to-blue-600" },
+  { icon: Zap, label: "Fast Processing", color: "from-blue-400 to-indigo-600" },
+  { icon: Star, label: "Premium Support", color: "from-indigo-400 to-indigo-600" },
 ]
 
 export function Hero() {
@@ -511,7 +519,7 @@ export function Hero() {
                   Start your medical journey with confidence
                 </h3>
                 <p className="text-slate-400 mt-2 text-sm">
-                  Join thousands of students who have successfully completed their observerships.
+                  Be among the first students to access verified observership programs as our hospital partnerships go live.
                 </p>
               </div>
               <div className="flex flex-wrap gap-4">

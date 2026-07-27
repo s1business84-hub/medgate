@@ -56,7 +56,7 @@ export function Header() {
           </nav>
 
           {/* Auth Buttons - Desktop */}
-          <div className="hidden sm:flex items-center space-x-2">
+          <div className="hidden lg:flex items-center space-x-2">
             {user ? (
               <>
                 <span className="text-slate-300 font-medium text-sm">

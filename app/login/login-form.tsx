@@ -149,11 +149,11 @@ export default function LoginForm() {
           transition={{ delay: 0.1, duration: motionTokens.duration.ui }}
           className="mb-6"
         >
-          <div className="grid grid-cols-2 gap-2 bg-white/5 border border-white/10 rounded-lg p-2 text-sm font-semibold">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 bg-white/5 border border-white/10 rounded-lg p-2 text-sm font-semibold">
             <button
               type="button"
               onClick={() => setRole("student")}
-              className={`px-3 py-2 rounded-lg transition duration-150 ease-out ${role === "student" ? "bg-white text-slate-900 shadow" : "text-slate-200 hover:text-white"}`}
+              className={`px-3 py-2 rounded-lg transition duration-150 ease-out ${role === "student" ? "bg-linear-to-r from-cyan-500 to-indigo-600 text-white shadow-lg shadow-indigo-500/25" : "text-slate-200 hover:text-white hover:bg-white/5"}`}
               aria-pressed={role === "student"}
             >
               Student
@@ -161,7 +161,7 @@ export default function LoginForm() {
             <button
               type="button"
               onClick={() => setRole("staff")}
-              className={`px-3 py-2 rounded-lg transition duration-150 ease-out ${role === "staff" ? "bg-white text-slate-900 shadow" : "text-slate-200 hover:text-white"}`}
+              className={`px-3 py-2 rounded-lg transition duration-150 ease-out ${role === "staff" ? "bg-linear-to-r from-cyan-500 to-indigo-600 text-white shadow-lg shadow-indigo-500/25" : "text-slate-200 hover:text-white hover:bg-white/5"}`}
               aria-pressed={role === "staff"}
             >
               Hospital
@@ -169,7 +169,7 @@ export default function LoginForm() {
             <button
               type="button"
               onClick={() => setRole("supervisor")}
-              className={`px-3 py-2 rounded-lg transition duration-150 ease-out ${role === "supervisor" ? "bg-white text-slate-900 shadow" : "text-slate-200 hover:text-white"}`}
+              className={`px-3 py-2 rounded-lg transition duration-150 ease-out ${role === "supervisor" ? "bg-linear-to-r from-cyan-500 to-indigo-600 text-white shadow-lg shadow-indigo-500/25" : "text-slate-200 hover:text-white hover:bg-white/5"}`}
               aria-pressed={role === "supervisor"}
             >
               Supervisor
@@ -177,7 +177,7 @@ export default function LoginForm() {
             <button
               type="button"
               onClick={() => setRole("admin")}
-              className={`px-3 py-2 rounded-lg transition duration-150 ease-out ${role === "admin" ? "bg-white text-slate-900 shadow" : "text-slate-200 hover:text-white"}`}
+              className={`px-3 py-2 rounded-lg transition duration-150 ease-out ${role === "admin" ? "bg-linear-to-r from-cyan-500 to-indigo-600 text-white shadow-lg shadow-indigo-500/25" : "text-slate-200 hover:text-white hover:bg-white/5"}`}
               aria-pressed={role === "admin"}
             >
               Admin
