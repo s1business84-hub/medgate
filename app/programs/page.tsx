@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { hospitals, programs } from "@/lib/mockData";
+import { ProgramsDataGrid, type ProgramRow } from "@/components/programs/programs-data-grid";
 import { EligibilityChecker } from "@/components/eligibility-checker";
 import { getProgramMetadata } from '@/lib/storage';
 import { ProgramFilters } from "@/components/program-filters";
 import { ReminderModal } from "@/components/reminder-modal";
 import { HospitalsMap, hospitalCoords } from "@/components/hospitals-map";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ChevronDown, ChevronUp, Bell, MapPin } from "lucide-react";
 import { ApplicationModal } from "@/components/application-modal";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
@@ -15,7 +16,7 @@ import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "framer-m
 import Reveal from "@/components/Reveal";
 import { ScrollableViewport, ScrollSection } from "@/components/scrollable-viewport";
 import { motionTokens } from "@/lib/motion";
-import { ProgramsSkeleton } from "@/components/ui/Skeleton";
+import { ProgramsSkeleton } from "@/components/ui/skeleton";
 import { fetchEligibilitySummary, type EligibilitySummary } from "@/lib/eligibility/storage";
 import { useAuth } from "@/lib/auth-context";
 import { VoiceProgramAssistant } from "@/components/voice-program-assistant";
@@ -24,6 +25,24 @@ import { AnimatedProgramCard } from "@/components/AnimatedProgramCard";
 
 export default function ProgramsPage() {
   const { user } = useAuth();
+  const programRows: ProgramRow[] = useMemo(
+    () =>
+      programs.map((p) => {
+        const h = hospitals.find((x) => x.id === p.hospitalId);
+        return {
+          id: p.id,
+          name: p.name.replace(/\s*\(Example Listing[^)]*\)/i, "").trim(),
+          hospital: h?.name ?? "—",
+          city: h?.city ?? "—",
+          specialty: p.name.split(" Observership")[0].split(" Elective")[0].trim(),
+          duration: (p as { duration?: string }).duration ?? "4 weeks",
+          exposureLevel: (p as { exposureLevel?: string }).exposureLevel ?? "Observation",
+          status: p.isActive ? "Pilot" : "Planned",
+        } as ProgramRow;
+      }),
+    []
+  );
+
   const [expandedProgram, setExpandedProgram] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProgram, setSelectedProgram] = useState<{ name: string; hospital: string; programId?: string; hospitalId?: string } | null>(null);
@@ -196,6 +215,13 @@ export default function ProgramsPage() {
             </div>
           </div>
         </div>
+        </Reveal>
+
+        {/* reUI DataGrid — searchable/sortable listing index */}
+        <Reveal>
+          <div className="mb-10 sm:mb-14">
+            <ProgramsDataGrid rows={programRows} />
+          </div>
         </Reveal>
 
         {/* Program Filters */}

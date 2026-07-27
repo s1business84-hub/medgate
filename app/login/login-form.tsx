@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
 import { createUser, getCurrentUser, findUserByEmail } from "@/lib/storage";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
-import { DemoButton } from "@/components/demo-button";
 import { Toast } from "@/components/ui/Toast";
 import { motion } from "framer-motion";
 import { motionTokens } from "@/lib/motion";
@@ -144,15 +143,6 @@ export default function LoginForm() {
                 : "Create your Electivio account"}
             </p>
           </div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.15, duration: motionTokens.duration.ui }}
-          className="mb-8 flex justify-center"
-        >
-          <DemoButton />
-        </motion.div>
 
         <form onSubmit={handleSubmit} className="space-y-7">
           <StaggerGroup staggerDelay={0.08} initialDelay={0.2}>
