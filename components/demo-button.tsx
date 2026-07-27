@@ -92,7 +92,16 @@ export function DemoButton() {
     { id: "admin", label: "Admin", icon: "🔐" },
   ]
 
+  // Only surface the demo entry point when demo accounts actually carry
+  // credentials. If none do, the login page shows just the Login button.
+  const hasUsableDemos = Object.values(demoCredentials).some(
+    (c) => Boolean(c?.email) && Boolean(c?.password)
+  )
+
   const current = demoCredentials[selectedTab as keyof typeof demoCredentials]
+
+  if (!hasUsableDemos) return null
+
 
   const handleCopyEmail = (email: string) => {
     navigator.clipboard.writeText(email)

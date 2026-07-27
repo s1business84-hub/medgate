@@ -2,6 +2,7 @@ import {
   Hero,
   TrustStrip,
   Benefits,
+  EmailProblem,
   HowItWorks,
   FeaturedProgrammes,
   About,
@@ -15,6 +16,7 @@ export default function Home() {
       <Hero />
       <TrustStrip />
       <Benefits />
+      <EmailProblem />
       <HowItWorks />
       <FeaturedProgrammes />
       <About />

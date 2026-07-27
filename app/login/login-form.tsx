@@ -139,52 +139,11 @@ export default function LoginForm() {
               {isLogin ? "Welcome Back" : "Create Account"}
             </h1>
             <p className="text-slate-300">
-              {isLogin ? `Sign in as a ${role === "staff" ? "Hospital" : role === "supervisor" ? "Supervisor" : role === "admin" ? "Admin" : "Student"}` : `Create a ${role === "staff" ? "Hospital" : role === "supervisor" ? "Supervisor" : role === "admin" ? "Admin" : "Student"} account`}
+              {isLogin
+                ? "Sign in to continue"
+                : "Create your Electivio account"}
             </p>
           </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1, duration: motionTokens.duration.ui }}
-          className="mb-6"
-        >
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 bg-white/5 border border-white/10 rounded-lg p-2 text-sm font-semibold">
-            <button
-              type="button"
-              onClick={() => setRole("student")}
-              className={`px-3 py-2 rounded-lg transition duration-150 ease-out ${role === "student" ? "bg-linear-to-r from-cyan-500 to-indigo-600 text-white shadow-lg shadow-indigo-500/25" : "text-slate-200 hover:text-white hover:bg-white/5"}`}
-              aria-pressed={role === "student"}
-            >
-              Student
-            </button>
-            <button
-              type="button"
-              onClick={() => setRole("staff")}
-              className={`px-3 py-2 rounded-lg transition duration-150 ease-out ${role === "staff" ? "bg-linear-to-r from-cyan-500 to-indigo-600 text-white shadow-lg shadow-indigo-500/25" : "text-slate-200 hover:text-white hover:bg-white/5"}`}
-              aria-pressed={role === "staff"}
-            >
-              Hospital
-            </button>
-            <button
-              type="button"
-              onClick={() => setRole("supervisor")}
-              className={`px-3 py-2 rounded-lg transition duration-150 ease-out ${role === "supervisor" ? "bg-linear-to-r from-cyan-500 to-indigo-600 text-white shadow-lg shadow-indigo-500/25" : "text-slate-200 hover:text-white hover:bg-white/5"}`}
-              aria-pressed={role === "supervisor"}
-            >
-              Supervisor
-            </button>
-            <button
-              type="button"
-              onClick={() => setRole("admin")}
-              className={`px-3 py-2 rounded-lg transition duration-150 ease-out ${role === "admin" ? "bg-linear-to-r from-cyan-500 to-indigo-600 text-white shadow-lg shadow-indigo-500/25" : "text-slate-200 hover:text-white hover:bg-white/5"}`}
-              aria-pressed={role === "admin"}
-            >
-              Admin
-            </button>
-          </div>
-          <p className="text-xs text-slate-400 mt-2">Choose your role to sign in or create an account.</p>
-        </motion.div>
 
         <motion.div
           initial={{ opacity: 0 }}

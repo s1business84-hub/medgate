@@ -24,6 +24,7 @@ import {
   MapPin,
   CalendarDays,
   Clock,
+  Mail,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -116,14 +117,14 @@ export function Hero() {
             </span>
 
             <h1 className="mt-5 text-[2.15rem] leading-[1.1] sm:text-5xl lg:text-[3.4rem] lg:leading-[1.05] font-bold tracking-tight text-white">
-              Clinical training,{" "}
-              <span className="text-blue-300">structured end to end</span>
+              Stop running observerships{" "}
+              <span className="text-blue-300">out of an inbox</span>
             </h1>
 
             <p className="mt-4 sm:mt-5 text-base sm:text-lg leading-relaxed text-slate-300 max-w-xl">
-              Electivio gives hospitals a clear intake process for observerships and
-              electives — and gives students one place to check eligibility, apply,
-              and track every step afterwards.
+              Applications, documents, eligibility checks and scheduling for
+              observerships and electives — in one place instead of hundreds of
+              emails between students and hospital coordinators.
             </p>
 
             {/* exactly two CTAs */}
@@ -270,18 +271,18 @@ export function TrustStrip() {
 const BENEFITS = [
   {
     icon: ShieldCheck,
-    title: "Verified programmes",
-    body: "Every listing is defined and published by the institution itself, with its own eligibility rules and document requirements.",
+    title: "No more inbox triage",
+    body: "Applications arrive complete and comparable in one queue. Coordinators stop digging through threads for a missing vaccination record.",
   },
   {
     icon: ClipboardList,
-    title: "Structured applications",
-    body: "One consistent submission format across hospitals, so students stop guessing and coordinators stop chasing missing paperwork.",
+    title: "Eligibility checked before submission",
+    body: "Students see the institution's own criteria up front, so hospitals stop fielding applications that were never going to qualify.",
   },
   {
-    icon: LineChart,
-    title: "Trackable training records",
-    body: "Status is visible to both sides from submission through completion — no email threads, no silent waiting.",
+    icon: CalendarDays,
+    title: "Scheduling without the back-and-forth",
+    body: "Intake windows, seat capacity and start dates are published once. No email chains to agree a date or discover a rotation is full.",
   },
 ];
 
@@ -290,9 +291,9 @@ export function Benefits() {
     <section className="bg-slate-950">
       <div className="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-14 sm:py-20">
         <SectionHeading
-          eyebrow="Why Electivio"
-          title="Three things the platform is built to get right"
-          blurb="Not a placement service. An intake and tracking layer that hospitals control and students can follow."
+          eyebrow="The problem"
+          title="Built to remove the email round-trips"
+          blurb="Not a placement service. The coordination layer that replaces the threads, spreadsheets and scheduling calls around observership intake."
         />
 
         <div className="mt-9 sm:mt-12 grid gap-4 sm:gap-6 md:grid-cols-3">
@@ -314,6 +315,82 @@ export function Benefits() {
               </article>
             </FadeUp>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------- the email problem */
+
+const BEFORE = [
+  "Student emails the coordinator asking if they qualify",
+  "Coordinator replies with the requirements list",
+  "Documents arrive piecemeal across several threads",
+  "Two more emails to agree a start date",
+  "Rotation turns out to be full — start again",
+];
+
+const AFTER = [
+  "Criteria published once, checked before applying",
+  "Documents submitted together in the required format",
+  "Intake windows and seat capacity visible up front",
+  "Status updates in place, no chasing",
+];
+
+export function EmailProblem() {
+  return (
+    <section className="relative overflow-hidden bg-slate-950 border-y border-white/10">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-24 left-1/2 h-64 w-[42rem] -translate-x-1/2 rounded-full bg-blue-500/10 blur-3xl"
+      />
+      <div className="relative mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-14 sm:py-20">
+        <SectionHeading
+          eyebrow="Before / after"
+          title="One observership placement, two workflows"
+        />
+
+        <div className="mt-9 sm:mt-12 grid gap-4 sm:gap-6 md:grid-cols-2">
+          <FadeUp>
+            <div className="h-full rounded-2xl border border-white/10 bg-slate-900/60 p-6">
+              <div className="flex items-center gap-2">
+                <Mail className="h-4 w-4 text-slate-400" />
+                <h3 className="text-sm font-semibold uppercase tracking-[0.12em] text-slate-400">
+                  Today — over email
+                </h3>
+              </div>
+              <ul className="mt-5 space-y-3">
+                {BEFORE.map((t, i) => (
+                  <li key={t} className="flex gap-3 text-sm text-slate-400">
+                    <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-white/5 text-[10px] font-semibold text-slate-500 ring-1 ring-white/10">
+                      {i + 1}
+                    </span>
+                    <span className="line-through decoration-slate-600">{t}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </FadeUp>
+
+          <FadeUp delay={0.08}>
+            <div className="h-full rounded-2xl border border-blue-500/30 bg-blue-500/[0.07] p-6">
+              <div className="flex items-center gap-2">
+                <ClipboardList className="h-4 w-4 text-blue-300" />
+                <h3 className="text-sm font-semibold uppercase tracking-[0.12em] text-blue-300">
+                  With Electivio
+                </h3>
+              </div>
+              <ul className="mt-5 space-y-3">
+                {AFTER.map((t) => (
+                  <li key={t} className="flex gap-3 text-sm text-slate-200">
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-blue-400" />
+                    <span>{t}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </FadeUp>
         </div>
       </div>
     </section>
