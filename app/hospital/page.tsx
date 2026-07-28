@@ -32,7 +32,7 @@ import { ApplicationDecisionModal } from "@/components/application-decision-moda
 import { processApplicationDecision } from "@/lib/application-decision-service";
 
 export default function HospitalPortal() {
-  const { user, logout } = useAuth();
+  const { user, logout, isLoading } = useAuth();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
@@ -61,6 +61,7 @@ export default function HospitalPortal() {
   });
 
   useEffect(() => {
+    if (isLoading) return;
     if (!user || user.role !== "staff") {
       router.push("/hospital-login");
       return;
@@ -76,7 +77,7 @@ export default function HospitalPortal() {
       setStaffAlerts(hospitalAlerts);
       setLoading(false);
     });
-  }, [user, router]);
+  }, [user, router, isLoading]);
 
   const getStudentName = (studentId: string): string => {
     const students = getStudents();
@@ -293,40 +294,57 @@ export default function HospitalPortal() {
       <LiquidParallax />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
       <div className="relative max-w-7xl mx-auto px-6 py-20">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-20 animate-fade-in">
+        {/* Header — one primary action, a quiet tool row, single exit */}
+        <div className="mb-10 sm:mb-14 flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between animate-fade-in">
           <div>
             <h1 className="text-3xl font-bold mb-2">
               <AnimatedGradientText className="text-3xl font-bold">Hospital Portal</AnimatedGradientText>
             </h1>
             <p className="text-slate-300">Manage observership applications</p>
           </div>
-          <div className="flex gap-4">
-            <Link
-              href="/hospital/forms"
-              className="px-6 py-2 rounded-lg bg-blue-600/90 hover:bg-blue-600 text-white transition-colors font-medium shadow-sm flex items-center gap-2"
-            >
-              <FileText className="w-4 h-4" />
-              Form Tracking
-            </Link>
+
+          <div className="flex flex-col gap-3 sm:items-end">
             <button
               onClick={() => setShowObsForm(true)}
-              className="px-6 py-2 rounded-lg bg-indigo-600/90 hover:bg-indigo-600 text-white transition-colors font-medium shadow-sm"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-blue-600 px-5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
             >
-              + Add Observership
+              <Plus className="h-4 w-4" />
+              Add Observership
             </button>
-            <button
-              onClick={() => {
-                logout();
-                router.push("/");
-              }}
-              className="px-6 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-slate-100 transition-colors font-medium border border-white/15"
+
+            <nav
+              aria-label="Hospital tools"
+              className="flex items-center gap-1.5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             >
-              Logout
-            </button>
-            <Link href="/" className="px-6 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-slate-100 transition-colors font-medium border border-white/15">
-              ← Back to Home
-            </Link>
+              <Link
+                href="/hospital/forms"
+                className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 text-xs font-medium text-slate-300 backdrop-blur-xl transition-colors hover:border-blue-500/30 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+              >
+                <FileText className="h-3.5 w-3.5" />
+                Form tracking
+              </Link>
+              <Link
+                href="/hospital/analytics"
+                className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 text-xs font-medium text-slate-300 backdrop-blur-xl transition-colors hover:border-blue-500/30 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+              >
+                Analytics
+              </Link>
+              <Link
+                href="/hospital/performance"
+                className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 text-xs font-medium text-slate-300 backdrop-blur-xl transition-colors hover:border-blue-500/30 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+              >
+                Performance
+              </Link>
+              <button
+                onClick={() => {
+                  logout();
+                  router.push("/");
+                }}
+                className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 text-xs font-medium text-slate-400 backdrop-blur-xl transition-colors hover:border-red-500/30 hover:text-red-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+              >
+                Sign out
+              </button>
+            </nav>
           </div>
         </div>
 

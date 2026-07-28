@@ -47,15 +47,15 @@ export async function POST(request: Request) {
           <tr>
             <td align="center">
               <!-- Main Container -->
-              <table width="600" cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 24px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.5); border: 1px solid rgba(56, 189, 248, 0.2);">
+              <table width="600" cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 24px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.5); border: 1px solid rgba(59, 130, 246, 0.2);">
                 
                 <!-- Header with Gradient -->
                 <tr>
-                  <td style="background: linear-gradient(135deg, #06b6d4 0%, #6366f1 100%); padding: 40px 40px 60px; text-align: center; position: relative;">
+                  <td style="background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%); padding: 40px 40px 60px; text-align: center; position: relative;">
                     <div style="background: rgba(255,255,255,0.1); width: 80px; height: 80px; border-radius: 20px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px);">
                       <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="15" y="10" width="10" height="10" fill="white" rx="2"/>
-                        <rect x="17" y="12" width="6" height="6" fill="#06b6d4"/>
+                        <rect x="17" y="12" width="6" height="6" fill="#3b82f6"/>
                         <path d="M 10 25 Q 10 15 17 15" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
                         <path d="M 30 25 Q 30 15 23 15" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
                       </svg>
@@ -80,7 +80,7 @@ export async function POST(request: Request) {
                     <!-- Features List -->
                     <table width="100%" cellpadding="0" cellspacing="0" style="margin: 30px 0;">
                       <tr>
-                        <td style="padding: 15px; background: rgba(56, 189, 248, 0.1); border-left: 3px solid #06b6d4; margin-bottom: 10px; border-radius: 8px;">
+                        <td style="padding: 15px; background: rgba(59, 130, 246, 0.1); border-left: 3px solid #3b82f6; margin-bottom: 10px; border-radius: 8px;">
                           <p style="margin: 0; color: #e2e8f0; font-size: 15px;">
                             <strong style="color: #38bdf8;">✨ New Programs:</strong> Fresh observership and elective opportunities
                           </p>
@@ -104,7 +104,7 @@ export async function POST(request: Request) {
                       </tr>
                     </table>
 
-                    <div style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.15) 0%, rgba(99, 102, 241, 0.15) 100%); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 16px; padding: 25px; margin: 30px 0;">
+                    <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(99, 102, 241, 0.15) 100%); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 25px; margin: 30px 0;">
                       <p style="margin: 0 0 15px; color: #38bdf8; font-size: 18px; font-weight: 600;">
                         📬 Check Your Inbox
                       </p>
@@ -124,7 +124,7 @@ export async function POST(request: Request) {
                   <td style="padding: 0 40px 40px;" align="center">
                     <table cellpadding="0" cellspacing="0">
                       <tr>
-                        <td style="background: linear-gradient(135deg, #06b6d4 0%, #6366f1 100%); border-radius: 12px; padding: 16px 40px;">
+                        <td style="background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%); border-radius: 12px; padding: 16px 40px;">
                           <a href="https://electivio-tau.vercel.app/programs" style="color: white; text-decoration: none; font-weight: 600; font-size: 16px; display: block;">
                             Explore Programs
                           </a>
@@ -136,7 +136,7 @@ export async function POST(request: Request) {
 
                 <!-- Footer -->
                 <tr>
-                  <td style="padding: 30px 40px; background: rgba(15, 23, 42, 0.8); border-top: 1px solid rgba(56, 189, 248, 0.1); text-align: center;">
+                  <td style="padding: 30px 40px; background: rgba(15, 23, 42, 0.8); border-top: 1px solid rgba(59, 130, 246, 0.1); text-align: center;">
                     <p style="margin: 0 0 10px; color: #64748b; font-size: 14px;">
                       <strong style="color: #94a3b8;">Electivio</strong> — Your Gateway to Medical Training Opportunities
                     </p>

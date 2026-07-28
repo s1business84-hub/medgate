@@ -11,7 +11,7 @@ import { ArrowLeft, Sparkles } from "lucide-react"
 import Link from "next/link"
 
 export default function CareerPathPage() {
-  const { user } = useAuth()
+  const { user, isLoading } = useAuth()
   const router = useRouter()
   const [applications, setApplications] = useState<Application[]>([])
   const [sessions, setSessions] = useState<Session[]>([])
@@ -129,6 +129,7 @@ export default function CareerPathPage() {
   }
 
   useEffect(() => {
+    if (isLoading) return;
     if (!user) {
       router.push("/login")
       return
@@ -141,7 +142,7 @@ export default function CareerPathPage() {
 
     loadData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, router])
+  }, [user, router, isLoading])
 
   if (loading) {
     return (

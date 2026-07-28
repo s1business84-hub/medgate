@@ -19,7 +19,7 @@ interface FormResponse {
 }
 
 export default function FormResponsePage({ params }: { params: { formId: string } }) {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
   const router = useRouter();
   const [form, setForm] = useState<ObservationForm | null>(null);
   const [responses, setResponses] = useState<Record<string, FormResponse>>({});
@@ -30,6 +30,7 @@ export default function FormResponsePage({ params }: { params: { formId: string 
   const [formProgress, setFormProgress] = useState(0);
 
   useEffect(() => {
+    if (isLoading) return;
     if (!user || user.role !== "student") {
       router.push("/login");
       return;
@@ -57,7 +58,7 @@ export default function FormResponsePage({ params }: { params: { formId: string 
 
     setForm(foundForm);
     setLoading(false);
-  }, [user, router, params.formId]);
+  }, [user, router, params.formId, isLoading]);
 
   const handleFieldChange = (fieldId: string, value: string) => {
     setResponses((prev) => ({

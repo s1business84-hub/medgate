@@ -20,11 +20,11 @@ export function LetterByLetter({
   const letters = text.split('');
   
   const gradientStyles = gradient ? {
-    background: `linear-gradient(90deg, 
-      rgb(34, 211, 238),   /* blue-400 */
+    background: `linear-gradient(90deg,
+      rgb(96, 165, 250),   /* blue-400 */
       rgb(129, 140, 248),  /* indigo-400 */
-      rgb(192, 132, 250),  /* indigo-400 */
-      rgb(34, 211, 238))`,
+      rgb(59, 130, 246),   /* blue-500 */
+      rgb(96, 165, 250))`,
     backgroundSize: "200% 100%",
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: "transparent",

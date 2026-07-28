@@ -58,7 +58,7 @@ interface StudentData {
 // Data will be synced from student applications and observerships
 
 export default function SupervisorDashboard() {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
   const router = useRouter();
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [students, setStudents] = useState<StudentData[]>([]);
@@ -89,12 +89,13 @@ export default function SupervisorDashboard() {
   });
 
   useEffect(() => {
+    if (isLoading) return;
     if (!user || user.role !== "supervisor") {
       router.push("/login");
       return;
     }
     queueMicrotask(() => setIsCheckingAuth(false));
-  }, [user, router]);
+  }, [user, router, isLoading]);
 
   // Load students from localStorage on mount
   useEffect(() => {

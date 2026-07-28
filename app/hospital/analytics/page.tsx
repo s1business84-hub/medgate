@@ -19,13 +19,14 @@ interface StudentProgress {
 }
 
 export default function HospitalAnalyticsPage() {
-  const { user } = useAuth()
+  const { user, isLoading } = useAuth()
   const router = useRouter()
   const [studentData, setStudentData] = useState<StudentProgress[]>([])
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState("all")
 
   useEffect(() => {
+    if (isLoading) return;
     if (!user || (user.role !== "staff" && user.role !== "supervisor")) {
       router.push("/login")
       return
@@ -62,7 +63,7 @@ export default function HospitalAnalyticsPage() {
       setStudentData(allData)
       setLoading(false)
     })
-  }, [user, router])
+  }, [user, router, isLoading])
 
   const categories = [
     { id: "skills", label: "Clinical Skills", emoji: "🏥" },

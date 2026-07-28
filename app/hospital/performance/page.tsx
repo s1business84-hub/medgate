@@ -11,13 +11,14 @@ import { StudentPerformanceMetrics, SessionFormSubmission } from "@/lib/types";
 import { ArrowLeft, TrendingUp } from "lucide-react";
 
 export default function HospitalPerformancePage() {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
   const router = useRouter();
   const [metrics, setMetrics] = useState<StudentPerformanceMetrics[]>([]);
   const [subs, setSubs] = useState<SessionFormSubmission[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (isLoading) return;
     if (!user || user.role !== "staff") {
       router.push("/hospital-login");
       return;
@@ -44,7 +45,7 @@ export default function HospitalPerformancePage() {
         setLoading(false);
       });
     }
-  }, [user, router]);
+  }, [user, router, isLoading]);
 
   if (!user || user.role !== "staff") return null;
 

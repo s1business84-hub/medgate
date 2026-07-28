@@ -11,7 +11,7 @@ import { ObservationForm } from "@/lib/types"
 import { LiquidParallax } from "@/components/ui/liquid-parallax"
 
 export default function FormSubmissionPage() {
-  const { user } = useAuth()
+  const { user, isLoading } = useAuth()
   const router = useRouter()
   const [forms, setForms] = useState<ObservationForm[]>([])
   const [selectedForm, setSelectedForm] = useState<ObservationForm | null>(null)
@@ -19,6 +19,7 @@ export default function FormSubmissionPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    if (isLoading) return;
     if (!user || user.role !== "student") {
       router.push("/login")
       return
@@ -46,7 +47,7 @@ export default function FormSubmissionPage() {
       setSelectedForm(allForms[0])
     }
     setLoading(false)
-  }, [user, router])
+  }, [user, router, isLoading])
 
   const handleFormSubmit = async (responses: Array<{ fieldId: string; value: any }>) => {
     if (!user || !selectedForm) return

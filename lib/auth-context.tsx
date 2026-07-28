@@ -7,6 +7,14 @@ import { mockUsers, mockStudents, mockApplications, mockStaffAlerts } from '@/li
 
 interface AuthContextType {
   user: User | null;
+  /**
+   * True until the initial client-side check of stored auth state resolves.
+   * Every protected page reads this before deciding to redirect — `user`
+   * starts as null on every mount (SSR has no localStorage), so a page that
+   * redirects the instant `user` is null bounces already-logged-in staff
+   * and students to the login screen on every fresh load or refresh.
+   */
+  isLoading: boolean;
   login: (email: string, password: string) => boolean;
   logout: () => void;
 }
@@ -47,12 +55,16 @@ function initializeDemoData() {
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // Initialize demo data and load current user on client-side only
     initializeDemoData();
     const currentUser = getCurrentUser();
-    queueMicrotask(() => setUser(currentUser));
+    queueMicrotask(() => {
+      setUser(currentUser);
+      setIsLoading(false);
+    });
   }, []);
 
   const login = (email: string, password: string): boolean => {
@@ -70,7 +82,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, isLoading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

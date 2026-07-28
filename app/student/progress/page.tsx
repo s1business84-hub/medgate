@@ -21,13 +21,14 @@ interface ProgressEntry {
 }
 
 export default function StudentProgressPage() {
-  const { user } = useAuth()
+  const { user, isLoading } = useAuth()
   const router = useRouter()
   const [entries, setEntries] = useState<ProgressEntry[]>([])
   const [loading, setLoading] = useState(true)
 
   // Load progress entries from localStorage
   useEffect(() => {
+    if (isLoading) return;
     if (!user || user.role !== "student") {
       router.push("/login")
       return
@@ -40,7 +41,7 @@ export default function StudentProgressPage() {
       }
       setLoading(false)
     })
-  }, [user, router])
+  }, [user, router, isLoading])
 
   const categories = [
     { id: "skills", label: "Clinical Skills", emoji: "🏥", color: "from-slate-900/80 to-slate-800/60" },

@@ -12,7 +12,7 @@ import { CareerStrategizer } from "@/components/career-strategizer";
 import { ArrowLeft, TrendingUp } from "lucide-react";
 
 export default function StudentPerformancePage() {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
   const router = useRouter();
   const [metrics, setMetrics] = useState<StudentPerformanceMetrics[]>([]);
   const [subs, setSubs] = useState<SessionFormSubmission[]>([]);
@@ -20,6 +20,7 @@ export default function StudentPerformancePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (isLoading) return;
     if (!user || user.role !== "student") {
       router.push("/login");
       return;
@@ -45,7 +46,7 @@ export default function StudentPerformancePage() {
         setLoading(false);
       });
     }
-  }, [user, router]);
+  }, [user, router, isLoading]);
 
 
   // Aggregate department performance for AI/summary

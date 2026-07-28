@@ -9,7 +9,7 @@ import { Application, SessionFormSubmission, StudentPerformanceMetrics } from "@
 import { LiquidParallax } from "@/components/ui/liquid-parallax"
 
 export default function FormTrackingPage() {
-  const { user } = useAuth()
+  const { user, isLoading } = useAuth()
   const router = useRouter()
   const [submissions, setSubmissions] = useState<SessionFormSubmission[]>([])
   const [metrics, setMetrics] = useState<StudentPerformanceMetrics[]>([])
@@ -17,6 +17,7 @@ export default function FormTrackingPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    if (isLoading) return;
     if (!user || (user.role !== "supervisor" && user.role !== "staff")) {
       router.push("/login")
       return
@@ -53,7 +54,7 @@ export default function FormTrackingPage() {
       console.error("Error loading data:", error)
       startTransition(() => setLoading(false))
     }
-  }, [user, router])
+  }, [user, router, isLoading])
 
   if (loading) {
     return (

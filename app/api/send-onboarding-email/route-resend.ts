@@ -38,13 +38,13 @@ function buildHtmlTemplate({
       <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#0f172a;padding:40px 20px;">
         <tr>
           <td align="center">
-            <table width="600" cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 24px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.5); border: 1px solid rgba(56, 189, 248, 0.2);">
+            <table width="600" cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 24px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.5); border: 1px solid rgba(59, 130, 246, 0.2);">
               <tr>
-                <td style="background: linear-gradient(135deg, #06b6d4 0%, #6366f1 100%); padding: 40px 40px 60px; text-align: center;">
+                <td style="background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%); padding: 40px 40px 60px; text-align: center;">
                   <div style="background: rgba(255,255,255,0.12); width: 80px; height: 80px; border-radius: 20px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px);">
                     <svg width="42" height="42" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <rect x="15" y="10" width="10" height="10" fill="white" rx="2"/>
-                      <rect x="17" y="12" width="6" height="6" fill="#06b6d4"/>
+                      <rect x="17" y="12" width="6" height="6" fill="#3b82f6"/>
                       <path d="M 10 25 Q 10 15 17 15" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
                       <path d="M 30 25 Q 30 15 23 15" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
                     </svg>
@@ -74,13 +74,13 @@ function buildHtmlTemplate({
                       .join("")}
                   </table>
 
-                  <div style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.15) 0%, rgba(99, 102, 241, 0.15) 100%); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 16px; padding: 22px; margin: 18px 0 26px;">
+                  <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(99, 102, 241, 0.15) 100%); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 22px; margin: 18px 0 26px;">
                     <p style="margin: 0 0 10px; color: #38bdf8; font-size: 17px; font-weight: 600;">${calloutTitle}</p>
                     <p style="margin: 0; color: #cbd5e1; font-size: 15px; line-height: 1.6;">${calloutBody}</p>
                   </div>
 
                   <div style="text-align: center; padding: 6px 0 12px;">
-                    <a href="${ctaHref}" style="background: linear-gradient(135deg, #06b6d4 0%, #6366f1 100%); color: white; text-decoration: none; font-weight: 600; font-size: 16px; padding: 14px 38px; border-radius: 12px; display: inline-block; box-shadow: 0 15px 40px rgba(6,182,212,0.25);">
+                    <a href="${ctaHref}" style="background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%); color: white; text-decoration: none; font-weight: 600; font-size: 16px; padding: 14px 38px; border-radius: 12px; display: inline-block; box-shadow: 0 15px 40px rgba(6,182,212,0.25);">
                       ${ctaLabel}
                     </a>
                   </div>
@@ -88,7 +88,7 @@ function buildHtmlTemplate({
               </tr>
 
               <tr>
-                <td style="padding: 26px 40px; background: rgba(15, 23, 42, 0.82); border-top: 1px solid rgba(56, 189, 248, 0.12); text-align: center;">
+                <td style="padding: 26px 40px; background: rgba(15, 23, 42, 0.82); border-top: 1px solid rgba(59, 130, 246, 0.12); text-align: center;">
                   <p style="margin: 0 0 8px; color: #94a3b8; font-size: 14px; font-weight: 600;">Electivio — Gateway to Medical Training Opportunities</p>
                   <p style="margin: 0; color: #64748b; font-size: 12px;">Dubai, UAE | ${FROM_EMAIL}</p>
                   <p style="margin: 12px 0 0; color: #475569; font-size: 11px;">You are receiving this email because you requested onboarding or created an account on Electivio.</p>
@@ -111,7 +111,7 @@ function buildEmailContent(type: EmailVariant, email: string, name?: string) {
       headline: "Welcome Onboard! 🎉",
       subhead: `Hi ${name || "there"}, thanks for joining early access.`,
       highlights: [
-        { label: "✨ New Programs:", text: "First look at observerships and electives as they open.", color: "rgba(56, 189, 248, 0.1)", border: "#06b6d4" },
+        { label: "✨ New Programs:", text: "First look at observerships and electives as they open.", color: "rgba(59, 130, 246, 0.1)", border: "#3b82f6" },
         { label: "🚀 Platform Updates:", text: "Feature drops and improvements tailored for students.", color: "rgba(99, 102, 241, 0.1)", border: "#6366f1" },
         { label: "💡 Guidance:", text: "Application tips, visa guidance, and preparation checklists.", color: "rgba(16, 185, 129, 0.1)", border: "#10b981" },
       ],
@@ -131,7 +131,7 @@ function buildEmailContent(type: EmailVariant, email: string, name?: string) {
       headline: "Welcome Onboard! 🎉",
       subhead: `Hi ${name || "Team"}, your hospital account is set. Let's configure your onboarding.`,
       highlights: [
-        { label: "👥 Team Setup:", text: "Set coordinator and approver contacts for applications.", color: "rgba(56, 189, 248, 0.1)", border: "#06b6d4" },
+        { label: "👥 Team Setup:", text: "Set coordinator and approver contacts for applications.", color: "rgba(59, 130, 246, 0.1)", border: "#3b82f6" },
         { label: "✅ Eligibility:", text: "Define applicant rules and required documents.", color: "rgba(99, 102, 241, 0.1)", border: "#6366f1" },
         { label: "📅 Capacity:", text: "Add intake windows and seats per period for observerships/electives.", color: "rgba(16, 185, 129, 0.1)", border: "#10b981" },
       ],
@@ -150,7 +150,7 @@ function buildEmailContent(type: EmailVariant, email: string, name?: string) {
     headline: "Welcome Onboard! 🎉",
     subhead: "Thanks for requesting the onboarding pack. Here are your next steps.",
     highlights: [
-      { label: "👤 Contacts:", text: "Confirm primary coordinator and approver roles.", color: "rgba(56, 189, 248, 0.1)", border: "#06b6d4" },
+      { label: "👤 Contacts:", text: "Confirm primary coordinator and approver roles.", color: "rgba(59, 130, 246, 0.1)", border: "#3b82f6" },
       { label: "📑 Eligibility:", text: "Define applicant criteria and document checklist.", color: "rgba(99, 102, 241, 0.1)", border: "#6366f1" },
       { label: "📈 Intake:", text: "Share capacity, application windows, and review timelines.", color: "rgba(16, 185, 129, 0.1)", border: "#10b981" },
     ],

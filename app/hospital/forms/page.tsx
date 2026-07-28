@@ -44,7 +44,7 @@ interface FormWithStudents {
 }
 
 export default function HospitalFormsPage() {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
   const router = useRouter();
   const [forms, setForms] = useState<FormTemplate[]>([]);
   const [submissions, setSubmissions] = useState<SessionFormSubmission[]>([]);
@@ -56,6 +56,7 @@ export default function HospitalFormsPage() {
   const [selectedFormId, setSelectedFormId] = useState<string | null>(null);
 
   useEffect(() => {
+    if (isLoading) return;
     if (!user || user.role !== "staff") {
       router.push("/hospital-login");
       return;
@@ -80,7 +81,7 @@ export default function HospitalFormsPage() {
         setLoading(false);
       });
     }
-  }, [user, router]);
+  }, [user, router, isLoading]);
 
   const formsWithStudents = useMemo(() => {
     return forms.map(form => {

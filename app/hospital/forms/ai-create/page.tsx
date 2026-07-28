@@ -13,7 +13,7 @@ import { showToast } from "@/lib/toast";
 import { ObservationForm } from "@/lib/types";
 
 export default function AIFormCreatorPage() {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [programId, setProgramId] = useState("");
@@ -21,6 +21,7 @@ export default function AIFormCreatorPage() {
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
+    if (isLoading) return;
     if (!user || user.role !== "staff") {
       router.push("/login");
       return;
@@ -32,7 +33,7 @@ export default function AIFormCreatorPage() {
     const uniquePrograms = [...new Set(hospitalApps.map((a) => a.programId))];
     setPrograms(uniquePrograms);
     setLoading(false);
-  }, [user, router]);
+  }, [user, router, isLoading]);
 
   const handleFormGenerated = (form: any) => {
     console.log("Form generated:", form);

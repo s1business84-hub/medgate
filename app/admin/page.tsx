@@ -17,17 +17,18 @@ import { AdminFormAssignment } from "@/components/admin-form-assignment";
 import { SupervisorNotifications } from "@/components/supervisor-notifications";
 
 export default function AdminPage() {
-  const { user, logout } = useAuth();
+  const { user, logout, isLoading } = useAuth();
   const router = useRouter();
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
   useEffect(() => {
+    if (isLoading) return;
     if (!user || user.role !== "admin") {
       router.push("/login");
     } else {
       setIsCheckingAuth(false);
     }
-  }, [user, router]);
+  }, [user, router, isLoading]);
 
   const [applications, setApplications] = useState<Application[]>([]);
   const [selectedApp, setSelectedApp] = useState<Application | null>(null);
