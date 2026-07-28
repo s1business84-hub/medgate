@@ -88,8 +88,8 @@ export default function HospitalDemoPage() {
         {/* Stats Grid */}
         <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-12">
           {[
-            { icon: Users, label: "Active Trainees", value: "24", color: "from-blue-500 to-cyan-500" },
-            { icon: BookMarked, label: "Programs", value: "8", color: "from-purple-500 to-pink-500" },
+            { icon: Users, label: "Active Trainees", value: "24", color: "from-blue-500 to-blue-500" },
+            { icon: BookMarked, label: "Programs", value: "8", color: "from-indigo-500 to-indigo-500" },
             { icon: CheckCircle, label: "Completed", value: "6", color: "from-green-500 to-emerald-500" },
             { icon: TrendingUp, label: "Avg Completion", value: "72%", color: "from-orange-500 to-red-500" },
           ].map((stat, idx) => (

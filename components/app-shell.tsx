@@ -93,7 +93,7 @@ export function AppShell({ children }: AppShellProps) {
                           className={cn(
                             "group flex gap-x-3 rounded-lg p-3 text-sm font-medium leading-6 transition-all duration-200",
                             item.name === "Login"
-                              ? "bg-linear-to-r from-cyan-500 to-indigo-600 text-white shadow-lg hover:from-cyan-400 hover:to-indigo-500"
+                              ? "bg-linear-to-r from-blue-500 to-indigo-600 text-white shadow-lg hover:from-blue-400 hover:to-indigo-500"
                               : isActive
                               ? "bg-linear-to-r from-blue-50 to-indigo-50 text-blue-700 shadow-sm border border-blue-200/50 hover:bg-slate-50 hover:shadow-sm"
                               : "text-slate-700 hover:bg-slate-50 hover:shadow-sm hover:text-slate-900"
@@ -159,7 +159,7 @@ export function AppShell({ children }: AppShellProps) {
                             className={cn(
                               "group flex gap-x-3 rounded-lg p-3 sm:p-4 text-sm sm:text-base font-medium leading-6 transition-all duration-200 min-h-12 items-center",
                               item.name === "Login"
-                                ? "bg-linear-to-r from-cyan-500 to-indigo-600 text-white shadow-lg hover:from-cyan-400 hover:to-indigo-500"
+                                ? "bg-linear-to-r from-blue-500 to-indigo-600 text-white shadow-lg hover:from-blue-400 hover:to-indigo-500"
                                 : isActive
                                 ? "bg-linear-to-r from-blue-50 to-indigo-50 text-blue-700 shadow-sm border border-blue-200/50 hover:bg-slate-50 hover:shadow-sm"
                                 : "text-slate-700 hover:bg-slate-50 hover:shadow-sm hover:text-slate-900"

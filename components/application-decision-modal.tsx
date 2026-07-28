@@ -126,7 +126,7 @@ export function ApplicationDecisionModal({
               {/* Student info */}
               <div className="bg-white/5 border border-white/10 rounded-lg p-4">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-linear-to-br from-cyan-400 to-blue-500 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-linear-to-br from-blue-400 to-blue-500 flex items-center justify-center">
                     <User className="w-6 h-6 text-white" />
                   </div>
                   <div>
@@ -235,7 +235,7 @@ export function ApplicationDecisionModal({
                     value={reason}
                     onChange={e => setReason(e.target.value)}
                     placeholder={`e.g., "Strong academic record and relevant experience" or "Limited spots available"`}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white placeholder-slate-500 focus:border-cyan-400/50 focus:outline-none resize-none"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white placeholder-slate-500 focus:border-blue-400/50 focus:outline-none resize-none"
                     rows={3}
                   />
                 </div>
@@ -249,7 +249,7 @@ export function ApplicationDecisionModal({
                     value={notes}
                     onChange={e => setNotes(e.target.value)}
                     placeholder="Add any internal notes for your team..."
-                    className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white placeholder-slate-500 focus:border-cyan-400/50 focus:outline-none resize-none"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white placeholder-slate-500 focus:border-blue-400/50 focus:outline-none resize-none"
                     rows={2}
                   />
                 </div>
@@ -281,7 +281,7 @@ export function ApplicationDecisionModal({
                 <Button
                   onClick={handleSubmitDecision}
                   disabled={!decision || isPending || loading}
-                  className="flex-1 bg-linear-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-semibold"
+                  className="flex-1 bg-linear-to-r from-blue-600 to-blue-600 hover:from-blue-700 hover:to-blue-700 text-white font-semibold"
                 >
                   {isPending || loading ? (
                     <>

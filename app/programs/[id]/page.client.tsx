@@ -49,22 +49,22 @@ export function ProgramDetailClient({ program, hospital, relatedPrograms }: Prog
   return (
     <main className="relative min-h-screen overflow-hidden text-slate-100">
       <LiquidParallax />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(34,211,238,0.15),transparent_40%),radial-gradient(circle_at_80%_20%,rgba(99,102,241,0.12),transparent_35%),radial-gradient(circle_at_40%_80%,rgba(139,92,246,0.13),transparent_38%),linear-gradient(180deg,#0a0e1a_0%,#0f172a_50%,#0a0e1a_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(96,165,250,0.15),transparent_40%),radial-gradient(circle_at_80%_20%,rgba(99,102,241,0.12),transparent_35%),radial-gradient(circle_at_40%_80%,rgba(139,92,246,0.13),transparent_38%),linear-gradient(180deg,#0a0e1a_0%,#0f172a_50%,#0a0e1a_100%)]" />
 
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
         {/* Navigation Header */}
         <Reveal>
           <div className="flex items-center justify-between mb-8">
-            <Link href="/programs" className="flex items-center gap-2 text-slate-300 hover:text-cyan-200 transition-colors">
+            <Link href="/programs" className="flex items-center gap-2 text-slate-300 hover:text-blue-200 transition-colors">
               <ChevronLeft className="w-5 h-5" />
               <span>Back to Programs</span>
             </Link>
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setIsFavorite(!isFavorite)}
-                className="p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-rose-400/15 hover:border-rose-300/40 transition-all"
+                className="p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-indigo-400/15 hover:border-indigo-300/40 transition-all"
               >
-                <Heart className={`w-5 h-5 ${isFavorite ? "fill-rose-400 text-rose-400" : "text-slate-400"}`} />
+                <Heart className={`w-5 h-5 ${isFavorite ? "fill-indigo-400 text-indigo-400" : "text-slate-400"}`} />
               </button>
               <button
                 onClick={() => {
@@ -76,7 +76,7 @@ export function ProgramDetailClient({ program, hospital, relatedPrograms }: Prog
                     });
                   }
                 }}
-                className="p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-cyan-400/15 hover:border-cyan-300/40 transition-all"
+                className="p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-blue-400/15 hover:border-blue-300/40 transition-all"
               >
                 <Share2 className="w-5 h-5 text-slate-400" />
               </button>
@@ -88,19 +88,19 @@ export function ProgramDetailClient({ program, hospital, relatedPrograms }: Prog
         <Reveal delay={0.1}>
           <motion.div className="mb-8 rounded-2xl border border-white/10 bg-linear-to-br from-white/10 to-white/5 backdrop-blur-xl p-8 sm:p-10 overflow-hidden relative">
             <div className="absolute inset-0 opacity-0 group-hover:opacity-25 transition-opacity duration-500 pointer-events-none">
-              <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-linear-to-br from-cyan-500/30 to-transparent rounded-full blur-3xl" />
+              <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-linear-to-br from-blue-500/30 to-transparent rounded-full blur-3xl" />
               <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-linear-to-tl from-indigo-500/30 to-transparent rounded-full blur-3xl" />
             </div>
 
             <div className="relative z-10">
               <div className="flex items-center gap-4 mb-4">
-                <div className="w-16 h-16 bg-linear-to-br from-cyan-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
+                <div className="w-16 h-16 bg-linear-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
                   <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                   </svg>
                 </div>
                 <div>
-                  <h1 className="text-4xl sm:text-5xl font-bold bg-clip-text bg-linear-to-r from-cyan-300 via-sky-200 to-indigo-200 text-transparent mb-2">
+                  <h1 className="text-4xl sm:text-5xl font-bold bg-clip-text bg-linear-to-r from-blue-300 via-blue-200 to-indigo-200 text-transparent mb-2">
                     {program.departmentName}
                   </h1>
                   <p className="text-lg text-slate-300">{program.programType} Program</p>
@@ -109,7 +109,7 @@ export function ProgramDetailClient({ program, hospital, relatedPrograms }: Prog
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8 pt-8 border-t border-white/10">
                 <div className="flex items-center gap-3">
-                  <MapPin className="w-5 h-5 text-cyan-400" />
+                  <MapPin className="w-5 h-5 text-blue-400" />
                   <div>
                     <p className="text-xs text-slate-400">Location</p>
                     <p className="text-sm font-medium text-slate-200">{hospital.city}, {hospital.emirate}</p>
@@ -163,7 +163,7 @@ export function ProgramDetailClient({ program, hospital, relatedPrograms }: Prog
                         <p className="text-xs text-slate-400 font-medium mb-2">Key Skills</p>
                         <div className="flex flex-wrap gap-2">
                           {program.keySkills.slice(0, 4).map((skill, idx) => (
-                            <span key={idx} className="px-3 py-1 rounded-full text-xs bg-cyan-500/15 text-cyan-200 border border-cyan-300/30">
+                            <span key={idx} className="px-3 py-1 rounded-full text-xs bg-blue-500/15 text-blue-200 border border-blue-300/30">
                               {skill}
                             </span>
                           ))}
@@ -185,7 +185,7 @@ export function ProgramDetailClient({ program, hospital, relatedPrograms }: Prog
                 <ul className="space-y-3">
                   {program.requirements.map((req, idx) => (
                     <li key={idx} className="flex items-start gap-3 p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
-                      <div className="w-5 h-5 rounded-full bg-linear-to-br from-cyan-500 to-indigo-600 flex items-center justify-center shrink-0 mt-0.5">
+                      <div className="w-5 h-5 rounded-full bg-linear-to-br from-blue-500 to-indigo-600 flex items-center justify-center shrink-0 mt-0.5">
                         <span className="text-xs font-bold text-white">{idx + 1}</span>
                       </div>
                       <span className="text-slate-300">{req}</span>
@@ -212,7 +212,7 @@ export function ProgramDetailClient({ program, hospital, relatedPrograms }: Prog
                     <p className="text-xs text-slate-400 font-medium mb-3">Departments</p>
                     <div className="flex flex-wrap gap-2">
                       {hospital.departments.map((dept, idx) => (
-                        <span key={idx} className="px-3 py-1 rounded-full text-xs bg-purple-500/15 text-purple-200 border border-purple-300/30">
+                        <span key={idx} className="px-3 py-1 rounded-full text-xs bg-indigo-500/15 text-indigo-200 border border-indigo-300/30">
                           {dept}
                         </span>
                       ))}
@@ -221,7 +221,7 @@ export function ProgramDetailClient({ program, hospital, relatedPrograms }: Prog
                   <div className="pt-4 border-t border-white/10">
                     <p className="text-xs text-slate-400 font-medium mb-2">Program Capacity</p>
                     <p className="text-sm text-slate-300 flex items-center gap-2">
-                      <Users className="w-4 h-4 text-cyan-400" />
+                      <Users className="w-4 h-4 text-blue-400" />
                       Set by the institution
                     </p>
                   </div>
@@ -243,7 +243,7 @@ export function ProgramDetailClient({ program, hospital, relatedPrograms }: Prog
                   </div>
                   <div className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10">
                     <span className="text-xs text-slate-400">Hands-on Level</span>
-                    <span className="text-sm font-medium text-cyan-200">{program.handsOnLevel}</span>
+                    <span className="text-sm font-medium text-blue-200">{program.handsOnLevel}</span>
                   </div>
                   <div className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10">
                     <span className="text-xs text-slate-400">Daily Hours</span>
@@ -267,7 +267,7 @@ export function ProgramDetailClient({ program, hospital, relatedPrograms }: Prog
                   <div className="mt-8 pt-6 border-t border-white/10 space-y-3">
                     <button
                       onClick={() => setIsApplicationModalOpen(true)}
-                      className="w-full bg-linear-to-r from-cyan-500 to-indigo-600 text-white py-3 rounded-xl font-semibold hover:from-cyan-400 hover:to-indigo-500 transition-all duration-300 shadow-lg"
+                      className="w-full bg-linear-to-r from-blue-500 to-indigo-600 text-white py-3 rounded-xl font-semibold hover:from-blue-400 hover:to-indigo-500 transition-all duration-300 shadow-lg"
                     >
                       Apply Now
                     </button>
@@ -323,13 +323,13 @@ export function ProgramDetailClient({ program, hospital, relatedPrograms }: Prog
                     href={`/programs/${relatedProgram.id}`}
                     className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl p-5 hover:bg-white/10 hover:border-white/20 transition-all duration-300 group"
                   >
-                    <h3 className="text-sm font-semibold text-slate-100 group-hover:text-cyan-200 transition-colors mb-2">
+                    <h3 className="text-sm font-semibold text-slate-100 group-hover:text-blue-200 transition-colors mb-2">
                       {relatedProgram.departmentName}
                     </h3>
                     <p className="text-xs text-slate-400 mb-4">{relatedProgram.programType}</p>
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-slate-400">{relatedProgram.durationWeeksOptions[0]} weeks</span>
-                      <span className="text-xs px-2 py-1 rounded-full bg-cyan-500/15 text-cyan-200">
+                      <span className="text-xs px-2 py-1 rounded-full bg-blue-500/15 text-blue-200">
                         {relatedProgram.handsOnLevel}
                       </span>
                     </div>

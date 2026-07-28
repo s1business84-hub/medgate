@@ -226,11 +226,11 @@ export function VoiceAnswerRecorder({
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="p-4 rounded-lg border border-purple-500/30 bg-purple-500/10 space-y-4"
+      className="p-4 rounded-lg border border-indigo-500/30 bg-indigo-500/10 space-y-4"
     >
       <div>
         <p className="font-semibold text-white mb-2 flex items-center gap-2">
-          <Volume2 className="w-4 h-4 text-purple-400" />
+          <Volume2 className="w-4 h-4 text-indigo-400" />
           Voice Answer
         </p>
         <p className="text-sm text-slate-300">{question}</p>
@@ -256,7 +256,7 @@ export function VoiceAnswerRecorder({
             whileTap={{ scale: 0.98 }}
             onClick={startRecording}
             disabled={hasPermission === false}
-            className="flex-1 px-4 py-3 rounded-lg bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold flex items-center justify-center gap-2 transition shadow-lg"
+            className="flex-1 px-4 py-3 rounded-lg bg-linear-to-r from-indigo-600 to-indigo-600 hover:from-indigo-500 hover:to-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold flex items-center justify-center gap-2 transition shadow-lg"
           >
             <Mic className="w-5 h-5" />
             Start Recording
@@ -297,8 +297,8 @@ export function VoiceAnswerRecorder({
               {/* Header with Recording Info */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-purple-500/20 border border-purple-500/30">
-                    <FileAudio className="w-4 h-4 text-purple-400" />
+                  <div className="p-2 rounded-lg bg-indigo-500/20 border border-indigo-500/30">
+                    <FileAudio className="w-4 h-4 text-indigo-400" />
                   </div>
                   <div className="flex flex-col gap-1">
                     <span className="text-sm font-semibold text-slate-200">

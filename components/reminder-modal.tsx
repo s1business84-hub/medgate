@@ -99,7 +99,7 @@ export function ReminderModal({
           >
             <div className="rounded-2xl shadow-2xl overflow-hidden backdrop-blur-xl bg-linear-to-br from-white/60 via-white/40 to-white/20 border border-white/40">
               {/* Animated gradient overlay */}
-              <div className="absolute inset-0 bg-linear-to-br from-blue-400/10 via-transparent to-purple-400/10" />
+              <div className="absolute inset-0 bg-linear-to-br from-blue-400/10 via-transparent to-indigo-400/10" />
 
               {/* Header */}
               <div className="relative border-b border-white/20 px-6 py-6">

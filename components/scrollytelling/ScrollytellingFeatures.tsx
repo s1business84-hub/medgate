@@ -126,10 +126,10 @@ export function ScrollytellingFeatures({ features }: ScrollytellingFeaturesProps
             whileHover={{ y: -8 }}
           >
             {/* Base gradient glass tint - always visible */}
-            <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-white/3 to-indigo-500/5" />
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-white/3 to-indigo-500/5" />
 
             {/* Animated gradient overlay on hover */}
-            <div className="absolute inset-0 bg-gradient-to-br from-cyan-600/8 via-transparent to-indigo-600/8 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/8 via-transparent to-indigo-600/8 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
             {/* Liquid glass shine effect - top left shimmer */}
             <div className="absolute inset-0 transition-opacity duration-300">

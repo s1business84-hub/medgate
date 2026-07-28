@@ -162,7 +162,7 @@ export default function TraineeRegistry() {
             onClick={() => setShowConfirmedOnly(!showConfirmedOnly)}
             className={`px-4 py-2 rounded font-medium transition text-sm whitespace-nowrap ${
               showConfirmedOnly
-                ? "bg-cyan-600 text-white hover:bg-cyan-700"
+                ? "bg-blue-600 text-white hover:bg-blue-700"
                 : "bg-slate-200 text-slate-700 hover:bg-slate-300"
             }`}
             title="Filter to show only program-confirmed trainees"
@@ -210,7 +210,7 @@ export default function TraineeRegistry() {
                         t.regulatory === "None"
                           ? "bg-gray-100 text-gray-700"
                           : t.regulatory === "EHS"
-                            ? "bg-purple-100 text-purple-700"
+                            ? "bg-indigo-100 text-indigo-700"
                             : t.regulatory === "DHA"
                               ? "bg-blue-100 text-blue-700"
                               : "bg-green-100 text-green-700"
@@ -234,7 +234,7 @@ export default function TraineeRegistry() {
                   </td>
                   <td className="p-3 border-b border-slate-200">
                     {t.hasConfirmation ? (
-                      <span className="px-2 py-1 bg-cyan-100 text-cyan-700 rounded text-xs font-medium" title={t.confirmationType === "program" ? "Program-level confirmation" : "Student-specific confirmation"}>
+                      <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs font-medium" title={t.confirmationType === "program" ? "Program-level confirmation" : "Student-specific confirmation"}>
                         ✓ {t.confirmationType === "program" ? "Program" : "Student"}
                       </span>
                     ) : (

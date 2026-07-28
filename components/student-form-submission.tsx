@@ -137,7 +137,7 @@ export function StudentFormSubmission({
         </div>
         <div className="h-2 w-full rounded bg-white/10 overflow-hidden">
           <motion.div
-            className="h-full bg-linear-to-r from-purple-500 to-pink-500"
+            className="h-full bg-linear-to-r from-indigo-500 to-indigo-500"
             initial={{ width: 0 }}
             animate={{ width: `${progressPct}%` }}
             transition={{ type: "spring", stiffness: 200, damping: 24 }}
@@ -186,7 +186,7 @@ export function StudentFormSubmission({
                 value={(responses[field.id] as string) || ""}
                 onChange={(e) => handleFieldChange(field.id, e.target.value)}
                 placeholder={field.placeholder}
-                className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-purple-500 transition-colors"
+                className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors"
               />
             )}
 
@@ -196,7 +196,7 @@ export function StudentFormSubmission({
                 onChange={(e) => handleFieldChange(field.id, e.target.value)}
                 placeholder={field.placeholder}
                 rows={4}
-                className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-purple-500 transition-colors resize-none"
+                className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors resize-none"
               />
             )}
 
@@ -226,7 +226,7 @@ export function StudentFormSubmission({
                   type="checkbox"
                   checked={(responses[field.id] as boolean) || false}
                   onChange={(e) => handleFieldChange(field.id, e.target.checked)}
-                  className="rounded w-4 h-4 accent-purple-500"
+                  className="rounded w-4 h-4 accent-indigo-500"
                 />
                 <span className="text-slate-300">{field.placeholder || "Confirm"}</span>
               </div>
@@ -236,7 +236,7 @@ export function StudentFormSubmission({
               <select
                 value={(responses[field.id] as string) || ""}
                 onChange={(e) => handleFieldChange(field.id, e.target.value)}
-                className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-purple-500 transition-colors"
+                className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-indigo-500 transition-colors"
               >
                 <option value="" className="bg-slate-900">
                   {field.placeholder || "Select an option..."}
@@ -268,7 +268,7 @@ export function StudentFormSubmission({
                   onChange={(e) => handleReflectionChange(q.id, e.target.value)}
                   rows={3}
                   placeholder="Type your reflection..."
-                  className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-purple-500 transition-colors resize-none"
+                  className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors resize-none"
                 />
               </div>
             ))}
@@ -276,8 +276,8 @@ export function StudentFormSubmission({
 
           {/* AI Insight summary (simple heuristic) */}
           {answeredCount > 0 && (
-            <div className="mt-4 p-3 rounded-lg bg-purple-500/10 border border-purple-500/20">
-              <p className="text-xs text-purple-200">
+            <div className="mt-4 p-3 rounded-lg bg-indigo-500/10 border border-indigo-500/20">
+              <p className="text-xs text-indigo-200">
                 Insight: Your reflections highlight growth in <span className="font-semibold">communication and clinical reasoning</span>. Consider setting a specific goal for next session to reinforce learning.
               </p>
             </div>

@@ -15,7 +15,7 @@ export function SignaturePad({ onSigned }: { onSigned?: (signed: boolean) => voi
       <div className="mt-3 flex items-center gap-2">
         <Button
           size="sm"
-          className="bg-linear-to-r from-cyan-500 to-indigo-600 text-white"
+          className="bg-linear-to-r from-blue-500 to-indigo-600 text-white"
           onClick={() => {
             setSigned(true);
             onSigned?.(true);

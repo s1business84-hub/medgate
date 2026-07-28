@@ -94,7 +94,7 @@ export function Pricing() {
     <section className="py-16 sm:py-24 bg-linear-to-b from-slate-50 via-white to-slate-50 relative overflow-hidden">
       {/* Animated Background Elements */}
       <div className="absolute top-0 left-0 w-80 h-80 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 -z-10 animate-pulse" />
-      <div className="absolute top-1/2 right-0 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 -z-10 animate-pulse" style={{ animationDelay: '2s' }} />
+      <div className="absolute top-1/2 right-0 w-96 h-96 bg-indigo-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 -z-10 animate-pulse" style={{ animationDelay: '2s' }} />
       
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
@@ -134,7 +134,7 @@ export function Pricing() {
               }`}
             >
               {/* Animated gradient overlay */}
-              <div className="absolute inset-0 bg-linear-to-br from-blue-400/10 via-transparent to-purple-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-linear-to-br from-blue-400/10 via-transparent to-indigo-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               
               {/* Liquid glass shine effect */}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-300">

@@ -33,13 +33,13 @@ export function EligibilityChecker() {
             transition={{ delay: index * 0.05 }}
             className="flex items-start gap-3 p-3 sm:p-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl"
           >
-            <CheckCircle2 className="w-5 h-5 text-cyan-400 mt-0.5" />
+            <CheckCircle2 className="w-5 h-5 text-blue-400 mt-0.5" />
             <p className="text-sm sm:text-base text-slate-200 leading-snug">{item}</p>
           </motion.div>
         ))}
       </div>
 
-      <div className="mt-6 p-4 rounded-xl bg-linear-to-r from-cyan-500/10 to-indigo-500/10 border border-cyan-400/30 text-sm text-slate-200">
+      <div className="mt-6 p-4 rounded-xl bg-linear-to-r from-blue-500/10 to-indigo-500/10 border border-blue-400/30 text-sm text-slate-200">
         <strong>Note:</strong> Requirements vary by institution. Each program sets its own eligibility criteria, documentation needs, and approval process. Academic transcripts, vaccinations, and screenings are required by some programs but not all.
       </div>
     </motion.div>

@@ -73,8 +73,8 @@ export default function HospitalAnalyticsPage() {
 
   const getCategoryColor = (category: string) => {
     const colors: Record<string, string> = {
-      skills: "from-blue-500 to-cyan-500",
-      knowledge: "from-purple-500 to-pink-500",
+      skills: "from-blue-500 to-blue-500",
+      knowledge: "from-indigo-500 to-indigo-500",
       communication: "from-green-500 to-emerald-500",
       professionalism: "from-yellow-500 to-orange-500",
     }
@@ -93,7 +93,7 @@ export default function HospitalAnalyticsPage() {
 
   if (loading) {
     return (
-      <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950 flex items-center justify-center">
+      <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-indigo-900/20 to-slate-950 flex items-center justify-center">
         <LiquidParallax depth={14} className="opacity-70" />
         <p className="text-slate-300 relative z-10">Loading analytics dashboard...</p>
       </div>
@@ -101,7 +101,7 @@ export default function HospitalAnalyticsPage() {
   }
 
   return (
-    <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950">
+    <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-indigo-900/20 to-slate-950">
       <LiquidParallax depth={14} className="opacity-70" />
 
       <div className="max-w-7xl mx-auto px-4 py-12 relative z-10">
@@ -117,7 +117,7 @@ export default function HospitalAnalyticsPage() {
               </Link>
               <div>
                 <h1 className="text-4xl font-bold text-white flex items-center gap-2">
-                  <BarChart3 className="w-8 h-8 text-cyan-400" />
+                  <BarChart3 className="w-8 h-8 text-blue-400" />
                   Student Progress Analytics
                 </h1>
                 <p className="text-slate-300">Track clinical development across your programs</p>
@@ -143,7 +143,7 @@ export default function HospitalAnalyticsPage() {
                     <p className="text-sm text-slate-400 mb-1">{stat.label}</p>
                     <p className="text-3xl font-bold text-white">{stat.value}</p>
                   </div>
-                  <stat.icon className="w-12 h-12 text-cyan-400/30" />
+                  <stat.icon className="w-12 h-12 text-blue-400/30" />
                 </div>
               </motion.div>
             </Reveal>
@@ -163,7 +163,7 @@ export default function HospitalAnalyticsPage() {
                 whileHover={{ scale: 1.05 }}
                 className={`px-4 py-2 rounded-full font-medium transition-all ${
                   filter === cat.id
-                    ? "bg-linear-to-r from-cyan-500 to-indigo-600 text-white shadow-lg"
+                    ? "bg-linear-to-r from-blue-500 to-indigo-600 text-white shadow-lg"
                     : "bg-white/10 text-slate-300 hover:bg-white/20"
                 }`}
               >
@@ -193,7 +193,7 @@ export default function HospitalAnalyticsPage() {
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="text-2xl font-bold text-cyan-400">{data.avgProgress}%</p>
+                        <p className="text-2xl font-bold text-blue-400">{data.avgProgress}%</p>
                         <p className="text-xs text-slate-400">{data.entries} logs</p>
                       </div>
                     </div>

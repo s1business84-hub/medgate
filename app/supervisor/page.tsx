@@ -201,8 +201,8 @@ export default function SupervisorDashboard() {
       "bg-slate-600",
       "bg-blue-600",
       "bg-indigo-600",
-      "bg-purple-600",
-      "bg-pink-600",
+      "bg-indigo-600",
+      "bg-indigo-600",
     ];
     return { label: labels[level - 1], color: colors[level - 1] };
   };
@@ -506,7 +506,7 @@ export default function SupervisorDashboard() {
 
   if (loading) {
     return (
-      <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950 flex items-center justify-center">
+      <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-indigo-900/20 to-slate-950 flex items-center justify-center">
         <LiquidParallax depth={14} className="opacity-70" />
         <p className="text-slate-300 relative z-10">Loading supervisor dashboard...</p>
       </div>
@@ -529,7 +529,7 @@ export default function SupervisorDashboard() {
                 <ArrowLeft className="w-6 h-6 text-slate-300" />
               </Link>
               <div>
-                <h1 className="text-5xl font-bold bg-linear-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent flex items-center gap-2">
+                <h1 className="text-5xl font-bold bg-linear-to-r from-indigo-400 via-indigo-400 to-red-400 bg-clip-text text-transparent flex items-center gap-2">
                   Supervisor Dashboard
                 </h1>
                 <p className="text-xl text-slate-300">Track student progress, visualize clinical development, and gain AI-powered insights</p>
@@ -542,8 +542,8 @@ export default function SupervisorDashboard() {
         {/* KPI Cards */}
         <div className="grid md:grid-cols-4 gap-4 mb-8">
           {[
-            { label: "Total Students", value: overallStats.totalStudents, icon: Users, color: "from-purple-500 to-pink-500" },
-            { label: "Avg Form Progress", value: `${overallStats.avgFormProgress}%`, icon: TrendingUp, color: "from-blue-500 to-cyan-500" },
+            { label: "Total Students", value: overallStats.totalStudents, icon: Users, color: "from-indigo-500 to-indigo-500" },
+            { label: "Avg Form Progress", value: `${overallStats.avgFormProgress}%`, icon: TrendingUp, color: "from-blue-500 to-blue-500" },
             { label: "Avg Entries", value: overallStats.avgEntries, icon: Target, color: "from-green-500 to-emerald-500" },
             { label: "Programs Completed", value: overallStats.completedPrograms, icon: BarChart3, color: "from-orange-500 to-yellow-500" },
           ].map((stat, idx) => (
@@ -561,7 +561,7 @@ export default function SupervisorDashboard() {
 
         {/* AI Insights */}
         <Reveal delay={0.3} y={20}>
-          <div className="mb-8 p-6 rounded-2xl border border-purple-500/30 bg-purple-500/10 backdrop-blur-xl">
+          <div className="mb-8 p-6 rounded-2xl border border-indigo-500/30 bg-indigo-500/10 backdrop-blur-xl">
             <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
               <span className="text-2xl">✨</span> AI Insights
             </h2>
@@ -573,7 +573,7 @@ export default function SupervisorDashboard() {
                   className="p-3 rounded-lg bg-white/5 border border-white/10"
                 >
                   <p className="text-slate-300">
-                    <span className="text-purple-300 font-semibold">Top Performer:</span> {insights.topPerformer.name} (GMUID: {insights.topPerformer.gmuid}, Year {insights.topPerformer.year}) with {insights.topPerformer.formProgress}% progress
+                    <span className="text-indigo-300 font-semibold">Top Performer:</span> {insights.topPerformer.name} (GMUID: {insights.topPerformer.gmuid}, Year {insights.topPerformer.year}) with {insights.topPerformer.formProgress}% progress
                   </p>
                 </motion.div>
               )}
@@ -613,7 +613,7 @@ export default function SupervisorDashboard() {
                 whileHover={{ scale: 1.05 }}
                 className={`px-4 py-2 rounded-full font-medium transition-all ${
                   filter === cat.id
-                    ? "bg-linear-to-r from-purple-500 to-pink-600 text-white shadow-lg"
+                    ? "bg-linear-to-r from-indigo-500 to-indigo-600 text-white shadow-lg"
                     : "bg-white/10 text-slate-300 hover:bg-white/20"
                 }`}
               >
@@ -640,7 +640,7 @@ export default function SupervisorDashboard() {
               onClick={() => setActiveTab(tab.id as any)}
               className={`px-4 py-2 rounded-full font-medium transition-all ${
                 activeTab === tab.id
-                  ? "bg-linear-to-r from-purple-500 to-pink-600 text-white shadow-lg"
+                  ? "bg-linear-to-r from-indigo-500 to-indigo-600 text-white shadow-lg"
                   : "bg-white/10 text-slate-300 hover:bg-white/20"
               }`}
             >
@@ -654,7 +654,7 @@ export default function SupervisorDashboard() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setShowAddStudentModal(true)}
-            className="px-6 py-3 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold shadow-lg text-base flex items-center gap-2"
+            className="px-6 py-3 rounded-lg bg-gradient-to-r from-indigo-600 to-indigo-600 hover:from-indigo-500 hover:to-indigo-500 text-white font-bold shadow-lg text-base flex items-center gap-2"
           >
             <span className="text-xl">➕</span> ADD STUDENT MANUALLY
           </motion.button>
@@ -664,7 +664,7 @@ export default function SupervisorDashboard() {
           <button onClick={exportToCSV} className="px-4 py-2 rounded-md bg-linear-to-r from-green-600 to-emerald-600 hover:opacity-90 text-white text-sm">
             Export to CSV
           </button>
-          <label className="px-4 py-2 rounded-md bg-linear-to-r from-blue-600 to-cyan-600 hover:opacity-90 text-white text-sm cursor-pointer">
+          <label className="px-4 py-2 rounded-md bg-linear-to-r from-blue-600 to-blue-600 hover:opacity-90 text-white text-sm cursor-pointer">
             Import from CSV
             <input type="file" accept=".csv" onChange={importFromCSV} className="hidden" />
           </label>
@@ -688,7 +688,7 @@ export default function SupervisorDashboard() {
                         {levelBadge(student.level).label}
                       </span>
                     </div>
-                    <p className="text-xs text-purple-300 font-mono mb-1">GMUID: {student.gmuid}</p>
+                    <p className="text-xs text-indigo-300 font-mono mb-1">GMUID: {student.gmuid}</p>
                     <p className="text-sm text-slate-400">Year {student.year} | {student.completedPrograms} programs completed</p>
                   </div>
 
@@ -696,14 +696,14 @@ export default function SupervisorDashboard() {
                   <div className="mb-4">
                     <div className="flex justify-between items-center mb-2">
                       <p className="text-sm text-slate-300">Form Progress</p>
-                      <p className="text-sm font-bold text-cyan-400">{student.formProgress}%</p>
+                      <p className="text-sm font-bold text-blue-400">{student.formProgress}%</p>
                     </div>
                     <div className="w-full bg-white/10 rounded-full h-2">
                       <motion.div
                         initial={{ width: 0 }}
                         whileInView={{ width: `${student.formProgress}%` }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="bg-linear-to-r from-purple-500 to-pink-500 h-2 rounded-full"
+                        className="bg-linear-to-r from-indigo-500 to-indigo-500 h-2 rounded-full"
                       />
                     </div>
                   </div>
@@ -728,15 +728,15 @@ export default function SupervisorDashboard() {
                   {/* Supervisor Assignments */}
                   {student.observerships && student.observerships.length > 0 && (
                     <div className="mt-4 pt-4 border-t border-white/10">
-                      <p className="text-xs font-semibold text-cyan-300 mb-2">Assigned Supervisors</p>
+                      <p className="text-xs font-semibold text-blue-300 mb-2">Assigned Supervisors</p>
                       <div className="space-y-1">
                         {student.observerships.map((obs) => (
                           <div key={obs.id} className="text-xs text-slate-400 flex items-start gap-2">
-                            <span className="text-cyan-400 mt-1">→</span>
+                            <span className="text-blue-400 mt-1">→</span>
                             <div>
                               <p className="text-slate-300">{obs.title}</p>
                               {obs.assignedSupervisor && (
-                                <p className="text-cyan-300 text-xs">{obs.assignedSupervisor}</p>
+                                <p className="text-blue-300 text-xs">{obs.assignedSupervisor}</p>
                               )}
                             </div>
                           </div>
@@ -749,7 +749,7 @@ export default function SupervisorDashboard() {
                   <div className="mt-4 flex justify-end">
                     <button
                       onClick={() => promoteStudent(student.id)}
-                      className="text-xs px-3 py-1 rounded-md bg-linear-to-r from-purple-600 to-pink-600 text-white hover:opacity-90"
+                      className="text-xs px-3 py-1 rounded-md bg-linear-to-r from-indigo-600 to-indigo-600 text-white hover:opacity-90"
                     >
                       Promote Level
                     </button>
@@ -778,7 +778,7 @@ export default function SupervisorDashboard() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => setShowAddStudentModal(true)}
-              className="w-full px-6 py-4 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold shadow-lg text-lg flex items-center justify-center gap-3 mb-6"
+              className="w-full px-6 py-4 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-600 hover:from-indigo-500 hover:to-indigo-500 text-white font-bold shadow-lg text-lg flex items-center justify-center gap-3 mb-6"
             >
               <span className="text-2xl">➕</span> ADD STUDENT MANUALLY
             </motion.button>
@@ -787,7 +787,7 @@ export default function SupervisorDashboard() {
                 <div className="flex items-center justify-between mb-3">
                   <div>
                     <h3 className="text-lg font-bold text-white">{student.name}</h3>
-                    <p className="text-xs text-purple-300">GMUID: {student.gmuid} | Year {student.year}</p>
+                    <p className="text-xs text-indigo-300">GMUID: {student.gmuid} | Year {student.year}</p>
                   </div>
                   <span className={`text-xs px-2 py-1 rounded-full text-white ${levelBadge(student.level).color}`}>
                     {levelBadge(student.level).label}
@@ -805,7 +805,7 @@ export default function SupervisorDashboard() {
                         <span className="text-xs text-slate-400">None</span>
                       ) : (
                         (student.formsAssigned || []).map((f) => (
-                          <span key={f} className="text-xs px-2 py-1 rounded-full bg-purple-500/20 text-purple-300">
+                          <span key={f} className="text-xs px-2 py-1 rounded-full bg-indigo-500/20 text-indigo-300">
                             {f}
                           </span>
                         ))
@@ -824,10 +824,10 @@ export default function SupervisorDashboard() {
                             <p className="text-sm text-slate-300">
                               {obs.title} <span className="text-xs text-slate-400">({obs.type})</span>
                             </p>
-                            <p className="text-sm font-bold text-cyan-400">{pct}%</p>
+                            <p className="text-sm font-bold text-blue-400">{pct}%</p>
                           </div>
                           <div className="w-full bg-white/10 rounded-full h-2">
-                            <motion.div initial={{ width: 0 }} whileInView={{ width: `${pct}%` }} transition={{ duration: 0.8, ease: "easeOut" }} className="bg-linear-to-r from-cyan-500 to-indigo-500 h-2 rounded-full" />
+                            <motion.div initial={{ width: 0 }} whileInView={{ width: `${pct}%` }} transition={{ duration: 0.8, ease: "easeOut" }} className="bg-linear-to-r from-blue-500 to-indigo-500 h-2 rounded-full" />
                           </div>
                           <div className="flex items-center justify-between mt-2">
                             <p className="text-xs text-slate-400">Sessions: {obs.sessionsCompleted}/{obs.totalSessions}</p>
@@ -872,18 +872,18 @@ export default function SupervisorDashboard() {
         {/* Observerships Tab */}
         {activeTab === "observerships" && (
           <>
-            <div className="mb-6 p-6 rounded-xl bg-gradient-to-r from-cyan-600/20 to-indigo-600/20 border-2 border-cyan-500/50">
-              <h3 className="text-xl font-bold text-cyan-200 mb-4 flex items-center gap-2">
+            <div className="mb-6 p-6 rounded-xl bg-gradient-to-r from-blue-600/20 to-indigo-600/20 border-2 border-blue-500/50">
+              <h3 className="text-xl font-bold text-blue-200 mb-4 flex items-center gap-2">
                 <span className="text-2xl">📋</span> Quick Add Observership
               </h3>
-              <p className="text-sm text-cyan-100 mb-4">Select a student below and use the form in their card to add observerships/electives</p>
+              <p className="text-sm text-blue-100 mb-4">Select a student below and use the form in their card to add observerships/electives</p>
             </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredStudents.map((student) => (
               <div key={student.id} className="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl">
                 <div className="mb-4">
                   <h3 className="text-lg font-bold text-white">{student.name}</h3>
-                  <p className="text-xs text-purple-300">GMUID: {student.gmuid}</p>
+                  <p className="text-xs text-indigo-300">GMUID: {student.gmuid}</p>
                 </div>
                 <div className="space-y-3">
                   {(student.observerships || []).map((obs) => {
@@ -894,14 +894,14 @@ export default function SupervisorDashboard() {
                           <p className="text-sm text-slate-300">
                             {obs.title} <span className="text-xs text-slate-400">({obs.type})</span>
                           </p>
-                          <p className="text-sm font-bold text-cyan-400">{pct}%</p>
+                          <p className="text-sm font-bold text-blue-400">{pct}%</p>
                         </div>
                         <div className="w-full bg-white/10 rounded-full h-2">
                           <motion.div
                             initial={{ width: 0 }}
                             whileInView={{ width: `${pct}%` }}
                             transition={{ duration: 0.8, ease: "easeOut" }}
-                            className="bg-linear-to-r from-cyan-500 to-indigo-500 h-2 rounded-full"
+                            className="bg-linear-to-r from-blue-500 to-indigo-500 h-2 rounded-full"
                           />
                         </div>
                         <div className="flex items-center justify-between mt-2">
@@ -941,7 +941,7 @@ export default function SupervisorDashboard() {
                   </div>
                   <div className="mt-2 flex justify-end">
                     <button
-                      className="text-xs px-3 py-1 rounded-md bg-linear-to-r from-cyan-600 to-indigo-600 text-white"
+                      className="text-xs px-3 py-1 rounded-md bg-linear-to-r from-blue-600 to-indigo-600 text-white"
                       onClick={() => {
                         const title = (document.getElementById(`title-${student.id}`) as HTMLInputElement)?.value || "Untitled";
                         const type = ((document.getElementById(`type-${student.id}`) as HTMLSelectElement)?.value as any) || "observership";
@@ -990,7 +990,7 @@ export default function SupervisorDashboard() {
         {/* Forms Tab */}
         {activeTab === "forms" && (
           <>
-            <div className="mb-6 p-6 rounded-xl bg-gradient-to-r from-blue-600/20 to-purple-600/20 border-2 border-blue-500/50">
+            <div className="mb-6 p-6 rounded-xl bg-gradient-to-r from-blue-600/20 to-indigo-600/20 border-2 border-blue-500/50">
               <h3 className="text-xl font-bold text-blue-200 mb-4 flex items-center gap-2">
                 <span className="text-2xl">📄</span> Assign Forms to Students
               </h3>
@@ -1004,7 +1004,7 @@ export default function SupervisorDashboard() {
                   <p className="text-xs text-slate-400">Assigned Forms:</p>
                   <div className="flex flex-wrap gap-2 mt-2">
                     {(student.formsAssigned || []).map((f) => (
-                      <span key={f} className="text-xs px-2 py-1 rounded-full bg-purple-500/20 text-purple-300">
+                      <span key={f} className="text-xs px-2 py-1 rounded-full bg-indigo-500/20 text-indigo-300">
                         {f}
                       </span>
                     ))}
@@ -1048,7 +1048,7 @@ export default function SupervisorDashboard() {
             <div className="lg:col-span-1">
               <div className="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl">
                 <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                  <Target className="w-5 h-5 text-purple-300" />
+                  <Target className="w-5 h-5 text-indigo-300" />
                   Academic Goal Assignment
                 </h3>
                 <div className="space-y-4">
@@ -1085,7 +1085,7 @@ export default function SupervisorDashboard() {
                       max="100"
                       value={goalForm.targetValue}
                       onChange={(e) => setGoalForm({ ...goalForm, targetValue: parseInt(e.target.value, 10) })}
-                      className="w-full mt-2 accent-purple-500"
+                      className="w-full mt-2 accent-indigo-500"
                     />
                   </div>
                   <div>
@@ -1099,7 +1099,7 @@ export default function SupervisorDashboard() {
                   </div>
                   <button
                     onClick={addAcademicGoal}
-                    className="w-full px-4 py-2 rounded-lg bg-linear-to-r from-purple-500 to-pink-600 text-white font-semibold hover:opacity-90 transition"
+                    className="w-full px-4 py-2 rounded-lg bg-linear-to-r from-indigo-500 to-indigo-600 text-white font-semibold hover:opacity-90 transition"
                   >
                     Assign Academic Goal
                   </button>
@@ -1122,14 +1122,14 @@ export default function SupervisorDashboard() {
                           <h4 className="text-lg font-bold text-white">{student.name}</h4>
                           <p className="text-xs text-slate-400">Academic Goals</p>
                         </div>
-                        <span className="text-xs px-2 py-1 rounded-full bg-purple-500/20 text-purple-300">
+                        <span className="text-xs px-2 py-1 rounded-full bg-indigo-500/20 text-indigo-300">
                           {studentGoals.length} goals
                         </span>
                       </div>
                       {studentGoals.length > 0 ? (
                         <div className="space-y-2">
                           {studentGoals.map((goal) => (
-                            <div key={goal.id} className="p-3 rounded-lg bg-purple-500/10 border border-purple-500/30 flex items-center justify-between">
+                            <div key={goal.id} className="p-3 rounded-lg bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-between">
                               <div>
                                 <p className="text-sm font-semibold text-white capitalize">{goal.category}</p>
                                 <p className="text-xs text-slate-400">
@@ -1225,14 +1225,14 @@ export default function SupervisorDashboard() {
                       onClick={() => setSelectedStudent(student.id)}
                       className={`w-full text-left p-4 rounded-lg transition-all ${
                         selectedStudent === student.id
-                          ? "bg-linear-to-r from-purple-500/20 to-pink-500/20 border-2 border-purple-400"
+                          ? "bg-linear-to-r from-indigo-500/20 to-indigo-500/20 border-2 border-indigo-400"
                           : "bg-white/5 border border-white/10 hover:bg-white/10"
                       }`}
                     >
                       <p className="text-sm font-semibold text-white">{student.name}</p>
                       <p className="text-xs text-slate-400">{student.gmuid}</p>
                       <div className="mt-2 flex items-center gap-2">
-                        <span className="text-xs px-2 py-1 rounded-full bg-cyan-500/20 text-cyan-300">
+                        <span className="text-xs px-2 py-1 rounded-full bg-blue-500/20 text-blue-300">
                           {student.entries} entries
                         </span>
                         <span className={`text-xs px-2 py-1 rounded-full ${levelBadge(student.level).color} text-white`}>
@@ -1252,7 +1252,7 @@ export default function SupervisorDashboard() {
                   <div className="mb-6">
                     <h3 className="text-2xl font-bold text-white mb-2">Log Progress Entry</h3>
                     <p className="text-slate-300">
-                      Recording progress for: <span className="font-semibold text-cyan-400">
+                      Recording progress for: <span className="font-semibold text-blue-400">
                         {students.find(s => s.id === selectedStudent)?.name}
                       </span>
                     </p>
@@ -1271,7 +1271,7 @@ export default function SupervisorDashboard() {
                             whileTap={{ scale: 0.98 }}
                             className={`p-4 rounded-lg border-2 transition-all ${
                               progressForm.category === cat.id
-                                ? "border-cyan-400 bg-cyan-500/20"
+                                ? "border-blue-400 bg-blue-500/20"
                                 : "border-white/10 bg-white/5 hover:border-white/20"
                             }`}
                           >
@@ -1293,7 +1293,7 @@ export default function SupervisorDashboard() {
                         max="100"
                         value={progressForm.value}
                         onChange={(e) => setProgressForm({ ...progressForm, value: parseInt(e.target.value) })}
-                        className="w-full h-3 bg-white/10 rounded-lg appearance-none cursor-pointer accent-cyan-500"
+                        className="w-full h-3 bg-white/10 rounded-lg appearance-none cursor-pointer accent-blue-500"
                       />
                       <div className="flex justify-between text-xs text-slate-400 mt-2">
                         <span>Beginning</span>
@@ -1310,7 +1310,7 @@ export default function SupervisorDashboard() {
                         value={progressForm.notes}
                         onChange={(e) => setProgressForm({ ...progressForm, notes: e.target.value })}
                         placeholder="e.g., Demonstrated improved suturing technique, actively participated in 3 procedures, showed excellent patient communication..."
-                        className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-cyan-400 min-h-30"
+                        className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-blue-400 min-h-30"
                         rows={5}
                       />
                     </div>
@@ -1320,7 +1320,7 @@ export default function SupervisorDashboard() {
                       onClick={handleLogProgress}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="w-full px-6 py-4 bg-linear-to-r from-cyan-500 to-indigo-600 text-white font-semibold rounded-lg hover:shadow-xl shadow-lg transition-all"
+                      className="w-full px-6 py-4 bg-linear-to-r from-blue-500 to-indigo-600 text-white font-semibold rounded-lg hover:shadow-xl shadow-lg transition-all"
                     >
                       Save Progress Entry
                     </motion.button>
@@ -1346,10 +1346,10 @@ export default function SupervisorDashboard() {
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-gradient-to-br from-slate-900 to-slate-950 border-2 border-purple-500/50 rounded-2xl p-8 max-w-md w-full shadow-2xl"
+            className="bg-gradient-to-br from-slate-900 to-slate-950 border-2 border-indigo-500/50 rounded-2xl p-8 max-w-md w-full shadow-2xl"
           >
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              <h2 className="text-2xl font-bold bg-gradient-to-r from-indigo-400 to-indigo-400 bg-clip-text text-transparent">
                 Add Student Manually
               </h2>
               <button
@@ -1368,7 +1368,7 @@ export default function SupervisorDashboard() {
                   value={newStudentForm.name}
                   onChange={(e) => setNewStudentForm({ ...newStudentForm, name: e.target.value })}
                   placeholder="e.g., John Smith"
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-purple-400"
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-indigo-400"
                 />
               </div>
 
@@ -1379,7 +1379,7 @@ export default function SupervisorDashboard() {
                   value={newStudentForm.gmuid}
                   onChange={(e) => setNewStudentForm({ ...newStudentForm, gmuid: e.target.value })}
                   placeholder="e.g., GMU-12345"
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-purple-400"
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-indigo-400"
                 />
               </div>
 
@@ -1391,7 +1391,7 @@ export default function SupervisorDashboard() {
                     const year = parseInt(e.target.value);
                     setNewStudentForm({ ...newStudentForm, year, category: `year-${year}` });
                   }}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-purple-400"
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-indigo-400"
                 >
                   {[1, 2, 3, 4, 5, 6, 7].map(y => (
                     <option key={y} value={y}>Year {y}</option>
@@ -1408,7 +1408,7 @@ export default function SupervisorDashboard() {
                 </button>
                 <button
                   onClick={addStudentManually}
-                  className="flex-1 px-6 py-3 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold shadow-lg transition-all"
+                  className="flex-1 px-6 py-3 rounded-lg bg-gradient-to-r from-indigo-600 to-indigo-600 hover:from-indigo-500 hover:to-indigo-500 text-white font-bold shadow-lg transition-all"
                 >
                   Add Student
                 </button>

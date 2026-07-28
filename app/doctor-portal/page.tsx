@@ -115,7 +115,7 @@ export default function DoctorPortal() {
       <div className="pointer-events-none absolute inset-0">
         {/* Animated gradient orbs */}
         <motion.div
-          className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-full blur-3xl"
+          className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-r from-blue-500/20 to-blue-500/20 rounded-full blur-3xl"
           animate={{
             scale: [1, 1.2, 1],
             opacity: [0.3, 0.5, 0.3],
@@ -127,7 +127,7 @@ export default function DoctorPortal() {
           }}
         />
         <motion.div
-          className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full blur-3xl"
+          className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-r from-indigo-500/20 to-indigo-500/20 rounded-full blur-3xl"
           animate={{
             scale: [1.2, 1, 1.2],
             opacity: [0.4, 0.6, 0.4],
@@ -138,14 +138,14 @@ export default function DoctorPortal() {
             ease: "easeInOut"
           }}
         />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(6,182,212,0.15),transparent_50%),radial-gradient(circle_at_70%_60%,rgba(168,85,247,0.12),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.15),transparent_50%),radial-gradient(circle_at_70%_60%,rgba(99,102,241,0.12),transparent_50%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-20" />
         
         {/* Floating particles */}
         {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-cyan-400/30 rounded-full"
+            className="absolute w-1 h-1 bg-blue-400/30 rounded-full"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -172,7 +172,7 @@ export default function DoctorPortal() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent">
                 Student Portal
               </h1>
               <p className="text-sm text-slate-400">Learning Journey & Progress</p>
@@ -194,7 +194,7 @@ export default function DoctorPortal() {
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     whileHover={{ scale: 1.1 }}
-                    className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs rounded-full flex items-center justify-center font-bold shadow-lg ring-2 ring-slate-900"
+                    className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-indigo-500 to-indigo-500 text-white text-xs rounded-full flex items-center justify-center font-bold shadow-lg ring-2 ring-slate-900"
                   >
                     {unreadNotifications}
                   </motion.span>
@@ -209,10 +209,10 @@ export default function DoctorPortal() {
               </motion.button>
               <motion.div 
                 whileHover={{ scale: 1.05 }}
-                className="relative w-10 h-10 bg-gradient-to-br from-cyan-500 via-blue-500 to-indigo-600 rounded-xl flex items-center justify-center text-white font-bold shadow-lg ring-2 ring-cyan-500/30 hover:ring-4 transition-all cursor-pointer"
+                className="relative w-10 h-10 bg-gradient-to-br from-blue-500 via-blue-500 to-indigo-600 rounded-xl flex items-center justify-center text-white font-bold shadow-lg ring-2 ring-blue-500/30 hover:ring-4 transition-all cursor-pointer"
               >
                 <span className="relative z-10">D</span>
-                <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 to-indigo-500 rounded-xl blur opacity-50 group-hover:opacity-75 transition-opacity" />
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-xl blur opacity-50 group-hover:opacity-75 transition-opacity" />
               </motion.div>
             </motion.div>
           </div>
@@ -234,7 +234,7 @@ export default function DoctorPortal() {
                   whileTap={{ scale: 0.98 }}
                   className={`relative px-5 py-3 rounded-xl font-medium transition-all duration-200 flex items-center gap-2 whitespace-nowrap ${
                     isActive
-                      ? "text-cyan-300 bg-white/10 backdrop-blur-xl border border-cyan-500/30 shadow-lg shadow-cyan-500/20"
+                      ? "text-blue-300 bg-white/10 backdrop-blur-xl border border-blue-500/30 shadow-lg shadow-blue-500/20"
                       : "text-slate-400 hover:text-slate-200 hover:bg-white/5 border border-transparent"
                   }`}
                 >
@@ -243,7 +243,7 @@ export default function DoctorPortal() {
                   {isActive && (
                     <motion.span
                       layoutId="doctor-portal-tab"
-                      className="absolute -bottom-0.5 left-0 right-0 h-0.5 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full"
+                      className="absolute -bottom-0.5 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full"
                       transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                     />
                   )}
@@ -271,15 +271,15 @@ export default function DoctorPortal() {
                   label: "Students",
                   value: metrics?.studentsUnderSupervision,
                   icon: Users,
-                  gradient: "from-blue-500 to-cyan-500",
-                  bgGradient: "from-blue-500/10 to-cyan-500/10",
+                  gradient: "from-blue-500 to-blue-500",
+                  bgGradient: "from-blue-500/10 to-blue-500/10",
                 },
                 {
                   label: "Observations",
                   value: `${metrics?.completedObservations}/${metrics?.totalObservations}`,
                   icon: BookOpen,
-                  gradient: "from-purple-500 to-pink-500",
-                  bgGradient: "from-purple-500/10 to-pink-500/10",
+                  gradient: "from-indigo-500 to-indigo-500",
+                  bgGradient: "from-indigo-500/10 to-indigo-500/10",
                 },
                 {
                   label: "Average Rating",
@@ -302,7 +302,7 @@ export default function DoctorPortal() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.05, duration: 0.3 }}
                   whileHover={{ y: -6, scale: 1.03 }}
-                  className="group relative p-6 rounded-3xl border border-white/20 bg-white/8 backdrop-blur-3xl hover:border-white/40 transition-all duration-300 overflow-hidden hover:shadow-2xl hover:shadow-cyan-500/10"
+                  className="group relative p-6 rounded-3xl border border-white/20 bg-white/8 backdrop-blur-3xl hover:border-white/40 transition-all duration-300 overflow-hidden hover:shadow-2xl hover:shadow-blue-500/10"
                 >
                   {/* Animated gradient border */}
                   <motion.div
@@ -420,11 +420,11 @@ export default function DoctorPortal() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: idx * 0.05, duration: 0.3 }}
                     whileHover={{ y: -6, scale: 1.02 }}
-                    className="group relative bg-white/8 backdrop-blur-3xl rounded-3xl border border-white/20 p-6 hover:border-white/40 transition-all duration-300 overflow-hidden hover:shadow-2xl hover:shadow-purple-500/10"
+                    className="group relative bg-white/8 backdrop-blur-3xl rounded-3xl border border-white/20 p-6 hover:border-white/40 transition-all duration-300 overflow-hidden hover:shadow-2xl hover:shadow-indigo-500/10"
                   >
                     {/* Animated gradient glow */}
                     <motion.div
-                      className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 rounded-3xl transition-opacity duration-500"
+                      className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-indigo-500/10 to-indigo-500/10 opacity-0 group-hover:opacity-100 rounded-3xl transition-opacity duration-500"
                       animate={{
                         backgroundPosition: ['0% 0%', '100% 100%'],
                       }}
@@ -438,7 +438,7 @@ export default function DoctorPortal() {
                     {/* Enhanced liquid shimmer effect */}
                     <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                       <motion.div 
-                        className="absolute top-0 right-0 w-2/3 h-2/3 bg-gradient-to-bl from-cyan-400/20 via-purple-400/10 to-transparent rounded-full blur-3xl"
+                        className="absolute top-0 right-0 w-2/3 h-2/3 bg-gradient-to-bl from-blue-400/20 via-indigo-400/10 to-transparent rounded-full blur-3xl"
                         animate={{
                           x: [0, 30, 0],
                           y: [0, 20, 0],
@@ -455,14 +455,14 @@ export default function DoctorPortal() {
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex items-center gap-3">
                           <motion.div 
-                            className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-indigo-600 rounded-xl flex items-center justify-center text-white font-bold shadow-lg ring-2 ring-cyan-500/30 group-hover:ring-4 transition-all"
+                            className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center text-white font-bold shadow-lg ring-2 ring-blue-500/30 group-hover:ring-4 transition-all"
                             whileHover={{ rotate: [0, -5, 5, 0], scale: 1.1 }}
                             transition={{ duration: 0.5 }}
                           >
                             {student.name.split(" ")[0][0]}
                           </motion.div>
                           <div>
-                            <p className="font-semibold text-white group-hover:text-cyan-300 transition-colors">{student.name}</p>
+                            <p className="font-semibold text-white group-hover:text-blue-300 transition-colors">{student.name}</p>
                             <p className="text-sm text-slate-400">Level {student.level}</p>
                           </div>
                         </div>
@@ -492,7 +492,7 @@ export default function DoctorPortal() {
                         </div>
                         <div className="relative w-full h-3 bg-slate-800/50 rounded-full overflow-hidden shadow-inner">
                           <motion.div
-                            className="absolute inset-y-0 left-0 bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500 rounded-full shadow-lg"
+                            className="absolute inset-y-0 left-0 bg-gradient-to-r from-blue-500 via-blue-500 to-indigo-500 rounded-full shadow-lg"
                             initial={{ width: 0 }}
                             animate={{ width: `${student.progress}%` }}
                             transition={{ duration: 0.8, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
@@ -515,11 +515,11 @@ export default function DoctorPortal() {
                       <motion.button 
                         whileHover={{ scale: 1.03, y: -2 }}
                         whileTap={{ scale: 0.98 }}
-                        className="relative w-full px-4 py-2.5 border border-cyan-500/30 text-cyan-300 bg-cyan-500/10 rounded-xl hover:bg-cyan-500/20 hover:border-cyan-500/50 backdrop-blur-xl transition-all duration-200 text-sm font-medium shadow-lg hover:shadow-cyan-500/20 overflow-hidden group/btn"
+                        className="relative w-full px-4 py-2.5 border border-blue-500/30 text-blue-300 bg-blue-500/10 rounded-xl hover:bg-blue-500/20 hover:border-blue-500/50 backdrop-blur-xl transition-all duration-200 text-sm font-medium shadow-lg hover:shadow-blue-500/20 overflow-hidden group/btn"
                       >
                         <span className="relative z-10">View Details</span>
                         <motion.div
-                          className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-indigo-500/20 opacity-0 group-hover/btn:opacity-100"
+                          className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 opacity-0 group-hover/btn:opacity-100"
                           animate={{
                             x: [-100, 100],
                           }}
@@ -549,9 +549,9 @@ export default function DoctorPortal() {
               <h3 className="text-lg font-bold text-white mb-6">Supervision Schedule</h3>
               <div className="space-y-3">
                 {[
-                  { day: "Monday", time: "08:00 AM - 12:00 PM", location: "Ward A", color: "from-blue-500 to-cyan-500" },
-                  { day: "Wednesday", time: "02:00 PM - 06:00 PM", location: "Ward B", color: "from-purple-500 to-pink-500" },
-                  { day: "Friday", time: "09:00 AM - 01:00 PM", location: "Operating Theatre", color: "from-emerald-500 to-teal-500" },
+                  { day: "Monday", time: "08:00 AM - 12:00 PM", location: "Ward A", color: "from-blue-500 to-blue-500" },
+                  { day: "Wednesday", time: "02:00 PM - 06:00 PM", location: "Ward B", color: "from-indigo-500 to-indigo-500" },
+                  { day: "Friday", time: "09:00 AM - 01:00 PM", location: "Operating Theatre", color: "from-emerald-500 to-blue-500" },
                 ].map((slot, idx) => (
                   <motion.div
                     key={idx}
@@ -593,21 +593,21 @@ export default function DoctorPortal() {
                     title: "Student At Risk",
                     message: "Omar Khalid is showing signs of struggle. Consider additional guidance.",
                     time: "2 hours ago",
-                    gradient: "from-red-500 to-rose-500",
+                    gradient: "from-red-500 to-indigo-500",
                   },
                   {
                     type: "info",
                     title: "New Student Assignment",
                     message: "You have been assigned 1 new student.",
                     time: "1 day ago",
-                    gradient: "from-blue-500 to-cyan-500",
+                    gradient: "from-blue-500 to-blue-500",
                   },
                   {
                     type: "success",
                     title: "Observation Completed",
                     message: "Your observation for Ahmed Hassan has been recorded.",
                     time: "3 days ago",
-                    gradient: "from-emerald-500 to-teal-500",
+                    gradient: "from-emerald-500 to-blue-500",
                   },
                 ].map((notif, idx) => (
                   <motion.div

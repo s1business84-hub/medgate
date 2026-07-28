@@ -130,7 +130,7 @@ export default function SupervisorDemoDashboard() {
       icon: Target,
       title: "Milestone Achievement",
       description: "3 students on track to complete all requirements ahead of schedule",
-      color: "from-blue-500 to-cyan-500"
+      color: "from-blue-500 to-blue-500"
     }
   ];
 
@@ -143,7 +143,7 @@ export default function SupervisorDemoDashboard() {
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-4xl font-bold mb-2 bg-linear-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent">
+            <h1 className="text-4xl font-bold mb-2 bg-linear-to-r from-indigo-400 via-indigo-400 to-red-400 bg-clip-text text-transparent">
               Supervisor Dashboard
             </h1>
             <p className="text-slate-400">Track student progress • Manage observerships • AI-powered insights</p>
@@ -169,7 +169,7 @@ export default function SupervisorDemoDashboard() {
               onClick={() => setSelectedTab(tab.id as any)}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
                 selectedTab === tab.id
-                  ? "bg-purple-500/20 text-purple-300 border border-purple-500/50"
+                  ? "bg-indigo-500/20 text-indigo-300 border border-indigo-500/50"
                   : "bg-white/5 text-slate-400 border border-white/10 hover:bg-white/10"
               }`}
             >
@@ -184,15 +184,15 @@ export default function SupervisorDemoDashboard() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="group relative rounded-2xl border border-purple-500/20 bg-linear-to-br from-purple-500/10 via-purple-500/5 to-transparent p-6 backdrop-blur-sm hover:border-purple-500/40 transition-all overflow-hidden"
+            className="group relative rounded-2xl border border-indigo-500/20 bg-linear-to-br from-indigo-500/10 via-indigo-500/5 to-transparent p-6 backdrop-blur-sm hover:border-indigo-500/40 transition-all overflow-hidden"
           >
-            <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-3xl" />
             <div className="relative">
               <div className="flex items-center justify-between mb-4">
-                <div className="p-3 rounded-xl bg-purple-500/20 backdrop-blur-sm">
-                  <Users className="w-6 h-6 text-purple-400" />
+                <div className="p-3 rounded-xl bg-indigo-500/20 backdrop-blur-sm">
+                  <Users className="w-6 h-6 text-indigo-400" />
                 </div>
-                <div className="px-2 py-1 rounded-full bg-purple-500/20 text-purple-300 text-xs font-semibold">
+                <div className="px-2 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-semibold">
                   Active
                 </div>
               </div>
@@ -211,15 +211,15 @@ export default function SupervisorDemoDashboard() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="group relative rounded-2xl border border-cyan-500/20 bg-linear-to-br from-cyan-500/10 via-cyan-500/5 to-transparent p-6 backdrop-blur-sm hover:border-cyan-500/40 transition-all overflow-hidden"
+            className="group relative rounded-2xl border border-blue-500/20 bg-linear-to-br from-blue-500/10 via-blue-500/5 to-transparent p-6 backdrop-blur-sm hover:border-blue-500/40 transition-all overflow-hidden"
           >
-            <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl" />
             <div className="relative">
               <div className="flex items-center justify-between mb-4">
-                <div className="p-3 rounded-xl bg-cyan-500/20 backdrop-blur-sm">
-                  <BarChart3 className="w-6 h-6 text-cyan-400" />
+                <div className="p-3 rounded-xl bg-blue-500/20 backdrop-blur-sm">
+                  <BarChart3 className="w-6 h-6 text-blue-400" />
                 </div>
-                <div className="px-2 py-1 rounded-full bg-cyan-500/20 text-cyan-300 text-xs font-semibold">
+                <div className="px-2 py-1 rounded-full bg-blue-500/20 text-blue-300 text-xs font-semibold">
                   Avg
                 </div>
               </div>
@@ -227,7 +227,7 @@ export default function SupervisorDemoDashboard() {
               <p className="text-4xl font-bold text-white mb-2">{avgProgress}%</p>
               <div className="w-full bg-slate-700/50 rounded-full h-1.5 mt-2">
                 <div
-                  className="bg-linear-to-r from-cyan-500 to-blue-500 h-1.5 rounded-full transition-all duration-500"
+                  className="bg-linear-to-r from-blue-500 to-blue-500 h-1.5 rounded-full transition-all duration-500"
                   style={{ width: `${avgProgress}%` }}
                 />
               </div>
@@ -296,8 +296,8 @@ export default function SupervisorDemoDashboard() {
             className="mb-8"
           >
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 rounded-lg bg-purple-500/20">
-                <Brain className="w-6 h-6 text-purple-400" />
+              <div className="p-2 rounded-lg bg-indigo-500/20">
+                <Brain className="w-6 h-6 text-indigo-400" />
               </div>
               <div>
                 <h2 className="text-2xl font-bold">AI-Powered Insights</h2>
@@ -330,8 +330,8 @@ export default function SupervisorDemoDashboard() {
           <div className="mb-8">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-purple-500/20">
-                  <Users className="w-6 h-6 text-purple-400" />
+                <div className="p-2 rounded-lg bg-indigo-500/20">
+                  <Users className="w-6 h-6 text-indigo-400" />
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold">Student Management Hub</h2>
@@ -339,8 +339,8 @@ export default function SupervisorDemoDashboard() {
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-purple-400 animate-pulse" />
-                <span className="text-sm text-purple-400 font-semibold">Live Tracking</span>
+                <Sparkles className="w-4 h-4 text-indigo-400 animate-pulse" />
+                <span className="text-sm text-indigo-400 font-semibold">Live Tracking</span>
               </div>
             </div>
 
@@ -348,8 +348,8 @@ export default function SupervisorDemoDashboard() {
               {students.map((student, idx) => {
                 const rankColors = {
                   Novice: "from-slate-500 to-gray-500",
-                  Apprentice: "from-blue-500 to-cyan-500",
-                  Practitioner: "from-purple-500 to-pink-500",
+                  Apprentice: "from-blue-500 to-blue-500",
+                  Practitioner: "from-indigo-500 to-indigo-500",
                   Expert: "from-orange-500 to-red-500",
                   Master: "from-yellow-500 to-amber-500"
                 };
@@ -361,10 +361,10 @@ export default function SupervisorDemoDashboard() {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: idx * 0.05 }}
-                    className="group relative rounded-2xl p-6 bg-white/5 border border-white/10 hover:bg-white/10 hover:border-purple-500/50 transition-all overflow-hidden"
+                    className="group relative rounded-2xl p-6 bg-white/5 border border-white/10 hover:bg-white/10 hover:border-indigo-500/50 transition-all overflow-hidden"
                   >
                     {/* Glow effect */}
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
                     
                     {/* Header with Avatar and Basic Info */}
                     <div className="relative mb-4">
@@ -399,7 +399,7 @@ export default function SupervisorDemoDashboard() {
                     {/* XP Progress Bar */}
                     <div className="relative mb-4">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs font-semibold text-purple-300 flex items-center gap-1">
+                        <span className="text-xs font-semibold text-indigo-300 flex items-center gap-1">
                           <Zap className="w-3 h-3" />
                           XP Progress
                         </span>
@@ -442,11 +442,11 @@ export default function SupervisorDemoDashboard() {
 
                       <div className="bg-white/5 rounded-lg p-3 border border-white/10">
                         <div className="flex items-center gap-2 mb-1">
-                          <Calendar className="w-4 h-4 text-purple-400" />
+                          <Calendar className="w-4 h-4 text-indigo-400" />
                           <span className="text-xs text-slate-400">Sessions</span>
                         </div>
                         <p className="text-lg font-bold text-white">{student.sessionsAttended}</p>
-                        <p className="text-xs text-purple-400 mt-1">Attended</p>
+                        <p className="text-xs text-indigo-400 mt-1">Attended</p>
                       </div>
 
                       <div className="bg-white/5 rounded-lg p-3 border border-white/10">
@@ -460,9 +460,9 @@ export default function SupervisorDemoDashboard() {
                     </div>
 
                     {/* Performance Score */}
-                    <div className="bg-linear-to-r from-purple-500/10 to-pink-500/10 rounded-lg p-3 mb-4 border border-purple-500/20">
+                    <div className="bg-linear-to-r from-indigo-500/10 to-indigo-500/10 rounded-lg p-3 mb-4 border border-indigo-500/20">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs font-semibold text-purple-300 flex items-center gap-1">
+                        <span className="text-xs font-semibold text-indigo-300 flex items-center gap-1">
                           <Activity className="w-3 h-3" />
                           Performance Score
                         </span>
@@ -470,7 +470,7 @@ export default function SupervisorDemoDashboard() {
                       </div>
                       <div className="w-full bg-slate-700/50 rounded-full h-2">
                         <div 
-                          className="bg-linear-to-r from-purple-500 to-pink-500 h-2 rounded-full" 
+                          className="bg-linear-to-r from-indigo-500 to-indigo-500 h-2 rounded-full" 
                           style={{ width: `${student.performanceScore}%` }}
                         />
                       </div>
@@ -500,7 +500,7 @@ export default function SupervisorDemoDashboard() {
                       </button>
                       <button
                         onClick={() => handleAddXP(student.id, 100)}
-                        className="flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-purple-500/20 text-purple-300 border border-purple-500/30 hover:bg-purple-500/30 transition-all text-sm font-semibold"
+                        className="flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 hover:bg-indigo-500/30 transition-all text-sm font-semibold"
                       >
                         <Zap className="w-4 h-4" />
                         +100 XP
@@ -525,8 +525,8 @@ export default function SupervisorDemoDashboard() {
           <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 mb-8">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-purple-500/20">
-                  <Users className="w-6 h-6 text-purple-400" />
+                <div className="p-2 rounded-lg bg-indigo-500/20">
+                  <Users className="w-6 h-6 text-indigo-400" />
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold">Student Overview</h2>
@@ -534,8 +534,8 @@ export default function SupervisorDemoDashboard() {
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-purple-400" />
-                <span className="text-sm text-purple-400 font-semibold">Live Data</span>
+                <Sparkles className="w-4 h-4 text-indigo-400" />
+                <span className="text-sm text-indigo-400 font-semibold">Live Data</span>
               </div>
             </div>
 
@@ -544,7 +544,7 @@ export default function SupervisorDemoDashboard() {
                 const studentApps = applications.filter(app => app.studentId === student.id);
                 const approvedApps = studentApps.filter(app => app.status === "Approved");
                 const progressColor = student.formProgress >= 80 ? "from-green-500 to-emerald-500" : 
-                                     student.formProgress >= 50 ? "from-cyan-500 to-blue-500" : 
+                                     student.formProgress >= 50 ? "from-blue-500 to-blue-500" : 
                                      "from-orange-500 to-yellow-500";
 
                 return (
@@ -553,21 +553,21 @@ export default function SupervisorDemoDashboard() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: idx * 0.1 }}
-                    className="group relative rounded-xl p-5 bg-white/5 border border-white/10 hover:bg-white/10 hover:border-purple-500/30 transition-all overflow-hidden"
+                    className="group relative rounded-xl p-5 bg-white/5 border border-white/10 hover:bg-white/10 hover:border-indigo-500/30 transition-all overflow-hidden"
                   >
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-purple-500/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
                     
                     <div className="relative flex items-center justify-between">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <div className="w-10 h-10 rounded-full bg-linear-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold">
+                          <div className="w-10 h-10 rounded-full bg-linear-to-br from-indigo-500 to-indigo-500 flex items-center justify-center text-white font-bold">
                             {student.name.split(' ').map((n: string) => n[0]).join('')}
                           </div>
                           <div>
                             <p className="font-semibold text-white text-lg">{student.name}</p>
-                            <p className="text-sm text-purple-300">{student.email}</p>
+                            <p className="text-sm text-indigo-300">{student.email}</p>
                           </div>
-                          <span className="px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 text-xs font-semibold">
+                          <span className="px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-semibold">
                             Year {student.year || 2}
                           </span>
                         </div>
@@ -657,7 +657,7 @@ export default function SupervisorDemoDashboard() {
                     <div className="flex items-center justify-between">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <div className="w-8 h-8 rounded-full bg-linear-to-br from-emerald-500 to-cyan-500 flex items-center justify-center text-white text-sm font-bold">
+                          <div className="w-8 h-8 rounded-full bg-linear-to-br from-emerald-500 to-blue-500 flex items-center justify-center text-white text-sm font-bold">
                             {student?.name?.split(' ').map((n: string) => n[0]).join('') || "?"}
                           </div>
                           <div>
@@ -749,7 +749,7 @@ export default function SupervisorDemoDashboard() {
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-3">
-                          <div className="w-10 h-10 rounded-full bg-linear-to-br from-emerald-500 to-cyan-500 flex items-center justify-center text-white text-sm font-bold">
+                          <div className="w-10 h-10 rounded-full bg-linear-to-br from-emerald-500 to-blue-500 flex items-center justify-center text-white text-sm font-bold">
                             {student?.name?.split(' ').map((n: string) => n[0]).join('') || "?"}
                           </div>
                           <div className="flex-1">
@@ -780,7 +780,7 @@ export default function SupervisorDemoDashboard() {
                                       onClick={() => handleStatusChange(app.id, status)}
                                       className={`w-full px-3 py-2 rounded-md text-left text-sm font-medium transition-colors ${
                                         app.status === status
-                                          ? "bg-purple-500/20 text-purple-300"
+                                          ? "bg-indigo-500/20 text-indigo-300"
                                           : "text-slate-300 hover:bg-white/10"
                                       }`}
                                     >
@@ -881,7 +881,7 @@ export default function SupervisorDemoDashboard() {
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-3">
-                        <div className="w-10 h-10 rounded-full bg-linear-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white text-sm font-bold">
+                        <div className="w-10 h-10 rounded-full bg-linear-to-br from-blue-500 to-indigo-500 flex items-center justify-center text-white text-sm font-bold">
                           {obs.studentName?.split(' ').map((n: string) => n[0]).join('') || "?"}
                         </div>
                         <div className="flex-1">
@@ -1234,12 +1234,12 @@ export default function SupervisorDemoDashboard() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className="mt-8 p-6 rounded-2xl border border-purple-500/30 bg-linear-to-r from-purple-500/10 to-pink-500/10 backdrop-blur-sm"
+          className="mt-8 p-6 rounded-2xl border border-indigo-500/30 bg-linear-to-r from-indigo-500/10 to-indigo-500/10 backdrop-blur-sm"
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className="p-3 rounded-xl bg-purple-500/20">
-                <Sparkles className="w-6 h-6 text-purple-400" />
+              <div className="p-3 rounded-xl bg-indigo-500/20">
+                <Sparkles className="w-6 h-6 text-indigo-400" />
               </div>
               <div>
                 <p className="text-white font-semibold text-lg">Experience the Full Platform</p>
@@ -1247,7 +1247,7 @@ export default function SupervisorDemoDashboard() {
               </div>
             </div>
             <Link href="/login">
-              <button className="px-6 py-3 rounded-xl bg-linear-to-r from-purple-500 to-pink-500 text-white font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all">
+              <button className="px-6 py-3 rounded-xl bg-linear-to-r from-indigo-500 to-indigo-500 text-white font-semibold hover:shadow-lg hover:shadow-indigo-500/50 transition-all">
                 Get Started
               </button>
             </Link>

@@ -101,7 +101,7 @@ export function SupervisorChat() {
       {/* Chat Button with Electivio Bot branding */}
       <motion.button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-40 p-4 bg-gradient-to-r from-cyan-600 via-purple-600 to-pink-600 text-white rounded-full shadow-2xl hover:shadow-cyan-500/50 transition-all duration-300"
+        className="fixed bottom-6 right-6 z-40 p-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-600 text-white rounded-full shadow-2xl hover:shadow-blue-500/50 transition-all duration-300"
         whileHover={{ scale: 1.15, rotate: 5 }}
         whileTap={{ scale: 0.95 }}
         initial={{ opacity: 0, y: 100 }}
@@ -110,7 +110,7 @@ export function SupervisorChat() {
       >
         <Bot className="w-6 h-6" />
         <motion.div 
-          className="absolute -top-1 -right-1 w-3 h-3 bg-cyan-400 rounded-full"
+          className="absolute -top-1 -right-1 w-3 h-3 bg-blue-400 rounded-full"
           animate={{ scale: [1, 1.2, 1] }}
           transition={{ duration: 2, repeat: Infinity }}
         />
@@ -126,19 +126,19 @@ export function SupervisorChat() {
             className="fixed bottom-24 right-6 z-50 w-96 max-w-[calc(100vw-3rem)] h-[32rem] bg-gradient-to-br from-slate-900 to-slate-950 border border-white/20 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
           >
             {/* Header with Electivio Bot branding */}
-            <div className="flex items-center justify-between p-4 border-b border-white/10 bg-gradient-to-r from-cyan-600/30 via-purple-600/30 to-pink-600/30 backdrop-blur-sm">
+            <div className="flex items-center justify-between p-4 border-b border-white/10 bg-gradient-to-r from-blue-600/30 via-indigo-600/30 to-indigo-600/30 backdrop-blur-sm">
               <div className="flex items-center gap-3">
                 <motion.div 
-                  className="p-2 bg-gradient-to-r from-cyan-500/30 via-purple-500/30 to-pink-500/30 rounded-full"
+                  className="p-2 bg-gradient-to-r from-blue-500/30 via-indigo-500/30 to-indigo-500/30 rounded-full"
                   animate={{ rotate: [0, 10, -10, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                 >
-                  <Bot className="w-5 h-5 text-cyan-400" />
+                  <Bot className="w-5 h-5 text-blue-400" />
                 </motion.div>
                 <div>
                   <h3 className="text-white font-semibold flex items-center gap-2">
                     Electivio Bot
-                    <span className="text-xs bg-gradient-to-r from-cyan-500/20 to-purple-500/20 text-cyan-400 px-2 py-0.5 rounded-full border border-cyan-500/30">AI</span>
+                    <span className="text-xs bg-gradient-to-r from-blue-500/20 to-indigo-500/20 text-blue-400 px-2 py-0.5 rounded-full border border-blue-500/30">AI</span>
                   </h3>
                   <p className="text-xs text-slate-400">Powered by OpenAI</p>
                 </div>
@@ -164,14 +164,14 @@ export function SupervisorChat() {
                   <div
                     className={`max-w-[80%] p-3 rounded-2xl shadow-lg ${
                       message.sender === "user"
-                        ? "bg-gradient-to-r from-cyan-600 to-purple-600 text-white"
+                        ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white"
                         : "bg-white/10 backdrop-blur-sm text-slate-200 border border-white/10"
                     }`}
                   >
                     {message.sender === "bot" && (
                       <div className="flex items-center gap-2 mb-2 pb-2 border-b border-white/10">
-                        <Bot className="w-4 h-4 text-cyan-400" />
-                        <span className="text-xs text-cyan-400 font-medium">Electivio Bot</span>
+                        <Bot className="w-4 h-4 text-blue-400" />
+                        <span className="text-xs text-blue-400 font-medium">Electivio Bot</span>
                       </div>
                     )}
                     <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.text}</p>
@@ -189,7 +189,7 @@ export function SupervisorChat() {
                 >
                   <div className="bg-white/10 backdrop-blur-sm text-slate-200 border border-white/10 p-3 rounded-2xl">
                     <div className="flex items-center gap-2">
-                      <Loader2 className="w-4 h-4 text-cyan-400 animate-spin" />
+                      <Loader2 className="w-4 h-4 text-blue-400 animate-spin" />
                       <span className="text-sm text-slate-400">Electivio Bot is thinking...</span>
                     </div>
                   </div>
@@ -203,7 +203,7 @@ export function SupervisorChat() {
               <motion.div 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="p-4 border-t border-white/10 space-y-2 bg-gradient-to-b from-transparent to-cyan-500/5"
+                className="p-4 border-t border-white/10 space-y-2 bg-gradient-to-b from-transparent to-blue-500/5"
               >
                 <p className="text-xs text-slate-400 mb-2 font-semibold">Quick questions:</p>
                 <div className="space-y-2">
@@ -219,7 +219,7 @@ export function SupervisorChat() {
                         setTimeout(() => handleSendMessage(), 100);
                       }}
                       disabled={isLoading}
-                      className="w-full text-left text-xs p-3 rounded-lg bg-white/5 hover:bg-gradient-to-r hover:from-cyan-500/20 hover:to-purple-500/20 text-slate-300 hover:text-white transition-all duration-300 border border-white/5 hover:border-cyan-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full text-left text-xs p-3 rounded-lg bg-white/5 hover:bg-gradient-to-r hover:from-blue-500/20 hover:to-indigo-500/20 text-slate-300 hover:text-white transition-all duration-300 border border-white/5 hover:border-blue-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {q}
                     </motion.button>
@@ -238,14 +238,14 @@ export function SupervisorChat() {
                   onKeyPress={(e) => e.key === "Enter" && !isLoading && handleSendMessage()}
                   placeholder="Ask Electivio Bot anything..."
                   disabled={isLoading}
-                  className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all disabled:opacity-50"
+                  className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:opacity-50"
                 />
                 <motion.button
                   onClick={handleSendMessage}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   disabled={isLoading || !inputText.trim()}
-                  className="p-3 bg-gradient-to-r from-cyan-600 via-purple-600 to-pink-600 hover:from-cyan-500 hover:via-purple-500 hover:to-pink-500 rounded-xl transition-all shadow-lg hover:shadow-cyan-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="p-3 bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-600 hover:from-blue-500 hover:via-indigo-500 hover:to-indigo-500 rounded-xl transition-all shadow-lg hover:shadow-blue-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isLoading ? (
                     <Loader2 className="w-5 h-5 text-white animate-spin" />

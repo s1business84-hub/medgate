@@ -207,7 +207,7 @@ export function StudentSessions({
                 {isCompleted && session.formResponseId && (
                   <Button
                     onClick={() => onFillForm?.(session.id, session.sessionNumber)}
-                    className="bg-purple-600 hover:bg-purple-700 text-white"
+                    className="bg-indigo-600 hover:bg-indigo-700 text-white"
                     size="sm"
                   >
                     View Form

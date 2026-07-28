@@ -137,7 +137,7 @@ export function ProgramFilters({ onFilterChange }: ProgramFiltersProps) {
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
-          <Filter className="w-5 h-5 text-cyan-400" />
+          <Filter className="w-5 h-5 text-blue-400" />
           <div>
             <h3 className="text-base sm:text-lg font-semibold text-slate-100">Filter Programs</h3>
             <p className="text-xs sm:text-sm text-slate-300">Organize by program characteristics</p>
@@ -149,7 +149,7 @@ export function ProgramFilters({ onFilterChange }: ProgramFiltersProps) {
         >
           {isOpen ? 'Hide' : 'Show'} Filters
           {activeFilterCount > 0 && (
-            <span className="ml-2 px-2 py-0.5 rounded-full bg-cyan-500 text-white text-xs">
+            <span className="ml-2 px-2 py-0.5 rounded-full bg-blue-500 text-white text-xs">
               {activeFilterCount}
             </span>
           )}
@@ -163,7 +163,7 @@ export function ProgramFilters({ onFilterChange }: ProgramFiltersProps) {
           <div className="flex justify-end">
             <button
               onClick={clearAllFilters}
-              className="text-sm text-cyan-400 hover:text-cyan-300 transition-colors flex items-center gap-2"
+              className="text-sm text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-2"
             >
               <X className="w-4 h-4" />
               Clear all filters
@@ -185,7 +185,7 @@ export function ProgramFilters({ onFilterChange }: ProgramFiltersProps) {
                       onClick={() => toggleFilter(key as keyof FilterOptions, option)}
                       className={`w-full text-left px-3 py-2 rounded-lg border transition duration-150 ease-out text-sm ${
                         isSelected
-                          ? 'border-cyan-400/50 bg-cyan-400/10 text-cyan-200'
+                          ? 'border-blue-400/50 bg-blue-400/10 text-blue-200'
                           : 'border-white/10 bg-white/5 text-slate-300 hover:bg-white/10'
                       }`}
                     >
@@ -199,7 +199,7 @@ export function ProgramFilters({ onFilterChange }: ProgramFiltersProps) {
         </div>
 
         {/* Notice */}
-        <div className="mt-6 p-4 rounded-xl bg-linear-to-r from-cyan-500/10 to-indigo-500/10 border border-cyan-400/30">
+        <div className="mt-6 p-4 rounded-xl bg-linear-to-r from-blue-500/10 to-indigo-500/10 border border-blue-400/30">
           <p className="text-sm text-slate-200">
             <strong>Note:</strong> Filters help you explore programs. Final eligibility is determined by each institution during their review process.
           </p>
@@ -215,7 +215,7 @@ export function ProgramFilters({ onFilterChange }: ProgramFiltersProps) {
           >
             <button
               onClick={() => setIsOpen(false)}
-              className="flex-1 px-4 py-2.5 rounded-lg bg-linear-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-semibold transition duration-150 ease-out shadow-lg"
+              className="flex-1 px-4 py-2.5 rounded-lg bg-linear-to-r from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 text-white font-semibold transition duration-150 ease-out shadow-lg"
             >
               Apply Filters ({activeFilterCount})
             </button>

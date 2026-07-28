@@ -124,7 +124,7 @@ export default function FormResponsePage({ params }: { params: { formId: string 
 
   if (loading) {
     return (
-      <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950 flex items-center justify-center">
+      <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-indigo-900/20 to-slate-950 flex items-center justify-center">
         <LiquidParallax depth={14} className="opacity-70" />
         <p className="text-slate-300 relative z-10">Loading form...</p>
       </div>
@@ -133,7 +133,7 @@ export default function FormResponsePage({ params }: { params: { formId: string 
 
   if (!form) {
     return (
-      <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950 flex items-center justify-center">
+      <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-indigo-900/20 to-slate-950 flex items-center justify-center">
         <LiquidParallax depth={14} className="opacity-70" />
         <p className="text-slate-300 relative z-10">Form not found</p>
       </div>
@@ -143,7 +143,7 @@ export default function FormResponsePage({ params }: { params: { formId: string 
   const currentField = form.fields[currentFieldIndex];
 
   return (
-    <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950">
+    <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-indigo-900/20 to-slate-950">
       <LiquidParallax depth={14} className="opacity-70" />
 
       <div className="max-w-2xl mx-auto px-4 py-12 relative z-10">
@@ -168,11 +168,11 @@ export default function FormResponsePage({ params }: { params: { formId: string 
             <span className="text-sm font-semibold text-slate-300">
               Question {currentFieldIndex + 1} of {form.fields.length}
             </span>
-            <span className="text-sm font-bold text-purple-300">{formProgress}% Complete</span>
+            <span className="text-sm font-bold text-indigo-300">{formProgress}% Complete</span>
           </div>
           <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
             <motion.div
-              className="h-full bg-linear-to-r from-purple-500 to-pink-500"
+              className="h-full bg-linear-to-r from-indigo-500 to-indigo-500"
               initial={{ width: 0 }}
               animate={{ width: `${formProgress}%` }}
               transition={{ duration: 0.3 }}
@@ -188,7 +188,7 @@ export default function FormResponsePage({ params }: { params: { formId: string 
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.3 }}
-            className="p-8 rounded-2xl border border-purple-500/30 bg-purple-500/10 backdrop-blur-xl mb-6 min-h-64"
+            className="p-8 rounded-2xl border border-indigo-500/30 bg-indigo-500/10 backdrop-blur-xl mb-6 min-h-64"
           >
             <h2 className="text-2xl font-bold text-white mb-2">{currentField.label}</h2>
             {currentField.helpText && (
@@ -202,7 +202,7 @@ export default function FormResponsePage({ params }: { params: { formId: string 
                   value={responses[currentField.id]?.value || ""}
                   onChange={(e) => handleFieldChange(currentField.id, e.target.value)}
                   placeholder={currentField.placeholder}
-                  className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-slate-400 focus:border-purple-500 outline-none transition"
+                  className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-slate-400 focus:border-indigo-500 outline-none transition"
                 />
               )}
 
@@ -212,7 +212,7 @@ export default function FormResponsePage({ params }: { params: { formId: string 
                     value={responses[currentField.id]?.value || ""}
                     onChange={(e) => handleFieldChange(currentField.id, e.target.value)}
                     placeholder={currentField.placeholder}
-                    className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-slate-400 focus:border-purple-500 outline-none transition resize-none h-32"
+                    className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-slate-400 focus:border-indigo-500 outline-none transition resize-none h-32"
                   />
                   <div className="flex gap-2">
                     <label className="flex items-center gap-2 text-sm text-slate-300 cursor-pointer">
@@ -244,7 +244,7 @@ export default function FormResponsePage({ params }: { params: { formId: string 
                       onClick={() => handleFieldChange(currentField.id, String(rating))}
                       className={`w-12 h-12 rounded-lg font-bold transition ${
                         responses[currentField.id]?.value === String(rating)
-                          ? "bg-purple-500 text-white"
+                          ? "bg-indigo-500 text-white"
                           : "bg-white/10 border border-white/20 text-slate-300 hover:bg-white/20"
                       }`}
                     >
@@ -258,7 +258,7 @@ export default function FormResponsePage({ params }: { params: { formId: string 
                 <select
                   value={responses[currentField.id]?.value || ""}
                   onChange={(e) => handleFieldChange(currentField.id, e.target.value)}
-                  className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white focus:border-purple-500 outline-none transition"
+                  className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white focus:border-indigo-500 outline-none transition"
                 >
                   <option value="">Select an option...</option>
                   {currentField.options?.map((option) => (
@@ -310,7 +310,7 @@ export default function FormResponsePage({ params }: { params: { formId: string 
           {currentFieldIndex < form.fields.length - 1 ? (
             <button
               onClick={() => setCurrentFieldIndex(Math.min(form.fields.length - 1, currentFieldIndex + 1))}
-              className="flex-1 px-6 py-3 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-semibold transition"
+              className="flex-1 px-6 py-3 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition"
             >
               Next
             </button>

@@ -17,7 +17,7 @@ const features = [
     name: "Structured Program Listings",
     description: "Designed to present observership and elective programs with clearly defined eligibility criteria, documentation requirements, duration, and intake limits set by participating institutions.",
     icon: Search,
-    gradient: "from-blue-500 to-cyan-500",
+    gradient: "from-blue-500 to-blue-500",
   },
   {
     name: "Eligibility & Requirement Transparency",
@@ -29,13 +29,13 @@ const features = [
     name: "Application Workflow Management",
     description: "Planned tools to support structured application submission, review stages, and status visibility aligned with institutional processes.",
     icon: Clock,
-    gradient: "from-purple-500 to-pink-500",
+    gradient: "from-indigo-500 to-indigo-500",
   },
   {
     name: "Institution-First Design",
     description: "Developed with hospital administrators in mind, prioritizing control, clarity, and governance over program intake and applicant review.",
     icon: Heart,
-    gradient: "from-indigo-500 to-purple-500",
+    gradient: "from-indigo-500 to-indigo-500",
   },
 ]
 
@@ -65,8 +65,8 @@ export function Features() {
     <section className="py-24 sm:py-32 relative overflow-hidden text-slate-50">
       {/* Animated Background Elements with parallax drift */}
       <div className="absolute top-0 left-0 w-80 h-80 bg-blue-400/20 rounded-full mix-blend-screen blur-3xl opacity-60 -z-10 animate-float" />
-      <div className="absolute top-1/2 right-0 w-96 h-96 bg-purple-400/20 rounded-full mix-blend-screen blur-3xl opacity-60 -z-10 animate-[float_3.8s_ease-in-out_infinite_1.2s]" />
-      <div className="absolute bottom-0 left-1/2 w-80 h-80 bg-cyan-300/20 rounded-full mix-blend-screen blur-3xl opacity-60 -z-10 animate-[float_4.4s_ease-in-out_infinite_2.1s]" />
+      <div className="absolute top-1/2 right-0 w-96 h-96 bg-indigo-400/20 rounded-full mix-blend-screen blur-3xl opacity-60 -z-10 animate-[float_3.8s_ease-in-out_infinite_1.2s]" />
+      <div className="absolute bottom-0 left-1/2 w-80 h-80 bg-blue-300/20 rounded-full mix-blend-screen blur-3xl opacity-60 -z-10 animate-[float_4.4s_ease-in-out_infinite_2.1s]" />
 
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">

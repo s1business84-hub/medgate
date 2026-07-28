@@ -211,7 +211,7 @@ export function VoiceRecorder({ fieldId, fieldLabel, onSubmit, isSubmitting, pla
           className={`w-full py-4 rounded-lg font-semibold flex items-center justify-center gap-3 transition relative overflow-hidden ${
             isRecording
               ? "bg-linear-to-r from-red-500/30 to-red-600/30 border-2 border-red-500 text-red-300 hover:bg-linear-to-r hover:from-red-500/40 hover:to-red-600/40 shadow-lg shadow-red-500/20"
-              : "bg-linear-to-r from-purple-500/20 to-indigo-500/20 border-2 border-purple-500 text-purple-300 hover:bg-linear-to-r hover:from-purple-500/30 hover:to-indigo-500/30 shadow-lg shadow-purple-500/10"
+              : "bg-linear-to-r from-indigo-500/20 to-indigo-500/20 border-2 border-indigo-500 text-indigo-300 hover:bg-linear-to-r hover:from-indigo-500/30 hover:to-indigo-500/30 shadow-lg shadow-indigo-500/10"
           }`}
         >
           {isRecording && (
@@ -246,8 +246,8 @@ export function VoiceRecorder({ fieldId, fieldLabel, onSubmit, isSubmitting, pla
           {/* Recording Info Bar */}
           <div className="flex items-center justify-between p-2 rounded-lg bg-white/5 border border-white/10">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-purple-500/20 border border-purple-500/30">
-                <Activity className="w-4 h-4 text-purple-400" />
+              <div className="p-2 rounded-lg bg-indigo-500/20 border border-indigo-500/30">
+                <Activity className="w-4 h-4 text-indigo-400" />
               </div>
               <div className="flex-1">
                 <p className="text-xs text-slate-400">Audio Recording</p>
@@ -256,7 +256,7 @@ export function VoiceRecorder({ fieldId, fieldLabel, onSubmit, isSubmitting, pla
             </div>
             <button
               onClick={playAudio}
-              className="p-2 rounded-lg bg-purple-500/30 hover:bg-purple-500/50 text-purple-300 transition shadow-lg shadow-purple-500/20"
+              className="p-2 rounded-lg bg-indigo-500/30 hover:bg-indigo-500/50 text-indigo-300 transition shadow-lg shadow-indigo-500/20"
             >
               <Volume2 className="w-5 h-5" />
             </button>

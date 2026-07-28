@@ -38,7 +38,7 @@ export function FigmaShowcase() {
         {/* Background Elements */}
         <div className="absolute inset-0 bg-grid-slate-700 mask-[linear-gradient(0deg,rgba(0,0,0,0.3),rgba(255,255,255,0.05))] -z-10" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 -z-10">
-          <div className="h-96 w-96 rounded-full bg-linear-to-br from-purple-500 to-indigo-500 opacity-15 blur-3xl" />
+          <div className="h-96 w-96 rounded-full bg-linear-to-br from-indigo-500 to-indigo-500 opacity-15 blur-3xl" />
         </div>
 
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -49,7 +49,7 @@ export function FigmaShowcase() {
             viewport={{ once: true }}
             className="text-center mb-12 sm:mb-16"
           >
-            <span className="text-xs sm:text-sm text-purple-200/80 bg-purple-500/10 border border-purple-400/30 rounded-full px-3 py-1 inline-block mb-4">
+            <span className="text-xs sm:text-sm text-indigo-200/80 bg-indigo-500/10 border border-indigo-400/30 rounded-full px-3 py-1 inline-block mb-4">
               🎯 Key Features
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6">

@@ -51,11 +51,11 @@ export function FAQ() {
   }
 
   const accentGradients = [
-    "from-cyan-400/40 via-blue-500/30 to-indigo-500/30",
-    "from-purple-400/40 via-pink-500/30 to-orange-400/30",
-    "from-emerald-400/40 via-teal-400/30 to-cyan-400/30",
-    "from-amber-400/40 via-orange-500/30 to-rose-400/30",
-    "from-sky-400/40 via-indigo-400/30 to-fuchsia-400/30",
+    "from-blue-400/40 via-blue-500/30 to-indigo-500/30",
+    "from-indigo-400/40 via-indigo-500/30 to-orange-400/30",
+    "from-emerald-400/40 via-blue-400/30 to-blue-400/30",
+    "from-amber-400/40 via-orange-500/30 to-indigo-400/30",
+    "from-blue-400/40 via-indigo-400/30 to-indigo-400/30",
   ] as const
 
   return (
@@ -67,12 +67,12 @@ export function FAQ() {
       <motion.div
         animate={{ y: [0, -10, 0], rotate: [0, 4, -2, 0] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-0 right-10 w-80 h-80 bg-linear-to-br from-cyan-500/20 via-blue-500/15 to-indigo-500/10 rounded-full blur-3xl opacity-70 -z-10"
+        className="absolute top-0 right-10 w-80 h-80 bg-linear-to-br from-blue-500/20 via-blue-500/15 to-indigo-500/10 rounded-full blur-3xl opacity-70 -z-10"
       />
       <motion.div
         animate={{ y: [0, 12, 0], rotate: [0, -3, 2, 0] }}
         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-0 left-6 w-96 h-96 bg-linear-to-tr from-purple-500/15 via-fuchsia-500/15 to-blue-500/10 rounded-full blur-3xl opacity-70 -z-10"
+        className="absolute bottom-0 left-6 w-96 h-96 bg-linear-to-tr from-indigo-500/15 via-indigo-500/15 to-blue-500/10 rounded-full blur-3xl opacity-70 -z-10"
       />
       <motion.div
         animate={{ scale: [1, 1.05, 1] }}
@@ -89,8 +89,8 @@ export function FAQ() {
             viewport={{ once: true }}
             className="inline-flex items-center justify-center gap-2 mb-6"
           >
-            <HelpCircle className="w-6 h-6 text-cyan-400" />
-            <span className="text-sm font-semibold text-cyan-400 uppercase tracking-wider">Questions & Answers</span>
+            <HelpCircle className="w-6 h-6 text-blue-400" />
+            <span className="text-sm font-semibold text-blue-400 uppercase tracking-wider">Questions & Answers</span>
           </motion.div>
 
           <motion.h2
@@ -131,11 +131,11 @@ export function FAQ() {
                     whileHover={{ y: -6, scale: 1.01 }}
                   >
                     {/* Subtle gradient background on hover */}
-                    <div className={`absolute inset-0 bg-linear-to-br from-cyan-500/10 via-blue-500/10 to-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-400`} />
+                    <div className={`absolute inset-0 bg-linear-to-br from-blue-500/10 via-blue-500/10 to-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-400`} />
 
                     {/* Liquid glass shine effect */}
                     <div className={`absolute inset-0 transition-opacity duration-300 ${openIndex === index ? "opacity-100" : "opacity-0 group-hover:opacity-80"}`}>
-                      <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-linear-to-bl from-cyan-500/20 via-blue-500/15 to-transparent rounded-full blur-2xl" />
+                      <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-linear-to-bl from-blue-500/20 via-blue-500/15 to-transparent rounded-full blur-2xl" />
                       <div className="absolute bottom-0 left-0 w-2/5 h-2/5 bg-linear-to-tr from-indigo-500/15 to-transparent rounded-full blur-xl" />
                     </div>
 
@@ -145,14 +145,14 @@ export function FAQ() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="absolute inset-0 bg-linear-to-br from-cyan-500/10 via-blue-500/10 to-transparent"
+                        className="absolute inset-0 bg-linear-to-br from-blue-500/10 via-blue-500/10 to-transparent"
                       />
                     )}
 
                     {/* Soft glow ring */}
                     <motion.div
                       animate={{ opacity: openIndex === index ? 0.3 : 0 }}
-                      className="absolute -inset-px rounded-3xl bg-linear-to-r from-blue-300/20 via-purple-300/20 to-pink-300/20 blur-sm"
+                      className="absolute -inset-px rounded-3xl bg-linear-to-r from-blue-300/20 via-indigo-300/20 to-indigo-300/20 blur-sm"
                     />
 
                     <button
@@ -160,7 +160,7 @@ export function FAQ() {
                       id={`faq-trigger-${index}`}
                       aria-expanded={openIndex === index}
                       aria-controls={`faq-panel-${index}`}
-                        className="relative flex w-full items-center justify-between px-6 py-5 text-left cursor-pointer z-10 rounded-3xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                        className="relative flex w-full items-center justify-between px-6 py-5 text-left cursor-pointer z-10 rounded-3xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
                     >
                       <div className="flex items-center gap-4 flex-1">
                         <motion.div
@@ -168,9 +168,9 @@ export function FAQ() {
                           transition={{ duration: 0.2 }}
                           className="shrink-0"
                         >
-                            <MessageCircle className="h-5 w-5 text-cyan-400" />
+                            <MessageCircle className="h-5 w-5 text-blue-400" />
                         </motion.div>
-                          <h3 className="text-lg font-semibold text-slate-100 group-hover:text-cyan-400 transition-colors">
+                          <h3 className="text-lg font-semibold text-slate-100 group-hover:text-blue-400 transition-colors">
                           {faq.question}
                         </h3>
                       </div>
@@ -203,7 +203,7 @@ export function FAQ() {
                           >
                             {faq.answer}
                           </motion.p>
-                          <div className="mt-3 flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-cyan-400/80">
+                          <div className="mt-3 flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-blue-400/80">
                             <Sparkles className="h-3.5 w-3.5" />
                             <span>In Development</span>
                           </div>

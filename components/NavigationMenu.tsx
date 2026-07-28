@@ -20,7 +20,7 @@ export default function NavigationMenu() {
     <div className="relative">
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
-        className="group relative inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-cyan-500 to-indigo-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+        className="group relative inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-blue-500 to-indigo-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
@@ -34,7 +34,7 @@ export default function NavigationMenu() {
         <span className="relative z-10 whitespace-nowrap">Continue to</span>
         
         {/* Animated background */}
-        <div className="absolute inset-0 bg-linear-to-r from-cyan-400 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
+        <div className="absolute inset-0 bg-linear-to-r from-blue-400 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
       </motion.button>
 
       <AnimatePresence>
@@ -56,9 +56,9 @@ export default function NavigationMenu() {
                 <Link
                   href={item.href}
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center gap-3 px-4 py-3 text-slate-200 hover:bg-white/10 hover:text-cyan-300 transition-all duration-200 border-b border-white/5 last:border-b-0 group"
+                  className="flex items-center gap-3 px-4 py-3 text-slate-200 hover:bg-white/10 hover:text-blue-300 transition-all duration-200 border-b border-white/5 last:border-b-0 group"
                 >
-                  <item.icon className="w-5 h-5 text-cyan-400 group-hover:scale-110 transition-transform" />
+                  <item.icon className="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform" />
                   <span className="font-medium">{item.label}</span>
                 </Link>
               </motion.div>

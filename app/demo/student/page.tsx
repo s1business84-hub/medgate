@@ -195,7 +195,7 @@ export default function StudentDemoPage() {
         <motion.div variants={itemVariants} className="mb-8 sm:mb-12">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 mb-4">
             <div className="flex-1">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 bg-linear-to-r from-blue-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent">
                 Student Portal Demo
               </h1>
               <p className="text-base sm:text-lg md:text-xl text-slate-300 leading-relaxed">
@@ -203,13 +203,13 @@ export default function StudentDemoPage() {
               </p>
             </div>
             {/* Level & XP Display */}
-            <div className="flex items-center gap-3 bg-linear-to-r from-purple-600 to-pink-600 px-4 py-2.5 rounded-xl shadow-lg shadow-purple-500/25">
+            <div className="flex items-center gap-3 bg-linear-to-r from-indigo-600 to-indigo-600 px-4 py-2.5 rounded-xl shadow-lg shadow-indigo-500/25">
               <div>
-                <p className="text-xs text-purple-100">Level {Math.ceil(xpPoints / 100) + 1}</p>
+                <p className="text-xs text-indigo-100">Level {Math.ceil(xpPoints / 100) + 1}</p>
                 <p className="font-bold text-white">{xpPoints} XP</p>
               </div>
               <div className="text-right">
-                <p className="text-xs text-purple-100">{100 - (xpPoints % 100)} XP to next level</p>
+                <p className="text-xs text-indigo-100">{100 - (xpPoints % 100)} XP to next level</p>
               </div>
             </div>
           </div>
@@ -218,8 +218,8 @@ export default function StudentDemoPage() {
         {/* Stats Grid */}
         <motion.div variants={itemVariants} className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-8 sm:mb-12">
           {[
-            { icon: BookOpen, label: "Active Programs", value: "3", color: "from-blue-500 to-cyan-500" },
-            { icon: Award, label: "Certifications", value: "2", color: "from-purple-500 to-pink-500" },
+            { icon: BookOpen, label: "Active Programs", value: "3", color: "from-blue-500 to-blue-500" },
+            { icon: Award, label: "Certifications", value: "2", color: "from-indigo-500 to-indigo-500" },
             { icon: Brain, label: "Learning Hours", value: "245", color: "from-green-500 to-emerald-500" },
             { icon: TrendingUp, label: "Avg. Progress", value: "55%", color: "from-orange-500 to-red-500" },
           ].map((stat, idx) => (
@@ -280,7 +280,7 @@ export default function StudentDemoPage() {
                 {/* Progress Bar */}
                 <div className="bg-slate-700/50 rounded-full h-2 overflow-hidden">
                   <motion.div
-                    className="h-full bg-linear-to-r from-cyan-500 to-blue-500"
+                    className="h-full bg-linear-to-r from-blue-500 to-blue-500"
                     initial={{ width: 0 }}
                     animate={{ width: `${program.progress}%` }}
                     transition={{ duration: 1, delay: idx * 0.2 }}
@@ -296,7 +296,7 @@ export default function StudentDemoPage() {
         {selectedProgramData && (
           <motion.div 
             variants={itemVariants}
-            className="mt-8 sm:mt-12 p-5 sm:p-8 rounded-2xl border border-purple-500/30 bg-purple-500/10 backdrop-blur-xl"
+            className="mt-8 sm:mt-12 p-5 sm:p-8 rounded-2xl border border-indigo-500/30 bg-indigo-500/10 backdrop-blur-xl"
           >
             <div className="flex items-start sm:items-center justify-between gap-3 mb-4 sm:mb-6">
               <h2 className="text-xl sm:text-2xl font-bold text-white">{selectedProgramData.name}</h2>
@@ -313,11 +313,11 @@ export default function StudentDemoPage() {
               <div>
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-sm text-slate-300">Overall Progress</span>
-                  <span className="text-sm font-bold text-purple-300">{selectedProgramData.progress}%</span>
+                  <span className="text-sm font-bold text-indigo-300">{selectedProgramData.progress}%</span>
                 </div>
                 <div className="h-3 w-full bg-white/10 rounded-full overflow-hidden">
                   <motion.div
-                    className="h-full bg-linear-to-r from-purple-500 to-pink-500"
+                    className="h-full bg-linear-to-r from-indigo-500 to-indigo-500"
                     initial={{ width: 0 }}
                     animate={{ width: `${selectedProgramData.progress}%` }}
                     transition={{ duration: 0.8 }}
@@ -333,7 +333,7 @@ export default function StudentDemoPage() {
                 </div>
                 <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
                   <motion.div
-                    className="h-full bg-linear-to-r from-blue-500 to-cyan-500"
+                    className="h-full bg-linear-to-r from-blue-500 to-blue-500"
                     initial={{ width: 0 }}
                     animate={{ width: `${Math.round(selectedProgramData.progress * 0.8)}%` }}
                     transition={{ duration: 0.8, delay: 0.2 }}
@@ -349,7 +349,7 @@ export default function StudentDemoPage() {
                 </div>
                 <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
                   <motion.div
-                    className="h-full bg-linear-to-r from-emerald-500 to-teal-500"
+                    className="h-full bg-linear-to-r from-emerald-500 to-blue-500"
                     initial={{ width: 0 }}
                     animate={{ width: `${Math.round(Math.min(selectedProgramData.progress * 1.1, 100))}%` }}
                     transition={{ duration: 0.8, delay: 0.4 }}
@@ -372,7 +372,7 @@ export default function StudentDemoPage() {
 
             <button
               onClick={() => setSelectedProgramData(null)}
-              className="w-full px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors"
+              className="w-full px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-colors"
             >
               Close Details
             </button>
@@ -397,7 +397,7 @@ export default function StudentDemoPage() {
                   router.push("/student");
                 }
               }}
-              className="group relative px-8 py-4 bg-linear-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300"
+              className="group relative px-8 py-4 bg-linear-to-r from-indigo-600 to-indigo-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300"
             >
               <div className="flex items-center gap-2">
                 <Sparkles className="w-5 h-5" />
@@ -406,7 +406,7 @@ export default function StudentDemoPage() {
             </button>
             
             <Link href="/login">
-              <button className="px-8 py-4 rounded-xl bg-linear-to-r from-cyan-500 to-blue-500 font-semibold hover:shadow-lg hover:shadow-cyan-500/50 hover:scale-105 transition-all duration-300">
+              <button className="px-8 py-4 rounded-xl bg-linear-to-r from-blue-500 to-blue-500 font-semibold hover:shadow-lg hover:shadow-blue-500/50 hover:scale-105 transition-all duration-300">
                 Go Back to Login
               </button>
             </Link>
@@ -440,8 +440,8 @@ export default function StudentDemoPage() {
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-white/10">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 bg-linear-to-r from-purple-500/20 to-pink-500/20 rounded-lg">
-                      <Sparkles className="w-6 h-6 text-purple-400" />
+                    <div className="p-2 bg-linear-to-r from-indigo-500/20 to-indigo-500/20 rounded-lg">
+                      <Sparkles className="w-6 h-6 text-indigo-400" />
                     </div>
                     <div>
                       <h2 className="text-2xl font-bold text-white">AI Program Finder</h2>
@@ -507,7 +507,7 @@ export default function StudentDemoPage() {
                           <ul className="space-y-2">
                             {selectedProgram.requirements?.map((req: string, idx: number) => (
                               <li key={idx} className="flex items-start gap-3 text-slate-300">
-                                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-purple-500/20 text-purple-300 text-xs mt-0.5 shrink-0">✓</span>
+                                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-indigo-500/20 text-indigo-300 text-xs mt-0.5 shrink-0">✓</span>
                                 {req}
                               </li>
                             ))}
@@ -542,7 +542,7 @@ export default function StudentDemoPage() {
                               setTimeout(resetAI, 300);
                               router.push("/programs");
                             }}
-                            className="flex-1 px-6 py-3 bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-semibold rounded-lg transition-all"
+                            className="flex-1 px-6 py-3 bg-linear-to-r from-indigo-600 to-indigo-600 hover:from-indigo-500 hover:to-indigo-500 text-white font-semibold rounded-lg transition-all"
                           >
                             Browse Real Programs
                           </button>
@@ -563,7 +563,7 @@ export default function StudentDemoPage() {
                         </div>
                         <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
                           <motion.div
-                            className="h-full bg-linear-to-r from-purple-500 to-pink-500"
+                            className="h-full bg-linear-to-r from-indigo-500 to-indigo-500"
                             initial={{ width: 0 }}
                             animate={{ width: `${((currentStep + 1) / questions.length) * 100}%` }}
                             transition={{ duration: 0.3 }}
@@ -588,13 +588,13 @@ export default function StudentDemoPage() {
                               <motion.button
                                 key={option}
                                 onClick={() => handleAnswer(questions[currentStep].id, option)}
-                                className="text-left p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-purple-500/50 transition-all duration-200 group"
+                                className="text-left p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-indigo-500/50 transition-all duration-200 group"
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                               >
                                 <div className="flex items-center justify-between">
                                   <span className="text-white font-medium">{option}</span>
-                                  <ChevronRight className="w-5 h-5 text-slate-400 group-hover:text-purple-400 transition-colors" />
+                                  <ChevronRight className="w-5 h-5 text-slate-400 group-hover:text-indigo-400 transition-colors" />
                                 </div>
                               </motion.button>
                             ))}

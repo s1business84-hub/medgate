@@ -72,7 +72,7 @@ export default function ProgramsPage() {
         <ScrollSection id="programs">
           <main className="relative min-h-screen overflow-hidden text-slate-100">
             <LiquidParallax />
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(34,211,238,0.15),transparent_40%),radial-gradient(circle_at_80%_20%,rgba(99,102,241,0.12),transparent_35%),radial-gradient(circle_at_40%_80%,rgba(139,92,246,0.13),transparent_38%),linear-gradient(180deg,#0a0e1a_0%,#0f172a_50%,#0a0e1a_100%)]" />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(96,165,250,0.15),transparent_40%),radial-gradient(circle_at_80%_20%,rgba(99,102,241,0.12),transparent_35%),radial-gradient(circle_at_40%_80%,rgba(139,92,246,0.13),transparent_38%),linear-gradient(180deg,#0a0e1a_0%,#0f172a_50%,#0a0e1a_100%)]" />
             <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
               <div className="mb-8 h-8 w-64 bg-white/10 rounded-xl skeleton" />
               <div className="mb-12 h-6 w-full max-w-xl bg-white/10 rounded-xl skeleton" />
@@ -174,13 +174,13 @@ export default function ProgramsPage() {
       <ScrollSection id="programs">
       <main className="relative min-h-screen overflow-hidden text-slate-100">
       <LiquidParallax />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(34,211,238,0.15),transparent_40%),radial-gradient(circle_at_80%_20%,rgba(99,102,241,0.12),transparent_35%),radial-gradient(circle_at_40%_80%,rgba(139,92,246,0.13),transparent_38%),linear-gradient(180deg,#0a0e1a_0%,#0f172a_50%,#0a0e1a_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(96,165,250,0.15),transparent_40%),radial-gradient(circle_at_80%_20%,rgba(99,102,241,0.12),transparent_35%),radial-gradient(circle_at_40%_80%,rgba(139,92,246,0.13),transparent_38%),linear-gradient(180deg,#0a0e1a_0%,#0f172a_50%,#0a0e1a_100%)]" />
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
         {/* Header */}
         <Reveal>
         <div className="text-center mb-8 sm:mb-12 space-y-3">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-clip-text bg-linear-to-r from-cyan-300 via-sky-200 to-indigo-200 text-transparent mb-3 sm:mb-4">Prototype Program Listings</h1>
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-clip-text bg-linear-to-r from-blue-300 via-blue-200 to-indigo-200 text-transparent mb-3 sm:mb-4">Prototype Program Listings</h1>
           <p className="text-base sm:text-lg lg:text-xl text-slate-300 max-w-2xl mx-auto px-4">
             Prototype listings for demonstration only
           </p>
@@ -230,7 +230,7 @@ export default function ProgramsPage() {
                   setVoiceFilterIds([]);
                   setVoiceQuery("");
                 }}
-                className="text-xs text-cyan-200 hover:text-cyan-100"
+                className="text-xs text-blue-200 hover:text-blue-100"
               >
                 Clear filter
               </button>
@@ -264,7 +264,7 @@ export default function ProgramsPage() {
                         layout
                         className="group relative rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl overflow-hidden p-5 sm:p-7 lg:p-8 wrap-break-word"
                       >
-                    <div className="absolute inset-0 bg-linear-to-r from-cyan-400/10 via-transparent to-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                    <div className="absolute inset-0 bg-linear-to-r from-blue-400/10 via-transparent to-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                     <div className="absolute inset-0 opacity-0 group-hover:opacity-25 transition-opacity duration-500 pointer-events-none">
                       <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-linear-to-br from-white/70 to-transparent rounded-full blur-3xl" />
                     </div>
@@ -272,13 +272,13 @@ export default function ProgramsPage() {
                     {/* Program Header */}
                     <div className="relative flex flex-col lg:flex-row lg:items-center justify-between gap-4 z-10">
                       <div className="flex items-center space-x-3 flex-1 min-w-0">
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-linear-to-br from-cyan-500 to-indigo-600 rounded-xl flex items-center justify-center shrink-0 shadow-lg group-hover:shadow-xl group-hover:scale-110 transition-all duration-300">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-linear-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shrink-0 shadow-lg group-hover:shadow-xl group-hover:scale-110 transition-all duration-300">
                           <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                           </svg>
                         </div>
                         <div className="min-w-0 flex-1">
-                      <h2 className="text-lg sm:text-xl font-semibold text-slate-100 truncate group-hover:text-cyan-200 transition-colors">{p.departmentName}</h2>
+                      <h2 className="text-lg sm:text-xl font-semibold text-slate-100 truncate group-hover:text-blue-200 transition-colors">{p.departmentName}</h2>
                       <p className="text-sm text-slate-300">{p.programType} • {h?.name}</p>
                     </div>
                   </div>
@@ -314,7 +314,7 @@ export default function ProgramsPage() {
                     {/* Reminder Button */}
                     <button
                       onClick={() => handleReminderClick(p)}
-                      className="p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-cyan-400/15 hover:border-cyan-300/40 transition-all group"
+                      className="p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-blue-400/15 hover:border-blue-300/40 transition-all group"
                       title="Set reminder for this program"
                     >
                       <Bell className="w-4 h-4 text-amber-200 group-hover:text-amber-100" />
@@ -324,12 +324,12 @@ export default function ProgramsPage() {
                     <div className="relative">
                       <button
                         onClick={() => setOpenMapProgram(openMapProgram === p.id ? null : p.id)}
-                        className="p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-cyan-400/15 hover:border-cyan-300/40 transition-all"
+                        className="p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-blue-400/15 hover:border-blue-300/40 transition-all"
                         title="View on map and get directions"
                         aria-expanded={openMapProgram === p.id}
                         aria-haspopup="true"
                       >
-                        <MapPin className="w-4 h-4 text-cyan-200" />
+                        <MapPin className="w-4 h-4 text-blue-200" />
                       </button>
                       <div
                         className={`absolute right-0 top-full mt-2 w-48 rounded-lg bg-slate-900 border border-white/10 shadow-xl transition-all duration-200 z-20 ${openMapProgram === p.id ? "opacity-100 visible pointer-events-auto" : "opacity-0 invisible pointer-events-none"}`}
@@ -342,7 +342,7 @@ export default function ProgramsPage() {
                           rel="noopener noreferrer"
                           className="flex items-center gap-2 px-4 py-2 text-sm text-slate-200 hover:bg-white/10 rounded-t-lg border-b border-white/10 transition-colors"
                         >
-                          <MapPin className="w-4 h-4 text-cyan-400" />
+                          <MapPin className="w-4 h-4 text-blue-400" />
                           View on Google Maps
                         </a>
                         <a
@@ -359,7 +359,7 @@ export default function ProgramsPage() {
                     
                     <button
                       onClick={() => toggleProgramExpansion(p.id)}
-                      className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-linear-to-r from-cyan-500 to-indigo-600 text-white rounded-lg hover:from-cyan-400 hover:to-indigo-500 transition duration-150 ease-out text-sm shadow-lg w-full sm:w-auto active:scale-[0.98]"
+                      className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-linear-to-r from-blue-500 to-indigo-600 text-white rounded-lg hover:from-blue-400 hover:to-indigo-500 transition duration-150 ease-out text-sm shadow-lg w-full sm:w-auto active:scale-[0.98]"
                     >
                       {isExpanded ? (
                         <>
@@ -427,11 +427,11 @@ export default function ProgramsPage() {
                         <h3 className="text-lg font-semibold text-slate-100 mb-3">Program Overview</h3>
                         <p className="text-slate-300 mb-4">{p.description}</p>
                         
-                        <h4 className="text-md font-medium text-slate-100 mb-3 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]">Requirements</h4>
+                        <h4 className="text-md font-medium text-slate-100 mb-3 drop-shadow-[0_0_8px_rgba(96,165,250,0.5)]">Requirements</h4>
                         <ul className="space-y-2">
                           {p.requirements.map((req, reqIndex) => (
                             <li key={reqIndex} className="flex items-center text-sm text-slate-300 p-3 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-colors">
-                              <svg className="w-4 h-4 mr-2 text-cyan-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-4 h-4 mr-2 text-blue-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                               </svg>
                               {req}
@@ -460,7 +460,7 @@ export default function ProgramsPage() {
                             <span className="font-medium">Departments:</span>
                             <div className="mt-2 flex flex-wrap gap-2">
                               {h?.departments.map((dept, deptIndex) => (
-                                <span key={deptIndex} className="px-2 py-1 bg-purple-400/15 text-purple-100 text-xs rounded-full border border-purple-300/30">
+                                <span key={deptIndex} className="px-2 py-1 bg-indigo-400/15 text-indigo-100 text-xs rounded-full border border-indigo-300/30">
                                   {dept}
                                 </span>
                               ))}
@@ -478,7 +478,7 @@ export default function ProgramsPage() {
                           e.preventDefault();
                           handleApplyClick(p, h!);
                         }}
-                        className="flex-1 text-center hover-scale rounded-xl bg-linear-to-r from-cyan-500 to-indigo-600 text-white py-3 font-semibold shadow-lg hover:from-cyan-400 hover:to-indigo-500 transition-all duration-300 cursor-pointer"
+                        className="flex-1 text-center hover-scale rounded-xl bg-linear-to-r from-blue-500 to-indigo-600 text-white py-3 font-semibold shadow-lg hover:from-blue-400 hover:to-indigo-500 transition-all duration-300 cursor-pointer"
                       >
                         Apply for this Program →
                       </button>

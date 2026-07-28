@@ -90,14 +90,14 @@ const sections = [
     title: "6. Data Protection & Privacy",
     body: (
       <>
-        <h3 className="text-base font-semibold text-cyan-100">Data Handling</h3>
+        <h3 className="text-base font-semibold text-blue-100">Data Handling</h3>
         <p className="text-slate-200/90 leading-relaxed">By using this platform, applicants consent to:</p>
         <ul className="list-disc pl-5 text-slate-200/90 space-y-1">
           <li>Uploading personal, academic, and health-related documents</li>
           <li>Secure storage and controlled access for application processing</li>
           <li>Sharing documents only with relevant hospitals or institutions for application review</li>
         </ul>
-        <h3 className="text-base font-semibold text-cyan-100">Security</h3>
+        <h3 className="text-base font-semibold text-blue-100">Security</h3>
         <ul className="list-disc pl-5 text-slate-200/90 space-y-1">
           <li>Access to documents is role-restricted</li>
           <li>Documents are not publicly visible</li>
@@ -188,14 +188,14 @@ export default function LegalPage() {
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-14 space-y-8">
         <header className="text-center space-y-3 animate-fade-in">
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-300/30 bg-cyan-500/10 text-xs font-semibold uppercase tracking-[0.16em] text-cyan-100">Legal</span>
-          <h1 className="text-3xl sm:text-4xl font-bold bg-clip-text text-transparent bg-linear-to-r from-cyan-300 via-sky-200 to-indigo-200">Legal Disclaimer & Terms of Use</h1>
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-blue-300/30 bg-blue-500/10 text-xs font-semibold uppercase tracking-[0.16em] text-blue-100">Legal</span>
+          <h1 className="text-3xl sm:text-4xl font-bold bg-clip-text text-transparent bg-linear-to-r from-blue-300 via-blue-200 to-indigo-200">Legal Disclaimer & Terms of Use</h1>
           <p className="text-slate-300">Last Updated: January 8, 2026</p>
           <p className="text-slate-400 text-sm max-w-2xl mx-auto">This document is provided for informational purposes and does not constitute legal advice.</p>
         </header>
 
         <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.55)]">
-          <div className="absolute inset-0 bg-linear-to-br from-white/10 via-transparent to-cyan-500/10 pointer-events-none" />
+          <div className="absolute inset-0 bg-linear-to-br from-white/10 via-transparent to-blue-500/10 pointer-events-none" />
           <div className="relative p-6 sm:p-10 space-y-8">
             {sections.map((section, idx) => (
               <section key={section.title} className="space-y-3 border border-white/5 rounded-2xl bg-white/5 p-5 sm:p-6 shadow-inner">

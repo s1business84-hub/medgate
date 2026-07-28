@@ -86,7 +86,7 @@ export function FormBuilder({
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-purple-500"
+                className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500"
                 placeholder="e.g., Daily Observership Assessment"
               />
             </div>
@@ -95,7 +95,7 @@ export function FormBuilder({
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-purple-500"
+                className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500"
                 placeholder="Brief description of what this form assesses"
                 rows={2}
               />
@@ -108,7 +108,7 @@ export function FormBuilder({
               <h3 className="text-lg font-semibold text-white">Form Fields ({fields.length})</h3>
               <button
                 onClick={addField}
-                className="flex items-center gap-2 px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg transition-colors"
               >
                 <Plus className="w-4 h-4" />
                 Add Field
@@ -145,7 +145,7 @@ export function FormBuilder({
                           type="text"
                           value={field.label}
                           onChange={(e) => updateField(field.id, { label: e.target.value })}
-                          className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded text-white text-sm focus:outline-none focus:border-purple-500"
+                          className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded text-white text-sm focus:outline-none focus:border-indigo-500"
                           placeholder="e.g., Overall Performance Rating"
                         />
                       </div>
@@ -154,7 +154,7 @@ export function FormBuilder({
                         <select
                           value={field.type}
                           onChange={(e) => updateField(field.id, { type: e.target.value as FormFieldType })}
-                          className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded text-white text-sm focus:outline-none focus:border-purple-500"
+                          className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded text-white text-sm focus:outline-none focus:border-indigo-500"
                         >
                           {fieldTypeOptions.map(type => (
                             <option key={type} value={type} className="bg-slate-900">
@@ -172,7 +172,7 @@ export function FormBuilder({
                           type="text"
                           value={field.options?.join(", ") || ""}
                           onChange={(e) => updateField(field.id, { options: e.target.value.split(",").map(o => o.trim()) })}
-                          className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded text-white text-sm focus:outline-none focus:border-purple-500"
+                          className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded text-white text-sm focus:outline-none focus:border-indigo-500"
                           placeholder="e.g., Excellent, Good, Fair, Poor"
                         />
                       </div>
@@ -184,7 +184,7 @@ export function FormBuilder({
                         type="text"
                         value={field.placeholder || ""}
                         onChange={(e) => updateField(field.id, { placeholder: e.target.value })}
-                        className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded text-white text-sm focus:outline-none focus:border-purple-500"
+                        className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded text-white text-sm focus:outline-none focus:border-indigo-500"
                         placeholder="Help text for students"
                       />
                     </div>
@@ -209,7 +209,7 @@ export function FormBuilder({
             <button
               onClick={handleSave}
               disabled={loading}
-              className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-linear-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white rounded-lg font-medium transition-all disabled:opacity-50"
+              className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-linear-to-r from-indigo-500 to-blue-500 hover:from-indigo-600 hover:to-blue-600 text-white rounded-lg font-medium transition-all disabled:opacity-50"
             >
               <Save className="w-4 h-4" />
               {loading ? "Saving..." : "Save Form"}

@@ -85,7 +85,7 @@ export default function AIFormCreatorPage() {
 
   if (loading) {
     return (
-      <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950 flex items-center justify-center">
+      <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-indigo-900/20 to-slate-950 flex items-center justify-center">
         <LiquidParallax depth={14} className="opacity-70" />
         <p className="text-slate-300 relative z-10">Loading...</p>
       </div>
@@ -93,7 +93,7 @@ export default function AIFormCreatorPage() {
   }
 
   return (
-    <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950">
+    <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-indigo-900/20 to-slate-950">
       <LiquidParallax depth={14} className="opacity-70" />
 
       <div className="max-w-4xl mx-auto px-4 py-12 relative z-10">
@@ -106,8 +106,8 @@ export default function AIFormCreatorPage() {
             <ArrowLeft className="w-6 h-6 text-slate-300" />
           </Link>
           <div>
-            <h1 className="text-4xl font-bold bg-linear-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent flex items-center gap-2">
-              <Sparkles className="w-8 h-8 text-purple-400" />
+            <h1 className="text-4xl font-bold bg-linear-to-r from-indigo-400 via-indigo-400 to-red-400 bg-clip-text text-transparent flex items-center gap-2">
+              <Sparkles className="w-8 h-8 text-indigo-400" />
               AI Form Creator
             </h1>
             <p className="text-slate-300">Generate medical assessment forms using GPT-4o</p>
@@ -126,7 +126,7 @@ export default function AIFormCreatorPage() {
           <select
             value={programId}
             onChange={(e) => setProgramId(e.target.value)}
-            className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white focus:border-purple-500 outline-none transition"
+            className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white focus:border-indigo-500 outline-none transition"
           >
             <option value="">Choose a program...</option>
             {programs.map((programId) => (
@@ -147,7 +147,7 @@ export default function AIFormCreatorPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="p-8 rounded-2xl border border-purple-500/20 bg-white/5 backdrop-blur-xl"
+          className="p-8 rounded-2xl border border-indigo-500/20 bg-white/5 backdrop-blur-xl"
         >
           <AIFormBuilder
             onFormGenerated={handleFormGenerated}
@@ -162,9 +162,9 @@ export default function AIFormCreatorPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="mt-8 p-6 rounded-lg border border-cyan-500/30 bg-cyan-500/10"
+          className="mt-8 p-6 rounded-lg border border-blue-500/30 bg-blue-500/10"
         >
-          <h3 className="font-semibold text-cyan-300 mb-2">💡 How It Works</h3>
+          <h3 className="font-semibold text-blue-300 mb-2">💡 How It Works</h3>
           <ul className="space-y-2 text-sm text-slate-300">
             <li>• Describe the form you want to create (e.g., "Cardiology assessment form")</li>
             <li>• Choose form type: Assessment, Observation, Feedback, or Checklist</li>

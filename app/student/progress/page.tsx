@@ -81,7 +81,7 @@ export default function StudentProgressPage() {
               </Link>
               <div>
                 <h1 className="text-4xl font-bold text-white flex items-center gap-2">
-                  <TrendingUp className="w-8 h-8 text-cyan-400" />
+                  <TrendingUp className="w-8 h-8 text-blue-400" />
                   Progress Tracker
                 </h1>
                 <p className="text-slate-300">Your clinical development overview</p>
@@ -114,12 +114,12 @@ export default function StudentProgressPage() {
                   <h3 className="text-xl font-bold text-white mb-3">{cat.label}</h3>
                   <div className="space-y-2">
                     <div className="flex items-baseline gap-2">
-                      <span className="text-3xl font-bold text-cyan-400">{avgValue}%</span>
+                      <span className="text-3xl font-bold text-blue-400">{avgValue}%</span>
                       <span className="text-sm text-slate-400">average</span>
                     </div>
                     <div className="w-full bg-white/10 rounded-full h-2">
                       <div
-                        className="bg-linear-to-r from-cyan-400 to-indigo-500 h-2 rounded-full transition-all duration-500"
+                        className="bg-linear-to-r from-blue-400 to-indigo-500 h-2 rounded-full transition-all duration-500"
                         style={{ width: `${avgValue}%` }}
                       />
                     </div>
@@ -173,7 +173,7 @@ export default function StudentProgressPage() {
                           {entry.notes && <p className="mt-2 text-sm text-slate-300">{entry.notes}</p>}
                         </div>
                         <div className="text-right">
-                          <span className="text-2xl font-bold text-cyan-400">{entry.value}%</span>
+                          <span className="text-2xl font-bold text-blue-400">{entry.value}%</span>
                         </div>
                       </div>
                     </motion.div>

@@ -179,9 +179,9 @@ export function AIFormBuilder({ onFormGenerated, onSaveForm }: AIFormBuilderProp
             exit={{ opacity: 0, y: -20 }}
             className="space-y-6"
           >
-            <div className="p-6 rounded-2xl border border-purple-500/30 bg-purple-500/10 backdrop-blur-xl">
+            <div className="p-6 rounded-2xl border border-indigo-500/30 bg-indigo-500/10 backdrop-blur-xl">
               <h2 className="text-2xl font-bold text-white mb-2 flex items-center gap-2">
-                <Sparkles className="w-6 h-6 text-purple-400" />
+                <Sparkles className="w-6 h-6 text-indigo-400" />
                 AI Form Builder
               </h2>
               <p className="text-slate-300">
@@ -196,7 +196,7 @@ export function AIFormBuilder({ onFormGenerated, onSaveForm }: AIFormBuilderProp
                 <select
                   value={formType}
                   onChange={(e) => setFormType(e.target.value as any)}
-                  className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white focus:border-purple-500 outline-none transition"
+                  className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white focus:border-indigo-500 outline-none transition"
                 >
                   <option value="assessment">Assessment</option>
                   <option value="observation">Observation</option>
@@ -209,7 +209,7 @@ export function AIFormBuilder({ onFormGenerated, onSaveForm }: AIFormBuilderProp
                 <select
                   value={difficulty}
                   onChange={(e) => setDifficulty(e.target.value as any)}
-                  className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white focus:border-purple-500 outline-none transition"
+                  className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white focus:border-indigo-500 outline-none transition"
                 >
                   <option value="beginner">Beginner (5-7 fields)</option>
                   <option value="intermediate">Intermediate (8-12 fields)</option>
@@ -225,7 +225,7 @@ export function AIFormBuilder({ onFormGenerated, onSaveForm }: AIFormBuilderProp
                 value={specialty}
                 onChange={(e) => setSpecialty(e.target.value)}
                 placeholder="e.g., Cardiology, Emergency Medicine, Pediatrics"
-                className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-slate-400 focus:border-purple-500 outline-none transition"
+                className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-slate-400 focus:border-indigo-500 outline-none transition"
               />
             </div>
 
@@ -237,7 +237,7 @@ export function AIFormBuilder({ onFormGenerated, onSaveForm }: AIFormBuilderProp
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   placeholder="e.g., Create a form to assess a student's clinical examination skills during cardiology rotation. Include questions about patient history, physical examination findings, and clinical reasoning..."
-                  className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-slate-400 focus:border-purple-500 outline-none transition resize-none h-32"
+                  className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-slate-400 focus:border-indigo-500 outline-none transition resize-none h-32"
                 />
                 <button
                   ref={micRef}
@@ -245,7 +245,7 @@ export function AIFormBuilder({ onFormGenerated, onSaveForm }: AIFormBuilderProp
                   className={`absolute bottom-3 right-3 p-2 rounded-lg transition ${
                     isRecording
                       ? "bg-red-500/30 border border-red-500 text-red-400"
-                      : "bg-white/10 border border-white/20 text-slate-400 hover:text-purple-400"
+                      : "bg-white/10 border border-white/20 text-slate-400 hover:text-indigo-400"
                   }`}
                   title="Voice input"
                 >
@@ -266,7 +266,7 @@ export function AIFormBuilder({ onFormGenerated, onSaveForm }: AIFormBuilderProp
             <button
               onClick={generateForm}
               disabled={isGenerating || !prompt.trim()}
-              className="w-full px-6 py-3 rounded-lg bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold flex items-center justify-center gap-2 transition"
+              className="w-full px-6 py-3 rounded-lg bg-linear-to-r from-indigo-600 to-indigo-600 hover:from-indigo-500 hover:to-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold flex items-center justify-center gap-2 transition"
             >
               {isGenerating ? (
                 <>
@@ -443,7 +443,7 @@ export function AIFormBuilder({ onFormGenerated, onSaveForm }: AIFormBuilderProp
                 setPrompt("");
                 setGeneratedForm(null);
               }}
-              className="px-6 py-3 rounded-lg bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-semibold transition"
+              className="px-6 py-3 rounded-lg bg-linear-to-r from-indigo-600 to-indigo-600 hover:from-indigo-500 hover:to-indigo-500 text-white font-semibold transition"
             >
               Create Another Form
             </button>

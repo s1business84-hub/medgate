@@ -35,7 +35,7 @@ export function ComplianceAcknowledgement({
           <label key={policy} className="flex items-start gap-3 text-xs text-slate-300">
             <input
               type="checkbox"
-              className="mt-0.5 h-4 w-4 rounded border-white/30 bg-white/10 text-cyan-400"
+              className="mt-0.5 h-4 w-4 rounded border-white/30 bg-white/10 text-blue-400"
               checked={!!accepted[policy]}
               onChange={() => toggle(policy)}
             />

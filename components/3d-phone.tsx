@@ -24,7 +24,7 @@ function Phone() {
           color="#0f172a"
           metalness={0.95}
           roughness={0.05}
-          emissive="#06b6d4"
+          emissive="#3b82f6"
           emissiveIntensity={0.1}
           reflectivity={0.9}
           clearcoat={1}
@@ -38,7 +38,7 @@ function Phone() {
           color="#0a3f5a"
           metalness={0.2}
           roughness={0.3}
-          emissive="#06b6d4"
+          emissive="#3b82f6"
           emissiveIntensity={0.8}
           clearcoat={0.8}
           clearcoatRoughness={0.2}
@@ -62,7 +62,7 @@ function Phone() {
       <Center position={[0, 0.15, 0.18]}>
         <Text
           fontSize={0.28}
-          color="#06b6d4"
+          color="#3b82f6"
           anchorX="center"
           anchorY="middle"
           maxWidth={1.4}
@@ -123,13 +123,13 @@ function SceneContent() {
       <ambientLight intensity={0.5} />
       
       {/* Key light - cyan from top right */}
-      <pointLight position={[6, 8, 8]} intensity={2} color="#06b6d4" distance={30} decay={2} />
+      <pointLight position={[6, 8, 8]} intensity={2} color="#3b82f6" distance={30} decay={2} />
       
       {/* Fill light - indigo from back left */}
       <pointLight position={[-8, 4, -8]} intensity={1.5} color="#6366f1" distance={25} decay={2} />
       
       {/* Rim light - subtle cyan from bottom */}
-      <pointLight position={[0, -6, 8]} intensity={1} color="#06b6d4" distance={20} decay={2} />
+      <pointLight position={[0, -6, 8]} intensity={1} color="#3b82f6" distance={20} decay={2} />
       
       {/* Directional light for depth */}
       <directionalLight position={[4, 10, 6]} intensity={0.8} color="#ffffff" />

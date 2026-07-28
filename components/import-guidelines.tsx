@@ -44,7 +44,7 @@ export const ImportGuidelines = () => {
       <Reveal y={20} delay={0.2}>
         <div className="p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl">
           <h4 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-            <CheckCircle className="w-5 h-5 text-cyan-400" />
+            <CheckCircle className="w-5 h-5 text-blue-400" />
             Key Requirements
           </h4>
           <StaggerGroup>
@@ -59,7 +59,7 @@ export const ImportGuidelines = () => {
                     transition={{ delay: idx * 0.1 }}
                     className="p-4 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition"
                   >
-                    <Icon className="w-5 h-5 text-cyan-400 mb-2" />
+                    <Icon className="w-5 h-5 text-blue-400 mb-2" />
                     <p className="font-semibold text-white mb-1">{req.label}</p>
                     <p className="text-sm text-slate-400">{req.desc}</p>
                   </motion.div>
@@ -88,7 +88,7 @@ export const ImportGuidelines = () => {
                   className="flex gap-4 p-4 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition"
                 >
                   <div className="flex-shrink-0">
-                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-linear-to-br from-cyan-500 to-indigo-600 text-white font-bold text-sm">
+                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-linear-to-br from-blue-500 to-indigo-600 text-white font-bold text-sm">
                       {item.step}
                     </div>
                   </div>
@@ -105,30 +105,30 @@ export const ImportGuidelines = () => {
 
       {/* Eligibility Info */}
       <Reveal y={20} delay={0.4}>
-        <div className="p-8 rounded-2xl border border-cyan-500/20 bg-linear-to-br from-cyan-950/20 via-slate-950 to-slate-950 backdrop-blur-xl">
+        <div className="p-8 rounded-2xl border border-blue-500/20 bg-linear-to-br from-blue-950/20 via-slate-950 to-slate-950 backdrop-blur-xl">
           <div className="flex items-start gap-4">
-            <Trophy className="w-6 h-6 text-cyan-400 flex-shrink-0 mt-1" />
+            <Trophy className="w-6 h-6 text-blue-400 flex-shrink-0 mt-1" />
             <div>
               <h4 className="text-lg font-bold text-white mb-2">Eligibility Requirements</h4>
               <ul className="space-y-2 text-slate-300">
                 <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
                   Valid medical or healthcare license from recognized institution
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
                   Minimum 2 years of clinical experience (may vary by role)
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
                   Professional liability insurance (for certain positions)
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
                   Current CPR/BLS certification
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
                   Clean criminal background check
                 </li>
               </ul>

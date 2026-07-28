@@ -24,7 +24,7 @@ const guidelines = [
       "Specialty certifications",
     ],
     icon: FileText,
-    color: "from-blue-500 to-cyan-500",
+    color: "from-blue-500 to-blue-500",
   },
   {
     title: "Eligibility Criteria",
@@ -38,7 +38,7 @@ const guidelines = [
       "Commitment to program duration",
     ],
     icon: CheckCircle2,
-    color: "from-cyan-500 to-blue-500",
+    color: "from-blue-500 to-blue-500",
   },
   {
     title: "Application Requirements",
@@ -172,7 +172,7 @@ export function StudentGuidelines() {
                               </div>
                               <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
                                 <motion.div
-                                  className="h-full rounded-full bg-linear-to-r from-cyan-400 to-indigo-500"
+                                  className="h-full rounded-full bg-linear-to-r from-blue-400 to-indigo-500"
                                   animate={{ width: `${pct}%` }}
                                   transition={{ duration: 0.35, ease: "easeOut" }}
                                 />
@@ -197,12 +197,12 @@ export function StudentGuidelines() {
                                   type="button"
                                   onClick={() => toggle(key)}
                                   aria-pressed={isChecked}
-                                  className="flex w-full items-start gap-3 text-left rounded-lg px-2 py-1.5 -mx-2 transition-colors hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                                  className="flex w-full items-start gap-3 text-left rounded-lg px-2 py-1.5 -mx-2 transition-colors hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
                                 >
                                   <span
                                     className={`mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-md border transition-all duration-200 ${
                                       isChecked
-                                        ? "border-transparent bg-linear-to-br from-cyan-400 to-indigo-500"
+                                        ? "border-transparent bg-linear-to-br from-blue-400 to-indigo-500"
                                         : "border-white/25 bg-white/5"
                                     }`}
                                   >
@@ -243,7 +243,7 @@ export function StudentGuidelines() {
             <h3 className="text-2xl font-bold text-white mb-8">Application Process</h3>
             <div className="relative">
               {/* Connection line */}
-              <div className="hidden md:block absolute top-8 left-0 right-0 h-0.5 bg-gradient-to-r from-cyan-500/30 via-indigo-500/30 to-cyan-500/30" />
+              <div className="hidden md:block absolute top-8 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500/30 via-indigo-500/30 to-blue-500/30" />
 
               <div className="relative z-10">
                 <StaggerGroup
@@ -256,7 +256,7 @@ export function StudentGuidelines() {
                       <motion.div className="relative">
                         {/* Number circle */}
                         <motion.div
-                          className="w-16 h-16 rounded-full bg-linear-to-br from-cyan-500 to-indigo-600 border-4 border-slate-950 flex items-center justify-center mx-auto mb-4 shadow-lg"
+                          className="w-16 h-16 rounded-full bg-linear-to-br from-blue-500 to-indigo-600 border-4 border-slate-950 flex items-center justify-center mx-auto mb-4 shadow-lg"
                           whileHover={{ scale: 1.1 }}
                         >
                           <span className="text-white font-bold text-lg">{item.step}</span>

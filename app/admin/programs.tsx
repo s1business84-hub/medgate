@@ -38,7 +38,7 @@ export default function AdminProgramsPage() {
               </div>
               <div className="flex items-center gap-2">
                 <button
-                  className="px-3 py-2 rounded-lg bg-cyan-600 text-white text-sm"
+                  className="px-3 py-2 rounded-lg bg-blue-600 text-white text-sm"
                   onClick={() => openEditor(p.id)}
                 >
                   Edit Metadata

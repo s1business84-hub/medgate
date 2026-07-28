@@ -83,10 +83,10 @@ export function Footer() {
             className="lg:col-span-1"
           >
             <div className="flex items-center space-x-3 mb-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-r from-cyan-500 to-indigo-500">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-r from-blue-500 to-indigo-500">
                 <Stethoscope className="h-5 w-5 text-white" />
               </div>
-              <span className="text-xl font-bold bg-linear-to-r from-cyan-300 to-indigo-300 bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(34,211,238,0.4)]">Electivio</span>
+              <span className="text-xl font-bold bg-linear-to-r from-blue-300 to-indigo-300 bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(96,165,250,0.4)]">Electivio</span>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed mb-6">
               Connecting medical students with clinical training opportunities
@@ -94,15 +94,15 @@ export function Footer() {
             </p>
             <div className="space-y-2 text-sm text-slate-400">
               <div className="flex items-center">
-                <Mail className="h-4 w-4 mr-2 text-cyan-300 drop-shadow-[0_0_5px_rgba(34,211,238,0.3)]" />
+                <Mail className="h-4 w-4 mr-2 text-blue-300 drop-shadow-[0_0_5px_rgba(96,165,250,0.3)]" />
                 electivio.app@gmail.com
               </div>
               <div className="flex items-center">
-                <Phone className="h-4 w-4 mr-2 text-cyan-300 drop-shadow-[0_0_5px_rgba(34,211,238,0.3)]" />
+                <Phone className="h-4 w-4 mr-2 text-blue-300 drop-shadow-[0_0_5px_rgba(96,165,250,0.3)]" />
                 +971 54 453 0209 (Founder)
               </div>
               <div className="flex items-center">
-                <MapPin className="h-4 w-4 mr-2 text-cyan-300 drop-shadow-[0_0_5px_rgba(34,211,238,0.3)]" />
+                <MapPin className="h-4 w-4 mr-2 text-blue-300 drop-shadow-[0_0_5px_rgba(96,165,250,0.3)]" />
                 Dubai, UAE
               </div>
             </div>
@@ -116,13 +116,13 @@ export function Footer() {
               transition={{ duration: 0.6, delay: 0.1 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-sm font-semibold text-cyan-300 mb-4 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]">Product</h3>
+              <h3 className="text-sm font-semibold text-blue-300 mb-4 drop-shadow-[0_0_8px_rgba(96,165,250,0.5)]">Product</h3>
               <ul className="space-y-3">
                 {footerLinks.product.map((link) => (
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="text-sm text-slate-400 hover:text-cyan-300 transition-colors duration-200 hover:drop-shadow-[0_0_6px_rgba(34,211,238,0.4)]"
+                      className="text-sm text-slate-400 hover:text-blue-300 transition-colors duration-200 hover:drop-shadow-[0_0_6px_rgba(96,165,250,0.4)]"
                     >
                       {link.name}
                     </Link>
@@ -158,13 +158,13 @@ export function Footer() {
               transition={{ duration: 0.6, delay: 0.3 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-sm font-semibold text-purple-300 mb-4 drop-shadow-[0_0_8px_rgba(192,132,250,0.5)]">Support</h3>
+              <h3 className="text-sm font-semibold text-indigo-300 mb-4 drop-shadow-[0_0_8px_rgba(192,132,250,0.5)]">Support</h3>
               <ul className="space-y-3">
                 {footerLinks.support.map((link) => (
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="text-sm text-slate-400 hover:text-purple-300 transition-colors duration-200 hover:drop-shadow-[0_0_6px_rgba(192,132,250,0.4)]"
+                      className="text-sm text-slate-400 hover:text-indigo-300 transition-colors duration-200 hover:drop-shadow-[0_0_6px_rgba(192,132,250,0.4)]"
                     >
                       {link.name}
                     </Link>
@@ -182,7 +182,7 @@ export function Footer() {
             viewport={{ once: true }}
             className="lg:col-span-1"
           >
-            <h3 className="text-sm font-semibold text-cyan-300 mb-4 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]">Stay Updated</h3>
+            <h3 className="text-sm font-semibold text-blue-300 mb-4 drop-shadow-[0_0_8px_rgba(96,165,250,0.5)]">Stay Updated</h3>
             <p className="text-sm text-slate-400 mb-4">
               Get the latest updates on new programs and features.
             </p>
@@ -193,12 +193,12 @@ export function Footer() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
                 disabled={status === "loading" || status === "success"}
-                className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               />
               <button
                 type="submit"
                 disabled={status === "loading" || status === "success"}
-                className="w-full bg-linear-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 drop-shadow-[0_0_12px_rgba(34,211,238,0.4)] hover:drop-shadow-[0_0_16px_rgba(34,211,238,0.6)] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-linear-to-r from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 drop-shadow-[0_0_12px_rgba(96,165,250,0.4)] hover:drop-shadow-[0_0_16px_rgba(96,165,250,0.6)] disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {status === "loading" ? "Subscribing..." : status === "success" ? "Subscribed ✓" : "Subscribe"}
               </button>
@@ -207,7 +207,7 @@ export function Footer() {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   className={`text-xs ${
-                    status === "success" ? "text-cyan-300" : "text-red-400"
+                    status === "success" ? "text-blue-300" : "text-red-400"
                   }`}
                 >
                   {message}

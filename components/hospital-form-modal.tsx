@@ -219,7 +219,7 @@ export function HospitalFormModal({
               <select
                 value={selectedSessionId}
                 onChange={(e) => setSelectedSessionId(e.target.value)}
-                className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="">Select a session...</option>
                 {sessions.map(session => (
@@ -236,7 +236,7 @@ export function HospitalFormModal({
                 onClick={() => setMode("create")}
                 className={`flex-1 px-4 py-2 rounded-md font-medium transition-colors ${
                   mode === "create"
-                    ? "bg-cyan-500 text-white"
+                    ? "bg-blue-500 text-white"
                     : "text-slate-400 hover:text-slate-200"
                 }`}
               >
@@ -246,7 +246,7 @@ export function HospitalFormModal({
                 onClick={() => setMode("select")}
                 className={`flex-1 px-4 py-2 rounded-md font-medium transition-colors ${
                   mode === "select"
-                    ? "bg-cyan-500 text-white"
+                    ? "bg-blue-500 text-white"
                     : "text-slate-400 hover:text-slate-200"
                 }`}
               >
@@ -272,7 +272,7 @@ export function HospitalFormModal({
                 <select
                   value={selectedFormId}
                   onChange={(e) => setSelectedFormId(e.target.value)}
-                  className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                  className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="">Choose a template...</option>
                   {combinedTemplates.map(form => (
@@ -297,7 +297,7 @@ export function HospitalFormModal({
                     value={formTitle}
                     onChange={(e) => setFormTitle(e.target.value)}
                     placeholder="e.g., Session Observation Form"
-                    className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                    className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
 
@@ -310,7 +310,7 @@ export function HospitalFormModal({
                     onChange={(e) => setFormDescription(e.target.value)}
                     placeholder="Brief description of what this form evaluates..."
                     rows={2}
-                    className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                    className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
 
@@ -320,7 +320,7 @@ export function HospitalFormModal({
                     <label className="text-sm font-medium text-slate-300">Form Fields</label>
                     <button
                       onClick={addField}
-                      className="flex items-center gap-2 px-3 py-1.5 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 rounded-lg transition-colors text-sm font-medium"
+                      className="flex items-center gap-2 px-3 py-1.5 bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 rounded-lg transition-colors text-sm font-medium"
                     >
                       <Plus className="w-4 h-4" />
                       Add Field
@@ -336,12 +336,12 @@ export function HospitalFormModal({
                             value={field.label}
                             onChange={(e) => updateField(field.id, { label: e.target.value })}
                             placeholder={`Field ${idx + 1} label...`}
-                            className="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                            className="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                           />
                           <select
                             value={field.type}
                             onChange={(e) => updateField(field.id, { type: e.target.value as FormField["type"] })}
-                            className="px-3 py-2 bg-white/5 border border-white/10 rounded text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                            className="px-3 py-2 bg-white/5 border border-white/10 rounded text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                           >
                             <option value="text">Text</option>
                             <option value="textarea">Long Text</option>
@@ -373,7 +373,7 @@ export function HospitalFormModal({
                             value={field.options?.join(", ") || ""}
                             onChange={(e) => updateField(field.id, { options: e.target.value.split(",").map(o => o.trim()) })}
                             placeholder="Options (comma-separated): Excellent, Good, Fair, Poor"
-                            className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                            className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                           />
                         )}
                       </div>
@@ -396,7 +396,7 @@ export function HospitalFormModal({
             <button
               onClick={handleSubmit}
               disabled={isSubmitting}
-              className="flex items-center gap-2 px-6 py-2 bg-cyan-500 hover:bg-cyan-600 text-white rounded-lg transition-colors disabled:opacity-50 font-medium"
+              className="flex items-center gap-2 px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors disabled:opacity-50 font-medium"
             >
               <Save className="w-4 h-4" />
               {isSubmitting ? "Creating..." : "Create & Assign Form"}

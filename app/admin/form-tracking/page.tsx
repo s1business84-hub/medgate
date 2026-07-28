@@ -57,7 +57,7 @@ export default function FormTrackingPage() {
 
   if (loading) {
     return (
-      <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950 flex items-center justify-center">
+      <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-indigo-900/20 to-slate-950 flex items-center justify-center">
         <LiquidParallax depth={14} className="opacity-70" />
         <p className="text-slate-300">Loading tracking dashboard...</p>
       </div>
@@ -65,7 +65,7 @@ export default function FormTrackingPage() {
   }
 
   return (
-    <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950">
+    <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-indigo-900/20 to-slate-950">
       <LiquidParallax depth={14} className="opacity-70" />
       <div className="max-w-7xl mx-auto px-4 py-12 relative z-10">
         <FormTrackingDashboard

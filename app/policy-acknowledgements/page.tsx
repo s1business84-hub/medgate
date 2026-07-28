@@ -21,7 +21,7 @@ export default function PolicyAcknowledgementsPage() {
 
         <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 md:p-10">
           <div className="flex items-center gap-3 mb-6">
-            <ShieldCheck className="w-6 h-6 text-cyan-400" />
+            <ShieldCheck className="w-6 h-6 text-blue-400" />
             <h1 className="text-3xl md:text-4xl font-bold text-white">Policy Acknowledgements</h1>
           </div>
           <p className="text-slate-300 leading-relaxed mb-6">
@@ -31,7 +31,7 @@ export default function PolicyAcknowledgementsPage() {
 
           <div className="space-y-5">
             <div className="flex items-start gap-4 p-4 rounded-2xl border border-white/10 bg-slate-900/50">
-              <FileText className="w-5 h-5 text-cyan-300 mt-1" />
+              <FileText className="w-5 h-5 text-blue-300 mt-1" />
               <div>
                 <h2 className="text-lg font-semibold text-white">Observership scope (no hands-on care)</h2>
                 <p className="text-sm text-slate-300">Observerships are strictly observational. No clinical procedures or direct patient care are permitted.</p>
@@ -39,7 +39,7 @@ export default function PolicyAcknowledgementsPage() {
             </div>
 
             <div className="flex items-start gap-4 p-4 rounded-2xl border border-white/10 bg-slate-900/50">
-              <Lock className="w-5 h-5 text-cyan-300 mt-1" />
+              <Lock className="w-5 h-5 text-blue-300 mt-1" />
               <div>
                 <h2 className="text-lg font-semibold text-white">Confidentiality / NDA</h2>
                 <p className="text-sm text-slate-300">Applicants agree to maintain confidentiality of all institutional and patient information.</p>
@@ -47,7 +47,7 @@ export default function PolicyAcknowledgementsPage() {
             </div>
 
             <div className="flex items-start gap-4 p-4 rounded-2xl border border-white/10 bg-slate-900/50">
-              <ShieldCheck className="w-5 h-5 text-cyan-300 mt-1" />
+              <ShieldCheck className="w-5 h-5 text-blue-300 mt-1" />
               <div>
                 <h2 className="text-lg font-semibold text-white">Hospital policies acknowledgement</h2>
                 <p className="text-sm text-slate-300">Participants agree to follow hospital policies, safety protocols, and site-specific requirements.</p>
@@ -55,7 +55,7 @@ export default function PolicyAcknowledgementsPage() {
             </div>
 
             <div className="flex items-start gap-4 p-4 rounded-2xl border border-white/10 bg-slate-900/50">
-              <Lock className="w-5 h-5 text-cyan-300 mt-1" />
+              <Lock className="w-5 h-5 text-blue-300 mt-1" />
               <div>
                 <h2 className="text-lg font-semibold text-white">Patient data handling acknowledgement</h2>
                 <p className="text-sm text-slate-300">No patient data should be recorded, stored, or shared outside approved institutional systems.</p>
@@ -63,7 +63,7 @@ export default function PolicyAcknowledgementsPage() {
             </div>
 
             <div className="flex items-start gap-4 p-4 rounded-2xl border border-white/10 bg-slate-900/50">
-              <HeartHandshake className="w-5 h-5 text-cyan-300 mt-1" />
+              <HeartHandshake className="w-5 h-5 text-blue-300 mt-1" />
               <div>
                 <h2 className="text-lg font-semibold text-white">Code of conduct</h2>
                 <p className="text-sm text-slate-300">Applicants must uphold professional behavior, respect patient privacy, and follow staff guidance.</p>
@@ -71,7 +71,7 @@ export default function PolicyAcknowledgementsPage() {
             </div>
           </div>
 
-          <div className="mt-8 rounded-2xl border border-cyan-500/20 bg-cyan-500/10 p-5 text-sm text-cyan-100">
+          <div className="mt-8 rounded-2xl border border-blue-500/20 bg-blue-500/10 p-5 text-sm text-blue-100">
             These acknowledgements are kept short and current to reduce friction while meeting institutional requirements.
           </div>
         </div>

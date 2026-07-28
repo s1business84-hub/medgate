@@ -54,7 +54,7 @@ export default function HospitalPerformancePage() {
         <LiquidParallax />
         <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
         <div className="relative text-center">
-          <div className="w-12 h-12 border-4 border-cyan-400/40 border-t-cyan-400 rounded-full animate-spin mx-auto mb-4" />
+          <div className="w-12 h-12 border-4 border-blue-400/40 border-t-blue-400 rounded-full animate-spin mx-auto mb-4" />
           <p className="text-slate-300">Loading performance data...</p>
         </div>
       </div>
@@ -71,8 +71,8 @@ export default function HospitalPerformancePage() {
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
           <div>
             <div className="flex items-center gap-3 mb-3">
-              <div className="p-2 rounded-lg bg-linear-to-br from-cyan-500/20 to-indigo-500/20 border border-cyan-500/30">
-                <TrendingUp className="w-6 h-6 text-cyan-400" />
+              <div className="p-2 rounded-lg bg-linear-to-br from-blue-500/20 to-indigo-500/20 border border-blue-500/30">
+                <TrendingUp className="w-6 h-6 text-blue-400" />
               </div>
               <h1 className="text-4xl font-bold text-white">Performance on the Go</h1>
             </div>
@@ -80,7 +80,7 @@ export default function HospitalPerformancePage() {
           </div>
           <Link 
             href="/hospital" 
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 hover:border-cyan-500/40 text-cyan-300 hover:text-cyan-200 transition-all"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 hover:border-blue-500/40 text-blue-300 hover:text-blue-200 transition-all"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Portal

@@ -304,7 +304,7 @@ export default function HospitalPortal() {
           <div className="flex gap-4">
             <Link
               href="/hospital/forms"
-              className="px-6 py-2 rounded-lg bg-cyan-600/90 hover:bg-cyan-600 text-white transition-colors font-medium shadow-sm flex items-center gap-2"
+              className="px-6 py-2 rounded-lg bg-blue-600/90 hover:bg-blue-600 text-white transition-colors font-medium shadow-sm flex items-center gap-2"
             >
               <FileText className="w-4 h-4" />
               Form Tracking
@@ -335,18 +335,18 @@ export default function HospitalPortal() {
           <div className="lg:col-span-1 space-y-8">
             {/* Alerts Toggle Card */}
             {staffAlerts.length > 0 && (
-              <div className="rounded-xl border border-cyan-400/30 bg-cyan-500/10 backdrop-blur-xl shadow-lg p-6 sticky top-8">
+              <div className="rounded-xl border border-blue-400/30 bg-blue-500/10 backdrop-blur-xl shadow-lg p-6 sticky top-8">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2">
-                    <Bell className="w-5 h-5 text-cyan-400 animate-pulse" />
-                    <h3 className="font-semibold text-cyan-300">New Applications</h3>
+                    <Bell className="w-5 h-5 text-blue-400 animate-pulse" />
+                    <h3 className="font-semibold text-blue-300">New Applications</h3>
                   </div>
-                  <span className="text-cyan-400 font-bold">{getPendingApplicationAlerts(user?.hospitalId || "").length}</span>
+                  <span className="text-blue-400 font-bold">{getPendingApplicationAlerts(user?.hospitalId || "").length}</span>
                 </div>
-                <p className="text-xs text-cyan-200/70 mb-4">Click below to review and make decisions</p>
+                <p className="text-xs text-blue-200/70 mb-4">Click below to review and make decisions</p>
                 <button
                   onClick={() => setShowAlerts(!showAlerts)}
-                  className="w-full px-3 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg font-medium transition-colors text-sm"
+                  className="w-full px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors text-sm"
                 >
                   {showAlerts ? "Hide Alerts" : "Show Alerts"}
                 </button>
@@ -373,7 +373,7 @@ export default function HospitalPortal() {
           <div className="lg:col-span-3 space-y-14">
             {/* Application Alerts Section */}
             {showAlerts && staffAlerts.length > 0 && (
-              <div className="bg-gradient-to-br from-cyan-950/20 to-blue-950/20 border border-cyan-400/20 rounded-xl p-8">
+              <div className="bg-gradient-to-br from-blue-950/20 to-blue-950/20 border border-blue-400/20 rounded-xl p-8">
                 <StaffApplicationAlerts
                   alerts={staffAlerts}
                   staffId={user?.id || ""}
@@ -443,17 +443,17 @@ export default function HospitalPortal() {
               </div>
 
               <div 
-                className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-lg shadow p-8 cursor-pointer hover:bg-white/10 transition-all duration-300 hover:border-cyan-400/30"
+                className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-lg shadow p-8 cursor-pointer hover:bg-white/10 transition-all duration-300 hover:border-blue-400/30"
                 onClick={() => setShowAlerts(!showAlerts)}
               >
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-slate-300 text-sm mb-2">New Alerts</p>
-                    <p className="text-3xl font-bold text-cyan-400">
+                    <p className="text-3xl font-bold text-blue-400">
                       <CountUp value={staffAlerts.length} />
                     </p>
                   </div>
-                  <Bell className="w-12 h-12 text-cyan-400 opacity-30" />
+                  <Bell className="w-12 h-12 text-blue-400 opacity-30" />
                 </div>
               </div>
             </div>
@@ -480,7 +480,7 @@ export default function HospitalPortal() {
                           onClick={() => setAppFilter(tab.id as any)}
                           className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                             appFilter === tab.id
-                              ? "bg-cyan-500/30 text-cyan-300 border border-cyan-500/50"
+                              ? "bg-blue-500/30 text-blue-300 border border-blue-500/50"
                               : "bg-white/5 text-slate-400 border border-white/10 hover:border-white/20"
                           }`}
                         >
@@ -527,7 +527,7 @@ export default function HospitalPortal() {
                                   <span className="text-yellow-300 text-xs">Regulatory: {app.regulatory.status || 'Pending'}</span>
                                 ) : null}
                                 {(!getSupervisorConfirmations().some(s => s.programId === app.programId && (s.studentId === app.studentId || !s.studentId))) && (
-                                  <span className="text-rose-300 text-xs">No supervisor confirmation</span>
+                                  <span className="text-indigo-300 text-xs">No supervisor confirmation</span>
                                 )}
                               </div>
                             </div>
@@ -633,7 +633,7 @@ export default function HospitalPortal() {
                     <div className="pt-8 border-t border-white/10">
                       <Button
                         onClick={() => setShowFormModal(true)}
-                        className="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-medium py-2 rounded-lg transition-colors"
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition-colors"
                       >
                         <Plus className="w-4 h-4 mr-2 inline" />
                         Create Observation Form

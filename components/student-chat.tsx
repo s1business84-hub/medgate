@@ -135,7 +135,7 @@ export function StudentChat() {
       {/* Chat Button */}
       <motion.button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-40 p-4 bg-linear-to-r from-cyan-600 to-indigo-600 text-white rounded-full shadow-2xl hover:shadow-cyan-500/40 transition-all duration-300"
+        className="fixed bottom-6 right-6 z-40 p-4 bg-linear-to-r from-blue-600 to-indigo-600 text-white rounded-full shadow-2xl hover:shadow-blue-500/40 transition-all duration-300"
         whileHover={{ scale: 1.15, rotate: 5 }}
         whileTap={{ scale: 0.95 }}
         initial={{ opacity: 0, y: 100 }}
@@ -164,7 +164,7 @@ export function StudentChat() {
             className="fixed bottom-24 right-6 z-50 w-96 max-w-[calc(100vw-3rem)] h-128 bg-linear-to-br from-slate-900 to-slate-950 border border-white/20 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-white/10 bg-linear-to-r from-cyan-600/30 to-indigo-600/30 backdrop-blur-sm">
+            <div className="flex items-center justify-between p-4 border-b border-white/10 bg-linear-to-r from-blue-600/30 to-indigo-600/30 backdrop-blur-sm">
               <div className="flex items-center gap-3">
                 {view === "chat" && (
                   <button
@@ -186,7 +186,7 @@ export function StudentChat() {
                     <ArrowLeft className="w-5 h-5 text-white" />
                   </button>
                 )}
-                <Users className="w-5 h-5 text-cyan-300" />
+                <Users className="w-5 h-5 text-blue-300" />
                 <div>
                   <h3 className="text-white font-semibold">
                     {view === "list" && "Student Messages"}
@@ -219,7 +219,7 @@ export function StudentChat() {
                 <div className="p-3">
                   <button
                     onClick={() => setView("new")}
-                    className="w-full p-3 bg-linear-to-r from-cyan-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white rounded-lg font-semibold transition-all flex items-center justify-center gap-2"
+                    className="w-full p-3 bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-lg font-semibold transition-all flex items-center justify-center gap-2"
                   >
                     <MessageCircle className="w-4 h-4" />
                     Start New Conversation
@@ -245,7 +245,7 @@ export function StudentChat() {
                         >
                           <div className="flex items-start justify-between mb-1">
                             <div className="flex items-center gap-2">
-                              <div className="w-10 h-10 rounded-full bg-linear-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold">
+                              <div className="w-10 h-10 rounded-full bg-linear-to-r from-blue-500 to-indigo-500 flex items-center justify-center text-white font-bold">
                                 {studentInfo.name.charAt(0)}
                               </div>
                               <div>
@@ -282,7 +282,7 @@ export function StudentChat() {
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Search students..."
-                      className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                      className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
                 </div>
@@ -296,7 +296,7 @@ export function StudentChat() {
                       className="w-full p-3 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-left transition-all"
                     >
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-linear-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold">
+                        <div className="w-10 h-10 rounded-full bg-linear-to-r from-blue-500 to-indigo-500 flex items-center justify-center text-white font-bold">
                           {student.name.charAt(0)}
                         </div>
                         <div>
@@ -331,7 +331,7 @@ export function StudentChat() {
                       <div
                         className={`max-w-[80%] p-3 rounded-2xl shadow-lg ${
                           message.senderRole === "supervisor"
-                            ? "bg-linear-to-r from-cyan-600 to-indigo-600 text-white"
+                            ? "bg-linear-to-r from-blue-600 to-indigo-600 text-white"
                             : "bg-white/10 backdrop-blur-sm text-slate-200 border border-white/10"
                         }`}
                       >
@@ -353,13 +353,13 @@ export function StudentChat() {
                       onChange={(e) => setInputText(e.target.value)}
                       onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
                       placeholder="Type your message..."
-                      className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
+                      className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                     />
                     <motion.button
                       onClick={handleSendMessage}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="p-3 bg-linear-to-r from-cyan-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 rounded-xl transition-all shadow-lg hover:shadow-cyan-500/30"
+                      className="p-3 bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 rounded-xl transition-all shadow-lg hover:shadow-blue-500/30"
                     >
                       <Send className="w-5 h-5 text-white" />
                     </motion.button>

@@ -197,7 +197,7 @@ export function Robot3D() {
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 1, ease: "easeOut" }}
-      className="relative w-full h-96 rounded-3xl overflow-hidden border border-cyan-500/30 bg-slate-950/70 backdrop-blur-xl shadow-2xl shadow-cyan-500/20"
+      className="relative w-full h-96 rounded-3xl overflow-hidden border border-blue-500/30 bg-slate-950/70 backdrop-blur-xl shadow-2xl shadow-blue-500/20"
     >
       <Canvas>
         <Scene isWaving={isWaving} />
@@ -214,15 +214,15 @@ export function Robot3D() {
           animate={{ scale: [1, 1.05, 1] }}
           transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
         >
-          <p className="text-xl font-bold bg-linear-to-r from-cyan-300 via-cyan-200 to-blue-300 bg-clip-text text-transparent drop-shadow-lg">
+          <p className="text-xl font-bold bg-linear-to-r from-blue-300 via-blue-200 to-blue-300 bg-clip-text text-transparent drop-shadow-lg">
             👋 Welcome to Medgate
           </p>
         </motion.div>
       </motion.div>
 
       {/* Corner accents */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-linear-to-br from-cyan-500/20 via-transparent to-transparent pointer-events-none rounded-bl-3xl" />
-      <div className="absolute bottom-0 left-0 w-24 h-24 bg-linear-to-tr from-cyan-500/10 via-transparent to-transparent pointer-events-none rounded-tr-full" />
+      <div className="absolute top-0 right-0 w-32 h-32 bg-linear-to-br from-blue-500/20 via-transparent to-transparent pointer-events-none rounded-bl-3xl" />
+      <div className="absolute bottom-0 left-0 w-24 h-24 bg-linear-to-tr from-blue-500/10 via-transparent to-transparent pointer-events-none rounded-tr-full" />
     </motion.div>
   );
 }

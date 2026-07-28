@@ -319,7 +319,7 @@ export default function AdminPage() {
     state === "Approved"
       ? "bg-emerald-500/15 text-emerald-100 border-emerald-400/30"
       : state === "Rejected"
-        ? "bg-rose-500/15 text-rose-100 border-rose-400/30"
+        ? "bg-indigo-500/15 text-indigo-100 border-indigo-400/30"
         : state === "Waitlisted"
           ? "bg-amber-500/15 text-amber-100 border-amber-400/30"
           : state === "Accepted"
@@ -327,8 +327,8 @@ export default function AdminPage() {
             : state === "Deferred"
               ? "bg-yellow-500/10 text-amber-100 border-amber-400/20"
               : state === "Declined"
-                ? "bg-rose-600/10 text-rose-100 border-rose-400/20"
-                : "bg-cyan-500/15 text-cyan-100 border-cyan-400/30";
+                ? "bg-indigo-600/10 text-indigo-100 border-indigo-400/20"
+                : "bg-blue-500/15 text-blue-100 border-blue-400/30";
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
@@ -338,10 +338,10 @@ export default function AdminPage() {
       <div className="relative max-w-7xl mx-auto px-6 py-8">
         {/* EHS Allocations quick links */}
         <div className="mb-6 flex gap-3">
-          <Link href="/admin/hospital-confirmations" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-700 hover:bg-cyan-800 text-white font-semibold shadow transition-all">
+          <Link href="/admin/hospital-confirmations" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-semibold shadow transition-all">
             <span>🔗</span> EHS Hospital Confirmations
           </Link>
-          <Link href="/admin/ehs-audit" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-sky-700 hover:bg-sky-800 text-white font-semibold shadow transition-all">
+          <Link href="/admin/ehs-audit" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-semibold shadow transition-all">
             <span>📜</span> EHS Audit
                     <Link href="/admin/form-tracking" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-semibold shadow transition-all">
                       <span>📋</span> Form Tracking
@@ -375,7 +375,7 @@ export default function AdminPage() {
                   showToast('Failed to seed Scenario 2 — check console');
                 }
               }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-violet-600 hover:bg-violet-700 text-white font-semibold shadow transition-all"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow transition-all"
             >
               🚀 Run Scenario 2
             </button>
@@ -416,7 +416,7 @@ export default function AdminPage() {
             {user && <SupervisorNotifications userId={user.id} />}
             <button
               onClick={() => setShowObsForm(true)}
-              className="px-6 py-2 rounded-lg bg-linear-to-r from-cyan-500 to-indigo-600 text-white font-semibold shadow-lg hover:from-cyan-400 hover:to-indigo-500 transition-all"
+              className="px-6 py-2 rounded-lg bg-linear-to-r from-blue-500 to-indigo-600 text-white font-semibold shadow-lg hover:from-blue-400 hover:to-indigo-500 transition-all"
             >
               + Add Observership
             </button>
@@ -451,9 +451,9 @@ export default function AdminPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-slate-400 mb-1">Total Applications</p>
-                <p className="text-3xl font-bold text-cyan-400">{applications.length}</p>
+                <p className="text-3xl font-bold text-blue-400">{applications.length}</p>
               </div>
-              <CheckCircle className="w-10 h-10 text-cyan-400 opacity-50" />
+              <CheckCircle className="w-10 h-10 text-blue-400 opacity-50" />
             </div>
             <p className="text-xs text-slate-400 mt-3">All submitted applications</p>
           </div>
@@ -533,12 +533,12 @@ export default function AdminPage() {
                               <span className="text-yellow-300 text-xs">Regulatory: {app.regulatory.status || 'Pending'}</span>
                             ) : null}
                             {(!getSupervisorConfirmations().some(s => s.programId === app.programId && (s.studentId === app.studentId || !s.studentId))) && (
-                              <span className="text-rose-300 text-xs">No supervisor confirmation</span>
+                              <span className="text-indigo-300 text-xs">No supervisor confirmation</span>
                             )}
                             {getSupervisorConfirmations().some(s => s.programId === app.programId && !s.studentId) && (() => {
                               const prog = getSupervisorConfirmations().find(s => s.programId === app.programId && !s.studentId);
                               return (
-                                <span className="text-cyan-300 text-xs">Program confirmed by {getSupervisorName(prog?.supervisorId)} on {prog ? new Date(prog.confirmedAt).toLocaleDateString() : ''}</span>
+                                <span className="text-blue-300 text-xs">Program confirmed by {getSupervisorName(prog?.supervisorId)} on {prog ? new Date(prog.confirmedAt).toLocaleDateString() : ''}</span>
                               );
                             })()}
                             {app.supervisor && (
@@ -731,7 +731,7 @@ export default function AdminPage() {
                         <Clock className="w-4 h-4 mr-2" />
                         Defer Application
                       </button>
-                      <button onClick={() => handleDecline(selectedApp.id)} disabled={actionInProgress} className="w-full bg-linear-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white font-semibold py-2 rounded-lg transition-colors disabled:opacity-50 flex items-center justify-center shadow-lg">
+                      <button onClick={() => handleDecline(selectedApp.id)} disabled={actionInProgress} className="w-full bg-linear-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white font-semibold py-2 rounded-lg transition-colors disabled:opacity-50 flex items-center justify-center shadow-lg">
                         <XCircle className="w-4 h-4 mr-2" />
                         Decline Application
                       </button>
@@ -780,7 +780,7 @@ export default function AdminPage() {
                         ].map(t => <option key={t} value={t}>{t}</option>)}
                       </select>
                       <input value={docName} onChange={(e) => setDocName(e.target.value)} placeholder="Document name" className="flex-1 border border-white/15 bg-white/5 text-slate-100 rounded-lg px-3 py-2 text-sm" />
-                      <button onClick={handleUploadDocument} className="px-3 py-2 bg-linear-to-r from-cyan-500 to-indigo-600 text-white rounded-lg text-sm shadow-lg">Upload</button>
+                      <button onClick={handleUploadDocument} className="px-3 py-2 bg-linear-to-r from-blue-500 to-indigo-600 text-white rounded-lg text-sm shadow-lg">Upload</button>
                     </div>
                   </div>
                 </div>
@@ -888,7 +888,7 @@ export default function AdminPage() {
               </button>
               <button
                 onClick={handleCreateObservership}
-                className="flex-1 px-4 py-2 bg-linear-to-r from-cyan-500 to-indigo-600 text-white rounded-lg hover:from-cyan-400 hover:to-indigo-500 font-medium transition-colors shadow-lg"
+                className="flex-1 px-4 py-2 bg-linear-to-r from-blue-500 to-indigo-600 text-white rounded-lg hover:from-blue-400 hover:to-indigo-500 font-medium transition-colors shadow-lg"
               >
                 Create Observership
               </button>
@@ -954,13 +954,13 @@ export default function AdminPage() {
             <h3 className="text-xl font-bold mb-4">Reject Application</h3>
             <div className="mb-4">
               <label className="block text-sm font-medium text-slate-300 mb-2">Reason for Rejection (Optional)</label>
-              <textarea value={rejectReason} onChange={(e) => setRejectReason(e.target.value)} placeholder="Enter reason..." className="w-full px-3 py-2 border border-white/15 rounded-lg bg-white/5 focus:outline-none focus:ring-2 focus:ring-rose-500 text-slate-100" rows={4} />
+              <textarea value={rejectReason} onChange={(e) => setRejectReason(e.target.value)} placeholder="Enter reason..." className="w-full px-3 py-2 border border-white/15 rounded-lg bg-white/5 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-100" rows={4} />
             </div>
             <div className="flex gap-3">
               <button onClick={() => { setShowRejectModal(false); setRejectReason(""); }} className="flex-1 px-4 py-2 border border-white/15 text-slate-100 rounded-lg hover:bg-white/10 font-medium transition-colors">
                 Cancel
               </button>
-              <button onClick={() => selectedApp && handleReject(selectedApp.id)} disabled={actionInProgress} className="flex-1 px-4 py-2 bg-linear-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white rounded-lg font-medium transition-colors disabled:opacity-50 shadow-lg">
+              <button onClick={() => selectedApp && handleReject(selectedApp.id)} disabled={actionInProgress} className="flex-1 px-4 py-2 bg-linear-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white rounded-lg font-medium transition-colors disabled:opacity-50 shadow-lg">
                 {actionInProgress ? "Processing..." : "Confirm Rejection"}
               </button>
             </div>

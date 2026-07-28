@@ -260,7 +260,7 @@ export function Hero() {
     >
       <div className="absolute inset-0 bg-linear-to-b from-slate-900/60 via-slate-950 to-black" />
       <motion.div className="relative z-10 space-y-4 text-center">
-        <p className="hero-kicker text-sm uppercase tracking-[0.3em] text-cyan-200/80">
+        <p className="hero-kicker text-sm uppercase tracking-[0.3em] text-blue-200/80">
           Intelligent clinical pathways
         </p>
         <motion.h1

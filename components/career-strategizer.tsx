@@ -46,8 +46,8 @@ const stageIcons: Record<CareerStage, any> = {
 
 const stageColors: Record<CareerStage, string> = {
   medical_school: "bg-blue-500/20 text-blue-300 border-blue-500/30",
-  observership: "bg-purple-500/20 text-purple-300 border-purple-500/30",
-  internship: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
+  observership: "bg-indigo-500/20 text-indigo-300 border-indigo-500/30",
+  internship: "bg-blue-500/20 text-blue-300 border-blue-500/30",
   residency: "bg-green-500/20 text-green-300 border-green-500/30",
   fellowship: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30",
   consultant: "bg-orange-500/20 text-orange-300 border-orange-500/30"
@@ -126,7 +126,7 @@ export function CareerStrategizer({
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="rounded-2xl border border-white/10 bg-linear-to-br from-purple-500/10 to-blue-500/10 backdrop-blur-xl p-6">
+      <div className="rounded-2xl border border-white/10 bg-linear-to-br from-indigo-500/10 to-blue-500/10 backdrop-blur-xl p-6">
         <div className="flex items-start justify-between mb-4">
           <div>
             <h2 className="text-2xl font-bold text-white mb-2">Career Path Strategizer</h2>
@@ -139,7 +139,7 @@ export function CareerStrategizer({
               onClick={() => setViewMode("overview")}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 viewMode === "overview"
-                  ? "bg-purple-500 text-white"
+                  ? "bg-indigo-500 text-white"
                   : "bg-white/5 text-slate-300 hover:bg-white/10"
               }`}
             >
@@ -149,7 +149,7 @@ export function CareerStrategizer({
               onClick={() => setViewMode("specialties")}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 viewMode === "specialties"
-                  ? "bg-purple-500 text-white"
+                  ? "bg-indigo-500 text-white"
                   : "bg-white/5 text-slate-300 hover:bg-white/10"
               }`}
             >
@@ -159,7 +159,7 @@ export function CareerStrategizer({
               onClick={() => setViewMode("timeline")}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 viewMode === "timeline"
-                  ? "bg-purple-500 text-white"
+                  ? "bg-indigo-500 text-white"
                   : "bg-white/5 text-slate-300 hover:bg-white/10"
               }`}
             >
@@ -172,14 +172,14 @@ export function CareerStrategizer({
         <div className="space-y-2">
           <div className="flex items-center justify-between text-sm">
             <span className="text-slate-400">Your Current Stage: {careerStageInfo[currentStage].title}</span>
-            <span className="text-purple-300 font-semibold">{Math.round(getProgressPercentage())}% Complete</span>
+            <span className="text-indigo-300 font-semibold">{Math.round(getProgressPercentage())}% Complete</span>
           </div>
           <div className="w-full bg-white/10 rounded-full h-2 overflow-hidden">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${getProgressPercentage()}%` }}
               transition={{ duration: 1, ease: "easeOut" }}
-              className="h-full bg-linear-to-r from-purple-500 to-blue-500"
+              className="h-full bg-linear-to-r from-indigo-500 to-blue-500"
             />
           </div>
         </div>
@@ -215,7 +215,7 @@ export function CareerStrategizer({
               <h3 className="text-xl font-bold text-white mb-6">Medical Career Progression</h3>
               <div className="relative">
                 {/* Timeline Line */}
-                <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-linear-to-b from-purple-500 via-blue-500 to-green-500" />
+                <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-linear-to-b from-indigo-500 via-blue-500 to-green-500" />
 
                 <div className="space-y-6">
                   {(Object.keys(careerStageInfo) as CareerStage[]).map((stage, index) => {
@@ -230,7 +230,7 @@ export function CareerStrategizer({
                         <div
                           className={`relative z-10 flex items-center justify-center w-12 h-12 rounded-full border-2 ${
                             isPast
-                              ? "bg-linear-to-br from-purple-500 to-blue-500 border-white/20"
+                              ? "bg-linear-to-br from-indigo-500 to-blue-500 border-white/20"
                               : "bg-white/5 border-white/10"
                           }`}
                         >
@@ -242,7 +242,7 @@ export function CareerStrategizer({
                         </div>
 
                         {/* Content */}
-                        <div className={`flex-1 pb-6 ${isCurrent ? "ring-2 ring-purple-500/50 rounded-lg p-4 bg-purple-500/10" : ""}`}>
+                        <div className={`flex-1 pb-6 ${isCurrent ? "ring-2 ring-indigo-500/50 rounded-lg p-4 bg-indigo-500/10" : ""}`}>
                           <div className="flex items-center justify-between mb-2">
                             <h4 className="text-lg font-semibold text-white">{info.title}</h4>
                             <span className="text-sm text-slate-400 flex items-center gap-1">
@@ -253,7 +253,7 @@ export function CareerStrategizer({
                           <p className="text-slate-300 text-sm">{info.description}</p>
                           {isCurrent && (
                             <div className="mt-3 flex items-center gap-2 text-sm">
-                              <div className="px-3 py-1 bg-purple-500 text-white rounded-full font-medium">
+                              <div className="px-3 py-1 bg-indigo-500 text-white rounded-full font-medium">
                                 Current Stage
                               </div>
                             </div>
@@ -267,7 +267,7 @@ export function CareerStrategizer({
             </div>
 
             {/* AI Strategy Pathway */}
-            <div className="rounded-2xl border border-white/10 bg-linear-to-br from-purple-500/10 to-blue-500/10 backdrop-blur-xl p-6">
+            <div className="rounded-2xl border border-white/10 bg-linear-to-br from-indigo-500/10 to-blue-500/10 backdrop-blur-xl p-6">
               <div className="flex items-start justify-between mb-4">
                 <div>
                   <h3 className="text-xl font-bold text-white">AI Strategy Pathway</h3>
@@ -316,7 +316,7 @@ export function CareerStrategizer({
                       setSelectedSpecialty(specialty)
                       setViewMode("specialties")
                     }}
-                    className="p-4 bg-white/5 rounded-lg border border-white/10 hover:border-purple-500/50 cursor-pointer transition-all"
+                    className="p-4 bg-white/5 rounded-lg border border-white/10 hover:border-indigo-500/50 cursor-pointer transition-all"
                   >
                     <div className="flex items-start justify-between mb-2">
                       <div>
@@ -324,7 +324,7 @@ export function CareerStrategizer({
                         <p className="text-sm text-slate-400">{specialty.category}</p>
                       </div>
                       <div className="text-right">
-                        <div className="text-2xl font-bold text-purple-300">{score}%</div>
+                        <div className="text-2xl font-bold text-indigo-300">{score}%</div>
                         <div className="text-xs text-slate-400">Match</div>
                       </div>
                     </div>
@@ -368,13 +368,13 @@ export function CareerStrategizer({
                     onClick={() => setSelectedSpecialty(specialty)}
                     className={`w-full text-left p-3 rounded-lg transition-all ${
                       selectedSpecialty?.id === specialty.id
-                        ? "bg-purple-500/20 border-2 border-purple-500"
+                        ? "bg-indigo-500/20 border-2 border-indigo-500"
                         : "bg-white/5 border border-white/10 hover:bg-white/10"
                     }`}
                   >
                     <div className="flex items-center justify-between mb-1">
                       <span className="font-medium text-white text-sm">{specialty.name}</span>
-                      <span className="text-xs text-purple-300 font-semibold">{score}%</span>
+                      <span className="text-xs text-indigo-300 font-semibold">{score}%</span>
                     </div>
                     <div className="text-xs text-slate-400">{specialty.category}</div>
                   </button>
@@ -390,7 +390,7 @@ export function CareerStrategizer({
                     <div>
                       <h2 className="text-2xl font-bold text-white mb-2">{selectedSpecialty.name}</h2>
                       <div className="flex items-center gap-3">
-                        <span className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm border border-purple-500/30">
+                        <span className="px-3 py-1 bg-indigo-500/20 text-indigo-300 rounded-full text-sm border border-indigo-500/30">
                           {selectedSpecialty.category}
                         </span>
                         <span className="px-3 py-1 bg-green-500/20 text-green-300 rounded-full text-sm border border-green-500/30">
@@ -522,7 +522,7 @@ export function CareerStrategizer({
             </h3>
             
             <div className="relative">
-              <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-linear-to-b from-purple-500 via-blue-500 to-green-500" />
+              <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-linear-to-b from-indigo-500 via-blue-500 to-green-500" />
 
               <div className="space-y-8">
                 {selectedSpecialty.typicalCareerPath.map((stage, index) => {
@@ -538,7 +538,7 @@ export function CareerStrategizer({
                       <div
                         className={`relative z-10 flex items-center justify-center w-12 h-12 rounded-full border-2 ${
                           isPast
-                            ? "bg-linear-to-br from-purple-500 to-blue-500 border-white/20"
+                            ? "bg-linear-to-br from-indigo-500 to-blue-500 border-white/20"
                             : "bg-white/5 border-white/10"
                         }`}
                       >
@@ -549,7 +549,7 @@ export function CareerStrategizer({
                         )}
                       </div>
 
-                      <div className={`flex-1 ${isCurrent ? "ring-2 ring-purple-500/50 rounded-lg p-4 bg-purple-500/10" : ""}`}>
+                      <div className={`flex-1 ${isCurrent ? "ring-2 ring-indigo-500/50 rounded-lg p-4 bg-indigo-500/10" : ""}`}>
                         <div className="flex items-center justify-between mb-2">
                           <h4 className="text-lg font-semibold text-white">{info.title}</h4>
                           <span className="text-sm text-slate-400">{info.duration}</span>
@@ -558,10 +558,10 @@ export function CareerStrategizer({
                         
                         {isCurrent && (
                           <div className="flex items-center gap-2">
-                            <div className="px-3 py-1 bg-purple-500 text-white rounded-full text-sm font-medium">
+                            <div className="px-3 py-1 bg-indigo-500 text-white rounded-full text-sm font-medium">
                               You are here
                             </div>
-                            <ChevronRight className="w-4 h-4 text-purple-300" />
+                            <ChevronRight className="w-4 h-4 text-indigo-300" />
                             <span className="text-sm text-slate-400">
                               Next: {selectedSpecialty.typicalCareerPath[index + 1] 
                                 ? careerStageInfo[selectedSpecialty.typicalCareerPath[index + 1]].title
@@ -584,9 +584,9 @@ export function CareerStrategizer({
               </div>
             </div>
 
-            <div className="mt-8 p-6 bg-linear-to-br from-purple-500/10 to-blue-500/10 rounded-xl border border-purple-500/30">
+            <div className="mt-8 p-6 bg-linear-to-br from-indigo-500/10 to-blue-500/10 rounded-xl border border-indigo-500/30">
               <h4 className="text-lg font-semibold text-white mb-3">Estimated Total Timeline</h4>
-              <div className="text-3xl font-bold text-purple-300 mb-2">
+              <div className="text-3xl font-bold text-indigo-300 mb-2">
                 {selectedSpecialty.averageTrainingYears} years
               </div>
               <p className="text-slate-300 text-sm">

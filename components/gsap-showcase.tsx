@@ -78,7 +78,7 @@ export function GSAPAnimationShowcase() {
     <div ref={containerRef} className="space-y-12 py-12">
       {/* Header */}
       <div className="text-center space-y-4">
-        <div className="flex items-center justify-center gap-2 text-cyan-400">
+        <div className="flex items-center justify-center gap-2 text-blue-400">
           <Zap className="w-6 h-6" />
           <h2 className="text-3xl font-bold">GSAP Animation Examples</h2>
         </div>
@@ -91,7 +91,7 @@ export function GSAPAnimationShowcase() {
         <div className="flex justify-center">
           <div
             ref={boxRef}
-            className="w-24 h-24 bg-linear-to-br from-cyan-500 to-indigo-600 rounded-lg shadow-lg"
+            className="w-24 h-24 bg-linear-to-br from-blue-500 to-indigo-600 rounded-lg shadow-lg"
           />
         </div>
         <p className="text-center text-sm text-slate-400">
@@ -103,8 +103,8 @@ export function GSAPAnimationShowcase() {
       <div className="space-y-4">
         <h3 className="text-lg font-semibold text-white">Number Counter</h3>
         <div className="flex justify-center">
-          <div className="px-8 py-4 bg-slate-800/50 border border-cyan-500/30 rounded-lg">
-            <div ref={counterRef} className="text-5xl font-bold text-cyan-400">
+          <div className="px-8 py-4 bg-slate-800/50 border border-blue-500/30 rounded-lg">
+            <div ref={counterRef} className="text-5xl font-bold text-blue-400">
               0
             </div>
             <p className="text-center text-xs text-slate-400 mt-2">Animates from 0 to 100</p>
@@ -118,7 +118,7 @@ export function GSAPAnimationShowcase() {
         <div className="flex justify-center">
           <div
             ref={pulseRef}
-            className="w-32 h-32 bg-linear-to-br from-emerald-500 to-teal-600 rounded-full shadow-lg flex items-center justify-center"
+            className="w-32 h-32 bg-linear-to-br from-emerald-500 to-blue-600 rounded-full shadow-lg flex items-center justify-center"
           >
             <Play className="w-12 h-12 text-white" />
           </div>
@@ -133,7 +133,7 @@ export function GSAPAnimationShowcase() {
         <h3 className="text-lg font-semibold text-white">Scroll Trigger Animation</h3>
         <div
           ref={scrollBoxRef}
-          className="p-6 bg-linear-to-br from-purple-900/20 to-pink-900/20 border border-purple-500/30 rounded-lg backdrop-blur-sm"
+          className="p-6 bg-linear-to-br from-indigo-900/20 to-indigo-900/20 border border-indigo-500/30 rounded-lg backdrop-blur-sm"
         >
           <p className="text-slate-300">
             This box animates as it enters the viewport. Scroll down to see it in action!

@@ -139,7 +139,7 @@ export default function HospitalFormsPage() {
       <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-slate-900 via-slate-950 to-black text-slate-100 flex items-center justify-center">
         <LiquidParallax />
         <div className="relative text-center">
-          <div className="w-12 h-12 border-4 border-cyan-400/40 border-t-cyan-400 rounded-full animate-spin mx-auto mb-4" />
+          <div className="w-12 h-12 border-4 border-blue-400/40 border-t-blue-400 rounded-full animate-spin mx-auto mb-4" />
           <p className="text-slate-300">Loading forms...</p>
         </div>
       </div>
@@ -158,8 +158,8 @@ export default function HospitalFormsPage() {
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-12">
           <div>
             <div className="flex items-center gap-3 mb-3">
-              <div className="p-2 rounded-lg bg-gradient-to-br from-cyan-500/20 to-indigo-500/20 border border-cyan-500/30">
-                <FileText className="w-6 h-6 text-cyan-400" />
+              <div className="p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-indigo-500/20 border border-blue-500/30">
+                <FileText className="w-6 h-6 text-blue-400" />
               </div>
               <h1 className="text-4xl font-bold text-white">Form Tracking</h1>
             </div>
@@ -169,7 +169,7 @@ export default function HospitalFormsPage() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               onClick={() => router.push("/hospital")}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 hover:border-cyan-500/40 text-cyan-300 hover:text-cyan-200 transition-all"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 hover:border-blue-500/40 text-blue-300 hover:text-blue-200 transition-all"
             >
               <ArrowLeft className="w-4 h-4" />
               Back
@@ -177,7 +177,7 @@ export default function HospitalFormsPage() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               onClick={() => router.push("/hospital/forms/ai-create")}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-medium transition-all"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-indigo-600 to-indigo-600 hover:from-indigo-500 hover:to-indigo-500 text-white font-medium transition-all"
             >
               <Sparkles className="w-4 h-4" />
               AI Form Generator
@@ -185,7 +185,7 @@ export default function HospitalFormsPage() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               onClick={() => setShowFormBuilder(true)}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-medium transition-all"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-blue-500 hover:from-blue-600 hover:to-blue-600 text-white font-medium transition-all"
             >
               <Plus className="w-4 h-4" />
               Create Form
@@ -201,7 +201,7 @@ export default function HospitalFormsPage() {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search forms by name or department..."
-            className="w-full pl-12 pr-4 py-3 rounded-lg bg-slate-800/50 border border-white/10 text-white placeholder-slate-500 focus:border-cyan-500 focus:outline-none"
+            className="w-full pl-12 pr-4 py-3 rounded-lg bg-slate-800/50 border border-white/10 text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none"
           />
         </div>
 
@@ -217,7 +217,7 @@ export default function HospitalFormsPage() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 onClick={() => setShowFormBuilder(true)}
-                className="px-6 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-medium hover:from-cyan-600 hover:to-blue-600 transition-all"
+                className="px-6 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-blue-500 text-white font-medium hover:from-blue-600 hover:to-blue-600 transition-all"
               >
                 Create Your First Form
               </motion.button>
@@ -231,10 +231,10 @@ export default function HospitalFormsPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1 }}
-                className="border border-white/10 rounded-xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm overflow-hidden hover:border-cyan-500/30 transition-colors"
+                className="border border-white/10 rounded-xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm overflow-hidden hover:border-blue-500/30 transition-colors"
               >
                 {/* Form Header */}
-                <div className="p-8 border-b border-white/5 bg-gradient-to-r from-cyan-500/5 to-blue-500/5">
+                <div className="p-8 border-b border-white/5 bg-gradient-to-r from-blue-500/5 to-blue-500/5">
                   <div className="flex items-start justify-between mb-6">
                     <div className="flex-1">
                       <h3 className="text-xl font-bold text-white mb-1">{item.form.name}</h3>
@@ -244,7 +244,7 @@ export default function HospitalFormsPage() {
                       )}
                     </div>
                     <div className="text-right">
-                      <div className="text-2xl font-bold text-cyan-400">{item.stats.total}</div>
+                      <div className="text-2xl font-bold text-blue-400">{item.stats.total}</div>
                       <div className="text-xs text-slate-400">Submissions</div>
                     </div>
                   </div>

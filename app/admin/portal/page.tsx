@@ -218,8 +218,8 @@ export default function AdminPortal() {
         {/* KPI Cards */}
         <div className="grid md:grid-cols-4 gap-4 mb-8">
           {[
-            { label: "Active Duties", value: activeDuties, icon: Users, color: "from-blue-500 to-cyan-500" },
-            { label: "Total Doctors", value: doctors.length, icon: Users, color: "from-purple-500 to-pink-500" },
+            { label: "Active Duties", value: activeDuties, icon: Users, color: "from-blue-500 to-blue-500" },
+            { label: "Total Doctors", value: doctors.length, icon: Users, color: "from-indigo-500 to-indigo-500" },
             { label: "Students Assigned", value: totalAssignedStudents, icon: BarChart3, color: "from-green-500 to-emerald-500" },
             { label: "Pending Approval", value: duties.filter((d) => d.status === "pending").length, icon: AlertCircle, color: "from-yellow-500 to-orange-500" },
           ].map((stat, idx) => (

@@ -105,7 +105,7 @@ export function ScrollytellingTimeline({ steps }: ScrollytellingTimelineProps) {
   return (
     <div ref={containerRef} className="relative py-20 md:py-32 perf-section">
       {/* Central connecting line */}
-      <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-cyan-500 to-transparent opacity-0" ref={timelineRef} />
+      <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-blue-500 to-transparent opacity-0" ref={timelineRef} />
 
       {/* Timeline steps */}
       <div className="space-y-12 md:space-y-16 max-w-4xl mx-auto px-6">
@@ -120,7 +120,7 @@ export function ScrollytellingTimeline({ steps }: ScrollytellingTimelineProps) {
             }`}
           >
             {/* Step number circle - on timeline */}
-            <div className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 top-8 w-16 h-16 rounded-full bg-gradient-to-br from-cyan-500 to-indigo-600 flex items-center justify-center shadow-xl border-4 border-slate-950 z-10 step-icon">
+            <div className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 top-8 w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-xl border-4 border-slate-950 z-10 step-icon">
               <span className="text-white font-bold text-2xl">{step.step}</span>
             </div>
 
@@ -133,10 +133,10 @@ export function ScrollytellingTimeline({ steps }: ScrollytellingTimelineProps) {
               whileHover={{ scale: 1.02 }}
             >
               {/* Base gradient glass tint */}
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-white/3 to-indigo-500/5" />
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-white/3 to-indigo-500/5" />
 
               {/* Gradient overlay on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-600/8 via-transparent to-indigo-600/8 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-600/8 via-transparent to-indigo-600/8 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
               {/* Liquid glass shine effect */}
               <div className="absolute inset-0 transition-opacity duration-300">
@@ -144,7 +144,7 @@ export function ScrollytellingTimeline({ steps }: ScrollytellingTimelineProps) {
               </div>
 
               {/* Animated left accent */}
-              <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-500 to-indigo-600 scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top" />
+              <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-500 to-indigo-600 scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top" />
 
               <div className="relative z-10 p-8 md:p-10">
                 <h3 className="text-2xl font-bold text-slate-100 mb-3">

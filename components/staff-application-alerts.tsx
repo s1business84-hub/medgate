@@ -100,7 +100,7 @@ export function StaffApplicationAlerts({
         <div className="flex items-center justify-between mb-4">
           <div>
             <h3 className="text-xl font-bold text-white flex items-center gap-2">
-              <Bell className="w-6 h-6 text-cyan-400" />
+              <Bell className="w-6 h-6 text-blue-400" />
               Application Alerts
             </h3>
             <p className="text-slate-400 text-sm mt-1">New student applications awaiting review</p>
@@ -112,10 +112,10 @@ export function StaffApplicationAlerts({
               className="flex items-center gap-3"
             >
               <div className="text-right">
-                <div className="text-3xl font-bold text-cyan-400">{unreadCount}</div>
+                <div className="text-3xl font-bold text-blue-400">{unreadCount}</div>
                 <div className="text-xs text-slate-400">unread</div>
               </div>
-              <div className="w-3 h-3 bg-cyan-400 rounded-full animate-pulse"></div>
+              <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse"></div>
             </motion.div>
           )}
         </div>
@@ -149,7 +149,7 @@ export function StaffApplicationAlerts({
             onClick={() => setFilterStatus(status)}
             className={`px-4 py-2 rounded-lg font-medium transition-all ${
               filterStatus === status
-                ? "bg-cyan-600 text-white"
+                ? "bg-blue-600 text-white"
                 : "bg-white/5 text-slate-400 hover:bg-white/10 border border-white/10"
             }`}
           >
@@ -163,7 +163,7 @@ export function StaffApplicationAlerts({
       {/* Alerts list */}
       {loading ? (
         <div className="text-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-2 border-cyan-400 border-t-transparent mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-2 border-blue-400 border-t-transparent mx-auto mb-4"></div>
           <p className="text-slate-400">Loading alerts...</p>
         </div>
       ) : filteredAlerts.length === 0 ? (
@@ -191,12 +191,12 @@ export function StaffApplicationAlerts({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05 }}
                   className={`relative border rounded-lg overflow-hidden transition-all ${
-                    isUnread ? "border-cyan-400/50 bg-cyan-500/5" : "border-white/10 bg-white/5"
+                    isUnread ? "border-blue-400/50 bg-blue-500/5" : "border-white/10 bg-white/5"
                   }`}
                 >
                   {/* Unread indicator */}
                   {isUnread && (
-                    <motion.div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-cyan-400 to-blue-500" />
+                    <motion.div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-blue-400 to-blue-500" />
                   )}
 
                   {/* Alert header - always visible */}
@@ -222,7 +222,7 @@ export function StaffApplicationAlerts({
                               <motion.span
                                 animate={{ scale: [1, 1.2, 1] }}
                                 transition={{ repeat: Infinity, duration: 1 }}
-                                className="inline-block w-2 h-2 bg-cyan-400 rounded-full"
+                                className="inline-block w-2 h-2 bg-blue-400 rounded-full"
                               />
                             )}
                           </div>

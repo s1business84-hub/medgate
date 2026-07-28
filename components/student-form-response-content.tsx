@@ -276,7 +276,7 @@ export function StudentFormResponseContent() {
 
   if (loading) {
     return (
-      <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950 flex items-center justify-center">
+      <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-indigo-900/20 to-slate-950 flex items-center justify-center">
         <LiquidParallax depth={14} className="opacity-70" />
         <p className="text-slate-300 relative z-10">Loading form...</p>
       </div>
@@ -285,7 +285,7 @@ export function StudentFormResponseContent() {
 
   if (!form) {
     return (
-      <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950 flex items-center justify-center">
+      <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-indigo-900/20 to-slate-950 flex items-center justify-center">
         <LiquidParallax depth={14} className="opacity-70" />
         <p className="text-slate-300 relative z-10">Form not found</p>
       </div>
@@ -294,7 +294,7 @@ export function StudentFormResponseContent() {
 
   if (submitted) {
     return (
-      <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950">
+      <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-indigo-900/20 to-slate-950">
         <LiquidParallax depth={14} className="opacity-70" />
         <div className="max-w-6xl mx-auto px-4 py-12 relative z-10">
           {/* Success Message */}
@@ -330,7 +330,7 @@ export function StudentFormResponseContent() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1 }}
-                className="p-6 rounded-2xl border border-purple-500/30 bg-white/5 backdrop-blur-xl hover:border-purple-500/50 transition"
+                className="p-6 rounded-2xl border border-indigo-500/30 bg-white/5 backdrop-blur-xl hover:border-indigo-500/50 transition"
               >
                 {/* Header */}
                 <div className="flex items-start justify-between mb-4">
@@ -338,10 +338,10 @@ export function StudentFormResponseContent() {
                     <h4 className="text-2xl font-bold text-white mb-2">{course.title}</h4>
                     <p className="text-slate-300 mb-3">{course.description}</p>
                     <div className="flex flex-wrap gap-3 mb-4">
-                      <span className="text-xs px-3 py-1 rounded-full bg-purple-500/20 text-purple-300">
+                      <span className="text-xs px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300">
                         {course.level}
                       </span>
-                      <span className="text-xs px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300">
+                      <span className="text-xs px-3 py-1 rounded-full bg-blue-500/20 text-blue-300">
                         {course.duration}
                       </span>
                       <span className="text-xs px-3 py-1 rounded-full bg-yellow-500/20 text-yellow-300">
@@ -387,7 +387,7 @@ export function StudentFormResponseContent() {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     onClick={() => alert(`Enrolled in ${course.title}`)}
-                    className="flex-1 px-4 py-3 rounded-lg bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-semibold transition"
+                    className="flex-1 px-4 py-3 rounded-lg bg-linear-to-r from-indigo-600 to-indigo-600 hover:from-indigo-500 hover:to-indigo-500 text-white font-semibold transition"
                   >
                     Enroll Now
                   </motion.button>
@@ -419,7 +419,7 @@ export function StudentFormResponseContent() {
   }
 
   return (
-    <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950">
+    <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-indigo-900/20 to-slate-950">
       <LiquidParallax depth={14} className="opacity-70" />
 
       <div className="max-w-3xl mx-auto px-4 py-12 relative z-10">
@@ -443,7 +443,7 @@ export function StudentFormResponseContent() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-8 p-4 rounded-lg border border-purple-500/30 bg-purple-500/10 flex items-center justify-between"
+          className="mb-8 p-4 rounded-lg border border-indigo-500/30 bg-indigo-500/10 flex items-center justify-between"
         >
           <span className="text-white font-semibold">Input Mode:</span>
           <div className="flex gap-2">
@@ -451,7 +451,7 @@ export function StudentFormResponseContent() {
               onClick={() => setUseVoiceMode(false)}
               className={`px-4 py-2 rounded-lg font-semibold transition ${
                 !useVoiceMode
-                  ? "bg-purple-600 text-white"
+                  ? "bg-indigo-600 text-white"
                   : "bg-white/10 text-slate-300 hover:bg-white/20"
               }`}
             >
@@ -461,7 +461,7 @@ export function StudentFormResponseContent() {
               onClick={() => setUseVoiceMode(true)}
               className={`px-4 py-2 rounded-lg font-semibold transition flex items-center gap-2 ${
                 useVoiceMode
-                  ? "bg-purple-600 text-white"
+                  ? "bg-indigo-600 text-white"
                   : "bg-white/10 text-slate-300 hover:bg-white/20"
               }`}
             >
@@ -514,7 +514,7 @@ export function StudentFormResponseContent() {
                       }
                       placeholder={question.placeholder}
                       maxLength={question.maxLength}
-                      className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-slate-400 focus:border-purple-500/50 focus:outline-none transition"
+                      className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-slate-400 focus:border-indigo-500/50 focus:outline-none transition"
                     />
                   )}
 
@@ -527,7 +527,7 @@ export function StudentFormResponseContent() {
                       placeholder={question.placeholder}
                       maxLength={question.maxLength}
                       rows={4}
-                      className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-slate-400 focus:border-purple-500/50 focus:outline-none transition resize-none"
+                      className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-slate-400 focus:border-indigo-500/50 focus:outline-none transition resize-none"
                     />
                   )}
 
@@ -548,7 +548,7 @@ export function StudentFormResponseContent() {
                             onChange={(e) =>
                               handleAnswerChange(question.id, e.target.value)
                             }
-                            className="w-4 h-4 rounded-full accent-purple-500"
+                            className="w-4 h-4 rounded-full accent-indigo-500"
                           />
                           <span className="text-slate-300">{option}</span>
                         </label>
@@ -566,7 +566,7 @@ export function StudentFormResponseContent() {
                           }
                           className={`px-4 py-2 rounded-lg transition ${
                             responses[question.id]?.answer === String(rating)
-                              ? "bg-purple-600 text-white"
+                              ? "bg-indigo-600 text-white"
                               : "bg-white/10 text-slate-300 hover:bg-white/20"
                           }`}
                         >
@@ -588,7 +588,7 @@ export function StudentFormResponseContent() {
           transition={{ delay: (form.questions.length + 1) * 0.1 }}
           onClick={submitResponses}
           disabled={submitting}
-          className="w-full mt-8 px-6 py-4 rounded-lg bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold flex items-center justify-center gap-2 transition"
+          className="w-full mt-8 px-6 py-4 rounded-lg bg-linear-to-r from-indigo-600 to-indigo-600 hover:from-indigo-500 hover:to-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold flex items-center justify-center gap-2 transition"
         >
           {submitting ? (
             <>
@@ -612,9 +612,9 @@ export function StudentFormResponseContent() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: (form.questions.length + 2) * 0.1 }}
-          className="mt-8 p-6 rounded-lg border border-cyan-500/30 bg-cyan-500/10"
+          className="mt-8 p-6 rounded-lg border border-blue-500/30 bg-blue-500/10"
         >
-          <h3 className="font-semibold text-cyan-300 mb-2">
+          <h3 className="font-semibold text-blue-300 mb-2">
             💡 Tips for Voice Responses
           </h3>
           <ul className="space-y-2 text-sm text-slate-300">

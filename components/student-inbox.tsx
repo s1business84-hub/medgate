@@ -241,7 +241,7 @@ export function StudentInbox() {
                 onClick={() => setFilter("all")}
                 className={`pb-3 px-2 font-medium transition-all ${
                   filter === "all"
-                    ? "text-cyan-400 border-b-2 border-cyan-400"
+                    ? "text-blue-400 border-b-2 border-blue-400"
                     : "text-slate-400 hover:text-slate-300"
                 }`}
               >
@@ -251,7 +251,7 @@ export function StudentInbox() {
                 onClick={() => setFilter("unread")}
                 className={`pb-3 px-2 font-medium transition-all ${
                   filter === "unread"
-                    ? "text-cyan-400 border-b-2 border-cyan-400"
+                    ? "text-blue-400 border-b-2 border-blue-400"
                     : "text-slate-400 hover:text-slate-300"
                 }`}
               >
@@ -348,7 +348,7 @@ export function StudentInbox() {
                       email: e.target.value,
                     })
                   }
-                  className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500"
+                  className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
                   placeholder="your@email.com"
                 />
               </div>
@@ -367,7 +367,7 @@ export function StudentInbox() {
                       phone: e.target.value,
                     })
                   }
-                  className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500"
+                  className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
                   placeholder="+971 50 123 4567"
                 />
               </div>
@@ -405,7 +405,7 @@ export function StudentInbox() {
               <div className="flex gap-3">
                 <button
                   onClick={saveNotificationPrefs}
-                  className="flex-1 px-4 py-2 bg-cyan-500 hover:bg-cyan-600 text-white font-medium rounded-lg transition-colors"
+                  className="flex-1 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg transition-colors"
                 >
                   Save Preferences
                 </button>

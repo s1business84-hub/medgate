@@ -160,7 +160,7 @@ export function VoiceProgramAssistant({ programs, hospitals, eligibilitySummary,
     <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg p-5 sm:p-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 text-sm text-cyan-200 font-semibold">
+          <div className="flex items-center gap-2 text-sm text-blue-200 font-semibold">
             <Sparkles className="w-4 h-4" />
             Voice Program Assistant
           </div>
@@ -170,7 +170,7 @@ export function VoiceProgramAssistant({ programs, hospitals, eligibilitySummary,
         <div className="flex items-center gap-2">
           <Button
             size="sm"
-            className="bg-linear-to-r from-cyan-500 to-indigo-600 text-white"
+            className="bg-linear-to-r from-blue-500 to-indigo-600 text-white"
             onClick={handleListen}
             disabled={!supported || listening}
           >

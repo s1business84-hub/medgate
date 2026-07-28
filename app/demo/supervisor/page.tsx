@@ -118,7 +118,7 @@ export default function SupervisorDemoPage() {
 
         {/* Header */}
         <motion.div variants={itemVariants} className="mb-12">
-          <h1 className="text-5xl font-bold mb-4 bg-linear-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent">
+          <h1 className="text-5xl font-bold mb-4 bg-linear-to-r from-indigo-400 via-indigo-400 to-red-400 bg-clip-text text-transparent">
             Supervisor Dashboard
           </h1>
           <p className="text-xl text-slate-300">
@@ -129,8 +129,8 @@ export default function SupervisorDemoPage() {
         {/* Key Metrics */}
         <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-12">
           {[
-            { label: "Total Students", value: totalStudents.toString(), color: "from-purple-500 to-pink-500" },
-            { label: "Avg Form Progress", value: `${avgProgress}%`, color: "from-blue-500 to-cyan-500" },
+            { label: "Total Students", value: totalStudents.toString(), color: "from-indigo-500 to-indigo-500" },
+            { label: "Avg Form Progress", value: `${avgProgress}%`, color: "from-blue-500 to-blue-500" },
             { label: "Total Applications", value: studentApplications.length.toString(), color: "from-green-500 to-emerald-500" },
             { label: "Active Programs", value: studentApplications.filter(a => a.status === "Approved").length.toString(), color: "from-orange-500 to-yellow-500" },
           ].map((metric, idx) => (
@@ -156,13 +156,13 @@ export default function SupervisorDemoPage() {
                 className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm p-8 hover:bg-white/10 transition-colors group"
               >
                 <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-lg bg-linear-to-br from-purple-500/20 to-pink-500/20 group-hover:from-purple-500/30 group-hover:to-pink-500/30 transition-colors">
-                    <feature.icon className="w-6 h-6 text-purple-300" />
+                  <div className="p-3 rounded-lg bg-linear-to-br from-indigo-500/20 to-indigo-500/20 group-hover:from-indigo-500/30 group-hover:to-indigo-500/30 transition-colors">
+                    <feature.icon className="w-6 h-6 text-indigo-300" />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-lg font-semibold text-white mb-2">{feature.title}</h3>
                     <p className="text-slate-400 text-sm mb-3">{feature.description}</p>
-                    <span className="inline-block px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 text-xs font-semibold">
+                    <span className="inline-block px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-semibold">
                       {feature.metrics}
                     </span>
                   </div>
@@ -175,10 +175,10 @@ export default function SupervisorDemoPage() {
         {/* Student Data Sample */}
         <motion.div
           variants={itemVariants}
-          className="mt-12 rounded-xl border border-purple-500/30 bg-purple-500/10 backdrop-blur-sm p-6"
+          className="mt-12 rounded-xl border border-indigo-500/30 bg-indigo-500/10 backdrop-blur-sm p-6"
         >
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-purple-300 mb-4">
+            <h3 className="text-lg font-semibold text-indigo-300 mb-4">
               {loading ? "Loading Students..." : `Students (${students.length})`}
             </h3>
             {!loading && students.length > 0 ? (
@@ -191,13 +191,13 @@ export default function SupervisorDemoPage() {
                     <div key={idx} className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10">
                       <div>
                         <p className="font-semibold text-white">{student.name}</p>
-                        <p className="text-xs text-purple-300">{student.email}</p>
+                        <p className="text-xs text-indigo-300">{student.email}</p>
                         <p className="text-xs text-slate-400 mt-1">
                           Applications: {studentApps.length} | Approved: {approvedApps.length}
                         </p>
                       </div>
                       <div className="text-right">
-                        <p className="text-lg font-bold text-cyan-400">{student.formProgress || 0}%</p>
+                        <p className="text-lg font-bold text-blue-400">{student.formProgress || 0}%</p>
                         <p className="text-xs text-slate-400">Form Progress</p>
                       </div>
                     </div>
@@ -218,7 +218,7 @@ export default function SupervisorDemoPage() {
           <p className="text-slate-400 mb-4">Ready to monitor your students' progress?</p>
           <button 
             onClick={handleAccessFullDashboard}
-            className="px-8 py-3 rounded-lg bg-linear-to-r from-purple-500 to-pink-500 font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all"
+            className="px-8 py-3 rounded-lg bg-linear-to-r from-indigo-500 to-indigo-500 font-semibold hover:shadow-lg hover:shadow-indigo-500/50 transition-all"
           >
             Open Demo Dashboard
           </button>

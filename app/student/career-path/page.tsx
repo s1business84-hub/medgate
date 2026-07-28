@@ -145,9 +145,9 @@ export default function CareerPathPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-linear-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+      <div className="min-h-screen bg-linear-to-br from-slate-900 via-indigo-900 to-slate-900 flex items-center justify-center">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500 mb-4"></div>
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500 mb-4"></div>
           <p className="text-slate-300">Loading your career path...</p>
         </div>
       </div>
@@ -155,10 +155,10 @@ export default function CareerPathPage() {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="min-h-screen bg-linear-to-br from-slate-900 via-indigo-900 to-slate-900">
       {/* Background Effects */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 -left-40 w-80 h-80 bg-purple-500/30 rounded-full blur-[120px]" />
+        <div className="absolute top-1/4 -left-40 w-80 h-80 bg-indigo-500/30 rounded-full blur-[120px]" />
         <div className="absolute bottom-1/4 -right-40 w-80 h-80 bg-blue-500/30 rounded-full blur-[120px]" />
       </div>
 
@@ -174,7 +174,7 @@ export default function CareerPathPage() {
           </Link>
 
           <div className="flex items-center gap-3 mb-2">
-            <div className="p-3 bg-linear-to-br from-purple-500 to-blue-500 rounded-xl">
+            <div className="p-3 bg-linear-to-br from-indigo-500 to-blue-500 rounded-xl">
               <Sparkles className="w-8 h-8 text-white" />
             </div>
             <div>
@@ -189,8 +189,8 @@ export default function CareerPathPage() {
         {/* Main Content */}
         {applications.length === 0 ? (
           <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-12 text-center">
-            <div className="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Sparkles className="w-8 h-8 text-purple-300" />
+            <div className="w-16 h-16 bg-indigo-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Sparkles className="w-8 h-8 text-indigo-300" />
             </div>
             <h3 className="text-xl font-semibold text-white mb-2">Start Your Journey</h3>
             <p className="text-slate-300 mb-6 max-w-md mx-auto">
@@ -199,7 +199,7 @@ export default function CareerPathPage() {
             </p>
             <Link
               href="/programs"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-purple-500 to-blue-500 text-white rounded-lg font-medium hover:from-purple-600 hover:to-blue-600 transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-indigo-500 to-blue-500 text-white rounded-lg font-medium hover:from-indigo-600 hover:to-blue-600 transition-all"
             >
               Browse Programs
             </Link>
@@ -217,7 +217,7 @@ export default function CareerPathPage() {
         )}
 
         {/* Tips Section */}
-        <div className="mt-8 rounded-2xl border border-white/10 bg-linear-to-br from-blue-500/10 to-purple-500/10 backdrop-blur-xl p-6">
+        <div className="mt-8 rounded-2xl border border-white/10 bg-linear-to-br from-blue-500/10 to-indigo-500/10 backdrop-blur-xl p-6">
           <h3 className="text-lg font-semibold text-white mb-4">💡 Career Planning Tips</h3>
           <div className="grid md:grid-cols-2 gap-4">
             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
@@ -252,7 +252,7 @@ export default function CareerPathPage() {
           <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-6">
             <h3 className="text-lg font-semibold text-white mb-4">Your Experience Summary</h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="bg-linear-to-br from-purple-500/10 to-blue-500/10 rounded-lg p-4 border border-purple-500/30">
+              <div className="bg-linear-to-br from-indigo-500/10 to-blue-500/10 rounded-lg p-4 border border-indigo-500/30">
                 <div className="text-2xl font-bold text-white mb-1">{applications.length}</div>
                 <div className="text-sm text-slate-300">Total Applications</div>
               </div>
@@ -260,7 +260,7 @@ export default function CareerPathPage() {
                 <div className="text-2xl font-bold text-white mb-1">{completedSessionCount}</div>
                 <div className="text-sm text-slate-300">Sessions Completed</div>
               </div>
-              <div className="bg-linear-to-br from-blue-500/10 to-cyan-500/10 rounded-lg p-4 border border-blue-500/30">
+              <div className="bg-linear-to-br from-blue-500/10 to-blue-500/10 rounded-lg p-4 border border-blue-500/30">
                 <div className="text-2xl font-bold text-white mb-1">{completedDepartments.length}</div>
                 <div className="text-sm text-slate-300">Departments</div>
               </div>
@@ -277,7 +277,7 @@ export default function CareerPathPage() {
                   {completedDepartments.map(dept => (
                     <span
                       key={dept}
-                      className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm border border-purple-500/30"
+                      className="px-3 py-1 bg-indigo-500/20 text-indigo-300 rounded-full text-sm border border-indigo-500/30"
                     >
                       {dept}
                     </span>

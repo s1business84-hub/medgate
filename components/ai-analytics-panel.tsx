@@ -171,11 +171,11 @@ export function AIAnalyticsPanel({ entries, onGoalsUpdate, studentId }: AIAnalyt
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
-        className="p-6 rounded-2xl border border-white/10 bg-linear-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-xl"
+        className="p-6 rounded-2xl border border-white/10 bg-linear-to-br from-indigo-500/10 to-indigo-500/10 backdrop-blur-xl"
       >
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            <Brain className="w-6 h-6 text-purple-400" />
+            <Brain className="w-6 h-6 text-indigo-400" />
             AI Insights
           </h2>
           <motion.button
@@ -183,7 +183,7 @@ export function AIAnalyticsPanel({ entries, onGoalsUpdate, studentId }: AIAnalyt
             disabled={loading}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 px-4 py-2 bg-linear-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-lg hover:shadow-lg transition-all disabled:opacity-50"
+            className="flex items-center gap-2 px-4 py-2 bg-linear-to-r from-indigo-500 to-indigo-500 text-white font-semibold rounded-lg hover:shadow-lg transition-all disabled:opacity-50"
           >
             <Sparkles className="w-4 h-4" />
             {loading ? "Analyzing..." : "Generate"}
@@ -215,18 +215,18 @@ export function AIAnalyticsPanel({ entries, onGoalsUpdate, studentId }: AIAnalyt
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
         viewport={{ once: true }}
-        className="p-6 rounded-2xl border border-white/10 bg-linear-to-br from-cyan-500/10 to-indigo-500/10 backdrop-blur-xl"
+        className="p-6 rounded-2xl border border-white/10 bg-linear-to-br from-blue-500/10 to-indigo-500/10 backdrop-blur-xl"
       >
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            <Target className="w-6 h-6 text-cyan-400" />
+            <Target className="w-6 h-6 text-blue-400" />
             Goals & Targets
           </h2>
           <motion.button
             onClick={() => setShowForm(!showForm)}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 px-4 py-2 bg-linear-to-r from-cyan-500 to-indigo-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all"
+            className="flex items-center gap-2 px-4 py-2 bg-linear-to-r from-blue-500 to-indigo-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all"
           >
             <Plus className="w-4 h-4" />
             Add Goal
@@ -246,7 +246,7 @@ export function AIAnalyticsPanel({ entries, onGoalsUpdate, studentId }: AIAnalyt
                   onClick={() => setGoalType("personal")}
                   className={`flex-1 px-4 py-2 rounded-lg font-semibold transition ${
                     goalType === "personal"
-                      ? "bg-cyan-500 text-white"
+                      ? "bg-blue-500 text-white"
                       : "bg-white/10 text-slate-300 hover:bg-white/20"
                   }`}
                 >
@@ -256,7 +256,7 @@ export function AIAnalyticsPanel({ entries, onGoalsUpdate, studentId }: AIAnalyt
                   onClick={() => setGoalType("academic")}
                   className={`flex-1 px-4 py-2 rounded-lg font-semibold transition ${
                     goalType === "academic"
-                      ? "bg-purple-500 text-white"
+                      ? "bg-indigo-500 text-white"
                       : "bg-white/10 text-slate-300 hover:bg-white/20"
                   }`}
                 >
@@ -291,7 +291,7 @@ export function AIAnalyticsPanel({ entries, onGoalsUpdate, studentId }: AIAnalyt
                   max="100"
                   value={formData.targetValue}
                   onChange={(e) => setFormData({ ...formData, targetValue: parseInt(e.target.value) })}
-                  className="w-full mt-2 accent-cyan-500"
+                  className="w-full mt-2 accent-blue-500"
                 />
               </div>
             </div>
@@ -308,7 +308,7 @@ export function AIAnalyticsPanel({ entries, onGoalsUpdate, studentId }: AIAnalyt
               <motion.button
                 onClick={handleAddGoal}
                 whileHover={{ scale: 1.02 }}
-                className="flex-1 px-3 py-2 bg-cyan-500 text-white font-semibold rounded-lg hover:bg-cyan-600 transition"
+                className="flex-1 px-3 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition"
               >
                 Save
               </motion.button>
@@ -327,7 +327,7 @@ export function AIAnalyticsPanel({ entries, onGoalsUpdate, studentId }: AIAnalyt
             {/* Academic Goals Section */}
             {goals.filter(g => g.type === "academic").length > 0 && (
               <div>
-                <h3 className="text-sm font-semibold text-purple-300 mb-2 flex items-center gap-2">
+                <h3 className="text-sm font-semibold text-indigo-300 mb-2 flex items-center gap-2">
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/>
                   </svg>
@@ -339,14 +339,14 @@ export function AIAnalyticsPanel({ entries, onGoalsUpdate, studentId }: AIAnalyt
                       key={goal.id}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className="p-3 bg-purple-500/10 border border-purple-500/30 rounded-lg flex items-center justify-between"
+                      className="p-3 bg-indigo-500/10 border border-indigo-500/30 rounded-lg flex items-center justify-between"
                     >
                       <div className="flex-1">
                         <p className="font-semibold text-white capitalize">{goal.category}</p>
                         <p className="text-sm text-slate-400">
                           Target: {goal.targetValue}% by {new Date(goal.deadline).toLocaleDateString()}
                         </p>
-                        <p className="text-xs text-purple-300 mt-1">Set by {goal.setBy || "supervisor"}</p>
+                        <p className="text-xs text-indigo-300 mt-1">Set by {goal.setBy || "supervisor"}</p>
                       </div>
                       <motion.button
                         onClick={() => handleDeleteGoal(goal.id)}
@@ -365,7 +365,7 @@ export function AIAnalyticsPanel({ entries, onGoalsUpdate, studentId }: AIAnalyt
             {/* Personal Goals Section */}
             {goals.filter(g => g.type === "personal").length > 0 && (
               <div>
-                <h3 className="text-sm font-semibold text-cyan-300 mb-2 flex items-center gap-2">
+                <h3 className="text-sm font-semibold text-blue-300 mb-2 flex items-center gap-2">
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"/>
                   </svg>
@@ -377,14 +377,14 @@ export function AIAnalyticsPanel({ entries, onGoalsUpdate, studentId }: AIAnalyt
                       key={goal.id}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className="p-3 bg-cyan-500/10 border border-cyan-500/30 rounded-lg flex items-center justify-between"
+                      className="p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg flex items-center justify-between"
                     >
                       <div className="flex-1">
                         <p className="font-semibold text-white capitalize">{goal.category}</p>
                         <p className="text-sm text-slate-400">
                           Target: {goal.targetValue}% by {new Date(goal.deadline).toLocaleDateString()}
                         </p>
-                        <p className="text-xs text-cyan-300 mt-1">Self-directed</p>
+                        <p className="text-xs text-blue-300 mt-1">Self-directed</p>
                       </div>
                       <motion.button
                         onClick={() => handleDeleteGoal(goal.id)}

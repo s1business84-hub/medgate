@@ -41,8 +41,8 @@ export function DoctorAnalyticsDashboard({ metrics }: DoctorAnalyticsDashboardPr
       label: "Avg Rating",
       value: data.averageRating.toFixed(1),
       icon: TrendingUp,
-      color: "text-purple-600",
-      bg: "bg-purple-50",
+      color: "text-indigo-600",
+      bg: "bg-indigo-50",
     },
     {
       label: "Students",

@@ -69,11 +69,11 @@ export function SupervisorNotifications({ userId }: SupervisorNotificationsProps
       case 'application_review':
         return 'from-green-600/30 to-emerald-600/30 border-green-500/50';
       case 'rejection':
-        return 'from-red-600/30 to-rose-600/30 border-red-500/50';
+        return 'from-red-600/30 to-indigo-600/30 border-red-500/50';
       case 'update':
-        return 'from-blue-600/30 to-cyan-600/30 border-blue-500/50';
+        return 'from-blue-600/30 to-blue-600/30 border-blue-500/50';
       default:
-        return 'from-purple-600/30 to-pink-600/30 border-purple-500/50';
+        return 'from-indigo-600/30 to-indigo-600/30 border-indigo-500/50';
     }
   };
 
@@ -84,14 +84,14 @@ export function SupervisorNotifications({ userId }: SupervisorNotificationsProps
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setShowPanel(!showPanel)}
-        className="relative p-3 rounded-xl border-2 border-blue-500/50 bg-gradient-to-br from-blue-600/30 to-cyan-600/30 hover:from-blue-500/40 hover:to-cyan-500/40 text-white shadow-lg shadow-blue-500/30 transition-all hover:shadow-blue-500/50"
+        className="relative p-3 rounded-xl border-2 border-blue-500/50 bg-gradient-to-br from-blue-600/30 to-blue-600/30 hover:from-blue-500/40 hover:to-blue-500/40 text-white shadow-lg shadow-blue-500/30 transition-all hover:shadow-blue-500/50"
       >
         <Bell className="w-5 h-5" />
         {unreadCount > 0 && (
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-gradient-to-r from-red-500 to-rose-600 flex items-center justify-center text-white text-xs font-bold shadow-lg shadow-red-500/50 border-2 border-slate-950"
+            className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-gradient-to-r from-red-500 to-indigo-600 flex items-center justify-center text-white text-xs font-bold shadow-lg shadow-red-500/50 border-2 border-slate-950"
           >
             {unreadCount > 9 ? '9+' : unreadCount}
           </motion.div>
@@ -120,7 +120,7 @@ export function SupervisorNotifications({ userId }: SupervisorNotificationsProps
               className="absolute right-0 top-full mt-2 w-96 max-h-[32rem] overflow-hidden rounded-2xl border-2 border-blue-500/50 bg-gradient-to-br from-slate-900/98 to-slate-950/98 backdrop-blur-xl shadow-2xl shadow-blue-500/30 z-50"
             >
               {/* Header */}
-              <div className="sticky top-0 bg-gradient-to-r from-blue-600/40 to-cyan-600/30 border-b-2 border-blue-500/50 p-4 flex items-center justify-between">
+              <div className="sticky top-0 bg-gradient-to-r from-blue-600/40 to-blue-600/30 border-b-2 border-blue-500/50 p-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <Bell className="w-5 h-5 text-blue-200" />
                   <h3 className="text-lg font-bold text-blue-100">Notifications</h3>

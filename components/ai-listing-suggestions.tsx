@@ -223,7 +223,7 @@ export function AIListingSuggestions() {
       {/* Trigger Button */}
       <motion.button
         onClick={() => setIsOpen(true)}
-        className="group relative px-6 py-3 bg-linear-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300"
+        className="group relative px-6 py-3 bg-linear-to-r from-indigo-600 to-indigo-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
@@ -231,7 +231,7 @@ export function AIListingSuggestions() {
           <Sparkles className="w-5 h-5" />
           <span>Get AI Program Suggestions</span>
         </div>
-        <div className="absolute inset-0 bg-linear-to-r from-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl -z-10" />
+        <div className="absolute inset-0 bg-linear-to-r from-indigo-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl -z-10" />
       </motion.button>
 
       {/* Dialog */}
@@ -262,8 +262,8 @@ export function AIListingSuggestions() {
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-white/10">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 bg-linear-to-r from-purple-500/20 to-pink-500/20 rounded-lg">
-                      <Sparkles className="w-6 h-6 text-purple-400" />
+                    <div className="p-2 bg-linear-to-r from-indigo-500/20 to-indigo-500/20 rounded-lg">
+                      <Sparkles className="w-6 h-6 text-indigo-400" />
                     </div>
                     <div>
                       <h2 className="text-2xl font-bold text-white">AI Program Finder</h2>
@@ -297,7 +297,7 @@ export function AIListingSuggestions() {
                               <h3 className="text-2xl font-bold text-white mb-2">{selectedProgram.programName}</h3>
                               <p className="text-lg text-slate-300">{selectedProgram.hospitalName}</p>
                             </div>
-                            <div className="px-3 py-1 bg-purple-500/20 rounded text-sm font-semibold text-purple-300">
+                            <div className="px-3 py-1 bg-indigo-500/20 rounded text-sm font-semibold text-indigo-300">
                               {selectedProgram.matchScore}% Match
                             </div>
                           </div>
@@ -332,7 +332,7 @@ export function AIListingSuggestions() {
                           <ul className="space-y-2">
                             {selectedProgram.requirements?.map((req, idx) => (
                               <li key={idx} className="flex items-start gap-3 text-slate-300">
-                                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-purple-500/20 text-purple-300 text-xs mt-0.5 shrink-0">✓</span>
+                                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-indigo-500/20 text-indigo-300 text-xs mt-0.5 shrink-0">✓</span>
                                 {req}
                               </li>
                             ))}
@@ -353,7 +353,7 @@ export function AIListingSuggestions() {
                         <div className="flex gap-3 pt-4">
                           <Link
                             href={`/programs/${selectedProgram.programId}`}
-                            className="flex-1 px-6 py-3 bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-semibold rounded-lg transition-all text-center"
+                            className="flex-1 px-6 py-3 bg-linear-to-r from-indigo-600 to-indigo-600 hover:from-indigo-500 hover:to-indigo-500 text-white font-semibold rounded-lg transition-all text-center"
                           >
                             Apply Now
                           </Link>
@@ -377,7 +377,7 @@ export function AIListingSuggestions() {
                         </div>
                         <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
                           <motion.div
-                            className="h-full bg-linear-to-r from-purple-500 to-pink-500"
+                            className="h-full bg-linear-to-r from-indigo-500 to-indigo-500"
                             initial={{ width: 0 }}
                             animate={{ width: `${((currentStep + 1) / questions.length) * 100}%` }}
                             transition={{ duration: 0.3 }}
@@ -402,13 +402,13 @@ export function AIListingSuggestions() {
                               <motion.button
                                 key={option}
                                 onClick={() => handleAnswer(questions[currentStep].id, option)}
-                                className="text-left p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-purple-500/50 transition-all duration-200 group"
+                                className="text-left p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-indigo-500/50 transition-all duration-200 group"
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                               >
                                 <div className="flex items-center justify-between">
                                   <span className="text-white font-medium">{option}</span>
-                                  <ChevronRight className="w-5 h-5 text-slate-400 group-hover:text-purple-400 transition-colors" />
+                                  <ChevronRight className="w-5 h-5 text-slate-400 group-hover:text-indigo-400 transition-colors" />
                                 </div>
                               </motion.button>
                             ))}
@@ -450,14 +450,14 @@ export function AIListingSuggestions() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: idx * 0.1 }}
-                            className="p-4 rounded-xl border border-white/10 bg-linear-to-br from-purple-500/10 to-pink-500/10 hover:border-purple-500/50 transition-all cursor-pointer"
+                            className="p-4 rounded-xl border border-white/10 bg-linear-to-br from-indigo-500/10 to-indigo-500/10 hover:border-indigo-500/50 transition-all cursor-pointer"
                             onClick={() => setSelectedProgram(rec)}
                           >
                             <div className="flex items-start justify-between gap-4 mb-3">
                               <div className="flex-1">
                                 <div className="flex items-center gap-2 mb-1">
-                                  <span className="text-2xl font-bold text-purple-400">#{idx + 1}</span>
-                                  <div className="px-2 py-1 bg-purple-500/20 rounded text-xs font-semibold text-purple-300">
+                                  <span className="text-2xl font-bold text-indigo-400">#{idx + 1}</span>
+                                  <div className="px-2 py-1 bg-indigo-500/20 rounded text-xs font-semibold text-indigo-300">
                                     {rec.matchScore}% Match
                                   </div>
                                 </div>
@@ -473,7 +473,7 @@ export function AIListingSuggestions() {
                                 e.stopPropagation();
                                 setSelectedProgram(rec);
                               }}
-                              className="inline-flex items-center gap-2 px-4 py-2 bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white text-sm font-semibold rounded-lg transition-all"
+                              className="inline-flex items-center gap-2 px-4 py-2 bg-linear-to-r from-indigo-600 to-indigo-600 hover:from-indigo-500 hover:to-indigo-500 text-white text-sm font-semibold rounded-lg transition-all"
                             >
                               View Full Details
                               <ChevronRight className="w-4 h-4" />

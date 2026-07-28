@@ -162,7 +162,7 @@ export default function LoginForm() {
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       disabled={isSubmitting}
-                      className="w-full px-4 py-3 border border-white/15 bg-white/5 text-slate-100 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                      className="w-full px-4 py-3 border border-white/15 bg-white/5 text-slate-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                       placeholder="Enter your full name"
                     />
                   </div>
@@ -184,7 +184,7 @@ export default function LoginForm() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={isSubmitting}
-                  className="w-full px-4 py-3 border border-white/15 bg-white/5 text-slate-100 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                  className="w-full px-4 py-3 border border-white/15 bg-white/5 text-slate-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                   placeholder="Enter your email"
                 />
               </div>
@@ -204,7 +204,7 @@ export default function LoginForm() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   disabled={isSubmitting}
-                  className="w-full px-4 py-3 border border-white/15 bg-white/5 text-slate-100 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                  className="w-full px-4 py-3 border border-white/15 bg-white/5 text-slate-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                   placeholder="Enter your password"
                 />
               </div>
@@ -215,7 +215,7 @@ export default function LoginForm() {
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="bg-rose-500/10 border border-rose-300/30 text-rose-100 px-4 py-3 rounded-lg text-sm"
+                  className="bg-indigo-500/10 border border-indigo-300/30 text-indigo-100 px-4 py-3 rounded-lg text-sm"
                 >
                   {error}
                 </motion.div>
@@ -231,7 +231,7 @@ export default function LoginForm() {
                 whileHover={isSubmitting ? {} : { scale: 1.02 }}
                 whileTap={isSubmitting ? {} : { scale: 0.98 }}
                 transition={{ duration: motionTokens.duration.ui }}
-                className="w-full bg-linear-to-r from-cyan-500 to-indigo-600 text-white py-3 px-4 rounded-lg hover:from-cyan-400 hover:to-indigo-500 focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 transition duration-150 ease-out font-semibold shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-linear-to-r from-blue-500 to-indigo-600 text-white py-3 px-4 rounded-lg hover:from-blue-400 hover:to-indigo-500 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-out font-semibold shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? "Processing..." : isLogin ? "Sign In" : "Create Account"}
               </motion.button>
@@ -244,7 +244,7 @@ export default function LoginForm() {
             <StaggerItem>
               <button
                 onClick={() => setIsLogin(false)}
-                className="text-cyan-200 hover:text-cyan-100 text-sm"
+                className="text-blue-200 hover:text-blue-100 text-sm"
               >
                 Don&apos;t have an account? Sign up
               </button>
@@ -255,7 +255,7 @@ export default function LoginForm() {
             <StaggerItem>
               <button
                 onClick={() => setIsLogin(true)}
-                className="text-cyan-200 hover:text-cyan-100 text-sm"
+                className="text-blue-200 hover:text-blue-100 text-sm"
               >
                 Already have an account? Sign in
               </button>

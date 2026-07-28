@@ -21,9 +21,9 @@ export function LetterByLetter({
   
   const gradientStyles = gradient ? {
     background: `linear-gradient(90deg, 
-      rgb(34, 211, 238),   /* cyan-400 */
+      rgb(34, 211, 238),   /* blue-400 */
       rgb(129, 140, 248),  /* indigo-400 */
-      rgb(192, 132, 250),  /* purple-400 */
+      rgb(192, 132, 250),  /* indigo-400 */
       rgb(34, 211, 238))`,
     backgroundSize: "200% 100%",
     WebkitBackgroundClip: "text",

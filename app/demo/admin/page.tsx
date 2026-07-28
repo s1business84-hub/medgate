@@ -80,7 +80,7 @@ export default function AdminDemoPage() {
 
         {/* Header */}
         <motion.div variants={itemVariants} className="mb-12">
-          <h1 className="text-5xl font-bold mb-4 bg-linear-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent">
+          <h1 className="text-5xl font-bold mb-4 bg-linear-to-r from-indigo-400 via-indigo-400 to-red-400 bg-clip-text text-transparent">
             Admin Control Panel
           </h1>
           <p className="text-xl text-slate-300">
@@ -91,8 +91,8 @@ export default function AdminDemoPage() {
         {/* Key Metrics */}
         <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-12">
           {[
-            { label: "Total Institutions", value: "156", color: "from-purple-500 to-pink-500" },
-            { label: "Active Users", value: "3,200+", color: "from-blue-500 to-cyan-500" },
+            { label: "Total Institutions", value: "156", color: "from-indigo-500 to-indigo-500" },
+            { label: "Active Users", value: "3,200+", color: "from-blue-500 to-blue-500" },
             { label: "Programs Listed", value: "2,100+", color: "from-green-500 to-emerald-500" },
             { label: "Platform Health", value: "Optimal", color: "from-orange-500 to-yellow-500" },
           ].map((metric, idx) => (
@@ -118,13 +118,13 @@ export default function AdminDemoPage() {
                 className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm p-8 hover:bg-white/10 transition-colors group"
               >
                 <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-lg bg-linear-to-br from-purple-500/20 to-pink-500/20 group-hover:from-purple-500/30 group-hover:to-pink-500/30 transition-colors">
-                    <feature.icon className="w-6 h-6 text-purple-300" />
+                  <div className="p-3 rounded-lg bg-linear-to-br from-indigo-500/20 to-indigo-500/20 group-hover:from-indigo-500/30 group-hover:to-indigo-500/30 transition-colors">
+                    <feature.icon className="w-6 h-6 text-indigo-300" />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-lg font-semibold text-white mb-2">{feature.title}</h3>
                     <p className="text-slate-400 text-sm mb-3">{feature.description}</p>
-                    <span className="inline-block px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 text-xs font-semibold">
+                    <span className="inline-block px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-semibold">
                       {feature.metrics}
                     </span>
                   </div>
@@ -137,12 +137,12 @@ export default function AdminDemoPage() {
         {/* Security Notice */}
         <motion.div
           variants={itemVariants}
-          className="mt-12 rounded-xl border border-purple-500/30 bg-purple-500/10 backdrop-blur-sm p-6"
+          className="mt-12 rounded-xl border border-indigo-500/30 bg-indigo-500/10 backdrop-blur-sm p-6"
         >
           <div className="flex items-start gap-3">
-            <Shield className="w-6 h-6 text-purple-300 shrink-0 mt-1" />
+            <Shield className="w-6 h-6 text-indigo-300 shrink-0 mt-1" />
             <div>
-              <h3 className="text-lg font-semibold text-purple-300 mb-2">Enterprise Security</h3>
+              <h3 className="text-lg font-semibold text-indigo-300 mb-2">Enterprise Security</h3>
               <p className="text-slate-300">
                 All admin activities are logged and monitored. Two-factor authentication is required for all accounts. Data is encrypted end-to-end.
               </p>
@@ -166,7 +166,7 @@ export default function AdminDemoPage() {
                 }
               }, 100);
             }}
-            className="px-8 py-3 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all"
+            className="px-8 py-3 rounded-lg bg-gradient-to-r from-indigo-500 to-indigo-500 font-semibold hover:shadow-lg hover:shadow-indigo-500/50 transition-all"
           >
             Access Full Dashboard
           </button>

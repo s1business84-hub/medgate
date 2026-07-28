@@ -245,7 +245,7 @@ export function StudentVerificationCenter({ studentName, studentEmail, studentId
       VERIFIED: "bg-emerald-500/20 text-emerald-300 border-emerald-500/40",
       REVIEW: "bg-amber-500/20 text-amber-200 border-amber-500/40",
       PENDING: "bg-slate-500/20 text-slate-300 border-slate-500/30",
-      ELIGIBLE: "bg-cyan-500/20 text-cyan-300 border-cyan-500/40",
+      ELIGIBLE: "bg-blue-500/20 text-blue-300 border-blue-500/40",
       INCOMPLETE: "bg-red-500/20 text-red-300 border-red-500/40",
       REJECTED: "bg-red-500/15 text-red-200 border-red-500/30",
       PROCESSING: "bg-indigo-500/15 text-indigo-200 border-indigo-500/30",
@@ -262,7 +262,7 @@ export function StudentVerificationCenter({ studentName, studentEmail, studentId
     <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-lg p-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
         <div>
-          <div className="flex items-center gap-2 text-sm text-cyan-200 font-semibold">
+          <div className="flex items-center gap-2 text-sm text-blue-200 font-semibold">
             <ShieldCheck className="w-4 h-4" />
             Verification Checklist (Minimal Eligibility)
           </div>
@@ -283,7 +283,7 @@ export function StudentVerificationCenter({ studentName, studentEmail, studentId
             onClick={() => setActiveTab("before-start")}
             className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
               activeTab === "before-start"
-                ? "bg-linear-to-r from-cyan-500 to-indigo-600 text-white shadow-lg"
+                ? "bg-linear-to-r from-blue-500 to-indigo-600 text-white shadow-lg"
                 : "bg-white/10 text-slate-300 hover:bg-white/20"
             }`}
           >
@@ -293,7 +293,7 @@ export function StudentVerificationCenter({ studentName, studentEmail, studentId
             onClick={() => setActiveTab("verification")}
             className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
               activeTab === "verification"
-                ? "bg-linear-to-r from-cyan-500 to-indigo-600 text-white shadow-lg"
+                ? "bg-linear-to-r from-blue-500 to-indigo-600 text-white shadow-lg"
                 : "bg-white/10 text-slate-300 hover:bg-white/20"
             }`}
           >
@@ -311,7 +311,7 @@ export function StudentVerificationCenter({ studentName, studentEmail, studentId
                   <label key={policy} className="flex items-start gap-3 text-xs text-slate-300 cursor-pointer">
                     <input
                       type="checkbox"
-                      className="mt-0.5 h-4 w-4 rounded border-white/30 bg-white/10 text-cyan-400"
+                      className="mt-0.5 h-4 w-4 rounded border-white/30 bg-white/10 text-blue-400"
                       checked={!!acknowledgements[policy]}
                       onChange={() => toggleAcknowledgement(policy)}
                     />
@@ -329,7 +329,7 @@ export function StudentVerificationCenter({ studentName, studentEmail, studentId
         <div className="rounded-lg border border-white/10 bg-white/5 p-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-sm text-slate-200">
-              <FileCheck2 className="w-4 h-4 text-cyan-300" />
+              <FileCheck2 className="w-4 h-4 text-blue-300" />
               Documents Uploaded
             </div>
             <span className="text-sm font-semibold text-slate-100">{completedDocuments} / {DOCUMENT_DEFS.length}</span>
@@ -339,7 +339,7 @@ export function StudentVerificationCenter({ studentName, studentEmail, studentId
         <div className="rounded-lg border border-white/10 bg-white/5 p-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-sm text-slate-200">
-              <Sparkles className="w-4 h-4 text-purple-300" />
+              <Sparkles className="w-4 h-4 text-indigo-300" />
               AI Eligibility Status
             </div>
             {statusBadge(eligibilityStatus)}
@@ -398,7 +398,7 @@ export function StudentVerificationCenter({ studentName, studentEmail, studentId
                   </div>
                 ) : (
                   <div className="mt-3 flex flex-col sm:flex-row sm:items-center gap-3">
-                    <label className="inline-flex items-center gap-2 cursor-pointer px-6 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-purple-500 text-white font-medium hover:from-cyan-600 hover:to-purple-600 transition-all shadow-lg hover:shadow-xl">
+                    <label className="inline-flex items-center gap-2 cursor-pointer px-6 py-3 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-medium hover:from-blue-600 hover:to-indigo-600 transition-all shadow-lg hover:shadow-xl">
                       <UploadCloud className="w-5 h-5" />
                       <span>Upload Document</span>
                       <input

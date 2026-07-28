@@ -79,7 +79,7 @@ export default function FormSubmissionPage() {
 
   if (loading) {
     return (
-      <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950 flex items-center justify-center">
+      <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-indigo-900/20 to-slate-950 flex items-center justify-center">
         <LiquidParallax depth={14} className="opacity-70" />
         <p className="text-slate-300 relative z-10">Loading forms...</p>
       </div>
@@ -87,7 +87,7 @@ export default function FormSubmissionPage() {
   }
 
   return (
-    <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-purple-900/20 to-slate-950">
+    <div className="relative min-h-screen overflow-visible bg-linear-to-b from-slate-950 via-indigo-900/20 to-slate-950">
       <LiquidParallax depth={14} className="opacity-70" />
       <div className="max-w-2xl mx-auto px-4 py-12 relative z-10">
         {selectedForm ? (
@@ -106,7 +106,7 @@ export default function FormSubmissionPage() {
               </p>
               <button
                 onClick={() => router.push("/student")}
-                className="px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium transition-colors"
+                className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors"
               >
                 Back to Dashboard
               </button>

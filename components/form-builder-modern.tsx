@@ -33,11 +33,11 @@ const questionTypeConfig: Record<
   { icon: React.ReactNode; label: string; color: string }
 > = {
   text: { icon: <Type className="w-4 h-4" />, label: "Short Text", color: "from-blue-500 to-blue-600" },
-  textarea: { icon: <MessageSquare className="w-4 h-4" />, label: "Long Text", color: "from-purple-500 to-purple-600" },
+  textarea: { icon: <MessageSquare className="w-4 h-4" />, label: "Long Text", color: "from-indigo-500 to-indigo-600" },
   rating: { icon: <Star className="w-4 h-4" />, label: "Rating (1-5)", color: "from-yellow-500 to-yellow-600" },
   checkbox: { icon: <CheckSquare className="w-4 h-4" />, label: "Checkbox", color: "from-green-500 to-green-600" },
   dropdown: { icon: <ListCheck className="w-4 h-4" />, label: "Dropdown", color: "from-orange-500 to-orange-600" },
-  multiselect: { icon: <ListCheck className="w-4 h-4" />, label: "Multi-Select", color: "from-pink-500 to-pink-600" },
+  multiselect: { icon: <ListCheck className="w-4 h-4" />, label: "Multi-Select", color: "from-indigo-500 to-indigo-600" },
 };
 
 export function FormBuilderModern({ onSave, onCancel, initialTemplate }: FormBuilderModernProps) {
@@ -169,7 +169,7 @@ export function FormBuilderModern({ onSave, onCancel, initialTemplate }: FormBui
                 <div key={q.id} className="space-y-2">
                   <label className="block font-medium text-white">
                     {idx + 1}. {q.text}
-                    {q.required && <span className="text-rose-400 ml-1">*</span>}
+                    {q.required && <span className="text-indigo-400 ml-1">*</span>}
                   </label>
                   <div className="text-sm text-slate-400">
                     {questionTypeConfig[q.type]?.label}
@@ -238,7 +238,7 @@ export function FormBuilderModern({ onSave, onCancel, initialTemplate }: FormBui
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g., Cardiology Session Assessment"
-              className="w-full p-3 rounded-lg bg-slate-800 border border-white/10 text-white placeholder-slate-500 focus:border-cyan-500 focus:outline-none"
+              className="w-full p-3 rounded-lg bg-slate-800 border border-white/10 text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none"
             />
           </div>
 
@@ -248,7 +248,7 @@ export function FormBuilderModern({ onSave, onCancel, initialTemplate }: FormBui
               <select
                 value={department}
                 onChange={(e) => setDepartment(e.target.value)}
-                className="w-full p-3 rounded-lg bg-slate-800 border border-white/10 text-white focus:border-cyan-500 focus:outline-none"
+                className="w-full p-3 rounded-lg bg-slate-800 border border-white/10 text-white focus:border-blue-500 focus:outline-none"
               >
                 <option value="">Select Department</option>
                 {departments.map(d => (
@@ -264,7 +264,7 @@ export function FormBuilderModern({ onSave, onCancel, initialTemplate }: FormBui
                 max="100"
                 value={passingScore}
                 onChange={(e) => setPassingScore(Number(e.target.value))}
-                className="w-full p-3 rounded-lg bg-slate-800 border border-white/10 text-white focus:border-cyan-500 focus:outline-none"
+                className="w-full p-3 rounded-lg bg-slate-800 border border-white/10 text-white focus:border-blue-500 focus:outline-none"
               />
             </div>
           </div>
@@ -275,7 +275,7 @@ export function FormBuilderModern({ onSave, onCancel, initialTemplate }: FormBui
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Describe what this form assesses..."
-              className="w-full p-3 rounded-lg bg-slate-800 border border-white/10 text-white placeholder-slate-500 focus:border-cyan-500 focus:outline-none h-24"
+              className="w-full p-3 rounded-lg bg-slate-800 border border-white/10 text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none h-24"
             />
           </div>
 
@@ -305,7 +305,7 @@ export function FormBuilderModern({ onSave, onCancel, initialTemplate }: FormBui
                       type === "text"
                         ? "bg-blue-500/20 text-blue-300 border border-blue-500/30 hover:bg-blue-500/30"
                         : type === "textarea"
-                          ? "bg-purple-500/20 text-purple-300 border border-purple-500/30 hover:bg-purple-500/30"
+                          ? "bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 hover:bg-indigo-500/30"
                           : type === "rating"
                             ? "bg-yellow-500/20 text-yellow-300 border border-yellow-500/30 hover:bg-yellow-500/30"
                             : type === "checkbox"
@@ -436,7 +436,7 @@ export function FormBuilderModern({ onSave, onCancel, initialTemplate }: FormBui
                             <motion.button
                               whileHover={{ scale: 1.05 }}
                               onClick={() => deleteQuestion(q.id)}
-                              className="flex-1 p-2 rounded-lg bg-rose-500/20 text-rose-300 text-xs font-medium hover:bg-rose-500/30 flex items-center justify-center gap-1 transition-colors"
+                              className="flex-1 p-2 rounded-lg bg-indigo-500/20 text-indigo-300 text-xs font-medium hover:bg-indigo-500/30 flex items-center justify-center gap-1 transition-colors"
                             >
                               <Trash2 className="w-4 h-4" />
                               Delete
@@ -466,7 +466,7 @@ export function FormBuilderModern({ onSave, onCancel, initialTemplate }: FormBui
                 initial={{ width: 0 }}
                 animate={{ width: `${completionPercent}%` }}
                 transition={{ duration: 0.3 }}
-                className="h-full bg-linear-to-r from-cyan-500 to-blue-500"
+                className="h-full bg-linear-to-r from-blue-500 to-blue-500"
               />
             </div>
             <p className="text-xs text-slate-400 mt-2">{completionPercent}% Complete</p>
@@ -497,7 +497,7 @@ export function FormBuilderModern({ onSave, onCancel, initialTemplate }: FormBui
 
           <button
             onClick={() => setPreviewMode(true)}
-            className="w-full p-3 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-300 text-sm font-medium hover:bg-purple-500/30 transition-colors flex items-center justify-center gap-2"
+            className="w-full p-3 rounded-lg bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 text-sm font-medium hover:bg-indigo-500/30 transition-colors flex items-center justify-center gap-2"
           >
             <Eye className="w-4 h-4" />
             Preview Form
@@ -515,7 +515,7 @@ export function FormBuilderModern({ onSave, onCancel, initialTemplate }: FormBui
               whileHover={{ scale: 1.05 }}
               onClick={handleSave}
               disabled={completionPercent < 100}
-              className="flex-1 p-3 rounded-lg bg-linear-to-r from-cyan-500 to-blue-500 text-white text-sm font-medium hover:from-cyan-600 hover:to-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="flex-1 p-3 rounded-lg bg-linear-to-r from-blue-500 to-blue-500 text-white text-sm font-medium hover:from-blue-600 hover:to-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               <Save className="w-4 h-4" />
               Save Form

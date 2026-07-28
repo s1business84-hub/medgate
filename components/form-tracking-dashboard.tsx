@@ -162,7 +162,7 @@ export function FormTrackingDashboard({
           onClick={() => setSelectedTab("students")}
           className={`px-4 py-2 font-medium transition-colors ${
             selectedTab === "students"
-              ? "text-white border-b-2 border-purple-500"
+              ? "text-white border-b-2 border-indigo-500"
               : "text-slate-400 hover:text-white"
           }`}
         >
@@ -173,7 +173,7 @@ export function FormTrackingDashboard({
           disabled={!selectedStudent}
           className={`px-4 py-2 font-medium transition-colors ${
             selectedTab === "sessions"
-              ? "text-white border-b-2 border-purple-500"
+              ? "text-white border-b-2 border-indigo-500"
               : "text-slate-400 hover:text-white disabled:opacity-50"
           }`}
         >
@@ -184,7 +184,7 @@ export function FormTrackingDashboard({
           disabled={!selectedStudent}
           className={`px-4 py-2 font-medium transition-colors ${
             selectedTab === "forms"
-              ? "text-white border-b-2 border-purple-500"
+              ? "text-white border-b-2 border-indigo-500"
               : "text-slate-400 hover:text-white disabled:opacity-50"
           }`}
         >
@@ -194,7 +194,7 @@ export function FormTrackingDashboard({
           onClick={() => setSelectedTab("performance")}
           className={`px-4 py-2 font-medium transition-colors ${
             selectedTab === "performance"
-              ? "text-white border-b-2 border-purple-500"
+              ? "text-white border-b-2 border-indigo-500"
               : "text-slate-400 hover:text-white"
           }`}
         >
@@ -214,7 +214,7 @@ export function FormTrackingDashboard({
               placeholder="Search by name or student ID..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-purple-500"
+              className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500"
             />
           </div>
 
@@ -233,7 +233,7 @@ export function FormTrackingDashboard({
                   }}
                   className={`p-4 rounded-lg border transition-all text-left ${
                     selectedStudent === student.studentId
-                      ? "bg-purple-500/20 border-purple-500/50"
+                      ? "bg-indigo-500/20 border-indigo-500/50"
                       : "bg-white/5 border-white/10 hover:bg-white/10"
                   }`}
                 >

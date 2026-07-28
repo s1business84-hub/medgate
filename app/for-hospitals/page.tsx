@@ -62,7 +62,7 @@ export default function ForHospitalsPage() {
         <div className="relative max-w-6xl mx-auto px-6 py-16 md:py-20">
             {/* Header */}
             <div className="flex items-center justify-between mb-8 md:mb-12 animate-fade-in">
-              <Link href="/" className="flex items-center text-cyan-300 hover:text-cyan-200 transition-all duration-300 hover:translate-x-1">
+              <Link href="/" className="flex items-center text-blue-300 hover:text-blue-200 transition-all duration-300 hover:translate-x-1">
                 <ArrowLeft className="w-5 h-5 mr-2" />
                 Back to Home
               </Link>
@@ -71,7 +71,7 @@ export default function ForHospitalsPage() {
             {/* Hero Section */}
             <div className="text-center mb-12 md:mb-16 animate-fade-in" style={{ animationDelay: '0.1s' }}>
               <div className="inline-block mb-5">
-                <div className="w-20 h-20 bg-gradient-to-br from-cyan-600 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg">
+                <div className="w-20 h-20 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg">
                   <Building2 className="w-10 h-10 text-white" />
                 </div>
               </div>
@@ -83,7 +83,7 @@ export default function ForHospitalsPage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link href="/hospital/create-account">
-                  <Button size="lg" className="bg-linear-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-semibold shadow-lg">
+                  <Button size="lg" className="bg-linear-to-r from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 text-white font-semibold shadow-lg">
                     Join Us Now
                   </Button>
                 </Link>
@@ -105,16 +105,16 @@ export default function ForHospitalsPage() {
                 transition={{ duration: 0.3 }}
                 className="mt-5 max-w-2xl mx-auto overflow-hidden perf-card"
               >
-                <div className="bg-gradient-to-br from-cyan-600/20 to-indigo-600/20 border border-cyan-500/30 rounded-xl backdrop-blur-xl p-8">
+                <div className="bg-gradient-to-br from-blue-600/20 to-indigo-600/20 border border-blue-500/30 rounded-xl backdrop-blur-xl p-8">
                   <h3 className="text-2xl font-bold text-slate-100 mb-6">Contact our founders</h3>
                   <div className="space-y-4 mb-6">
                     <div className="flex items-start gap-4 pb-4 border-b border-white/10">
-                      <div className="w-12 h-12 bg-cyan-500/20 rounded-lg flex items-center justify-center shrink-0">
-                        <Phone className="w-6 h-6 text-cyan-300" />
+                      <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center shrink-0">
+                        <Phone className="w-6 h-6 text-blue-300" />
                       </div>
                       <div>
                         <p className="text-slate-100 font-semibold mb-1">Founder Kashish</p>
-                        <p className="text-cyan-300 font-mono text-lg">+971 054 453 0209</p>
+                        <p className="text-blue-300 font-mono text-lg">+971 054 453 0209</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-4">
@@ -158,21 +158,21 @@ export default function ForHospitalsPage() {
                 title: 'Designed for Institutional Control',
                 description: 'Hospitals define eligibility criteria, documentation requirements, intake capacity, and review workflows. Electivio supports, not overrides, institutional processes.',
                 icon: Shield,
-                gradient: 'from-blue-600 to-cyan-600',
+                gradient: 'from-blue-600 to-blue-600',
                 delay: 0,
               },
               {
                 title: 'Standardized Intake',
                 description: 'Built to centralize program information and applications, reducing unstructured emails, calls, and ad-hoc requests.',
                 icon: FileCheck,
-                gradient: 'from-indigo-600 to-purple-600',
+                gradient: 'from-indigo-600 to-indigo-600',
                 delay: 0.1,
               },
               {
                 title: 'Clear Applicant Alignment',
                 description: 'Students apply based on published criteria, helping institutions receive applications aligned with their requirements.',
                 icon: CheckCircle2,
-                gradient: 'from-purple-600 to-pink-600',
+                gradient: 'from-indigo-600 to-indigo-600',
                 delay: 0.2,
               },
               {
@@ -194,12 +194,12 @@ export default function ForHospitalsPage() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="relative bg-gradient-to-br from-cyan-600 via-indigo-600 to-purple-600 rounded-3xl p-10 md:p-16 text-white overflow-hidden group border border-white/20 backdrop-blur-xl">
+          <div className="relative bg-gradient-to-br from-blue-600 via-indigo-600 to-indigo-600 rounded-3xl p-10 md:p-16 text-white overflow-hidden group border border-white/20 backdrop-blur-xl">
             {/* Base glass effect */}
             <div className="absolute inset-0 bg-slate-900/50 backdrop-blur-3xl" />
             
             {/* Animated background elements */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl -mr-48 -mt-48 group-hover:scale-125 transition-transform duration-500" />
+            <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl -mr-48 -mt-48 group-hover:scale-125 transition-transform duration-500" />
             <div className="absolute bottom-0 left-0 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl -ml-40 -mb-40 group-hover:scale-110 transition-transform duration-500" />
             
             <div className="relative z-10">
@@ -216,7 +216,7 @@ export default function ForHospitalsPage() {
                 ].map((feature, idx) => (
                   <motion.div 
                     key={feature.title}
-                    className="group/item backdrop-blur-2xl bg-slate-800/50 rounded-2xl p-7 border border-cyan-500/30 hover:bg-slate-700/50 hover:border-cyan-400/50 transition-all duration-300 relative overflow-hidden perf-card"
+                    className="group/item backdrop-blur-2xl bg-slate-800/50 rounded-2xl p-7 border border-blue-500/30 hover:bg-slate-700/50 hover:border-blue-400/50 transition-all duration-300 relative overflow-hidden perf-card"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -224,11 +224,11 @@ export default function ForHospitalsPage() {
                   >
                     {/* Liquid shimmer on hover */}
                     <div className="absolute inset-0 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300">
-                      <div className="absolute top-0 left-0 w-2/3 h-2/3 bg-gradient-to-br from-cyan-500/20 to-transparent rounded-full blur-3xl" />
+                      <div className="absolute top-0 left-0 w-2/3 h-2/3 bg-gradient-to-br from-blue-500/20 to-transparent rounded-full blur-3xl" />
                     </div>
                     
                     <div className="relative z-10 flex items-start">
-                      <div className="w-12 h-12 bg-cyan-500/30 rounded-lg flex items-center justify-center mr-4 shrink-0 group-hover/item:bg-cyan-500/50 transition-all">
+                      <div className="w-12 h-12 bg-blue-500/30 rounded-lg flex items-center justify-center mr-4 shrink-0 group-hover/item:bg-blue-500/50 transition-all">
                         <feature.icon className="w-6 h-6 text-white" />
                       </div>
                       <div>
@@ -237,7 +237,7 @@ export default function ForHospitalsPage() {
                           <span
                             className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold border ${
                               feature.status === 'In Development'
-                                ? 'border-cyan-400/40 bg-cyan-500/15 text-cyan-300'
+                                ? 'border-blue-400/40 bg-blue-500/15 text-blue-300'
                                 : 'border-indigo-400/40 bg-indigo-500/15 text-indigo-300'
                             }`}
                           >
@@ -292,18 +292,18 @@ export default function ForHospitalsPage() {
 
         {/* Call to Action */}
         <section className="text-center animate-fade-in mb-8 perf-section" style={{ animationDelay: '0.7s' }}>
-          <div className="relative rounded-3xl border border-cyan-500/30 bg-slate-900/50 backdrop-blur-3xl shadow-2xl p-10 md:p-16 overflow-hidden group hover:border-cyan-500/50 transition-all perf-card">
+          <div className="relative rounded-3xl border border-blue-500/30 bg-slate-900/50 backdrop-blur-3xl shadow-2xl p-10 md:p-16 overflow-hidden group hover:border-blue-500/50 transition-all perf-card">
             {/* Base glass tint */}
-            <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-white/3 to-indigo-500/5" />
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-white/3 to-indigo-500/5" />
             
             {/* Liquid shimmer effect */}
             <div className="absolute inset-0 transition-opacity duration-300">
-              <div className="absolute top-0 left-0 w-2/3 h-2/3 bg-gradient-to-br from-cyan-500/20 via-indigo-500/10 to-transparent rounded-full blur-3xl group-hover:from-cyan-500/30 transition-all" />
+              <div className="absolute top-0 left-0 w-2/3 h-2/3 bg-gradient-to-br from-blue-500/20 via-indigo-500/10 to-transparent rounded-full blur-3xl group-hover:from-blue-500/30 transition-all" />
               <div className="absolute bottom-[-30%] right-[-10%] w-1/2 h-1/2 bg-gradient-to-tl from-indigo-400/10 to-transparent rounded-full blur-3xl" />
             </div>
             
             {/* Animated gradient glow */}
-            <div className="absolute -top-20 -right-20 w-40 h-40 bg-linear-to-br from-cyan-400 to-indigo-400 rounded-full opacity-0 blur-3xl group-hover:opacity-20 transition-opacity duration-500" />
+            <div className="absolute -top-20 -right-20 w-40 h-40 bg-linear-to-br from-blue-400 to-indigo-400 rounded-full opacity-0 blur-3xl group-hover:opacity-20 transition-opacity duration-500" />
             
             <div className="relative z-10">
               <h2 className="text-4xl font-bold text-slate-100 mb-6">Pilot Partner Intake</h2>
@@ -316,27 +316,27 @@ export default function ForHospitalsPage() {
                   value={onboardingEmail}
                   onChange={(e) => setOnboardingEmail(e.target.value)}
                   placeholder="Enter your work email"
-                  className="w-full sm:max-w-xs px-4 py-3 border border-cyan-500/30 bg-slate-800/50 backdrop-blur-xl text-slate-100 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-400/60 focus:bg-slate-700/50 transition-all placeholder-slate-400"
+                  className="w-full sm:max-w-xs px-4 py-3 border border-blue-500/30 bg-slate-800/50 backdrop-blur-xl text-slate-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-400/60 focus:bg-slate-700/50 transition-all placeholder-slate-400"
                   required
                 />
                 <Button
                   type="submit"
                   size="lg"
-                  className="bg-linear-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-semibold shadow-lg"
+                  className="bg-linear-to-r from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 text-white font-semibold shadow-lg"
                 >
                   Request Onboarding Pack
                 </Button>
               </form>
               {onboardingError && (
-                <p className="text-sm text-rose-200 mt-3">{onboardingError}</p>
+                <p className="text-sm text-indigo-200 mt-3">{onboardingError}</p>
               )}
               {onboardingStatus === "sent" && (
-                <p className="text-sm text-cyan-200 mt-3">
+                <p className="text-sm text-blue-200 mt-3">
                   Onboarding steps sent! Please check your inbox.
                 </p>
               )}
               {onboardingStatus === "error" && (
-                <p className="text-sm text-rose-200 mt-3">
+                <p className="text-sm text-indigo-200 mt-3">
                   Unable to send onboarding steps right now. Please retry.
                 </p>
               )}

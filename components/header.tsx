@@ -44,7 +44,7 @@ function BrandMark() {
       <path d="M 130 50 Q 130 25 155 25" stroke="url(#grad1)" strokeWidth="3" fill="none" strokeLinecap="round" />
       <defs>
         <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style={{ stopColor: "#06B6D4", stopOpacity: 1 }} />
+          <stop offset="0%" style={{ stopColor: "#3B82F6", stopOpacity: 1 }} />
           <stop offset="100%" style={{ stopColor: "#6366F1", stopOpacity: 1 }} />
         </linearGradient>
       </defs>
@@ -66,11 +66,11 @@ export function Header() {
           {/* Brand */}
           <Link
             href="/"
-            className="flex items-center gap-2 rounded-lg transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+            className="flex items-center gap-2 rounded-lg transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
           >
             <BrandMark />
             <span className="flex flex-col leading-none">
-              <span className="text-base sm:text-lg font-bold bg-linear-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">
+              <span className="text-base sm:text-lg font-bold bg-linear-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
                 Electivio
               </span>
               <span className="hidden sm:block text-[11px] text-slate-400 font-medium mt-0.5">
@@ -87,7 +87,7 @@ export function Header() {
                 href={link.href}
                 aria-current={isActive(link.href) ? "page" : undefined}
                 className={cn(
-                  "relative px-3 py-2 rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950",
+                  "relative px-3 py-2 rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950",
                   isActive(link.href)
                     ? "text-white"
                     : "text-slate-300 hover:text-white hover:bg-white/5"
@@ -95,7 +95,7 @@ export function Header() {
               >
                 {link.label}
                 {isActive(link.href) && (
-                  <span className="absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-linear-to-r from-cyan-400 to-indigo-500" />
+                  <span className="absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-linear-to-r from-blue-400 to-indigo-500" />
                 )}
               </Link>
             ))}
@@ -109,14 +109,14 @@ export function Header() {
                   {user.name}
                 </span>
                 <Link href={dashboardHref(user.role)}>
-                  <Button size="sm" className="bg-linear-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white">
+                  <Button size="sm" className="bg-linear-to-r from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 text-white">
                     Dashboard
                   </Button>
                 </Link>
               </>
             ) : (
               <Link href="/login">
-                <Button size="sm" className="bg-linear-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white">
+                <Button size="sm" className="bg-linear-to-r from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 text-white">
                   Login
                 </Button>
               </Link>
@@ -128,7 +128,7 @@ export function Header() {
             <Sheet>
               <SheetTrigger asChild>
                 <button
-                  className="grid h-10 w-10 place-items-center rounded-lg text-slate-200 transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                  className="grid h-10 w-10 place-items-center rounded-lg text-slate-200 transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
                   aria-label="Open menu"
                 >
                   <Menu className="h-6 w-6" />
@@ -144,7 +144,7 @@ export function Header() {
                 <div className="flex h-full flex-col">
                   <div className="flex items-center gap-2 border-b border-white/10 px-5 h-14">
                     <BrandMark />
-                    <span className="text-base font-bold bg-linear-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">
+                    <span className="text-base font-bold bg-linear-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
                       Electivio
                     </span>
                   </div>
@@ -168,7 +168,7 @@ export function Header() {
                           className={cn(
                             "flex items-center justify-between rounded-xl px-4 py-3.5 text-base font-medium transition-colors",
                             isActive(link.href)
-                              ? "bg-linear-to-r from-cyan-500/15 to-indigo-500/10 text-white"
+                              ? "bg-linear-to-r from-blue-500/15 to-indigo-500/10 text-white"
                               : "text-slate-300 hover:bg-white/5 hover:text-white"
                           )}
                         >
@@ -187,7 +187,7 @@ export function Header() {
                   <div className="border-t border-white/10 p-4">
                     <SheetClose asChild>
                       <Link href={user ? dashboardHref(user.role) : "/login"} className="block">
-                        <Button className="h-12 w-full bg-linear-to-r from-cyan-500 to-indigo-600 text-base font-semibold text-white hover:from-cyan-400 hover:to-indigo-500">
+                        <Button className="h-12 w-full bg-linear-to-r from-blue-500 to-indigo-600 text-base font-semibold text-white hover:from-blue-400 hover:to-indigo-500">
                           {user ? "Go to Dashboard" : "Login"}
                         </Button>
                       </Link>
