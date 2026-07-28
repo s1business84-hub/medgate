@@ -337,102 +337,123 @@ export default function AdminPage() {
       <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-slate-900/70 via-slate-950/50 to-black/70" />
 
       <div className="relative max-w-7xl mx-auto px-6 py-8">
-        {/* EHS Allocations quick links */}
-        <div className="mb-6 flex gap-3">
-          <Link href="/admin/hospital-confirmations" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-semibold shadow transition-all">
-            <span>🔗</span> EHS Hospital Confirmations
-          </Link>
-          <Link href="/admin/ehs-audit" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-semibold shadow transition-all">
-            <span>📜</span> EHS Audit
-                    <Link href="/admin/form-tracking" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-semibold shadow transition-all">
-                      <span>📋</span> Form Tracking
-                    </Link>
-          </Link>
-          {process.env.NODE_ENV !== 'production' && (
-            <button
-              data-testid="run-scenario2-button"
-              onClick={async () => {
-                try {
-                  showToast('Seeding demo data for Scenario 2...');
-                  const base = window.location.origin;
-                  const resp = await fetch(`${base}/api/test/seed`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ programId: mockPrograms?.[0]?.id || 'demo', hospitalId: mockHospitals?.[0]?.id || 'h1', seedExposure: true, seedSupervisor: true }),
-                  });
-                  const payload = await resp.json();
-                  // Persist to localStorage to mimic test setup
-                  if (payload.users) localStorage.setItem('electivio_users', JSON.stringify(payload.users));
-                  if (payload.students) localStorage.setItem('electivio_students', JSON.stringify(payload.students));
-                  if (payload.applications) localStorage.setItem('electivio_applications', JSON.stringify(payload.applications));
-                  // set current user to student
-                  const stu = payload.users?.find((u: any) => u.role === 'student') || payload.users?.[0];
-                  if (stu) localStorage.setItem('electivio_current_user', JSON.stringify(stu));
-                  showToast('Scenario 2 seeded — opening program page');
-                  const programId = payload.programs?.[0]?.id || mockPrograms?.[0]?.id || 'demo';
-                  router.push(`/programs/${programId}`);
-                } catch (err) {
-                  console.error('Scenario 2 seed failed', err);
-                  showToast('Failed to seed Scenario 2 — check console');
-                }
-              }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow transition-all"
-            >
-              🚀 Run Scenario 2
-            </button>
-          )}
-          {ALLOW_EXPORT && (
-            <button
-              onClick={async () => {
-                try {
-                  const { exportAccreditationCSV } = await import('@/lib/auditStore');
-                  const csv = exportAccreditationCSV();
-                  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-                  const url = URL.createObjectURL(blob);
-                  const a = document.createElement('a');
-                  a.href = url;
-                  a.download = `electivio_accreditation_${new Date().toISOString().slice(0,10)}.csv`;
-                  document.body.appendChild(a);
-                  a.click();
-                  a.remove();
-                  URL.revokeObjectURL(url);
-                  try { (await import('@/lib/toast')).showToast('Export ready — download should begin shortly'); } catch {}
-                } catch (err) {
-                  console.error('Export failed', err);
-                  try { (await import('@/lib/toast')).showToast('Export failed'); } catch {}
-                }
-              }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-semibold shadow transition-all"
-            >
-              <span>⬇️</span> Export Accreditation CSV
-            </button>
-          )}
-        </div>
-        <div className="flex items-center justify-between mb-8">
+        {/* Header — one primary action, a quiet tool row, single exit */}
+        <div className="mb-6 flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-slate-100 mb-2">Supervisor Portal</h1>
+            <h1 className="text-3xl font-bold text-slate-100 mb-2">Admin Portal</h1>
             <p className="text-slate-300">Review and manage observership applications</p>
           </div>
-          <div className="flex gap-4 flex-wrap justify-end items-center">
-            {user && <SupervisorNotifications userId={user.id} />}
-            <button
-              onClick={() => setShowObsForm(true)}
-              className="px-6 py-2 rounded-lg bg-linear-to-r from-blue-500 to-indigo-600 text-white font-semibold shadow-lg hover:from-blue-400 hover:to-indigo-500 transition-all"
+
+          <div className="flex flex-col gap-3 sm:items-end">
+            <div className="flex items-center gap-3">
+              {user && <SupervisorNotifications userId={user.id} />}
+              <button
+                onClick={() => setShowObsForm(true)}
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-blue-600 px-5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+              >
+                + Add Observership
+              </button>
+            </div>
+
+            <nav
+              aria-label="Admin tools"
+              className="flex items-center gap-1.5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             >
-              + Add Observership
-            </button>
-            <button
-              onClick={() => { logout(); router.push("/"); }}
-              className="px-6 py-2 rounded-lg border border-white/15 bg-white/5 text-slate-100 hover:bg-white/10 transition-colors font-semibold"
-            >
-              Logout
-            </button>
-            <Link
-              href="/"
-              className="px-6 py-2 rounded-lg border border-white/15 bg-white/5 text-slate-100 hover:bg-white/10 transition-colors font-semibold"
-            >
-              ← Back to Home
-            </Link>
+              <Link href="/admin/hospital-confirmations" className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 text-xs font-medium text-slate-300 backdrop-blur-xl transition-colors hover:border-blue-500/30 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400">
+                Hospital confirmations
+              </Link>
+              <Link href="/admin/ehs-audit" className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 text-xs font-medium text-slate-300 backdrop-blur-xl transition-colors hover:border-blue-500/30 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400">
+                EHS audit
+              </Link>
+              <Link href="/admin/form-tracking" className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 text-xs font-medium text-slate-300 backdrop-blur-xl transition-colors hover:border-blue-500/30 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400">
+                Form tracking
+              </Link>
+              <Link href="/admin/regulatory-approval" className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 text-xs font-medium text-slate-300 backdrop-blur-xl transition-colors hover:border-blue-500/30 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400">
+                Regulatory approvals
+              </Link>
+              <Link href="/admin/trainee-registry" className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 text-xs font-medium text-slate-300 backdrop-blur-xl transition-colors hover:border-blue-500/30 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400">
+                Trainee registry
+              </Link>
+              <Link href="/admin/department-capacity" className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 text-xs font-medium text-slate-300 backdrop-blur-xl transition-colors hover:border-blue-500/30 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400">
+                Department capacity
+              </Link>
+              <Link href="/admin/incident-flag" className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 text-xs font-medium text-slate-300 backdrop-blur-xl transition-colors hover:border-blue-500/30 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400">
+                Incident flag
+              </Link>
+              <Link href="/admin/programs" className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 text-xs font-medium text-slate-300 backdrop-blur-xl transition-colors hover:border-blue-500/30 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400">
+                Programs
+              </Link>
+              {ALLOW_EXPORT && (
+                <Link href="/admin/accreditation-pack" className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 text-xs font-medium text-slate-300 backdrop-blur-xl transition-colors hover:border-blue-500/30 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400">
+                  Accreditation pack
+                </Link>
+              )}
+              {ALLOW_EXPORT && (
+                <button
+                  onClick={async () => {
+                    try {
+                      const { exportAccreditationCSV } = await import('@/lib/auditStore');
+                      const csv = exportAccreditationCSV();
+                      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                      const url = URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = `electivio_accreditation_${new Date().toISOString().slice(0,10)}.csv`;
+                      document.body.appendChild(a);
+                      a.click();
+                      a.remove();
+                      URL.revokeObjectURL(url);
+                      try { (await import('@/lib/toast')).showToast('Export ready — download should begin shortly'); } catch {}
+                    } catch (err) {
+                      console.error('Export failed', err);
+                      try { (await import('@/lib/toast')).showToast('Export failed'); } catch {}
+                    }
+                  }}
+                  className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 text-xs font-medium text-slate-300 backdrop-blur-xl transition-colors hover:border-blue-500/30 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+                >
+                  Export CSV
+                </button>
+              )}
+              {process.env.NODE_ENV !== 'production' && (
+                <button
+                  data-testid="run-scenario2-button"
+                  onClick={async () => {
+                    try {
+                      showToast('Seeding demo data for Scenario 2...');
+                      const base = window.location.origin;
+                      const resp = await fetch(`${base}/api/test/seed`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ programId: mockPrograms?.[0]?.id || 'demo', hospitalId: mockHospitals?.[0]?.id || 'h1', seedExposure: true, seedSupervisor: true }),
+                      });
+                      const payload = await resp.json();
+                      // Persist to localStorage to mimic test setup
+                      if (payload.users) localStorage.setItem('electivio_users', JSON.stringify(payload.users));
+                      if (payload.students) localStorage.setItem('electivio_students', JSON.stringify(payload.students));
+                      if (payload.applications) localStorage.setItem('electivio_applications', JSON.stringify(payload.applications));
+                      // set current user to student
+                      const stu = payload.users?.find((u: any) => u.role === 'student') || payload.users?.[0];
+                      if (stu) localStorage.setItem('electivio_current_user', JSON.stringify(stu));
+                      showToast('Scenario 2 seeded — opening program page');
+                      const programId = payload.programs?.[0]?.id || mockPrograms?.[0]?.id || 'demo';
+                      router.push(`/programs/${programId}`);
+                    } catch (err) {
+                      console.error('Scenario 2 seed failed', err);
+                      showToast('Failed to seed Scenario 2 — check console');
+                    }
+                  }}
+                  className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 text-xs font-medium text-slate-300 backdrop-blur-xl transition-colors hover:border-blue-500/30 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+                >
+                  Run Scenario 2
+                </button>
+              )}
+              <button
+                onClick={() => { logout(); router.push("/"); }}
+                className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 text-xs font-medium text-slate-400 backdrop-blur-xl transition-colors hover:border-red-500/30 hover:text-red-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+              >
+                Sign out
+              </button>
+            </nav>
           </div>
         </div>
 
