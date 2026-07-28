@@ -1,6 +1,18 @@
 import Link from "next/link"
 import { LiquidParallax } from "@/components/ui/liquid-parallax"
 
+/**
+ * Stable anchor ids so the footer can deep-link to the sections people
+ * actually look for. Named slugs for those two; a numeric fallback for the
+ * rest, so ids stay valid if section titles are reworded.
+ */
+function sectionAnchor(title: string): string {
+  if (title.includes("Data Protection")) return "privacy"
+  if (title.includes("Acceptance of Terms")) return "terms"
+  const num = title.match(/^(\d+)\./)?.[1]
+  return num ? `section-${num}` : "section"
+}
+
 const sections = [
   {
     title: "1. Platform Role & Disclaimer of Affiliation",
@@ -198,7 +210,11 @@ export default function LegalPage() {
           <div className="absolute inset-0 bg-linear-to-br from-white/10 via-transparent to-blue-500/10 pointer-events-none" />
           <div className="relative p-6 sm:p-10 space-y-8">
             {sections.map((section, idx) => (
-              <section key={section.title} className="space-y-3 border border-white/5 rounded-2xl bg-white/5 p-5 sm:p-6 shadow-inner">
+              <section
+                key={section.title}
+                id={sectionAnchor(section.title)}
+                className="scroll-mt-24 space-y-3 border border-white/5 rounded-2xl bg-white/5 p-5 sm:p-6 shadow-inner"
+              >
                 <div className="flex items-start justify-between gap-3">
                   <h2 className="text-lg sm:text-xl font-semibold text-slate-50 drop-shadow-[0_0_12px_rgba(14,165,233,0.25)]">{section.title}</h2>
                   <span className="text-xs text-slate-400">{String(idx + 1).padStart(2, '0')}</span>

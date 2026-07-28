@@ -1,12 +1,15 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { motion } from 'framer-motion';
-import { LucideIcon } from 'lucide-react';
+/**
+ * Vertical zigzag timeline. See ScrollytellingFeatures for why this no
+ * longer uses GSAP ScrollTrigger scrub — the same opacity-tied-to-scroll
+ * fragility applied here to the connecting line, each step card, and the
+ * step-number icons.
+ */
 
-gsap.registerPlugin(ScrollTrigger);
+import { motion, useReducedMotion } from "framer-motion";
+import { LucideIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface TimelineStep {
   step: number;
@@ -21,143 +24,81 @@ interface ScrollytellingTimelineProps {
 }
 
 export function ScrollytellingTimeline({ steps }: ScrollytellingTimelineProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const timelineRef = useRef<HTMLDivElement>(null);
-  const stepsRef = useRef<(HTMLDivElement | null)[]>([]);
-
-  useEffect(() => {
-    if (!containerRef.current || !timelineRef.current) return;
-
-    const ctx = gsap.context(() => {
-      // Animate the vertical line
-      gsap.fromTo(
-        timelineRef.current,
-        {
-          height: 0,
-        },
-        {
-          height: '100%',
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top center',
-            end: 'bottom center',
-            scrub: 0.6,
-            markers: false,
-          },
-        }
-      );
-
-      // Animate each step card
-      stepsRef.current.forEach((step, idx) => {
-        if (!step) return;
-
-        gsap.fromTo(
-          step,
-          {
-            opacity: 0,
-            y: 100,
-            scale: 0.8,
-          },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.6,
-            scrollTrigger: {
-              trigger: step,
-              start: 'top 80%',
-              end: 'top 30%',
-              scrub: 0.6,
-              markers: false,
-            },
-          }
-        );
-
-        // Animate the icon
-        const icon = step.querySelector('.step-icon');
-        if (icon) {
-          gsap.fromTo(
-            icon,
-            {
-              rotate: -180,
-              scale: 0,
-            },
-            {
-              rotate: 0,
-              scale: 1,
-              duration: 0.8,
-              scrollTrigger: {
-                trigger: step,
-                start: 'top 70%',
-                end: 'top 20%',
-                scrub: 0.6,
-                markers: false,
-              },
-            }
-          );
-        }
-      });
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, []);
+  const reduce = useReducedMotion();
 
   return (
-    <div ref={containerRef} className="relative py-20 md:py-32 perf-section">
-      {/* Central connecting line */}
-      <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-blue-500 to-transparent opacity-0" ref={timelineRef} />
+    <div className="relative py-12 md:py-16">
+      {/*
+        Connecting line. Rails to the left gutter on mobile and only moves to
+        centre from md up, where the zigzag spacers actually exist. Previously
+        it sat at left-1/2 at every width, so on mobile — where the spacers are
+        hidden and cards span full width — it drew straight through the cards.
+      */}
+      <motion.div
+        aria-hidden
+        className="absolute left-8 top-0 bottom-0 w-1 origin-top bg-gradient-to-b from-transparent via-blue-500 to-transparent md:left-1/2 md:-translate-x-1/2"
+        initial={reduce ? false : { scaleY: 0 }}
+        whileInView={{ scaleY: 1 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+      />
 
-      {/* Timeline steps */}
-      <div className="space-y-12 md:space-y-16 max-w-4xl mx-auto px-6">
+      <div className="mx-auto max-w-4xl space-y-12 px-6 md:space-y-16">
         {steps.map((step, idx) => (
           <div
             key={step.step}
-            ref={(el) => {
-              stepsRef.current[idx] = el;
-            }}
-            className={`relative flex items-start gap-8 md:gap-12 ${
-              idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-            }`}
+            className={cn(
+              "relative flex items-start gap-0 md:gap-12",
+              idx % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+            )}
           >
-            {/* Step number circle - on timeline */}
-            <div className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 top-8 w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-xl border-4 border-slate-950 z-10 step-icon">
-              <span className="text-white font-bold text-2xl">{step.step}</span>
-            </div>
-
-            {/* Left spacer for alignment */}
-            <div className="hidden md:block flex-1" />
-
-            {/* Card content */}
+            {/* Step number circle — sits on the line at both breakpoints */}
             <motion.div
-              className="flex-1 group relative rounded-3xl border border-white/20 bg-white/8 backdrop-blur-3xl shadow-lg hover:shadow-2xl overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:border-white/30 perf-card"
-              whileHover={{ scale: 1.02 }}
+              className="absolute left-8 top-8 z-10 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-4 border-slate-950 bg-gradient-to-br from-blue-500 to-indigo-600 shadow-xl md:left-1/2 md:h-16 md:w-16"
+              initial={reduce ? false : { scale: 0, rotate: -90 }}
+              whileInView={{ scale: 1, rotate: 0 }}
+              viewport={{ once: true, amount: 0.6 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             >
-              {/* Base gradient glass tint */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-white/3 to-indigo-500/5" />
+              <span className="text-xl font-bold text-white md:text-2xl">{step.step}</span>
+            </motion.div>
 
-              {/* Gradient overlay on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-600/8 via-transparent to-indigo-600/8 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="hidden flex-1 md:block" />
 
-              {/* Liquid glass shine effect */}
-              <div className="absolute inset-0 transition-opacity duration-300">
-                <div className="absolute top-0 left-0 w-2/3 h-2/3 bg-gradient-to-br from-white/25 via-white/10 to-transparent rounded-full blur-3xl group-hover:from-white/35 transition-all" />
-              </div>
-
-              {/* Animated left accent */}
-              <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-500 to-indigo-600 scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top" />
+            <motion.div
+              initial={reduce ? false : { opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ scale: 1.02, y: -4 }}
+              className="group relative ml-12 flex-1 overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl transition-colors duration-300 hover:border-blue-500/30 md:ml-0"
+            >
+              {/* animated glow ring on hover */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                style={{
+                  background:
+                    "linear-gradient(120deg, rgba(59,130,246,0.35), rgba(99,102,241,0.12), rgba(59,130,246,0.35))",
+                  backgroundSize: "250% 250%",
+                  animation: "glow-pan 4s linear infinite",
+                  WebkitMask:
+                    "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                  WebkitMaskComposite: "xor",
+                  maskComposite: "exclude",
+                  padding: "1px",
+                }}
+              />
 
               <div className="relative z-10 p-8 md:p-10">
-                <h3 className="text-2xl font-bold text-slate-100 mb-3">
-                  {step.title}
-                </h3>
-                <p className="text-slate-300 group-hover:text-slate-200 transition-colors leading-relaxed text-lg">
+                <h3 className="mb-3 text-2xl font-bold text-white">{step.title}</h3>
+                <p className="text-lg leading-relaxed text-slate-300">
                   {step.description}
                 </p>
               </div>
             </motion.div>
 
-            {/* Right spacer for alignment */}
-            <div className="hidden md:block flex-1" />
+            <div className="hidden flex-1 md:block" />
           </div>
         ))}
       </div>

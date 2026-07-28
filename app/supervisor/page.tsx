@@ -4,8 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 import { motion } from "framer-motion";
-import { TrendingUp, Users, Target, BarChart3, ArrowLeft } from "lucide-react";
-import Link from "next/link";
+import { TrendingUp, Users, Target, BarChart3 } from "lucide-react";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
 import Reveal from "@/components/Reveal";
 import { SupervisorNotifications } from "@/components/supervisor-notifications";
@@ -58,7 +57,7 @@ interface StudentData {
 // Data will be synced from student applications and observerships
 
 export default function SupervisorDashboard() {
-  const { user, isLoading } = useAuth();
+  const { user, isLoading, logout } = useAuth();
   const router = useRouter();
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [students, setStudents] = useState<StudentData[]>([]);
@@ -519,24 +518,27 @@ export default function SupervisorDashboard() {
       <LiquidParallax depth={14} className="opacity-70" />
 
       <div className="max-w-7xl mx-auto px-4 py-12 relative z-10">
-        {/* Header */}
+        {/* Header — one identity block, a quiet exit, no dead-end back-to-login */}
         <Reveal>
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center gap-4">
-              <Link
-                href="/login"
-                className="p-2 rounded-lg hover:bg-white/10 transition"
-              >
-                <ArrowLeft className="w-6 h-6 text-slate-300" />
-              </Link>
-              <div>
-                <h1 className="text-5xl font-bold bg-linear-to-r from-indigo-400 via-indigo-400 to-red-400 bg-clip-text text-transparent flex items-center gap-2">
-                  Supervisor Dashboard
-                </h1>
-                <p className="text-xl text-slate-300">Track student progress, visualize clinical development, and gain AI-powered insights</p>
-              </div>
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between mb-8">
+            <div>
+              <h1 className="text-3xl sm:text-4xl font-bold bg-linear-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
+                Supervisor Dashboard
+              </h1>
+              <p className="mt-1 text-slate-300">
+                Track student progress, visualize clinical development, and gain AI-powered insights
+              </p>
             </div>
-            {user && <SupervisorNotifications userId={user.id} />}
+
+            <div className="flex items-center gap-2">
+              {user && <SupervisorNotifications userId={user.id} />}
+              <button
+                onClick={() => { logout(); router.push("/"); }}
+                className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 text-xs font-medium text-slate-400 backdrop-blur-xl transition-colors hover:border-red-500/30 hover:text-red-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+              >
+                Sign out
+              </button>
+            </div>
           </div>
         </Reveal>
 
@@ -545,8 +547,8 @@ export default function SupervisorDashboard() {
           {[
             { label: "Total Students", value: overallStats.totalStudents, icon: Users, color: "from-indigo-500 to-indigo-500" },
             { label: "Avg Form Progress", value: `${overallStats.avgFormProgress}%`, icon: TrendingUp, color: "from-blue-500 to-blue-500" },
-            { label: "Avg Entries", value: overallStats.avgEntries, icon: Target, color: "from-green-500 to-emerald-500" },
-            { label: "Programs Completed", value: overallStats.completedPrograms, icon: BarChart3, color: "from-orange-500 to-yellow-500" },
+            { label: "Avg Entries", value: overallStats.avgEntries, icon: Target, color: "from-blue-500 to-indigo-500" },
+            { label: "Programs Completed", value: overallStats.completedPrograms, icon: BarChart3, color: "from-indigo-500 to-blue-600" },
           ].map((stat, idx) => (
             <Reveal key={stat.label} delay={0.1 * idx} y={20}>
               <motion.div

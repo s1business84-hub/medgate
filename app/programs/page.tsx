@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { hospitals, programs } from "@/lib/mockData";
 import { EligibilityChecker } from "@/components/eligibility-checker";
 import { getProgramMetadata } from '@/lib/storage';
@@ -24,6 +25,7 @@ import { AnimatedProgramCard } from "@/components/AnimatedProgramCard";
 
 export default function ProgramsPage() {
   const { user } = useAuth();
+  const router = useRouter();
   const [expandedProgram, setExpandedProgram] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProgram, setSelectedProgram] = useState<{ name: string; hospital: string; programId?: string; hospitalId?: string } | null>(null);
@@ -99,10 +101,10 @@ export default function ProgramsPage() {
 
   const handleApplyClick = (program: typeof programs[0], hospital: typeof hospitals[0]) => {
     if (!user) {
-      alert("Please log in to apply for programs");
+      router.push(`/login?next=${encodeURIComponent("/programs")}`);
       return;
     }
-    
+
     setSelectedProgram({
       name: program.departmentName,
       hospital: hospital?.name || '',

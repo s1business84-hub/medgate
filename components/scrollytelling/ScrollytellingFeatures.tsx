@@ -1,12 +1,21 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { motion } from 'framer-motion';
-import { LucideIcon } from 'lucide-react';
+/**
+ * Feature grid with a liquid-glass hover treatment.
+ *
+ * Previously drove card opacity directly off a GSAP ScrollTrigger `scrub`
+ * value keyed to scroll position. Scrub-tied opacity depends on the
+ * trigger's start/end offsets staying accurate after mount — any layout
+ * shift above it (a parallax hero resizing, fonts loading) desyncs the
+ * math and leaves cards stuck at partial or zero opacity. Reproduced this
+ * directly on /for-hospitals: cards rendered invisible on load and only
+ * appeared after a manual scroll jump. `whileInView` uses
+ * IntersectionObserver, fires once, and can't get stuck this way.
+ */
 
-gsap.registerPlugin(ScrollTrigger);
+import { motion, useReducedMotion } from "framer-motion";
+import { LucideIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface FeatureReveal {
   title: string;
@@ -21,136 +30,54 @@ interface ScrollytellingFeaturesProps {
 }
 
 export function ScrollytellingFeatures({ features }: ScrollytellingFeaturesProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    const ctx = gsap.context(() => {
-      itemsRef.current.forEach((item, idx) => {
-        if (!item) return;
-
-        // Create a staggered reveal animation based on scroll position
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: item,
-            start: 'top 85%',
-            end: 'top 35%',
-            scrub: 0.6,
-            markers: false,
-          },
-        });
-
-        tl.fromTo(
-          item,
-          {
-            opacity: 0,
-            y: 60,
-            scale: 0.9,
-            rotateX: 20,
-          },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            rotateX: 0,
-            duration: 1,
-          },
-          0
-        );
-
-        // Animate icon separately for more dynamism
-        const icon = item.querySelector('.feature-icon');
-        if (icon) {
-          tl.fromTo(
-            icon,
-            {
-              scale: 0,
-              rotate: -180,
-              opacity: 0,
-            },
-            {
-              scale: 1,
-              rotate: 0,
-              opacity: 1,
-              duration: 0.8,
-            },
-            0.1
-          );
-        }
-
-        // Animate accent bar
-        const accent = item.querySelector('.feature-accent');
-        if (accent) {
-          gsap.fromTo(
-            accent,
-            {
-              width: 0,
-              opacity: 0,
-            },
-            {
-              width: '100%',
-              opacity: 1,
-              duration: 0.6,
-              scrollTrigger: {
-                trigger: item,
-                start: 'top 70%',
-                end: 'top 40%',
-                scrub: 0.6,
-                markers: false,
-              },
-            }
-          );
-        }
-      });
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, []);
+  const reduce = useReducedMotion();
 
   return (
-    <div
-      ref={containerRef}
-      style={{ perspective: '1200px' }}
-      className="py-20 md:py-32 perf-section"
-    >
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10 max-w-7xl mx-auto px-6">
+    <div className="py-12 md:py-16">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
         {features.map((feature, idx) => (
           <motion.div
             key={feature.title}
-            ref={(el) => {
-              itemsRef.current[idx] = el;
-            }}
-            className="group relative rounded-3xl border border-white/20 bg-white/8 backdrop-blur-3xl shadow-lg hover:shadow-2xl overflow-hidden transition-all duration-300 hover:border-white/30 perf-card"
-            whileHover={{ y: -8 }}
+            initial={reduce ? false : { opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.5, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+            whileHover={{ y: -6 }}
+            className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl transition-colors duration-300 hover:border-blue-500/30"
           >
-            {/* Base gradient glass tint - always visible */}
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-white/3 to-indigo-500/5" />
-
-            {/* Animated gradient overlay on hover */}
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/8 via-transparent to-indigo-600/8 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-            {/* Liquid glass shine effect - top left shimmer */}
-            <div className="absolute inset-0 transition-opacity duration-300">
-              <div className="absolute top-0 left-0 w-2/3 h-2/3 bg-gradient-to-br from-white/25 via-white/10 to-transparent rounded-full blur-3xl group-hover:from-white/35 transition-all" />
-              <div className="absolute bottom-[-20%] right-[-10%] w-1/2 h-1/2 bg-gradient-to-tl from-indigo-400/10 to-transparent rounded-full blur-3xl" />
-            </div>
+            {/* animated glow ring on hover, matches GlowCard elsewhere on the site */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+              style={{
+                background:
+                  "linear-gradient(120deg, rgba(59,130,246,0.35), rgba(99,102,241,0.12), rgba(59,130,246,0.35))",
+                backgroundSize: "250% 250%",
+                animation: "glow-pan 4s linear infinite",
+                WebkitMask:
+                  "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                WebkitMaskComposite: "xor",
+                maskComposite: "exclude",
+                padding: "1px",
+              }}
+            />
 
             <div className="relative z-10 p-6 lg:p-8">
               <div
-                className={`w-16 h-16 bg-gradient-to-br ${feature.gradient} rounded-xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 feature-icon`}
+                className={cn(
+                  "mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br shadow-lg transition-transform duration-300 group-hover:scale-110",
+                  feature.gradient
+                )}
               >
-                <feature.icon className="w-8 h-8 text-white" />
+                <feature.icon className="h-7 w-7 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-slate-100 mb-3">
-                {feature.title}
-              </h3>
-              <p className="text-slate-300 group-hover:text-slate-200 transition-colors leading-relaxed mb-4">
-                {feature.description}
-              </p>
+              <h3 className="mb-3 text-xl font-bold text-white">{feature.title}</h3>
+              <p className="leading-relaxed text-slate-300">{feature.description}</p>
               <div
-                className={`h-1 bg-gradient-to-r ${feature.gradient} rounded-full feature-accent`}
+                className={cn(
+                  "mt-5 h-1 origin-left scale-x-0 rounded-full bg-gradient-to-r transition-transform duration-500 group-hover:scale-x-100",
+                  feature.gradient
+                )}
               />
             </div>
           </motion.div>

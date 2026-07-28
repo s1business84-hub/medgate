@@ -9,8 +9,8 @@ import { Building2, Mail, Lock, UserPlus } from "lucide-react";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
 
 export default function HospitalLogin() {
-  const [email, setEmail] = useState("hospital1@electivio.com");
-  const [password, setPassword] = useState("password");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
@@ -104,12 +104,6 @@ export default function HospitalLogin() {
               {loading ? "Signing in..." : "Sign In"}
             </Button>
 
-            {/* Demo Credentials */}
-            <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
-              <p className="text-sm font-semibold text-blue-900 mb-2">Demo Credentials:</p>
-              <p className="text-xs text-blue-800">Email: hospital1@electivio.com</p>
-              <p className="text-xs text-blue-800">Password: password</p>
-            </div>
           </form>
 
           {/* Footer */}

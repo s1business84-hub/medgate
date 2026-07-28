@@ -37,6 +37,7 @@ function getInitialRole(searchParams: ReturnType<typeof useSearchParams>) {
 
 export default function LoginForm() {
   const searchParams = useSearchParams();
+  const next = searchParams?.get("next");
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -67,7 +68,9 @@ export default function LoginForm() {
           const u = getCurrentUser();
           showToast(`Welcome back, ${u?.name || "User"}!`);
           setTimeout(() => {
-            if (u?.role === "staff") {
+            if (next) {
+              router.push(next);
+            } else if (u?.role === "staff") {
               router.push("/hospital");
             } else if (u?.role === "supervisor") {
               router.push("/supervisor");
@@ -103,7 +106,9 @@ export default function LoginForm() {
           const u = getCurrentUser();
           showToast(`Account created! Welcome, ${u?.name || "User"}!`);
           setTimeout(() => {
-            if (u?.role === "staff") {
+            if (next) {
+              router.push(next);
+            } else if (u?.role === "staff") {
               router.push("/hospital");
             } else if (u?.role === "supervisor") {
               router.push("/supervisor");
@@ -134,6 +139,11 @@ export default function LoginForm() {
       >
         <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.6)] p-8">
           <div className="text-center mb-8">
+            {next && (
+              <p className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 text-xs font-medium text-blue-200">
+                Sign in or create an account to continue
+              </p>
+            )}
             <h1 className="text-3xl font-bold text-slate-100 mb-2">
               {isLogin ? "Welcome Back" : "Create Account"}
             </h1>

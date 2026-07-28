@@ -142,13 +142,34 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-9 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-t border-white/10 pt-6">
+        <div className="mt-9 flex flex-col gap-4 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs text-slate-400">
             © {new Date().getFullYear()} Electivio. All rights reserved.
           </p>
-          <p className="text-xs text-slate-400">
-            Not a placement or recruitment service.
-          </p>
+
+          <nav aria-label="Legal" className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            <Link
+              href="/legal#privacy"
+              className="text-xs text-slate-400 transition-colors hover:text-blue-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded"
+            >
+              Privacy policy
+            </Link>
+            <Link
+              href="/legal#terms"
+              className="text-xs text-slate-400 transition-colors hover:text-blue-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded"
+            >
+              Terms
+            </Link>
+            <Link
+              href="/legal"
+              className="text-xs text-slate-400 transition-colors hover:text-blue-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded"
+            >
+              Legal & compliance
+            </Link>
+            <span className="text-xs text-slate-400">
+              Not a placement or recruitment service.
+            </span>
+          </nav>
         </div>
       </div>
     </footer>
