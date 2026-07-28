@@ -139,16 +139,16 @@ export function StudentToolbar({
   return (
     <nav
       aria-label="Student tools"
-      className="flex flex-wrap items-center gap-1.5"
+      className="flex items-center gap-1.5 overflow-x-auto sm:flex-wrap sm:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
     >
       {TOOLS.map((t) => (
         <Link
           key={t.href}
           href={t.href}
-          className="inline-flex h-10 items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 text-sm font-medium text-slate-200 backdrop-blur-xl transition-colors hover:border-blue-500/30 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+          className="inline-flex h-10 shrink-0 items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 text-sm font-medium text-slate-200 backdrop-blur-xl transition-colors hover:border-blue-500/30 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
         >
-          <t.icon className="h-4 w-4 text-slate-400" />
-          {t.label}
+          <t.icon className="h-4 w-4 shrink-0 text-slate-400" />
+          <span className="hidden sm:inline">{t.label}</span>
         </Link>
       ))}
 
@@ -156,10 +156,11 @@ export function StudentToolbar({
 
       <button
         onClick={onLogout}
-        className="inline-flex h-10 items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 text-sm font-medium text-slate-400 backdrop-blur-xl transition-colors hover:border-red-500/30 hover:text-red-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+        aria-label="Sign out"
+        className="inline-flex h-10 shrink-0 items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 text-sm font-medium text-slate-400 backdrop-blur-xl transition-colors hover:border-red-500/30 hover:text-red-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
       >
-        <LogOut className="h-4 w-4" />
-        Sign out
+        <LogOut className="h-4 w-4 shrink-0" />
+        <span className="hidden sm:inline">Sign out</span>
       </button>
     </nav>
   );

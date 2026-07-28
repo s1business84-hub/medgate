@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
-import { Heart, Users, CheckCircle, Upload, Menu, X, Zap } from "lucide-react";
+import { Upload, Menu, X } from "lucide-react";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
 import { AuditExcelButton } from "@/components/audit-excel-button";
 import { StudentSessions } from "./sessions";
@@ -16,7 +16,13 @@ import { SupervisorChat } from "@/components/supervisor-chat";
 import { StudentVerificationCenter } from "@/components/student-verification-center";
 import { StudentGuidelines } from "@/components/student-guidelines";
 import { StudentInbox } from "@/components/student-inbox";
-import { StaggerGroup, StaggerItem } from "@/components/animation/StaggerGroup";
+import { CountUp } from "@/components/home/effects";
+import {
+  NextStepCard,
+  StudentToolbar,
+  StudentSectionNav,
+  resolveNextStep,
+} from "@/components/student/student-shell";
 
 export default function StudentPortal() {
   const { user, logout } = useAuth();
@@ -31,18 +37,6 @@ export default function StudentPortal() {
     avgProgress: 0,
     certifications: 0,
   });
-
-  const backgroundParticles = useMemo(
-    () =>
-      Array.from({ length: 8 }, (_, i) => ({
-        id: i,
-        left: `${Math.random() * 100}%`,
-        top: `${Math.random() * 100}%`,
-        duration: 6 + Math.random() * 2,
-        delay: Math.random() * 3,
-      })),
-    []
-  );
 
   // Move load function outside useEffect so it can be reused
   const loadApplications = useCallback(async () => {
@@ -174,286 +168,63 @@ export default function StudentPortal() {
             transition={{ duration: 24, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
           />
           
-          {/* Floating particles */}
-          {backgroundParticles.map((particle) => (
-            <motion.div
-              key={particle.id}
-              className="absolute w-1.5 h-1.5 bg-blue-400/40 rounded-full"
-              style={{
-                left: particle.left,
-                top: particle.top,
-              }}
-              animate={{
-                y: [0, -24, 0],
-                opacity: [0, 0.55, 0],
-              }}
-              transition={{
-                duration: particle.duration,
-                repeat: Infinity,
-                delay: particle.delay,
-              }}
-            />
-          ))}
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
-          {/* Header with XP Meter */}
+          {/* Header */}
           <Reveal>
-          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-4 sm:mb-6 gap-4">
-            <div className="flex-1">
-              <motion.h1 
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5 }}
-                className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 via-blue-400 to-indigo-500 bg-clip-text text-transparent mb-1.5"
-              >
-                Student Portal
-              </motion.h1>
-              <motion.p 
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                className="text-base sm:text-lg text-slate-300"
-              >
-                Welcome back, <span className="font-bold bg-gradient-to-r from-indigo-400 to-indigo-400 bg-clip-text text-transparent">{user.name}!</span>
-              </motion.p>
-              {/* Level & XP Section */}
-              <div className="mt-3 sm:mt-4 flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 max-w-xl">
-                {/* Level Badge */}
-                <motion.div 
-                  whileHover={{ scale: 1.05 }}
-                  className="flex items-center gap-2"
-                >
-                  <div className="px-4 py-2 rounded-full text-sm font-bold text-white bg-gradient-to-r from-indigo-600 via-indigo-600 to-indigo-600 shadow-lg shadow-indigo-500/50 ring-2 ring-indigo-400/30">
-                    ⭐ Level {Math.ceil(xpData.xpPoints / 100)}
-                  </div>
-                </motion.div>
-                {/* XP Meter */}
-                <div className="flex-1 min-w-max sm:min-w-0">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="flex items-center gap-2 text-sm text-yellow-300 font-bold">
-                      <motion.div
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                      >
-                        <Zap className="w-5 h-5" />
-                      </motion.div>
-                      XP Progress
-                    </span>
-                    <span className="text-sm font-bold text-yellow-200">{xpData.xpPoints % 100} / 100 XP</span>
-                  </div>
-                  <div className="h-3 w-full rounded-full bg-gradient-to-r from-slate-900 to-black overflow-hidden border border-yellow-500/30 shadow-lg shadow-yellow-500/15">
-                    <motion.div
-                      className="h-full bg-gradient-to-r from-yellow-400 via-amber-400 to-orange-400 shadow-lg shadow-yellow-500/40"
-                      initial={{ width: 0 }}
-                      animate={{ width: `${Math.min((xpData.xpPoints % 100) * 1, 100)}%` }}
-                      transition={{ type: "spring", stiffness: 100, damping: 20 }}
-                    />
-                  </div>
-                  <p className="text-xs text-slate-400 mt-1.5 font-semibold">
-                    💡 Earn XP: Complete forms • Log sessions • Finish goals • Internship progress
-                  </p>
-                </div>
+          <div className="flex flex-col gap-4 mb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div>
+                <h1 className="text-2xl sm:text-3xl font-bold text-white">
+                  Welcome back, {user.name.split(" ")[0]}
+                </h1>
+                <p className="mt-1 text-sm text-slate-400">
+                  Level {Math.ceil(xpData.xpPoints / 100)} · {xpData.xpPoints % 100}/100 XP to next level
+                </p>
               </div>
-            </div>
-            <StaggerGroup className="flex flex-wrap gap-2 w-full lg:w-auto" staggerDelay={0.06} initialDelay={0.1}>
-              <StaggerItem>
-                <motion.div whileHover={{ scale: 1.03 }}>
-                  <Link
-                    href="/student/career-path"
-                    className="btn-secondary hover-scale px-3 sm:px-5 py-2.5 sm:py-3 rounded-lg backdrop-blur-xl border-2 border-indigo-500/50 bg-gradient-to-br from-indigo-600/30 to-blue-600/30 hover:from-indigo-500/40 hover:to-blue-500/40 text-white font-bold flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/30 transition-all hover:shadow-indigo-500/50 text-sm sm:text-base"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                    </svg>
-                    Career Path
-                  </Link>
-                </motion.div>
-              </StaggerItem>
-              <StaggerItem>
-                <motion.div whileHover={{ scale: 1.03 }}>
-                  <Link
-                    href="/student/progress"
-                    className="btn-secondary hover-scale px-3 sm:px-5 py-2.5 sm:py-3 rounded-lg backdrop-blur-xl border-2 border-blue-500/50 bg-gradient-to-br from-blue-600/30 to-blue-600/30 hover:from-blue-500/40 hover:to-blue-500/40 text-white font-bold flex items-center justify-center gap-2 shadow-lg shadow-blue-500/30 transition-all hover:shadow-blue-500/50 text-sm sm:text-base"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7H7v10h6V7z M17 7h-2v4h2V7z M5 20h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v13a2 2 0 002 2z" />
-                    </svg>
-                    Progress
-                  </Link>
-                </motion.div>
-              </StaggerItem>
-              <StaggerItem>
-                <motion.div whileHover={{ scale: 1.03 }}>
-                  <Link
-                    href="/student/form-submission"
-                    className="btn-secondary hover-scale px-3 sm:px-5 py-2.5 sm:py-3 rounded-lg backdrop-blur-xl border-2 border-blue-500/50 bg-gradient-to-br from-blue-600/30 to-indigo-600/30 hover:from-blue-500/40 hover:to-indigo-500/40 text-white font-bold flex items-center justify-center gap-2 shadow-lg shadow-blue-500/30 transition-all hover:shadow-blue-500/50 text-sm sm:text-base"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                    Forms
-                  </Link>
-                </motion.div>
-              </StaggerItem>
-              <StaggerItem>
+              <StudentToolbar onLogout={() => { logout(); router.push("/"); }}>
                 <StudentInbox />
-              </StaggerItem>
-              <StaggerItem>
-                <motion.button
-                  whileHover={{ scale: 1.03 }}
-                  onClick={() => {
-                    logout();
-                    router.push("/");
-                  }}
-                  className="btn-secondary hover-scale px-3 sm:px-5 py-2.5 sm:py-3 rounded-lg backdrop-blur-xl border-2 border-red-500/50 bg-gradient-to-br from-red-600/30 to-indigo-600/30 hover:from-red-500/40 hover:to-indigo-500/40 text-white font-bold shadow-lg shadow-red-500/30 transition-all hover:shadow-red-500/50 text-sm sm:text-base"
-                >
-                  Logout
-                </motion.button>
-              </StaggerItem>
-              <StaggerItem>
-                <motion.div whileHover={{ scale: 1.03 }}>
-                  <Link 
-                    href="/" 
-                    className="btn-secondary hover-scale px-3 sm:px-5 py-2.5 sm:py-3 rounded-lg backdrop-blur-xl border-2 border-slate-400/50 bg-gradient-to-br from-slate-600/30 to-slate-500/30 hover:from-slate-500/40 hover:to-slate-400/40 text-white font-bold shadow-lg shadow-slate-500/30 transition-all hover:shadow-slate-500/50 text-sm sm:text-base"
-                  >
-                    ← Back to Home
-                  </Link>
-                </motion.div>
-              </StaggerItem>
-            </StaggerGroup>
+              </StudentToolbar>
+            </div>
           </div>
           </Reveal>
 
-          {/* Student Stats */}
+          <Reveal delay={0.05}>
+            <div id="next" className="scroll-mt-32 mb-6">
+              <NextStepCard
+                step={resolveNextStep({
+                  verified: studentStats.certifications > 0 || applications.length > 0,
+                  applicationCount: applications.length,
+                  hasActionableApplication: applications.some(
+                    (a: any) => a.status === "Submitted" || a.status === "Action Required"
+                  ),
+                })}
+              />
+            </div>
+          </Reveal>
+
+          <StudentSectionNav />
+
+          {/* Stats */}
           <Reveal delay={0.1}>
-          <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-3 mb-5">
-            {/* Learning Hours */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              whileHover={{ y: -8, scale: 1.03 }}
-              className="group relative rounded-2xl border-2 border-blue-500/40 bg-gradient-to-br from-blue-900/30 to-blue-900/25 backdrop-blur-xl p-4 shadow-2xl shadow-blue-500/20 hover:shadow-blue-500/40 hover:border-blue-400/60 transition-all duration-300 overflow-hidden cursor-pointer"
-            >
-              {/* Animated gradient glow */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-blue-400/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                animate={{
-                  backgroundPosition: ['0% 0%', '100% 100%'],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                }}
-              />
-              <div className="relative z-10 flex items-center justify-between mb-3">
-                <span className="text-xs font-bold text-blue-200 uppercase tracking-wider">Learning Hours</span>
-                <motion.div 
-                  animate={{ rotate: [0, 10, -10, 0] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  <svg className="w-6 h-6 text-blue-300 drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </motion.div>
-              </div>
-              <motion.div 
-                className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-200 to-blue-200 bg-clip-text text-transparent mb-2"
-                whileHover={{ scale: 1.1 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                {studentStats.learningHours}
-              </motion.div>
-              <p className="text-xs sm:text-sm text-blue-100/90 font-semibold">hours completed</p>
-            </motion.div>
-
-            {/* Average Progress */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.15 }}
-              whileHover={{ y: -8, scale: 1.03 }}
-              className="group relative rounded-2xl border-2 border-indigo-500/40 bg-gradient-to-br from-indigo-900/30 to-indigo-900/25 backdrop-blur-xl p-4 shadow-2xl shadow-indigo-500/20 hover:shadow-indigo-500/40 hover:border-indigo-400/60 transition-all duration-300 overflow-hidden cursor-pointer"
-            >
-              {/* Animated gradient glow */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-indigo-400/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                animate={{
-                  backgroundPosition: ['0% 0%', '100% 100%'],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                }}
-              />
-              <div className="relative z-10 flex items-center justify-between mb-3">
-                <span className="text-xs font-bold text-indigo-200 uppercase tracking-wider">Avg Progress</span>
-                <motion.div 
-                  animate={{ y: [0, -3, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                >
-                  <svg className="w-6 h-6 text-indigo-300 drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                </motion.div>
-              </div>
-              <motion.div 
-                className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-indigo-200 to-indigo-200 bg-clip-text text-transparent mb-2"
-                whileHover={{ scale: 1.1 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                {studentStats.avgProgress}%
-              </motion.div>
-              <p className="text-xs sm:text-sm text-indigo-100/90 font-semibold">per course</p>
-            </motion.div>
-
-            {/* Certifications */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              whileHover={{ y: -8, scale: 1.03 }}
-              className="group relative rounded-2xl border-2 border-emerald-500/40 bg-gradient-to-br from-emerald-900/30 to-blue-900/25 backdrop-blur-xl p-4 shadow-2xl shadow-emerald-500/20 hover:shadow-emerald-500/40 hover:border-emerald-400/60 transition-all duration-300 overflow-hidden cursor-pointer"
-            >
-              {/* Animated gradient glow */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-emerald-400/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                animate={{
-                  backgroundPosition: ['0% 0%', '100% 100%'],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                }}
-              />
-              <div className="relative z-10 flex items-center justify-between mb-3">
-                <span className="text-xs font-bold text-emerald-200 uppercase tracking-wider">Certifications</span>
-                <motion.div 
-                  animate={{ rotate: [0, 360] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                >
-                  <svg className="w-6 h-6 text-emerald-300 drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                  </svg>
-                </motion.div>
-              </div>
-              <motion.div 
-                className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-emerald-200 to-blue-200 bg-clip-text text-transparent mb-2"
-                whileHover={{ scale: 1.1 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                {studentStats.certifications}
-              </motion.div>
-              <p className="text-xs sm:text-sm text-emerald-100/90 font-semibold">{studentStats.certifications === 0 ? 'none yet' : studentStats.certifications === 1 ? 'earned' : 'earned'}</p>
-            </motion.div>
+          <div id="stats" className="scroll-mt-32 grid grid-cols-1 xs:grid-cols-3 gap-3 mb-6">
+            <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-4">
+              <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Learning hours</p>
+              <p className="mt-2 text-3xl font-bold text-white"><CountUp value={studentStats.learningHours} /></p>
+            </div>
+            <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-4">
+              <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Avg progress</p>
+              <p className="mt-2 text-3xl font-bold text-white"><CountUp value={studentStats.avgProgress} />%</p>
+            </div>
+            <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-4">
+              <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Certifications</p>
+              <p className="mt-2 text-3xl font-bold text-white"><CountUp value={studentStats.certifications} /></p>
+            </div>
           </div>
           </Reveal>
 
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+          <div id="applications" className="scroll-mt-32 grid grid-cols-1 lg:grid-cols-4 gap-4">
             {/* Left Sidebar - Audit Card */}
             <div className="lg:col-span-1">
               <motion.div 
@@ -489,75 +260,9 @@ export default function StudentPortal() {
 
             {/* Main Content */}
             <div className="lg:col-span-3 space-y-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-              {/* XP System Reminder */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="relative p-5 rounded-2xl border-2 border-yellow-500/40 bg-gradient-to-br from-yellow-900/30 to-orange-900/25 backdrop-blur-xl shadow-2xl shadow-yellow-500/20 overflow-hidden"
-              >
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 via-transparent to-transparent opacity-0 group-hover:opacity-100"
-                  animate={{
-                    backgroundPosition: ['0% 0%', '100% 100%'],
-                  }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                  }}
-                />
-                <div className="relative z-10 flex items-start gap-4">
-                  <motion.div 
-                    className="text-4xl flex-shrink-0"
-                    animate={{ rotate: [0, 10, -10, 0] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
-                    ⚡
-                  </motion.div>
-                  <div className="flex-1">
-                    <h3 className="font-bold text-xl text-yellow-200 mb-3">XP Earning Guide</h3>
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div className="text-sm text-yellow-50">
-                        <p className="font-bold text-yellow-100 mb-2 flex items-center gap-2">
-                          <span className="px-2 py-1 rounded-lg bg-yellow-500/30 border border-yellow-500/50">⚙️</span>
-                          Complete Activities
-                        </p>
-                        <ul className="space-y-1.5 text-xs">
-                          <li className="flex items-center gap-2">
-                            <span className="text-yellow-300 font-bold">✓</span> <strong className="text-yellow-200">+10 XP</strong> per form completion
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <span className="text-yellow-300 font-bold">✓</span> <strong className="text-yellow-200">+5 XP</strong> per application submission
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <span className="text-yellow-300 font-bold">✓</span> <strong className="text-yellow-200">+3 XP</strong> per reflection logged
-                          </li>
-                        </ul>
-                      </div>
-                      <div className="text-sm text-yellow-50">
-                        <p className="font-bold text-yellow-100 mb-2 flex items-center gap-2">
-                          <span className="px-2 py-1 rounded-lg bg-yellow-500/30 border border-yellow-500/50">🏆</span>
-                          Achievements
-                        </p>
-                        <ul className="space-y-1.5 text-xs">
-                          <li className="flex items-center gap-2">
-                            <span className="text-yellow-300 font-bold">✓</span> <strong className="text-yellow-200">+15 XP</strong> per program completion
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <span className="text-yellow-300 font-bold">✓</span> <strong className="text-yellow-200">+20 XP</strong> per certification earned
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <span className="text-yellow-300 font-bold">⭐</span> <strong className="text-yellow-200">100 XP = Level Up!</strong>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    <p className="text-sm text-yellow-100/90 mt-3 font-semibold">🚀 Keep engaging to level up and unlock new opportunities!</p>
-                  </div>
-                </div>
-              </motion.div>
-
-              <StudentVerificationCenter studentName={user.name} studentEmail={user.email} studentId={user.id} />
+              <div id="verification" className="scroll-mt-32">
+                <StudentVerificationCenter studentName={user.name} studentEmail={user.email} studentId={user.id} />
+              </div>
 
               {loadingApps ? (
                 <div className="space-y-4">
