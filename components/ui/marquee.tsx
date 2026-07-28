@@ -48,7 +48,7 @@ export function Marquee({ items, speed = 50, direction = "left", className = "" 
         {doubledItems.map((item, index) => (
           <div key={index} className="flex items-center gap-2 text-sm font-medium text-slate-300">
             <span>{item}</span>
-            <span className="text-cyan-400">✦</span>
+            <span className="text-blue-400">✦</span>
           </div>
         ))}
       </div>

@@ -158,28 +158,28 @@ export default function ForHospitalsPage() {
                 title: 'Designed for Institutional Control',
                 description: 'Hospitals define eligibility criteria, documentation requirements, intake capacity, and review workflows. Electivio supports, not overrides, institutional processes.',
                 icon: Shield,
-                gradient: 'from-blue-600 to-blue-600',
+                gradient: 'from-blue-500 to-blue-700',
                 delay: 0,
               },
               {
                 title: 'Standardized Intake',
                 description: 'Built to centralize program information and applications, reducing unstructured emails, calls, and ad-hoc requests.',
                 icon: FileCheck,
-                gradient: 'from-indigo-600 to-indigo-600',
+                gradient: 'from-blue-500 to-indigo-600',
                 delay: 0.1,
               },
               {
                 title: 'Clear Applicant Alignment',
                 description: 'Students apply based on published criteria, helping institutions receive applications aligned with their requirements.',
                 icon: CheckCircle2,
-                gradient: 'from-indigo-600 to-indigo-600',
+                gradient: 'from-indigo-500 to-blue-700',
                 delay: 0.2,
               },
               {
                 title: 'Privacy-First Architecture',
                 description: 'Designed with role-based access and data protection principles to support responsible handling of applicant information.',
                 icon: Shield,
-                gradient: 'from-green-600 to-emerald-600',
+                gradient: 'from-blue-600 to-indigo-700',
                 delay: 0.3,
               }
             ]}

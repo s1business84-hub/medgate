@@ -58,7 +58,7 @@ export function PageTransition({ isOpen, onComplete, targetUrl }: PageTransition
               >
                 {/* Subtle gradient overlay for depth */}
                 <motion.div
-                  className="w-full h-full bg-linear-to-b from-cyan-500/10 via-transparent to-blue-500/10"
+                  className="w-full h-full bg-linear-to-b from-blue-500/10 via-transparent to-indigo-500/10"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: [0, 1, 1, 0] }}
                   transition={{
@@ -78,7 +78,7 @@ export function PageTransition({ isOpen, onComplete, targetUrl }: PageTransition
             animate={{ opacity: [0, 1, 1, 0] }}
             transition={{ duration: 1.4, times: [0, 0.3, 0.7, 1] }}
           >
-            <div className="w-16 h-16 border-4 border-cyan-500/30 border-t-cyan-500 rounded-full animate-spin" />
+            <div className="w-16 h-16 border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin" />
           </motion.div>
         </div>
       )}

@@ -23,6 +23,15 @@ import {
   StudentSectionNav,
   resolveNextStep,
 } from "@/components/student/student-shell";
+import {
+  Stepper,
+  StepperItem,
+  StepperTrigger,
+  StepperIndicator,
+  StepperSeparator,
+  StepperTitle,
+  StepperNav,
+} from "@/components/reui/stepper";
 
 export default function StudentPortal() {
   const { user, logout } = useAuth();
@@ -470,6 +479,79 @@ export default function StudentPortal() {
                               </div>
                             </motion.div>
                           </div>
+
+                          {/* Application tracker — real progression through the actual
+                              statuses this app uses, so "where am I" is answered at a
+                              glance instead of a single status word. */}
+                          {(() => {
+                            const REJECTED_STATES = ["Rejected", "Declined", "Waitlisted", "Deferred"];
+                            const isRejected = REJECTED_STATES.includes(selected?.status || "");
+                            const stepFor = (status?: string) => {
+                              switch (status) {
+                                case "Draft":
+                                case "Submitted":
+                                  return 1;
+                                case "Under Review":
+                                  return 2;
+                                case "Approved":
+                                case "Accepted":
+                                case "Stage 2 Accepted":
+                                  return 3;
+                                case "In Training":
+                                  return 4;
+                                case "Completed":
+                                  return 5;
+                                default:
+                                  return isRejected ? 2 : 1;
+                              }
+                            };
+                            const TRACKER_STEPS = ["Applied", "Under review", "Approved", "In training", "Completed"];
+
+                            if (isRejected) {
+                              return (
+                                <div className="mt-4 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+                                  This application will not continue: <strong>{selected?.status}</strong>.
+                                  {" "}Check the application list for details or apply to another programme.
+                                </div>
+                              );
+                            }
+
+                            return (
+                              <div className="mt-4">
+                                <Stepper value={stepFor(selected?.status)} className="hidden sm:block">
+                                  <StepperNav>
+                                    {TRACKER_STEPS.map((label, i) => (
+                                      <StepperItem key={label} step={i + 1} className="not-last:flex-1">
+                                        <StepperTrigger className="flex-col gap-2" disabled>
+                                          <StepperIndicator>{i + 1}</StepperIndicator>
+                                          <StepperTitle className="text-[11px] font-medium text-indigo-100">
+                                            {label}
+                                          </StepperTitle>
+                                        </StepperTrigger>
+                                        {i < TRACKER_STEPS.length - 1 && <StepperSeparator />}
+                                      </StepperItem>
+                                    ))}
+                                  </StepperNav>
+                                </Stepper>
+
+                                <Stepper value={stepFor(selected?.status)} orientation="vertical" className="sm:hidden">
+                                  <StepperNav className="gap-1">
+                                    {TRACKER_STEPS.map((label, i) => (
+                                      <StepperItem key={label} step={i + 1} className="not-last:flex-1">
+                                        <StepperTrigger className="gap-3" disabled>
+                                          <StepperIndicator>{i + 1}</StepperIndicator>
+                                          <StepperTitle className="text-[13px] font-medium text-indigo-100">
+                                            {label}
+                                          </StepperTitle>
+                                        </StepperTrigger>
+                                        {i < TRACKER_STEPS.length - 1 && <StepperSeparator />}
+                                      </StepperItem>
+                                    ))}
+                                  </StepperNav>
+                                </Stepper>
+                              </div>
+                            );
+                          })()}
 
                           {/* Program Progress Section */}
                           <motion.div 
