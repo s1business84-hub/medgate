@@ -15,6 +15,7 @@ import { CheckCircle, XCircle, Clock } from "lucide-react";
 import { LiquidParallax } from "@/components/ui/liquid-parallax";
 import { AdminFormAssignment } from "@/components/admin-form-assignment";
 import { SupervisorNotifications } from "@/components/supervisor-notifications";
+import { CountUp } from "@/components/home/effects";
 
 export default function AdminPage() {
   const { user, logout, isLoading } = useAuth();
@@ -463,7 +464,7 @@ export default function AdminPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-slate-400 mb-1">Waitlisted Students</p>
-                <p className="text-3xl font-bold text-yellow-400">{getWaitlistedApplications().length}</p>
+                <p className="text-3xl font-bold text-yellow-400"><CountUp value={getWaitlistedApplications().length} /></p>
               </div>
               <Clock className="w-10 h-10 text-yellow-400 opacity-50" />
             </div>
@@ -473,7 +474,7 @@ export default function AdminPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-slate-400 mb-1">Total Applications</p>
-                <p className="text-3xl font-bold text-blue-400">{applications.length}</p>
+                <p className="text-3xl font-bold text-blue-400"><CountUp value={applications.length} /></p>
               </div>
               <CheckCircle className="w-10 h-10 text-blue-400 opacity-50" />
             </div>
@@ -484,9 +485,13 @@ export default function AdminPage() {
               <div>
                 <p className="text-sm text-slate-400 mb-1">Conversion Rate</p>
                 <p className="text-3xl font-bold text-green-400">
-                  {applications.length > 0 
-                    ? Math.round(((applications.length - getWaitlistedApplications().length) / applications.length) * 100) 
-                    : 0}%
+                  <CountUp
+                    value={
+                      applications.length > 0
+                        ? Math.round(((applications.length - getWaitlistedApplications().length) / applications.length) * 100)
+                        : 0
+                    }
+                  />%
                 </p>
               </div>
               <CheckCircle className="w-10 h-10 text-green-400 opacity-50" />

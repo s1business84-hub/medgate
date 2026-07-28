@@ -107,6 +107,11 @@ export function CountUp({
   useEffect(() => {
     if (!inView) return;
     if (reduce || value === 0) {
+      // Synchronizing external state (IntersectionObserver's inView, via
+      // useInView) into React state on change is exactly what effects are
+      // for — there's no render-time equivalent for "start when scrolled
+      // into view."
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setDisplay(value);
       return;
     }

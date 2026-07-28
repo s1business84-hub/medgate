@@ -98,10 +98,10 @@ export function StudentGuidelines() {
   useEffect(() => {
     try {
       const saved = localStorage.getItem(CHECKLIST_STORAGE_KEY);
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- reading
-      // localStorage during render (or in a lazy useState initialiser) would
-      // run on the server too and cause a hydration mismatch. Deferring the
-      // first paint by one render is the intended trade-off.
+      // Reading localStorage during render (or in a lazy useState
+      // initialiser) would run on the server too and cause a hydration
+      // mismatch. Deferring the first paint by one render is the trade-off.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       if (saved) setChecked(JSON.parse(saved));
     } catch {
       /* ignore malformed storage */

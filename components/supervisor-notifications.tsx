@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Bell, CheckCircle, X } from "lucide-react";
 import { getUserNotifications, markNotificationAsRead } from "@/lib/storage";
@@ -16,23 +16,27 @@ export function SupervisorNotifications({ userId }: SupervisorNotificationsProps
   const [showPanel, setShowPanel] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
 
-  const loadNotifications = () => {
+  const loadNotifications = useCallback(() => {
     const allNotifications = getUserNotifications(userId);
     // Sort by newest first
-    const sorted = allNotifications.sort((a, b) => 
+    const sorted = allNotifications.sort((a, b) =>
       new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
     setNotifications(sorted);
     setUnreadCount(sorted.filter(n => !n.isRead).length);
-  };
+  }, [userId]);
 
   useEffect(() => {
+    // Polling localStorage on an interval to pick up notifications created
+    // elsewhere (another tab, a decision action) is a legitimate external-
+    // system sync, not derivable state.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     loadNotifications();
-    
+
     // Refresh notifications every 30 seconds
     const interval = setInterval(loadNotifications, 30000);
     return () => clearInterval(interval);
-  }, [userId]);
+  }, [loadNotifications]);
 
   const handleMarkAsRead = (notificationId: string) => {
     markNotificationAsRead(notificationId);

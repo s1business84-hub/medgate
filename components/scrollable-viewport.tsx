@@ -46,9 +46,10 @@ export function ScrollableViewport({
     mass: 0.5,
   });
 
-  // eslint-disable-next-line react-hooks/set-state-in-effect -- the fixed
-  // overlays below must not render during SSR; gating them on a post-mount
-  // flag is the standard way to keep server and client markup identical.
+  // The fixed overlays below must not render during SSR; gating them on a
+  // post-mount flag is the standard way to keep server and client markup
+  // identical.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => setMounted(true), []);
 
   useEffect(() => {

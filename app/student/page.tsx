@@ -16,7 +16,7 @@ import { SupervisorChat } from "@/components/supervisor-chat";
 import { StudentVerificationCenter } from "@/components/student-verification-center";
 import { StudentGuidelines } from "@/components/student-guidelines";
 import { StudentInbox } from "@/components/student-inbox";
-import { CountUp } from "@/components/home/effects";
+import { CountUp, GlowCard } from "@/components/home/effects";
 import {
   NextStepCard,
   StudentToolbar,
@@ -218,18 +218,18 @@ export default function StudentPortal() {
           {/* Stats */}
           <Reveal delay={0.1}>
           <div id="stats" className="scroll-mt-32 grid grid-cols-1 xs:grid-cols-3 gap-3 mb-6">
-            <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-4">
+            <GlowCard className="p-4">
               <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Learning hours</p>
               <p className="mt-2 text-3xl font-bold text-white"><CountUp value={studentStats.learningHours} /></p>
-            </div>
-            <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-4">
+            </GlowCard>
+            <GlowCard className="p-4">
               <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Avg progress</p>
               <p className="mt-2 text-3xl font-bold text-white"><CountUp value={studentStats.avgProgress} />%</p>
-            </div>
-            <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-4">
+            </GlowCard>
+            <GlowCard className="p-4">
               <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Certifications</p>
               <p className="mt-2 text-3xl font-bold text-white"><CountUp value={studentStats.certifications} /></p>
-            </div>
+            </GlowCard>
           </div>
           </Reveal>
 
