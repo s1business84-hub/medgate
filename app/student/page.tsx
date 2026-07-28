@@ -86,23 +86,21 @@ export default function StudentPortal() {
         });
       }
       
-      // Load program details for enrichment
-      const enrichedApps = await Promise.all(
-        myApps.map(async (app: any) => {
-          try {
-            const mockProgramsRaw = localStorage.getItem("mockPrograms");
-            const mockPrograms = mockProgramsRaw ? JSON.parse(mockProgramsRaw) : [];
-            const program = mockPrograms.find((p: any) => p.id === app.programId);
-            return {
-              ...app,
-              programName: program?.name || "Unknown Program",
-              hospitalName: program?.hospitalName || "Unknown Hospital",
-            };
-          } catch {
-            return app;
-          }
-        })
-      );
+      // Load program details for enrichment. Programs and hospitals are
+      // static seed data exported from lib/mockData, not persisted to
+      // localStorage — this previously read a "mockPrograms" localStorage
+      // key that nothing ever wrote, so every application showed as
+      // "Unknown Program" / "Unknown Hospital" regardless of real data.
+      const { programs: allPrograms, hospitals: allHospitals } = await import("@/lib/mockData");
+      const enrichedApps = myApps.map((app: any) => {
+        const program = allPrograms.find((p: any) => p.id === app.programId);
+        const hospital = allHospitals.find((h: any) => h.id === (program?.hospitalId || app.hospitalId));
+        return {
+          ...app,
+          programName: program?.name || program?.departmentName || "Unknown Program",
+          hospitalName: hospital?.name || "Unknown Hospital",
+        };
+      });
       
       setApplications(enrichedApps);
       if (enrichedApps.length > 0 && !selectedApplicationId) {
