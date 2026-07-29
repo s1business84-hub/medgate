@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  allowedDevOrigins: ["192.168.0.179", "localhost"],
+  allowedDevOrigins: ["localhost"],
   reactStrictMode: true,
   productionBrowserSourceMaps: false,
   experimental: {
