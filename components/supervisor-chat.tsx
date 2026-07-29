@@ -40,10 +40,10 @@ export function SupervisorChat() {
     "Any study tips for medical exams?",
   ];
 
-  const handleSendMessage = async () => {
-    if (!inputText.trim() || isLoading) return;
+  const handleSendMessage = async (override?: string) => {
+    const userMessage = override ?? inputText;
+    if (!userMessage.trim() || isLoading) return;
 
-    const userMessage = inputText;
     const newMessage: Message = {
       id: `msg-${Date.now()}`,
       text: userMessage,
@@ -214,10 +214,7 @@ export function SupervisorChat() {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: idx * 0.1 }}
                       whileHover={{ scale: 1.02, x: 4 }}
-                      onClick={() => {
-                        setInputText(q);
-                        setTimeout(() => handleSendMessage(), 100);
-                      }}
+                      onClick={() => handleSendMessage(q)}
                       disabled={isLoading}
                       className="w-full text-left text-xs p-3 rounded-lg bg-white/5 hover:bg-gradient-to-r hover:from-blue-500/20 hover:to-indigo-500/20 text-slate-300 hover:text-white transition-all duration-300 border border-white/5 hover:border-blue-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
@@ -241,7 +238,7 @@ export function SupervisorChat() {
                   className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:opacity-50"
                 />
                 <motion.button
-                  onClick={handleSendMessage}
+                  onClick={() => handleSendMessage()}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   disabled={isLoading || !inputText.trim()}

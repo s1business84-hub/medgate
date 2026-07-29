@@ -718,6 +718,12 @@ export default function StudentPortal() {
             </div>
           </div>
         </div>
+
+        {/* Electivio Bot — was only mounted on the logged-out marketing view
+            below, so a signed-in student never saw it on their own
+            dashboard. Added here so it's actually reachable where students
+            spend their time. */}
+        <SupervisorChat />
       </div>
     );
   }
