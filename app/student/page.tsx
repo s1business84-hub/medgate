@@ -216,15 +216,15 @@ export default function StudentPortal() {
           {/* Stats */}
           <Reveal delay={0.1}>
           <div id="stats" className="scroll-mt-32 grid grid-cols-1 xs:grid-cols-3 gap-3 mb-6">
-            <GlowCard className="p-4">
+            <GlowCard className="p-4" accent="blue">
               <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Learning hours</p>
               <p className="mt-2 text-3xl font-bold text-white"><CountUp value={studentStats.learningHours} /></p>
             </GlowCard>
-            <GlowCard className="p-4">
+            <GlowCard className="p-4" accent="teal">
               <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Avg progress</p>
               <p className="mt-2 text-3xl font-bold text-white"><CountUp value={studentStats.avgProgress} />%</p>
             </GlowCard>
-            <GlowCard className="p-4">
+            <GlowCard className="p-4" accent="violet">
               <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Certifications</p>
               <p className="mt-2 text-3xl font-bold text-white"><CountUp value={studentStats.certifications} /></p>
             </GlowCard>

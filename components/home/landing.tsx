@@ -262,23 +262,32 @@ export function TrustStrip() {
 
 /* --------------------------------------------------------------- benefits */
 
+const BENEFIT_TILE = {
+  blue: "bg-blue-500/10 text-blue-300 ring-1 ring-blue-500/25",
+  teal: "bg-teal-500/10 text-teal-300 ring-1 ring-teal-500/25",
+  violet: "bg-violet-500/10 text-violet-300 ring-1 ring-violet-500/25",
+} as const;
+
 const BENEFITS = [
   {
     icon: ShieldCheck,
     title: "No more inbox triage",
     body: "Applications arrive complete and comparable in one queue. Coordinators stop digging through threads for a missing vaccination record.",
+    accent: "blue",
   },
   {
     icon: ClipboardList,
     title: "Eligibility checked before submission",
     body: "Students see the institution's own criteria up front, so hospitals stop fielding applications that were never going to qualify.",
+    accent: "teal",
   },
   {
     icon: CalendarDays,
     title: "Scheduling without the back-and-forth",
     body: "Intake windows, seat capacity and start dates are published once. No email chains to agree a date or discover a rotation is full.",
+    accent: "violet",
   },
-];
+] as const;
 
 export function Benefits() {
   return (
@@ -294,9 +303,9 @@ export function Benefits() {
           {BENEFITS.map((b, i) => (
             <FadeUp key={b.title} delay={i * 0.06}>
               {/* the one place a spotlight treatment is used */}
-              <GlowCard className="h-full overflow-hidden p-6">
+              <GlowCard className="h-full overflow-hidden p-6" accent={b.accent}>
                 <div className="relative">
-                  <span className="grid h-11 w-11 place-items-center rounded-xl bg-blue-500/10 text-blue-300 ring-1 ring-blue-500/25">
+                  <span className={cn("grid h-11 w-11 place-items-center rounded-xl", BENEFIT_TILE[b.accent])}>
                     <b.icon className="h-5 w-5" />
                   </span>
                   <h3 className="mt-4 text-lg font-semibold text-white">{b.title}</h3>
